@@ -14,8 +14,8 @@ const App = ({ children, currentUser, journal }) => (
         <AppBar
             brandLink="/"
             brandName={journal.metadata.name}
-            logo={journal.metadata.logo}
             loginLink="/login"
+            logo={journal.metadata.logo}
             logoutLink="/logout"
             userName={currentUser ? currentUser.username : null}
         />
