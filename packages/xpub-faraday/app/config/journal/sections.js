@@ -1,6 +1,6 @@
 export default [
-    {
-        id: 'submissions',
-        label: 'My Submissions',
-    },
+  {
+    id: 'submissions',
+    label: 'My Submissions',
+  },
 ]

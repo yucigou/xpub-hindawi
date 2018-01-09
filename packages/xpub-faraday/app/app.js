@@ -15,25 +15,25 @@ const store = configureStore(history, {})
 const theme = {}
 
 const render = () => {
-    ReactDOM.render(
-        <AppContainer>
-            <JournalProvider journal={journal}>
-                <Root
-                    history={history}
-                    routes={<Routes />}
-                    store={store}
-                    theme={theme}
-                />
-            </JournalProvider>
-        </AppContainer>,
-        document.getElementById('root'),
-    )
+  ReactDOM.render(
+    <AppContainer>
+      <JournalProvider journal={journal}>
+        <Root
+          history={history}
+          routes={<Routes />}
+          store={store}
+          theme={theme}
+        />
+      </JournalProvider>
+    </AppContainer>,
+    document.getElementById('root'),
+  )
 }
 
 render()
 
 if (module.hot) {
-    module.hot.accept('./routes', () => {
-        render()
-    })
+  module.hot.accept('./routes', () => {
+    render()
+  })
 }

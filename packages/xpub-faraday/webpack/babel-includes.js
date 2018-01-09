@@ -4,10 +4,10 @@ const path = require('path')
 // TODO: compile components to ES5 for distribution
 
 module.exports = [
-    path.join(__dirname, '..', 'app'),
-    /pubsweet-[^/]+\/src/,
-    /xpub-[^/]+\/src/,
-    /component-[^/]+\/src/,
-    /wax-[^/]+\/src/,
-    /@pubsweet\/[^/]+\/src/,
+  path.join(__dirname, '..', 'app'),
+  /pubsweet-[^/]+\/src/,
+  /xpub-[^/]+\/src/,
+  /component-[^/]+\/src/,
+  /wax-[^/]+\/src/,
+  /@pubsweet\/[^/]+\/src/,
 ]
