@@ -10,22 +10,23 @@ import 'xpub-bootstrap'
 import classes from './App.local.scss'
 
 const App = ({ children, currentUser, journal }) => (
-  <div className={classes.root}>
-    <AppBar
-      brandLink="/"
-      brandName={journal.metadata.name}
-      loginLink="/login"
-      logoutLink="/logout"
-      userName={currentUser ? currentUser.username : null}
-    />
+    <div className={classes.root}>
+        <AppBar
+            brandLink="/"
+            brandName={journal.metadata.name}
+            logo={journal.metadata.logo}
+            loginLink="/login"
+            logoutLink="/logout"
+            userName={currentUser ? currentUser.username : null}
+        />
 
-    <div className={classes.main}>{children}</div>
-  </div>
+        <div className={classes.main}>{children}</div>
+    </div>
 )
 
 export default compose(
-  connect(state => ({
-    currentUser: state.currentUser.user,
-  })),
-  withJournal,
+    connect(state => ({
+        currentUser: state.currentUser.user,
+    })),
+    withJournal,
 )(App)
