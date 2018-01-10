@@ -11,11 +11,14 @@ import {
 
 import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
 
+import { Wizard } from './component-wizard'
+
 const Routes = () => (
   <App>
     <Route component={LoginPage} exact path="/login" />
     <PrivateRoute component={DashboardPage} exact path="/" />
     <PrivateRoute component={LogoutPage} exact path="/logout" />
+    <PrivateRoute component={Wizard} exact path="/wizard" />
   </App>
 )
 
