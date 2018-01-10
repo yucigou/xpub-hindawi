@@ -1,0 +1,12 @@
+{
+  "pubsweet-client": {
+    "API_ENDPOINT": "/api",
+    "login-redirect": "/",
+    "redux-log": false
+  },
+  "authsome": {
+    "mode": "/Users/sebi/Work/xpub/packages/xpub-faraday/config/authsome.js",
+    "teams": {}
+  },
+  "validations": "/Users/sebi/Work/xpub/packages/xpub-faraday/config/validations.js"
+}

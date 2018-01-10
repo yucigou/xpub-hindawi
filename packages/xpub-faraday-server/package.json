@@ -1,0 +1,22 @@
+{
+  "name": "xpub-faraday-server",
+  "version": "0.0.1",
+  "description": "xpub configured for faraday",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.coko.foundation/xpub/xpub"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "config": "^1.26.1",
+    "moment": "^2.18.1",
+    "nodemailer": "^4.0.1"
+  },
+  "peerDependencies": {
+    "@pubsweet/logger": "^0.0.1",
+    "pubsweet-server": "^1.0.1",
+    "pubsweet": "^1.1.1",
+    "pubsweet-client": "^1.1.1"
+  }
+}

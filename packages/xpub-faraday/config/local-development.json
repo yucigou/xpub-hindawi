@@ -1,0 +1,12 @@
+{
+  "pubsweet-server": {
+    "secret":
+      "033fb008ff867b50936c8278d3d3451e4334e29594fb3805afb4c7193b81f5d9b9bd6db7a6c40e5795247214bb5b6f85350a1a7d49fb3debe612183485dc7bef"
+  },
+  "pubsweet-component-ink-backend": {
+    "inkEndpoint": "http://inkdemo-api.coko.foundation/",
+    "email": "editoria@coko.foundation",
+    "password": "editoria",
+    "recipes": { "editoria-typescript": "2" }
+  }
+}
