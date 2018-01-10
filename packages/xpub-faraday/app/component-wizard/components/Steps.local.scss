@@ -1,0 +1,41 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 40px;
+  min-width: 400px;
+}
+
+.separator {
+  background-color: #444;
+  flex: 1;
+  height: 2px;
+}
+
+.step {
+  align-items: center;
+  border: 2px solid #555;
+  border-radius: 50%;
+  display: flex;
+  height: 16px;
+  justify-content: center;
+  position: relative;
+  width: 16px;
+}
+
+.bullet {
+  background-color: #555;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+}
+
+.stepTitle {
+  font-size: 14px;
+  left: -40px;
+  position: absolute;
+  top: 25px;
+  white-space: normal;
+  width: 120px;
+}
