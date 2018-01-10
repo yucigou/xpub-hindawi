@@ -8,7 +8,8 @@ const Separator = () => <div className={classes.separator} />
 
 const Step = ({ title, index, currentStep }) => (
   <div className={classes.step}>
-    {index <= currentStep && <div className={classes.bullet} />}
+    {index === currentStep && <div className={classes.bullet} />}
+    {index < currentStep && <div className={classes.success}>✓</div>}
     <span className={classes.stepTitle}>{`${index + 1}. ${title}`}</span>
   </div>
 )

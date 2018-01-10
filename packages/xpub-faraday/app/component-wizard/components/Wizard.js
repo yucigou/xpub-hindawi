@@ -29,7 +29,7 @@ const Wizard = ({ journal: { wizard }, getSteps, step, incrementStep }) => (
 
 export default compose(
   withJournal,
-  withState('step', 'changeStep', 0),
+  withState('step', 'changeStep', 1),
   withHandlers({
     getSteps: ({ journal: { wizard } }) => () => wizard.map(w => w.label),
     incrementStep: ({ changeStep }) => () => changeStep(step => step + 1),
