@@ -61,7 +61,7 @@ const SortableList = ({ items, moveItem, listItem }) => (
         key={item.name}
         listItem={listItem}
         moveItem={moveItem}
-        name={item.name}
+        {...item}
       />
     ))}
   </div>

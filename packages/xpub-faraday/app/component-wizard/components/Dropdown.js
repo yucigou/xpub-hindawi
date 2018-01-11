@@ -49,7 +49,11 @@ const Dropdown = ({
 )
 
 export default compose(
-  withState('inputValue', 'setInputValue', ({ defaultValue }) => defaultValue),
+  withState(
+    'inputValue',
+    'setInputValue',
+    ({ defaultValue }) => defaultValue || { label: '' },
+  ),
   withState('showDropdown', 'setDropdownVisibility', false),
   withHandlers({
     changeInput: ({ setInputValue }) => e => {
@@ -59,8 +63,13 @@ export default compose(
     setDropdown: ({ setDropdownVisibility }) => visibilty => e => {
       setDropdownVisibility(visibilty)
     },
-    selectValue: ({ setInputValue, setDropdownVisibility }) => value => e => {
+    selectValue: ({
+      setInputValue,
+      setDropdownVisibility,
+      onSelect,
+    }) => value => e => {
       setInputValue(value)
+      onSelect(value)
       setDropdownVisibility(false)
     },
   }),
