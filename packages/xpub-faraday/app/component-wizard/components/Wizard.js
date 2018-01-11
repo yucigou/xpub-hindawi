@@ -22,9 +22,16 @@ const items = [
 ]
 
 const AnItem = props => (
-  <div style={{ backgroundColor: 'salmon', marginBottom: 10 }}>
+  <div
+    style={{
+      backgroundColor: 'cyan',
+      marginBottom: 10,
+      opacity: props.isDragging ? 0 : 1,
+    }}
+  >
     Un item aici: {props.name}
     {props.isDragging && <span>ma trag</span>}
+    {props.isOver && <span>is over</span>}
   </div>
 )
 
@@ -59,22 +66,7 @@ export default compose(
     getSteps: ({ journal: { wizard } }) => () => wizard.map(w => w.label),
     incrementStep: ({ changeStep }) => () => changeStep(step => step + 1),
     moveItem: ({ changeItems }) => (dragIndex, hoverIndex) => {
-      changeItems(prev => {
-        if (dragIndex <= hoverIndex) {
-          return [
-            ...prev.slice(0, dragIndex),
-            prev[hoverIndex],
-            prev[dragIndex],
-            ...prev.slice(hoverIndex + 1),
-          ]
-        }
-        return [
-          ...prev.slice(0, hoverIndex),
-          prev[dragIndex],
-          prev[hoverIndex],
-          ...prev.slice(dragIndex + 1),
-        ]
-      })
+      changeItems(prev => SortableList.moveItem(prev, dragIndex, hoverIndex))
     },
   }),
 )(Wizard)

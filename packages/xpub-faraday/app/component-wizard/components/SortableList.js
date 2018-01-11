@@ -10,9 +10,9 @@ const itemSource = {
 }
 
 const itemTarget = {
-  hover(props, monitor, component) {
+  hover({ moveItem, index }, monitor, component) {
     const dragIndex = monitor.getItem().index
-    const hoverIndex = props.index
+    const hoverIndex = index
 
     // Don't replace items with themselves
     if (dragIndex === hoverIndex) {
@@ -32,7 +32,7 @@ const itemTarget = {
       return
     }
 
-    props.moveItem(dragIndex, hoverIndex)
+    moveItem(dragIndex, hoverIndex)
     monitor.getItem().index = hoverIndex
   },
 }
@@ -43,8 +43,9 @@ const Item = ({ connectDragSource, connectDropTarget, listItem, ...rest }) =>
   )
 
 const DecoratedItem = compose(
-  DropTarget('item', itemTarget, connect => ({
+  DropTarget('item', itemTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
   })),
   DragSource('item', itemSource, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
@@ -65,5 +66,23 @@ const SortableList = ({ items, moveItem, listItem }) => (
     ))}
   </div>
 )
+
+// helper function for sortable lists
+SortableList.moveItem = (items, dragIndex, hoverIndex) => {
+  if (dragIndex <= hoverIndex) {
+    return [
+      ...items.slice(0, dragIndex),
+      items[hoverIndex],
+      items[dragIndex],
+      ...items.slice(hoverIndex + 1),
+    ]
+  }
+  return [
+    ...items.slice(0, hoverIndex),
+    items[dragIndex],
+    items[hoverIndex],
+    ...items.slice(dragIndex + 1),
+  ]
+}
 
 export default SortableList
