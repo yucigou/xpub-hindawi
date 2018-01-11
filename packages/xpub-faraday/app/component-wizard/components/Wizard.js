@@ -2,7 +2,7 @@ import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 import { withJournal } from 'xpub-journal'
 
-import { Dropdown, Steps } from '../'
+import { Dropdown, Steps, SortableList } from '../'
 
 const { Step } = Steps
 
@@ -13,7 +13,22 @@ const options = [
   { label: 'vaca 4', value: 'opt4' },
 ]
 
-const Wizard = ({ journal: { wizard }, getSteps, step, incrementStep }) => (
+const items = [
+  { name: '1aurel' },
+  { name: '2costel' },
+  { name: '3dorel' },
+  { name: '4cocojambo' },
+  { name: '5gicuta' },
+]
+
+const Wizard = ({
+  journal: { wizard },
+  getSteps,
+  step,
+  incrementStep,
+  moveItem,
+  listItems,
+}) => (
   <div>
     <Dropdown defaultValue={options[0]} label="My dropdown" options={options} />
     <Dropdown defaultValue={options[1]} label="Altceva" options={options} />
@@ -24,14 +39,35 @@ const Wizard = ({ journal: { wizard }, getSteps, step, incrementStep }) => (
         <Step index={index} key={step} title={step} />
       ))}
     </Steps>
+    <hr style={{ marginTop: 40 }} />
+    <SortableList items={listItems} moveItem={moveItem} />
   </div>
 )
 
 export default compose(
   withJournal,
   withState('step', 'changeStep', 1),
+  withState('listItems', 'changeItems', items),
   withHandlers({
     getSteps: ({ journal: { wizard } }) => () => wizard.map(w => w.label),
     incrementStep: ({ changeStep }) => () => changeStep(step => step + 1),
+    moveItem: ({ changeItems }) => (dragIndex, hoverIndex) => {
+      changeItems(prev => {
+        if (dragIndex <= hoverIndex) {
+          return [
+            ...prev.slice(0, dragIndex),
+            prev[hoverIndex],
+            prev[dragIndex],
+            ...prev.slice(hoverIndex + 1),
+          ]
+        }
+        return [
+          ...prev.slice(0, hoverIndex),
+          prev[dragIndex],
+          prev[hoverIndex],
+          ...prev.slice(dragIndex + 1),
+        ]
+      })
+    },
   }),
 )(Wizard)

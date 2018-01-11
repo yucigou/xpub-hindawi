@@ -1,5 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 import App from 'pubsweet-component-xpub-app/src/components'
 
@@ -22,4 +24,4 @@ const Routes = () => (
   </App>
 )
 
-export default Routes
+export default DragDropContext(HTML5Backend)(Routes)

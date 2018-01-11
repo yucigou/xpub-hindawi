@@ -14,13 +14,13 @@ const Step = ({ title, index, currentStep }) => (
   </div>
 )
 
-const Steps = ({ currentStep, children, renderSeparator, renderSteps }) => (
+const Steps = ({ currentStep, children, renderSteps }) => (
   <div className={classes.container}>{renderSteps()}</div>
 )
 
 const DecoratedSteps = compose(
   withHandlers({
-    renderSteps: ({ children, currentStep }) => () => {
+    renderSteps: ({ children }) => () => {
       const c = []
       React.Children.forEach(children, (child, idx) => {
         c.push(child)
