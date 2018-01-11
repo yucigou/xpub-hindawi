@@ -13,7 +13,9 @@ import {
 
 import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
 
-import { Wizard } from './component-wizard'
+import { Wizard } from 'pubsweet-component-wizard/src/components'
+
+// import { Wizard } from './component-wizard'
 
 const Routes = () => (
   <App>

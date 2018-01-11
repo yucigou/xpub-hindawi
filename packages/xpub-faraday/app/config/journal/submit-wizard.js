@@ -97,6 +97,43 @@ const wizard = [
   {
     label: 'Manuscript & Authors Details',
     title: 'Manuscript & Authors Details',
+    subtitle:
+      'Please provide the details of all the authors of this manuscript....',
+    children: [
+      {
+        type: 'text',
+        label: 'Manuscript title',
+        fullWidth: false,
+      },
+      {
+        type: 'dropdown',
+        label: 'Manuscript type',
+        fullWidth: false,
+        values: [
+          { label: 'Type 1', value: 'type1' },
+          { label: 'Type 2', value: 'type2' },
+        ],
+      },
+      {
+        type: 'abstract',
+        label: 'Abstract',
+        fullWidth: true,
+      },
+      {
+        key: 'authors',
+        type: 'sortable-list',
+        fullWidth: true,
+        label: 'Authors details',
+      },
+      {
+        type: 'yesno',
+        label: 'Is there a potential conflict of interest?',
+      },
+      {
+        type: 'text',
+        label: 'Conflict of interest details',
+      },
+    ],
     buttons: [
       {
         label: 'Back',

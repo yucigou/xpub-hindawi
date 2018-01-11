@@ -69,7 +69,7 @@ export default compose(
       onSelect,
     }) => value => e => {
       setInputValue(value)
-      onSelect(value)
+      onSelect && onSelect(value)
       setDropdownVisibility(false)
     },
   }),

@@ -2,18 +2,13 @@ import React from 'react'
 import classnames from 'classnames'
 import { withJournal } from 'xpub-journal'
 import { compose, withHandlers, withState } from 'recompose'
+import { TextField, YesOrNo } from '@pubsweet/ui'
+import { AbstractEditor } from 'xpub-edit'
 
 import classes from './Wizard.local.scss'
-import { Dropdown, Steps, SortableList, ButtonGroup } from '../'
+import { Dropdown, Steps, SortableList, ButtonGroup } from './'
 
 const { Step } = Steps
-
-// const options = [
-//   { label: 'opt 1', value: 'opt1' },
-//   { label: 'caca 2', value: 'opt2' },
-//   { label: 'maca 3', value: 'opt3' },
-//   { label: 'vaca 4', value: 'opt4' },
-// ]
 
 const items = [
   { name: '1aurel', age: 2 },
@@ -22,12 +17,6 @@ const items = [
   { name: '4cocojambo' },
   { name: '5gicuta' },
 ]
-
-const FirstStep = ({ title }) => (
-  <div>
-    <h3>{title}</h3>
-  </div>
-)
 
 const Wizard = ({
   journal: { wizard },
@@ -71,30 +60,18 @@ export default compose(
   withState('disabled', 'changeBtn', true),
   withState('listItems', 'changeItems', items),
   withHandlers({
+    moveItem: ({ changeItems }) => (dragIndex, hoverIndex) => {
+      changeItems(prev => SortableList.moveItem(prev, dragIndex, hoverIndex))
+    },
+  }),
+  withHandlers({
     getSteps: ({ journal: { wizard } }) => () => wizard.map(w => w.label),
     toggleBtn: ({ changeBtn }) => () => changeBtn(v => !v),
     incrementStep: ({ changeStep, journal: { wizard } }) => () =>
       changeStep(step => (step === wizard.length ? step : step + 1)),
     decrementStep: ({ changeStep }) => () =>
       changeStep(step => (step <= 0 ? step : step - 1)),
-    moveItem: ({ changeItems }) => (dragIndex, hoverIndex) => {
-      changeItems(prev => SortableList.moveItem(prev, dragIndex, hoverIndex))
-    },
-    renderStep: () => stepIndex => {
-      switch (stepIndex) {
-        case 1:
-          return <FirstStep title="First step" />
-        case 2:
-          return <FirstStep title="Second step" />
-        case 3:
-          return <FirstStep title="Third step" />
-        case 4:
-          return <FirstStep title="Fourth step" />
-        default:
-          return null
-      }
-    },
-    renderChild: () => data => {
+    renderChild: ({ listItems, moveItem }) => data => {
       switch (data.type) {
         case 'dropdown':
           return (
@@ -110,6 +87,32 @@ export default compose(
               <input type="checkbox" />
               <label>{data.label}</label>
             </div>
+          )
+        case 'text':
+          return <TextField label={data.label} />
+        case 'abstract':
+          return (
+            <div>
+              <span>{data.label}</span>
+              <AbstractEditor />
+            </div>
+          )
+        case 'yesno':
+          return (
+            <div>
+              <span>{data.label}</span>
+              <YesOrNo name={data.label} />
+            </div>
+          )
+        case 'sortable-list':
+          return (
+            <SortableList
+              items={listItems}
+              listItem={({ name, isDragging }) => (
+                <div style={{ opacity: isDragging ? 0.5 : 1 }}>{name}</div>
+              )}
+              moveItem={moveItem}
+            />
           )
         default:
           return <div>sorry</div>
