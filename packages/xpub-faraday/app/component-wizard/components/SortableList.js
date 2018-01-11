@@ -37,11 +37,9 @@ const itemTarget = {
   },
 }
 
-const Item = ({ name, isDragging, connectDragSource, connectDropTarget }) =>
+const Item = ({ connectDragSource, connectDropTarget, listItem, ...rest }) =>
   connectDragSource(
-    connectDropTarget(
-      <div style={{ backgroundColor: 'wheat', margin: 5 }}>{name}</div>,
-    ),
+    connectDropTarget(<div>{React.createElement(listItem, rest)}</div>),
   )
 
 const DecoratedItem = compose(
@@ -54,12 +52,13 @@ const DecoratedItem = compose(
   })),
 )(Item)
 
-const SortableList = ({ items, moveItem }) => (
+const SortableList = ({ items, moveItem, listItem }) => (
   <div>
     {items.map((item, i) => (
       <DecoratedItem
         index={i}
         key={item.name}
+        listItem={listItem}
         moveItem={moveItem}
         name={item.name}
       />

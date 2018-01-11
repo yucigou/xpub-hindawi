@@ -21,6 +21,13 @@ const items = [
   { name: '5gicuta' },
 ]
 
+const AnItem = props => (
+  <div style={{ backgroundColor: 'salmon', marginBottom: 10 }}>
+    Un item aici: {props.name}
+    {props.isDragging && <span>ma trag</span>}
+  </div>
+)
+
 const Wizard = ({
   journal: { wizard },
   getSteps,
@@ -40,7 +47,7 @@ const Wizard = ({
       ))}
     </Steps>
     <hr style={{ marginTop: 40 }} />
-    <SortableList items={listItems} moveItem={moveItem} />
+    <SortableList items={listItems} listItem={AnItem} moveItem={moveItem} />
   </div>
 )
 
