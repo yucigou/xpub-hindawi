@@ -8,14 +8,14 @@
 }
 
 .separator {
-  background-color: #555;
+  background-color: #000;
   flex: 1;
   height: 2px;
 }
 
 .step {
   align-items: center;
-  border: 2px solid #555;
+  border: 2px solid #000;
   border-radius: 50%;
   display: flex;
   height: 16px;
@@ -25,7 +25,7 @@
 }
 
 .bullet {
-  background-color: #555;
+  background-color: #000;
   border-radius: 50%;
   height: 10px;
   width: 10px;
@@ -42,7 +42,7 @@
 
 .success {
   align-items: center;
-  background-color: #555;
+  background-color: #000;
   border-radius: 50%;
   color: #fff;
   display: flex;

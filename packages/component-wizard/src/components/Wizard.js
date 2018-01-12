@@ -1,9 +1,10 @@
 import React from 'react'
 import classnames from 'classnames'
 import { withJournal } from 'xpub-journal'
-import { compose, withHandlers, withState } from 'recompose'
-import { TextField, YesOrNo } from '@pubsweet/ui'
 import { AbstractEditor } from 'xpub-edit'
+import { reduxForm, Field } from 'redux-form'
+import { TextField, YesOrNo, Menu, Checkbox } from '@pubsweet/ui'
+import { compose, withHandlers, withState } from 'recompose'
 
 import classes from './Wizard.local.scss'
 import { Dropdown, Steps, SortableList, ButtonGroup } from './'
@@ -18,46 +19,76 @@ const items = [
   { name: '5gicuta' },
 ]
 
+const renderField = ({ renderComponent, input, ...rest }) => {
+  console.log('Render field', input, rest)
+  return React.createElement(renderComponent, { ...rest, ...input })
+}
+
+const WizardStep = ({
+  children: stepChildren,
+  title,
+  buttons,
+  nextStep,
+  prevStep,
+  onSubmit,
+  ...rest
+}) => (
+  <div className={classnames(classes.step)}>
+    <form onSubmit={onSubmit}>
+      <h3>{title}</h3>
+      {stepChildren &&
+        stepChildren.map((child, index) => (
+          <Field
+            component={renderField}
+            key={child.fieldId}
+            name={child.fieldId}
+            {...child}
+          />
+        ))}
+    </form>
+    <ButtonGroup buttons={buttons} onBack={prevStep} onNext={nextStep} />
+  </div>
+)
+
+const FormStep = compose(
+  reduxForm({
+    form: 'wizard',
+    onSubmit: () => console.log('am dat surmit'),
+    destroyOnUnmount: false,
+    forceUnregisterOnUnmount: true,
+  }),
+)(WizardStep)
+
 const Wizard = ({
   journal: { wizard },
   getSteps,
   step,
-  incrementStep,
-  decrementStep,
-  moveItem,
+  nextStep,
+  prevStep,
   listItems,
-  renderStep,
   renderChild,
-  disabled,
-  toggleBtn,
-}) => {
-  const { title, children: stepChildren, buttons: stepButtons } = wizard[step]
-  return (
-    <div className={classnames(classes.container)}>
-      <Steps currentStep={step}>
-        {getSteps().map((step, index) => (
-          <Step index={index} key={step} title={step} />
-        ))}
-      </Steps>
-      <button onClick={toggleBtn}>Toggle</button>
-      <div className={classnames(classes.step)}>
-        <h3>{title}</h3>
-        {stepChildren && stepChildren.map((sc, index) => renderChild(sc))}
-        <ButtonGroup
-          buttons={stepButtons}
-          disabled={disabled}
-          onBack={decrementStep}
-          onNext={incrementStep}
-        />
-      </div>
-    </div>
-  )
-}
+  handleSubmit,
+  ...rest
+}) => (
+  <div className={classnames(classes.container)}>
+    <Steps currentStep={step}>
+      {getSteps().map((step, index) => (
+        <Step index={index} key={step} title={step} />
+      ))}
+    </Steps>
+    <FormStep
+      {...wizard[step]}
+      nextStep={nextStep}
+      onSubmit={handleSubmit}
+      prevStep={prevStep}
+      renderChild={renderChild}
+    />
+  </div>
+)
 
 export default compose(
   withJournal,
   withState('step', 'changeStep', 0),
-  withState('disabled', 'changeBtn', true),
   withState('listItems', 'changeItems', items),
   withHandlers({
     moveItem: ({ changeItems }) => (dragIndex, hoverIndex) => {
@@ -66,57 +97,9 @@ export default compose(
   }),
   withHandlers({
     getSteps: ({ journal: { wizard } }) => () => wizard.map(w => w.label),
-    toggleBtn: ({ changeBtn }) => () => changeBtn(v => !v),
-    incrementStep: ({ changeStep, journal: { wizard } }) => () =>
+    nextStep: ({ changeStep, journal: { wizard } }) => () =>
       changeStep(step => (step === wizard.length ? step : step + 1)),
-    decrementStep: ({ changeStep }) => () =>
+    prevStep: ({ changeStep }) => () =>
       changeStep(step => (step <= 0 ? step : step - 1)),
-    renderChild: ({ listItems, moveItem }) => data => {
-      switch (data.type) {
-        case 'dropdown':
-          return (
-            <Dropdown
-              key={data.label}
-              label={data.label}
-              options={data.values}
-            />
-          )
-        case 'checkbox':
-          return (
-            <div key={data.label}>
-              <input type="checkbox" />
-              <label>{data.label}</label>
-            </div>
-          )
-        case 'text':
-          return <TextField label={data.label} />
-        case 'abstract':
-          return (
-            <div>
-              <span>{data.label}</span>
-              <AbstractEditor />
-            </div>
-          )
-        case 'yesno':
-          return (
-            <div>
-              <span>{data.label}</span>
-              <YesOrNo name={data.label} />
-            </div>
-          )
-        case 'sortable-list':
-          return (
-            <SortableList
-              items={listItems}
-              listItem={({ name, isDragging }) => (
-                <div style={{ opacity: isDragging ? 0.5 : 1 }}>{name}</div>
-              )}
-              moveItem={moveItem}
-            />
-          )
-        default:
-          return <div>sorry</div>
-      }
-    },
   }),
 )(Wizard)

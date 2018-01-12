@@ -31,7 +31,6 @@ const itemTarget = {
     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
       return
     }
-
     moveItem(dragIndex, hoverIndex)
     monitor.getItem().index = hoverIndex
   },

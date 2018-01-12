@@ -1,34 +1,32 @@
+import { AbstractEditor, TitleEditor } from 'xpub-edit'
+import { Menu, Checkbox, CheckboxGroup, YesOrNo, TextField } from '@pubsweet/ui'
+
+import { articleSections, articleTypes, declarations } from './'
+
 const wizard = [
   {
     label: 'Journal details',
     title: 'Jounal & Field Selection',
     children: [
       {
-        type: 'dropdown',
-        fullWidth: true,
-        label: 'Journal *',
-        values: [
-          { label: 'Dropdown 1.1', value: 'dd11' },
-          { label: 'Dropdown 1.2', value: 'dd12' },
-        ],
+        fieldId: 'journal',
+        renderComponent: Menu,
+        label: 'Journal',
+        options: articleTypes,
       },
       {
-        type: 'dropdown',
-        fullWidth: true,
+        fieldId: 'subject',
+        renderComponent: Menu,
         label: 'Subject area',
-        values: [
-          { label: 'Dropdown 2.1', value: 'dd21' },
-          { label: 'Dropdown 2.2', value: 'dd22' },
-        ],
+        options: articleSections,
       },
       {
-        type: 'dropdown',
-        fullWidth: true,
+        fieldId: 'specialIssue',
+        renderComponent: Menu,
         label: 'Special issue',
-        disabled: true,
-        values: [
-          { label: 'Dropdown 2.1', value: 'dd21' },
-          { label: 'Dropdown 2.2', value: 'dd22' },
+        options: [
+          { label: 'Special 2.1', value: 'dd21' },
+          { label: 'Special 2.2', value: 'dd22' },
         ],
       },
     ],
@@ -54,33 +52,9 @@ const wizard = [
       'Before moving forward make sure you have all the needed details prepared by reviewing and checking off the items on this list.',
     children: [
       {
-        type: 'checkbox',
-        label:
-          'I have the email addresses of all the co-authors of the manuscript.',
-      },
-      {
-        type: 'checkbox',
-        label:
-          'I have the manuscript file in Microsoft Word or Adobe PDF format with the tables and figures integrated in the manuscript body.',
-      },
-      {
-        type: 'checkbox',
-        label:
-          'I have the electronic files of any supplementary materials (e.g., datasets, images, audio, video) that I want to submit with the manuscript.',
-      },
-      {
-        type: 'checkbox',
-        label:
-          'I am aware that accepted manuscripts are subject to Article Processing Charges.',
-      },
-      {
-        type: 'checkbox',
-        label: `I'm aware that an ORCID ID is required for the corresponding author before the article can be published (if accepted). The ORCID ID should added via your user account.`,
-      },
-      {
-        type: 'checkbox',
-        label:
-          'I am aware that if my submission is covered by an institutional membership, Hindawi will share details of the manuscript with the administrator of the membership.',
+        fieldId: 'declarations',
+        renderComponent: CheckboxGroup,
+        options: declarations.options,
       },
     ],
     buttons: [
@@ -101,36 +75,39 @@ const wizard = [
       'Please provide the details of all the authors of this manuscript....',
     children: [
       {
-        type: 'text',
-        label: 'Manuscript title',
-        fullWidth: false,
+        fieldId: 'step3-1',
+        renderComponent: TitleEditor,
+        placeholder: 'Manuscript title',
+        title: 'Manuscript title',
       },
       {
-        type: 'dropdown',
+        fieldId: 'step3-2',
+        renderComponent: Menu,
         label: 'Manuscript type',
-        fullWidth: false,
-        values: [
+        options: [
           { label: 'Type 1', value: 'type1' },
           { label: 'Type 2', value: 'type2' },
         ],
       },
       {
-        type: 'abstract',
-        label: 'Abstract',
-        fullWidth: true,
+        fieldId: 'step3-3',
+        renderComponent: AbstractEditor,
+        title: 'Abstract',
+        placeholder: 'Write an abstract',
       },
+      // {
+      //   fieldId: 'authors',
+      //   renderComponent: 'sortable-list',
+      //   label: 'Authors details',
+      // },
       {
-        key: 'authors',
-        type: 'sortable-list',
-        fullWidth: true,
-        label: 'Authors details',
-      },
-      {
-        type: 'yesno',
+        fieldId: 'step3-4',
+        renderComponent: YesOrNo,
         label: 'Is there a potential conflict of interest?',
       },
       {
-        type: 'text',
+        fieldId: 'step3-5',
+        renderComponent: TextField,
         label: 'Conflict of interest details',
       },
     ],
@@ -145,6 +122,7 @@ const wizard = [
       },
     ],
   },
+  /*
   {
     label: 'Files upload',
     title: 'Manuscript Files Upload',
@@ -159,6 +137,7 @@ const wizard = [
       },
     ],
   },
+  */
 ]
 
 export default wizard
