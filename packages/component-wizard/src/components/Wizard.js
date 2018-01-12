@@ -1,13 +1,13 @@
 import React from 'react'
 import classnames from 'classnames'
 import { withJournal } from 'xpub-journal'
-import { AbstractEditor } from 'xpub-edit'
 import { reduxForm, Field } from 'redux-form'
-import { TextField, YesOrNo, Menu, Checkbox } from '@pubsweet/ui'
 import { compose, withHandlers, withState } from 'recompose'
+import { ValidatedField } from '@pubsweet/ui'
+import { required } from 'xpub-validators'
 
 import classes from './Wizard.local.scss'
-import { Dropdown, Steps, SortableList, ButtonGroup } from './'
+import { Steps, SortableList, ButtonGroup } from './'
 
 const { Step } = Steps
 
@@ -19,10 +19,19 @@ const items = [
   { name: '5gicuta' },
 ]
 
-const renderField = ({ renderComponent, input, ...rest }) => {
-  console.log('Render field', input, rest)
-  return React.createElement(renderComponent, { ...rest, ...input })
+const validate = values => {
+  const errors = {}
+  return errors
 }
+
+const renderField = ({ renderComponent: Comp, input, ...rest }) => (
+  <ValidatedField
+    component={() => <Comp {...input} {...rest} />}
+    name={rest.fieldId}
+    required
+    validate={[required]}
+  />
+)
 
 const WizardStep = ({
   children: stepChildren,
@@ -30,11 +39,11 @@ const WizardStep = ({
   buttons,
   nextStep,
   prevStep,
-  onSubmit,
+  handleSubmit,
   ...rest
 }) => (
   <div className={classnames(classes.step)}>
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <h3>{title}</h3>
       {stepChildren &&
         stepChildren.map((child, index) => (
@@ -45,6 +54,7 @@ const WizardStep = ({
             {...child}
           />
         ))}
+      <button type="submit">Next</button>
     </form>
     <ButtonGroup buttons={buttons} onBack={prevStep} onNext={nextStep} />
   </div>
@@ -53,9 +63,14 @@ const WizardStep = ({
 const FormStep = compose(
   reduxForm({
     form: 'wizard',
-    onSubmit: () => console.log('am dat surmit'),
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
+    validate,
+    onSubmit: (values, dispatch, { nextStep, isFinal }) => {
+      if (!isFinal) {
+        nextStep()
+      }
+    },
   }),
 )(WizardStep)
 
@@ -65,9 +80,6 @@ const Wizard = ({
   step,
   nextStep,
   prevStep,
-  listItems,
-  renderChild,
-  handleSubmit,
   ...rest
 }) => (
   <div className={classnames(classes.container)}>
@@ -78,10 +90,9 @@ const Wizard = ({
     </Steps>
     <FormStep
       {...wizard[step]}
+      isFinal={step === wizard.length - 1}
       nextStep={nextStep}
-      onSubmit={handleSubmit}
       prevStep={prevStep}
-      renderChild={renderChild}
     />
   </div>
 )
@@ -97,8 +108,9 @@ export default compose(
   }),
   withHandlers({
     getSteps: ({ journal: { wizard } }) => () => wizard.map(w => w.label),
-    nextStep: ({ changeStep, journal: { wizard } }) => () =>
-      changeStep(step => (step === wizard.length ? step : step + 1)),
+    nextStep: ({ changeStep, journal: { wizard } }) => () => {
+      changeStep(step => (step === wizard.length - 1 ? step : step + 1))
+    },
     prevStep: ({ changeStep }) => () =>
       changeStep(step => (step <= 0 ? step : step - 1)),
   }),

@@ -1,7 +1,22 @@
+import React from 'react'
 import { AbstractEditor, TitleEditor } from 'xpub-edit'
-import { Menu, Checkbox, CheckboxGroup, YesOrNo, TextField } from '@pubsweet/ui'
+import {
+  Menu,
+  CheckboxGroup,
+  YesOrNo,
+  TextField,
+  Supplementary,
+} from '@pubsweet/ui'
+import uploadFile from 'xpub-upload'
 
 import { articleSections, articleTypes, declarations } from './'
+
+const yesNoWithLabel = ({ label, ...rest }) => (
+  <div>
+    <label>{label}</label>
+    <YesOrNo {...rest} />
+  </div>
+)
 
 const wizard = [
   {
@@ -13,6 +28,7 @@ const wizard = [
         renderComponent: Menu,
         label: 'Journal',
         options: articleTypes,
+        required: true,
       },
       {
         fieldId: 'subject',
@@ -36,11 +52,7 @@ const wizard = [
         action: 'cancel',
       },
       {
-        label: 'Back',
-        action: 'back',
-      },
-      {
-        label: 'Next step >',
+        label: 'Next step',
         action: 'next',
       },
     ],
@@ -63,7 +75,7 @@ const wizard = [
         action: 'back',
       },
       {
-        label: 'Next step >',
+        label: 'Next step',
         action: 'next',
       },
     ],
@@ -102,7 +114,7 @@ const wizard = [
       // },
       {
         fieldId: 'step3-4',
-        renderComponent: YesOrNo,
+        renderComponent: yesNoWithLabel,
         label: 'Is there a potential conflict of interest?',
       },
       {
@@ -117,15 +129,34 @@ const wizard = [
         action: 'back',
       },
       {
-        label: 'Next step >',
+        label: 'Next step',
         action: 'next',
       },
     ],
   },
-  /*
   {
     label: 'Files upload',
     title: 'Manuscript Files Upload',
+    children: [
+      {
+        fieldId: 'mainManuscripts',
+        label: 'Main Manuscript',
+        renderComponent: Supplementary,
+        uploadFile,
+      },
+      {
+        fieldId: 'supplementalFiles',
+        label: 'Supplemental Files',
+        renderComponent: Supplementary,
+        uploadFile,
+      },
+      {
+        fieldId: 'coverLetter',
+        label: 'Cover Letter',
+        renderComponent: Supplementary,
+        uploadFile,
+      },
+    ],
     buttons: [
       {
         label: 'Back',
@@ -137,7 +168,6 @@ const wizard = [
       },
     ],
   },
-  */
 ]
 
 export default wizard

@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose, withHandlers } from 'recompose'
-import classnames from 'classnames'
+import { Button } from '@pubsweet/ui'
 
 import classes from './ButtonGroup.local.scss'
 
@@ -15,21 +15,13 @@ const ButtonGroup = ({ buttons, handleOnClick, disabled }) =>
   buttons && buttons.length > 0 ? (
     <div className={classes.container}>
       {buttons.map(btn => (
-        <button
-          className={classnames({
-            [classes.button]: true,
-            [classes.next]: btn.action === BUTTON_ACTIONS.next,
-            [classes.finish]: btn.action === BUTTON_ACTIONS.finish,
-            [classes.disabled]:
-              disabled &&
-              (btn.action !== BUTTON_ACTIONS.cancel &&
-                btn.action !== BUTTON_ACTIONS.back),
-          })}
+        <Button
           key={btn.label}
           onClick={handleOnClick(btn.action)}
+          primary={btn.action !== 'back' && btn.action !== 'cancel'}
         >
           {btn.label}
-        </button>
+        </Button>
       ))}
     </div>
   ) : null
