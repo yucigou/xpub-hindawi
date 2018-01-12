@@ -2,5 +2,6 @@
   "pubsweet-component-xpub-app",
   "pubsweet-component-xpub-authentication",
   "pubsweet-component-xpub-dashboard",
-  "xpub-faraday-server"
+  "xpub-faraday-server",
+  "pubsweet-component-ink-backend"
 ]

@@ -21,7 +21,7 @@ module.exports = {
         abstract: Joi.string(),
         articleType: Joi.string(),
         articleSection: Joi.array().items(Joi.string()),
-        authors: Joi.array(),
+        // authors: Joi.array(),
         keywords: Joi.array(),
       }),
       declarations: Joi.object().unknown(),
@@ -58,6 +58,20 @@ module.exports = {
       reviewers: Joi.array(),
       lock: Joi.object(),
       decision: Joi.object(),
+      authors: Joi.array().items(
+        Joi.object({
+          first_name: Joi.string().required(),
+          last_name: Joi.string().required(),
+          middle_name: Joi.string().allow(''),
+          email: Joi.string()
+            .email()
+            .required(),
+          affiliation: Joi.string().required(),
+          country: Joi.string().required(),
+          is_submitting: Joi.boolean(),
+          is_corresponding: Joi.boolean(),
+        }),
+      ),
     },
   ],
   user: {
