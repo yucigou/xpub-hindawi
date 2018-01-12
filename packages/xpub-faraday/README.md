@@ -4,4 +4,4 @@ An MVP implementation of the first design sessions which allows a user to go thr
 
 ## Faraday Project Roadmap
 
-[alt text](https://gitlab.coko.foundation/xpub/xpub/raw/faraday-master/packages/xpub-faraday/static/faraday-roadmap.png "Faraday Project Roadmap")
+![Project roadmap](https://gitlab.coko.foundation/xpub/xpub/raw/faraday-master/packages/xpub-faraday/static/faraday-roadmap.png "Faraday Project Roadmap")
