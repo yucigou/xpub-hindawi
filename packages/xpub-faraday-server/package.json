@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "xpub configured for faraday",
   "license": "MIT",
+  "files": [
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "https://gitlab.coko.foundation/xpub/xpub"

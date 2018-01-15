@@ -67,7 +67,7 @@ module.exports = {
             .email()
             .required(),
           affiliation: Joi.string().required(),
-          country: Joi.string().required(),
+          country: Joi.string().allow(''),
           is_submitting: Joi.boolean(),
           is_corresponding: Joi.boolean(),
         }),
