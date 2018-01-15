@@ -1,13 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { reduxForm } from 'redux-form'
 import { withJournal } from 'xpub-journal'
-import { reduxForm, Field } from 'redux-form'
-import { compose, withHandlers, withState } from 'recompose'
-import { ValidatedField } from '@pubsweet/ui'
-import { required } from 'xpub-validators'
+import { ValidatedField, Button } from '@pubsweet/ui'
+import {
+  compose,
+  withHandlers,
+  withState,
+  getContext,
+  withContext,
+} from 'recompose'
 
 import classes from './Wizard.local.scss'
-import { Steps, SortableList, ButtonGroup } from './'
+import { Steps, SortableList } from './'
 
 const { Step } = Steps
 
@@ -24,15 +30,6 @@ const validate = values => {
   return errors
 }
 
-const renderField = ({ renderComponent: Comp, input, ...rest }) => (
-  <ValidatedField
-    component={() => <Comp {...input} {...rest} />}
-    name={rest.fieldId}
-    required
-    validate={[required]}
-  />
-)
-
 const WizardStep = ({
   children: stepChildren,
   title,
@@ -40,23 +37,34 @@ const WizardStep = ({
   nextStep,
   prevStep,
   handleSubmit,
+  isFinal,
+  isFirst,
+  goBack,
   ...rest
 }) => (
   <div className={classnames(classes.step)}>
-    <form onSubmit={handleSubmit}>
+    <form className={classnames(classes.form)} onSubmit={handleSubmit}>
       <h3>{title}</h3>
       {stepChildren &&
-        stepChildren.map((child, index) => (
-          <Field
-            component={renderField}
-            key={child.fieldId}
-            name={child.fieldId}
-            {...child}
-          />
-        ))}
-      <button type="submit">Next</button>
+        stepChildren.map(
+          ({ fieldId, validate, renderComponent: Comp, ...rest }, index) => (
+            <ValidatedField
+              component={input => <Comp {...rest} {...input} />}
+              key={fieldId}
+              name={fieldId}
+              validate={validate}
+            />
+          ),
+        )}
+      <div className={classnames(classes.buttons)}>
+        <Button onClick={isFirst ? goBack : prevStep}>
+          {isFirst ? 'Cancel' : 'Back'}
+        </Button>
+        <Button primary type="submit">
+          {isFinal ? 'Finish' : 'Next'}
+        </Button>
+      </div>
     </form>
-    <ButtonGroup buttons={buttons} onBack={prevStep} onNext={nextStep} />
   </div>
 )
 
@@ -72,10 +80,15 @@ const FormStep = compose(
       }
     },
   }),
+  getContext({
+    goBack: PropTypes.func,
+    isFinal: PropTypes.bool,
+    isFirst: PropTypes.bool,
+  }),
 )(WizardStep)
 
 const Wizard = ({
-  journal: { wizard },
+  journal: { wizard: { showProgress, steps } },
   getSteps,
   step,
   nextStep,
@@ -83,17 +96,14 @@ const Wizard = ({
   ...rest
 }) => (
   <div className={classnames(classes.container)}>
-    <Steps currentStep={step}>
-      {getSteps().map((step, index) => (
-        <Step index={index} key={step} title={step} />
-      ))}
-    </Steps>
-    <FormStep
-      {...wizard[step]}
-      isFinal={step === wizard.length - 1}
-      nextStep={nextStep}
-      prevStep={prevStep}
-    />
+    {showProgress && (
+      <Steps currentStep={step}>
+        {getSteps().map((step, index) => (
+          <Step index={index} key={step} title={step} />
+        ))}
+      </Steps>
+    )}
+    <FormStep {...steps[step]} nextStep={nextStep} prevStep={prevStep} />
   </div>
 )
 
@@ -107,11 +117,24 @@ export default compose(
     },
   }),
   withHandlers({
-    getSteps: ({ journal: { wizard } }) => () => wizard.map(w => w.label),
-    nextStep: ({ changeStep, journal: { wizard } }) => () => {
-      changeStep(step => (step === wizard.length - 1 ? step : step + 1))
+    getSteps: ({ journal: { wizard: { steps } } }) => () =>
+      steps.map(w => w.label),
+    nextStep: ({ changeStep, journal: { wizard: { steps } } }) => () => {
+      changeStep(step => (step === steps.length - 1 ? step : step + 1))
     },
     prevStep: ({ changeStep }) => () =>
       changeStep(step => (step <= 0 ? step : step - 1)),
   }),
+  withContext(
+    {
+      goBack: PropTypes.func,
+      isFinal: PropTypes.bool,
+      isFirst: PropTypes.bool,
+    },
+    ({ history: { goBack }, step, journal: { wizard: { steps } } }) => ({
+      goBack,
+      isFinal: step === steps.length - 1,
+      isFirst: step === 0,
+    }),
+  ),
 )(Wizard)
