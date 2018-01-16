@@ -18,6 +18,7 @@ module.exports = {
       source: Joi.string(), // TODO: move to a file
       metadata: Joi.object({
         journal: Joi.string(),
+        issue: Joi.string(),
         title: Joi.string(),
         abstract: Joi.string(),
         articleType: Joi.string(),

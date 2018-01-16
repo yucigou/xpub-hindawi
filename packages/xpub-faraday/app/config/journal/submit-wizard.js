@@ -8,11 +8,13 @@ import {
   Supplementary,
 } from '@pubsweet/ui'
 import uploadFile from 'xpub-upload'
-import { required, minChars } from 'xpub-validators'
+import { required, minChars, minSize } from 'xpub-validators'
 
-import { articleSections, declarations } from './'
+import { declarations } from './'
+import issueTypes from './issues-types'
 
 const min3Chars = minChars(3)
+const declarationsMinSize = minSize(declarations.options.length)
 const yesNoWithLabel = ({ label, ...rest }) => (
   <div>
     <label>{label}</label>
@@ -37,7 +39,7 @@ export default {
   steps: [
     {
       label: 'Journal details',
-      title: 'Jounal & Field Selection',
+      title: 'Journal & Field Selection',
       children: [
         {
           fieldId: 'metadata.journal',
@@ -48,19 +50,11 @@ export default {
           validate: [required],
         },
         {
-          fieldId: 'subject',
+          fieldId: 'metadata.issue',
           renderComponent: Menu,
-          label: 'Subject area',
-          options: articleSections,
-        },
-        {
-          fieldId: 'specialIssue',
-          renderComponent: Menu,
-          label: 'Special issue',
-          options: [
-            { label: 'Special 2.1', value: 'dd21' },
-            { label: 'Special 2.2', value: 'dd22' },
-          ],
+          label: 'Issue',
+          options: issueTypes,
+          validate: [required],
         },
       ],
     },
@@ -74,7 +68,7 @@ export default {
           fieldId: 'declarations',
           renderComponent: CheckboxGroup,
           options: declarations.options,
-          validate: [required],
+          validate: [required, declarationsMinSize],
         },
       ],
     },

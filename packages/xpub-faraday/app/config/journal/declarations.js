@@ -27,30 +27,30 @@ export default {
   ],
   options: [
     {
-      value: 'step2-1',
+      value: 'has-email',
       label: `I have the email addresses of all the co-authors of the manuscript.`,
     },
     {
-      value: 'step2-2',
+      value: 'has-manuscript',
       label:
         'I have the manuscript file in Microsoft Word or Adobe PDF format with the tables and figures integrated in the manuscript body.',
     },
     {
-      value: 'step2-3',
+      value: 'has-efiles',
       label:
         'I have the electronic files of any supplementary materials (e.g., datasets, images, audio, video) that I want to submit with the manuscript.',
     },
     {
-      value: 'step2-4',
+      value: 'ok-article-processing',
       label:
         'I am aware that accepted manuscripts are subject to Article Processing Charges.',
     },
     {
-      value: 'step2-5',
+      value: 'has-orcid',
       label: `I'm aware that an ORCID ID is required for the corresponding author before the article can be published (if accepted). The ORCID ID should added via your user account.`,
     },
     {
-      value: 'step2-6',
+      value: 'ok-institutional',
       label:
         'I am aware that if my submission is covered by an institutional membership, Hindawi will share details of the manuscript with the administrator of the membership.',
     },
