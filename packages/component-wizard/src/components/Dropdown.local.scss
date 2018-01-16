@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+  position: relative;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 5px 0;
+}
+
+.inputContainer {
+  align-items: center;
+  display: flex;
+  position: relative;
+
+  input {
+    border: 1px solid #888;
+    border-radius: 2px;
+    display: flex;
+    flex: 1;
+    height: 20px;
+    padding: 0 2px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  span {
+    position: absolute;
+    right: 10px;
+    top: 1px;
+    transform: rotateZ(90deg);
+    transition: transform 0.2s linear;
+  }
+}
+
+.options {
+  background-color: #eee;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  z-index: 1000;
+
+  :hover {
+    background-color: #aaa;
+  }
+}
+
+.downarrow {
+  transform: rotateZ(270deg) !important;
+}

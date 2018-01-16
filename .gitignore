@@ -8,3 +8,5 @@ api/db/*
 logs/*
 log.txt
 config.json
+packages/**/_build
+packages/**/api/**/

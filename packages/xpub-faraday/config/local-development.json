@@ -1,12 +1,2 @@
-{
-  "pubsweet-server": {
-    "secret":
-      "033fb008ff867b50936c8278d3d3451e4334e29594fb3805afb4c7193b81f5d9b9bd6db7a6c40e5795247214bb5b6f85350a1a7d49fb3debe612183485dc7bef"
-  },
-  "pubsweet-component-ink-backend": {
-    "inkEndpoint": "http://inkdemo-api.coko.foundation/",
-    "email": "editoria@coko.foundation",
-    "password": "editoria",
-    "recipes": { "editoria-typescript": "2" }
-  }
-}
+{"pubsweet-server":{"secret":"702e1d23496c143026b634af15af57f5a88df7b7da9e3c24746da152d7068c72b98c692a09e76d5a618f2c2e473a8b6153bc4524a604290d04591eab9e0811e2"}}
+

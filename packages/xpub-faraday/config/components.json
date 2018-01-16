@@ -3,5 +3,6 @@
   "pubsweet-component-xpub-authentication",
   "pubsweet-component-xpub-dashboard",
   "xpub-faraday-server",
-  "pubsweet-component-ink-backend"
+  "pubsweet-component-ink-backend",
+  "pubsweet-component-wizard"
 ]

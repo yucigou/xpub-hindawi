@@ -18,6 +18,7 @@ const Dashboard = ({
   deleteProject,
   reviewerResponse,
   uploadManuscript,
+  createDraftSubmission,
 }) => (
   <div className={classes.root}>
     <div className={classes.upload}>
@@ -25,6 +26,11 @@ const Dashboard = ({
         conversion={conversion}
         uploadManuscript={uploadManuscript}
       />
+    </div>
+
+    <div>
+      Create new Submission
+      <button onClick={createDraftSubmission}>CREATE</button>
     </div>
 
     {!dashboard.owner.length &&
