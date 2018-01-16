@@ -41,7 +41,8 @@
     "winston": "^2.4.0",
     "xpub-journal": "^0.0.2",
     "xpub-selectors": "^0.0.2",
-    "xpub-theme": "^0.0.2"
+    "xpub-theme": "^0.0.2",
+    "xpub-faraday-server": "^0.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
