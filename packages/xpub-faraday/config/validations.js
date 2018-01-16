@@ -21,21 +21,12 @@ module.exports = {
         issue: Joi.string(),
         title: Joi.string(),
         abstract: Joi.string(),
-        articleType: Joi.string(),
-        articleSection: Joi.array().items(Joi.string()),
-        // authors: Joi.array(),
-        keywords: Joi.array(),
+        type: Joi.string(),
       }),
       declarations: Joi.array(),
-      suggestions: Joi.object({
-        reviewers: Joi.object({
-          suggested: Joi.array().items(Joi.string()),
-          opposed: Joi.array().items(Joi.string()),
-        }),
-        editors: Joi.object({
-          suggested: Joi.array().items(Joi.string()),
-          opposed: Joi.array().items(Joi.string()),
-        }),
+      conflicts: Joi.object({
+        hasConflicts: Joi.any().valid(['yes', 'no']),
+        message: Joi.string(),
       }),
       files: Joi.object({
         manuscript: Joi.object({

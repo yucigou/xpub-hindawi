@@ -12,12 +12,16 @@ import { required, minChars, minSize } from 'xpub-validators'
 
 import { declarations } from './'
 import issueTypes from './issues-types'
+import manuscriptTypes from './manuscript-types'
 
 const min3Chars = minChars(3)
 const declarationsMinSize = minSize(declarations.options.length)
+
 const yesNoWithLabel = ({ label, ...rest }) => (
   <div>
-    <label>{label}</label>
+    <label style={{ display: 'inline-block', marginBottom: 5, marginTop: 5 }}>
+      {label}
+    </label>
     <YesOrNo {...rest} />
   </div>
 )
@@ -29,13 +33,7 @@ const journal = {
 
 export default {
   showProgress: true,
-  formSectionKeys: [
-    'metadata',
-    'declarations',
-    'suggestions',
-    'notes',
-    'files',
-  ],
+  formSectionKeys: ['metadata', 'declarations', 'conflicts', 'notes', 'files'],
   steps: [
     {
       label: 'Journal details',
@@ -79,38 +77,35 @@ export default {
         'Please provide the details of all the authors of this manuscript....',
       children: [
         {
-          fieldId: 'step3-1',
+          fieldId: 'metadata.title',
           renderComponent: TitleEditor,
           placeholder: 'Manuscript title',
           title: 'Manuscript title',
         },
         {
-          fieldId: 'step3-2',
+          fieldId: 'metadata.type',
           renderComponent: Menu,
           label: 'Manuscript type',
-          options: [
-            { label: 'Type 1', value: 'type1' },
-            { label: 'Type 2', value: 'type2' },
-          ],
+          options: manuscriptTypes,
+          validate: [required],
         },
         {
-          fieldId: 'step3-3',
+          fieldId: 'metadata.abstract',
           renderComponent: AbstractEditor,
           title: 'Abstract',
           placeholder: 'Write an abstract',
         },
-        // {
-        //   fieldId: 'authors',
-        //   renderComponent: 'sortable-list',
-        //   label: 'Authors details',
-        // },
         {
-          fieldId: 'step3-4',
+          fieldId: 'conflicts.hasConflicts',
           renderComponent: yesNoWithLabel,
           label: 'Is there a potential conflict of interest?',
         },
         {
-          fieldId: 'step3-5',
+          dependsOn: {
+            field: 'conflicts.hasConflicts',
+            condition: 'yes',
+          },
+          fieldId: 'conflicts.message',
           renderComponent: TextField,
           label: 'Conflict of interest details',
           validate: [required, min3Chars],

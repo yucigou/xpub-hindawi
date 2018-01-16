@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { compose, withHandlers, withContext, getContext } from 'recompose'
 
-import classes from './Steps.local.scss'
+import classes from './Progress.local.scss'
 
 const Separator = () => <div className={classes.separator} />
 
