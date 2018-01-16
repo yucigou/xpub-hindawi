@@ -10,7 +10,7 @@ import {
 import uploadFile from 'xpub-upload'
 import { required, minChars } from 'xpub-validators'
 
-import { articleSections, articleTypes, declarations } from './'
+import { articleSections, declarations } from './'
 
 const min3Chars = minChars(3)
 const yesNoWithLabel = ({ label, ...rest }) => (
@@ -20,18 +20,31 @@ const yesNoWithLabel = ({ label, ...rest }) => (
   </div>
 )
 
+const journal = {
+  label: 'Hindawi Faraday',
+  value: 'hindawi-faraday',
+}
+
 export default {
-  showProgress: false,
+  showProgress: true,
+  formSectionKeys: [
+    'metadata',
+    'declarations',
+    'suggestions',
+    'notes',
+    'files',
+  ],
   steps: [
     {
       label: 'Journal details',
       title: 'Jounal & Field Selection',
       children: [
         {
-          fieldId: 'journal',
+          fieldId: 'metadata.journal',
           renderComponent: Menu,
           label: 'Journal',
-          options: articleTypes,
+          options: [journal],
+          value: journal.value,
           validate: [required],
         },
         {
@@ -48,7 +61,6 @@ export default {
             { label: 'Special 2.1', value: 'dd21' },
             { label: 'Special 2.2', value: 'dd22' },
           ],
-          validate: [required],
         },
       ],
     },
@@ -62,6 +74,7 @@ export default {
           fieldId: 'declarations',
           renderComponent: CheckboxGroup,
           options: declarations.options,
+          validate: [required],
         },
       ],
     },

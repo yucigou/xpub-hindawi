@@ -9,6 +9,10 @@ export const UPLOAD_MANUSCRIPT_REQUEST = 'UPLOAD_MANUSCRIPT_REQUEST'
 export const UPLOAD_MANUSCRIPT_SUCCESS = 'UPLOAD_MANUSCRIPT_SUCCESS'
 export const UPLOAD_MANUSCRIPT_FAILURE = 'UPLOAD_MANUSCRIPT_FAILURE'
 
+//
+export const CREATE_DRAFT_REQUEST = 'CREATE_DRAFT_REQUEST'
+export const CREATE_DRAFT_SUCCESS = 'CREATE_DRAFT_SUCCESS'
+
 /* actions */
 
 export const uploadManuscriptRequest = () => ({
@@ -102,6 +106,45 @@ export const uploadManuscript = (acceptedFiles, history) => dispatch => {
   })
 }
 
+// faraday stuff
+export const createDraftRequest = () => ({
+  type: CREATE_DRAFT_REQUEST,
+})
+
+export const createDraftSuccess = draft => ({
+  type: CREATE_DRAFT_SUCCESS,
+  draft,
+})
+
+export const createDraftSubmission = history => dispatch =>
+  dispatch(actions.createCollection()).then(({ collection }) => {
+    if (!collection.id) {
+      throw new Error('Failed to create a project')
+    }
+
+    // TODO: rethrow errors so they can be caught here
+    return dispatch(
+      actions.createFragment(collection, {
+        created: new Date(), // TODO: set on server
+        files: {
+          supplementary: [],
+        },
+        fragmentType: 'version',
+        metadata: {},
+        version: 1,
+      }),
+    ).then(({ fragment }) => {
+      dispatch(uploadManuscriptSuccess(collection, fragment))
+
+      const route = `/projects/${collection.id}/versions/${fragment.id}/submit`
+
+      // redirect after a short delay
+      window.setTimeout(() => {
+        history.push(route)
+      }, 1000)
+    })
+  })
+
 /* reducer */
 
 const initialState = {
@@ -131,7 +174,6 @@ export default (state = initialState, action) => {
         converting: false,
         error: action.error,
       }
-
     default:
       return state
   }

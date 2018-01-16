@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { actions } from 'pubsweet-client'
 import { newestFirst, selectCurrentUser } from 'xpub-selectors'
 import { ConnectPage } from 'xpub-connect'
-import { uploadManuscript } from '../redux/conversion'
+import { uploadManuscript, createDraftSubmission } from '../redux/conversion'
 import Dashboard from './Dashboard'
 import AssignEditorContainer from './AssignEditorContainer'
 
@@ -94,6 +94,7 @@ export default compose(
         dispatch(reviewerResponse(project, version, reviewer, status)),
       uploadManuscript: acceptedFiles =>
         dispatch(uploadManuscript(acceptedFiles, history)),
+      createDraftSubmission: () => dispatch(createDraftSubmission(history)),
     }),
   ),
   withProps({

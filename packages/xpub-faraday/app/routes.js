@@ -22,7 +22,11 @@ const Routes = () => (
     <Route component={LoginPage} exact path="/login" />
     <PrivateRoute component={DashboardPage} exact path="/" />
     <PrivateRoute component={LogoutPage} exact path="/logout" />
-    <PrivateRoute component={Wizard} exact path="/wizard" />
+    <PrivateRoute
+      component={Wizard}
+      exact
+      path="/projects/:project/versions/:version/submit"
+    />
   </App>
 )
 

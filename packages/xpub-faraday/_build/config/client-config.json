@@ -2,7 +2,7 @@
   "pubsweet-client": {
     "API_ENDPOINT": "/api",
     "login-redirect": "/",
-    "redux-log": false
+    "redux-log": true
   },
   "authsome": {
     "mode": "/Users/alexandrumunt/Projects/Hindawi/xpub/packages/xpub-faraday/config/authsome.js",
