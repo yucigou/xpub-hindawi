@@ -14,6 +14,28 @@ const AuthorBackend = app => {
           req.params.fragmentId,
         )
         fragment.authors = fragment.authors ? fragment.authors : []
+        if (fragment.authors.length > 0) {
+          const emailAuthors = fragment.authors.filter(
+            author => author.email === req.body.email,
+          )
+
+          if (emailAuthors.length > 0) {
+            res.status(400).json({ error: 'Author already exists' })
+            return
+          }
+
+          const nameAuthors = fragment.authors.filter(
+            author =>
+              author.first_name === req.body.first_name &&
+              author.middle_name === req.body.middle_name &&
+              author.last_name === req.body.last_name,
+          )
+
+          if (nameAuthors.length > 0) {
+            res.status(400).json({ error: 'Author already exists' })
+            return
+          }
+        }
         fragment.authors.push(req.body)
         fragment = await fragment.save()
         res.status(200).json(fragment)
