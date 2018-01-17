@@ -9,6 +9,7 @@ import {
 } from '@pubsweet/ui'
 import uploadFile from 'xpub-upload'
 import { required, minChars, minSize } from 'xpub-validators'
+import { AuthorList } from 'pubsweet-component-wizard/src/components'
 
 import { declarations } from './'
 import issueTypes from './issues-types'
@@ -99,6 +100,10 @@ export default {
           validate: [requiredBasedOnType],
         },
         {
+          fieldId: 'authors',
+          renderComponent: AuthorList,
+        },
+        {
           fieldId: 'conflicts.hasConflicts',
           renderComponent: yesNoWithLabel,
           label: 'Is there a potential conflict of interest?',
@@ -113,7 +118,6 @@ export default {
           label: 'Conflict of interest details',
           validate: [required, min3Chars],
         },
-        {},
       ],
     },
     {
