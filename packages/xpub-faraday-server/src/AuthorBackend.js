@@ -9,7 +9,6 @@ const AuthorBackend = app => {
     authBearer,
     bodyParser.json(),
     async (req, res, next) => {
-      // console.log(app.locals)
       try {
         if (!req.params.fragmentId) {
           res.status(400).json({ error: 'Fragment ID is required' })
@@ -31,9 +30,9 @@ const AuthorBackend = app => {
 
           const nameAuthors = fragment.authors.filter(
             author =>
-              author.first_name === req.body.first_name &&
-              author.middle_name === req.body.middle_name &&
-              author.last_name === req.body.last_name,
+              author.firstName === req.body.firstName &&
+              author.middleName === req.body.middleName &&
+              author.lastName === req.body.lastName,
           )
 
           if (nameAuthors.length > 0) {
@@ -45,6 +44,7 @@ const AuthorBackend = app => {
         fragment = await fragment.save()
         res.status(200).json(fragment)
       } catch (e) {
+        console.log(e)
         if (e.name === 'NotFoundError') {
           res.status(e.status).json({ error: 'Fragment not found' })
           return

@@ -53,16 +53,16 @@ module.exports = {
       decision: Joi.object(),
       authors: Joi.array().items(
         Joi.object({
-          first_name: Joi.string().required(),
-          last_name: Joi.string().required(),
-          middle_name: Joi.string().allow(''),
+          firstName: Joi.string().required(),
+          lastName: Joi.string().required(),
+          middleName: Joi.string().allow(''),
           email: Joi.string()
             .email()
             .required(),
           affiliation: Joi.string().required(),
           country: Joi.string().allow(''),
-          is_submitting: Joi.boolean(),
-          is_corresponding: Joi.boolean(),
+          isSubmitting: Joi.boolean(),
+          isCorresponding: Joi.boolean(),
         }),
       ),
     },
