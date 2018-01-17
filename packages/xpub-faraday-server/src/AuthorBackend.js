@@ -1,10 +1,15 @@
 const bodyParser = require('body-parser')
 
 const AuthorBackend = app => {
+  const authBearer = app.locals.passport.authenticate('bearer', {
+    session: false,
+  })
   app.post(
     '/api/fragments/:fragmentId/authors',
+    authBearer,
     bodyParser.json(),
     async (req, res, next) => {
+      // console.log(app.locals)
       try {
         if (!req.params.fragmentId) {
           res.status(400).json({ error: 'Fragment ID is required' })
@@ -55,6 +60,7 @@ const AuthorBackend = app => {
   )
   app.delete(
     '/api/fragments/:fragmentId/authors/:authorEmail',
+    authBearer,
     async (req, res, next) => {
       const { fragmentId, authorEmail } = req.params
       try {
@@ -63,7 +69,7 @@ const AuthorBackend = app => {
           res.status(404).json({ error: 'Fragment does not have any authors' })
           return
         }
-        // find author in authors list by email
+
         if (fragment.authors.length === 0) {
           res.status(404).json({ error: 'Fragment does not have any authors' })
           return
