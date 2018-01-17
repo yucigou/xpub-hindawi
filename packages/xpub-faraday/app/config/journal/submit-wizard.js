@@ -14,6 +14,8 @@ import { declarations } from './'
 import issueTypes from './issues-types'
 import manuscriptTypes from './manuscript-types'
 
+import { requiredBasedOnType } from './wizard-validators'
+
 const min3Chars = minChars(3)
 const declarationsMinSize = minSize(declarations.options.length)
 
@@ -94,6 +96,7 @@ export default {
           renderComponent: AbstractEditor,
           title: 'Abstract',
           placeholder: 'Write an abstract',
+          validate: [requiredBasedOnType],
         },
         {
           fieldId: 'conflicts.hasConflicts',
@@ -110,6 +113,7 @@ export default {
           label: 'Conflict of interest details',
           validate: [required, min3Chars],
         },
+        {},
       ],
     },
     {

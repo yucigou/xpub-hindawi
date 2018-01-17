@@ -10,10 +10,9 @@ const { Step } = Progress
 export default ({
   journal: { wizard: { showProgress, steps } },
   getSteps,
-  step,
   nextStep,
   prevStep,
-  ...rest
+  step,
 }) => (
   <div className={classnames(classes.container)}>
     {showProgress && (
