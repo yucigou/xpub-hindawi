@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 // const express = require('express')
 const supertest = require('supertest')
 const component = require('..')
-const app = require('../../xpub-collabra/app')
+const app = require('../../xpub-faraday/app')
 
 const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlYmkiLCJpZCI6IjVlMTRiY2IyLWQ5ZTEtNDZjOS05ZDI0LTM3YTk4MDhmMjFmYiIsImlhdCI6MTUxNjExODAxMSwiZXhwIjoxNTE2MjA0NDExfQ.tqH0Nnpiec2c1FPL2K5fK4krHGN2SrYyMbqVSnYSpog'
