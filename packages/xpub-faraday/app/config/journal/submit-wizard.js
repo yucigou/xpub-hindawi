@@ -8,14 +8,22 @@ import {
   Supplementary,
 } from '@pubsweet/ui'
 import uploadFile from 'xpub-upload'
-import { required, minChars } from 'xpub-validators'
+import { required, minChars, minSize } from 'xpub-validators'
 
-import { articleSections, declarations } from './'
+import { declarations } from './'
+import issueTypes from './issues-types'
+import manuscriptTypes from './manuscript-types'
+
+import { requiredBasedOnType } from './wizard-validators'
 
 const min3Chars = minChars(3)
+const declarationsMinSize = minSize(declarations.options.length)
+
 const yesNoWithLabel = ({ label, ...rest }) => (
   <div>
-    <label>{label}</label>
+    <label style={{ display: 'inline-block', marginBottom: 5, marginTop: 5 }}>
+      {label}
+    </label>
     <YesOrNo {...rest} />
   </div>
 )
@@ -27,17 +35,11 @@ const journal = {
 
 export default {
   showProgress: true,
-  formSectionKeys: [
-    'metadata',
-    'declarations',
-    'suggestions',
-    'notes',
-    'files',
-  ],
+  formSectionKeys: ['metadata', 'declarations', 'conflicts', 'notes', 'files'],
   steps: [
     {
       label: 'Journal details',
-      title: 'Jounal & Field Selection',
+      title: 'Journal & Field Selection',
       children: [
         {
           fieldId: 'metadata.journal',
@@ -48,19 +50,11 @@ export default {
           validate: [required],
         },
         {
-          fieldId: 'subject',
+          fieldId: 'metadata.issue',
           renderComponent: Menu,
-          label: 'Subject area',
-          options: articleSections,
-        },
-        {
-          fieldId: 'specialIssue',
-          renderComponent: Menu,
-          label: 'Special issue',
-          options: [
-            { label: 'Special 2.1', value: 'dd21' },
-            { label: 'Special 2.2', value: 'dd22' },
-          ],
+          label: 'Issue',
+          options: issueTypes,
+          validate: [required],
         },
       ],
     },
@@ -74,7 +68,7 @@ export default {
           fieldId: 'declarations',
           renderComponent: CheckboxGroup,
           options: declarations.options,
-          validate: [required],
+          validate: [required, declarationsMinSize],
         },
       ],
     },
@@ -85,42 +79,41 @@ export default {
         'Please provide the details of all the authors of this manuscript....',
       children: [
         {
-          fieldId: 'step3-1',
+          fieldId: 'metadata.title',
           renderComponent: TitleEditor,
           placeholder: 'Manuscript title',
           title: 'Manuscript title',
         },
         {
-          fieldId: 'step3-2',
+          fieldId: 'metadata.type',
           renderComponent: Menu,
           label: 'Manuscript type',
-          options: [
-            { label: 'Type 1', value: 'type1' },
-            { label: 'Type 2', value: 'type2' },
-          ],
+          options: manuscriptTypes,
+          validate: [required],
         },
         {
-          fieldId: 'step3-3',
+          fieldId: 'metadata.abstract',
           renderComponent: AbstractEditor,
           title: 'Abstract',
           placeholder: 'Write an abstract',
+          validate: [requiredBasedOnType],
         },
-        // {
-        //   fieldId: 'authors',
-        //   renderComponent: 'sortable-list',
-        //   label: 'Authors details',
-        // },
         {
-          fieldId: 'step3-4',
+          fieldId: 'conflicts.hasConflicts',
           renderComponent: yesNoWithLabel,
           label: 'Is there a potential conflict of interest?',
         },
         {
-          fieldId: 'step3-5',
+          dependsOn: {
+            field: 'conflicts.hasConflicts',
+            condition: 'yes',
+          },
+          fieldId: 'conflicts.message',
           renderComponent: TextField,
           label: 'Conflict of interest details',
           validate: [required, min3Chars],
         },
+        {},
       ],
     },
     {

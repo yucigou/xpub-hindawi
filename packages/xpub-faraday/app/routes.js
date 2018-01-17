@@ -13,7 +13,7 @@ import {
 
 import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
 
-import { Wizard } from 'pubsweet-component-wizard/src/components'
+import { WizardPage } from 'pubsweet-component-wizard/src/components'
 
 // import { Wizard } from './component-wizard'
 
@@ -23,7 +23,7 @@ const Routes = () => (
     <PrivateRoute component={DashboardPage} exact path="/" />
     <PrivateRoute component={LogoutPage} exact path="/logout" />
     <PrivateRoute
-      component={Wizard}
+      component={WizardPage}
       exact
       path="/projects/:project/versions/:version/submit"
     />

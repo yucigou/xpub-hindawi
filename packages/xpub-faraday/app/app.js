@@ -11,7 +11,7 @@ import * as journal from './config/journal'
 import Routes from './routes'
 
 const history = createHistory()
-const store = configureStore(history, {})
+export const store = configureStore(history, {})
 const theme = {}
 
 const render = () => {

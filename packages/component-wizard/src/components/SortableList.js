@@ -2,6 +2,9 @@ import React from 'react'
 import { compose } from 'recompose'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
+import classnames from 'classnames'
+import { Icon } from '@pubsweet/ui'
+import classes from './SortableList.local.scss'
 
 const itemSource = {
   beginDrag(props) {
@@ -31,14 +34,39 @@ const itemTarget = {
     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
       return
     }
-    moveItem(dragIndex, hoverIndex)
+    if (typeof moveItem === 'function') {
+      moveItem(dragIndex, hoverIndex)
+    }
     monitor.getItem().index = hoverIndex
   },
 }
 
-const Item = ({ connectDragSource, connectDropTarget, listItem, ...rest }) =>
-  connectDragSource(
-    connectDropTarget(<div>{React.createElement(listItem, rest)}</div>),
+const DragHandle = () => (
+  <div className={classnames(classes['drag-handle'])}>
+    <Icon>chevron_up</Icon>
+    <Icon>chevron_down</Icon>
+  </div>
+)
+
+const Item = ({
+  connectDragPreview,
+  connectDragSource,
+  connectDropTarget,
+  listItem,
+  ...rest
+}) =>
+  connectDragPreview(
+    <div style={{ display: 'flex' }}>
+      {connectDragSource(
+        <div className={classnames(classes['drag-handle'])}>
+          <Icon>chevron_up</Icon>
+          <Icon>chevron_down</Icon>
+        </div>,
+      )}
+      {connectDropTarget(
+        <div style={{ flex: 1 }}>{React.createElement(listItem, rest)}</div>,
+      )}
+    </div>,
   )
 
 const DecoratedItem = compose(
@@ -48,6 +76,7 @@ const DecoratedItem = compose(
   })),
   DragSource('item', itemSource, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging(),
   })),
 )(Item)
@@ -57,7 +86,7 @@ const SortableList = ({ items, moveItem, listItem }) => (
     {items.map((item, i) => (
       <DecoratedItem
         index={i}
-        key={item.name}
+        key={item.name || Math.random()}
         listItem={listItem}
         moveItem={moveItem}
         {...item}
