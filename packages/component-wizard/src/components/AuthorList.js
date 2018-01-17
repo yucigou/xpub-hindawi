@@ -1,7 +1,7 @@
 import React from 'react'
 import { get } from 'lodash'
 import classnames from 'classnames'
-import { TextField, Menu } from '@pubsweet/ui'
+import { TextField, Menu, Icon } from '@pubsweet/ui'
 import { compose, withState, withHandlers } from 'recompose'
 
 import classes from './AuthorList.local.scss'
@@ -67,6 +67,14 @@ const Label = ({ label, value }) => (
   </div>
 )
 
+const DragHandle = () => (
+  <div className={classnames(classes['drag-handle'])}>
+    <Icon>chevron_up</Icon>
+    <Icon size={16}>menu</Icon>
+    <Icon>chevron_down</Icon>
+  </div>
+)
+
 const Author = ({
   firstName,
   middleName,
@@ -74,24 +82,23 @@ const Author = ({
   email,
   affiliation,
   isDragging,
-  children,
+  dragHandle,
 }) => (
   <div className={classnames(classes.author)}>
-    <span className={classnames(classes.title)}>Author</span>
-    {!isDragging && (
+    {dragHandle}
+    <div className={classnames(classes.container)}>
+      <span className={classnames(classes.title)}>Author</span>
       <div className={classnames(classes.row)}>
         <Label label="First name" value={firstName} />
         <Label label="Middle name" value={middleName} />
         <Label label="Last name" value={lastName} />
       </div>
-    )}
-    {!isDragging && (
       <div className={classnames(classes.row)}>
         <Label label="Email" value={email} />
         <Label label="Affiliation" value={affiliation} />
         <Label label="Affiliation" value={affiliation} />
       </div>
-    )}
+    </div>
   </div>
 )
 
@@ -102,7 +109,12 @@ const Authors = ({ author, authors, moveAuthor, addAuthor, editAuthor }) => (
       author={author}
       editAuthor={editAuthor}
     />
-    <SortableList items={authors} listItem={Author} moveItem={moveAuthor} />
+    <SortableList
+      dragHandle={DragHandle}
+      items={authors}
+      listItem={Author}
+      moveItem={moveAuthor}
+    />
   </div>
 )
 
