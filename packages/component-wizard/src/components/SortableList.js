@@ -79,7 +79,7 @@ const DecoratedItem = compose(
   })),
 )(Item)
 
-const SortableList = ({ items, moveItem, listItem, dragHandle }) => (
+const SortableList = ({ items, moveItem, listItem, dragHandle, ...rest }) => (
   <div>
     {items.map((item, i) => (
       <DecoratedItem
@@ -89,6 +89,7 @@ const SortableList = ({ items, moveItem, listItem, dragHandle }) => (
         listItem={listItem}
         moveItem={moveItem}
         {...item}
+        {...rest}
       />
     ))}
   </div>

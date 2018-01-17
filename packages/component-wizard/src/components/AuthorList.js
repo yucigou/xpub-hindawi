@@ -1,8 +1,10 @@
 import React from 'react'
 import { get } from 'lodash'
 import classnames from 'classnames'
-import { TextField, Menu, Icon } from '@pubsweet/ui'
+import { reduxForm } from 'redux-form'
 import { compose, withState, withHandlers } from 'recompose'
+import { TextField, Menu, Icon, ValidatedField, Button } from '@pubsweet/ui'
+import { required } from 'xpub-validators'
 
 import classes from './AuthorList.local.scss'
 import SortableList from './SortableList'
@@ -14,48 +16,58 @@ const countries = [
   { label: 'France', value: 'fr' },
 ]
 
+const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
+
+const emailValidator = value =>
+  emailRegex.test(value) ? undefined : 'Invalid email'
+
+const ValidatedTextField = ({ label, name, isRequired, validators = [] }) => {
+  const v = [isRequired && required, ...validators].filter(Boolean)
+  return (
+    <div className={classnames(classes['validated-text'])}>
+      <span className={classnames(classes.label)}>{label}</span>
+      <ValidatedField component={TextField} name={name} validate={v} />
+    </div>
+  )
+}
+
+const MenuItem = ({ label, name, options }) => (
+  <div className={classnames(classes['validated-text'])}>
+    <span className={classnames(classes.label)}>{label}</span>
+    <ValidatedField
+      component={input => <Menu {...input} options={options} />}
+      name={name}
+      validate={[required]}
+    />
+  </div>
+)
 const AuthorAdder = ({
   author: { firstName, middleName, lastName, email, affiliation, country },
   editAuthor,
   addAuthor,
+  handleSubmit,
+  ...rest
 }) => (
   <div className={classnames(classes.adder)}>
-    <button onClick={addAuthor}>Add author</button>
+    <Button onClick={handleSubmit} primary>
+      + Add author
+    </Button>
     <span className={classnames(classes.title)}>Author</span>
     <div className={classnames(classes.row)}>
-      <TextField
-        label="First name"
-        onChange={editAuthor('firstName')}
-        value={firstName}
-      />
-      <TextField
-        label="Midle name"
-        onChange={editAuthor('middleName')}
-        value={middleName}
-      />
-      <TextField
-        label="Last name"
-        onChange={editAuthor('lastName')}
-        value={lastName}
-      />
+      <ValidatedTextField isRequired label="First name" name="firstName" />
+      <ValidatedTextField label="Middle name" name="middleName" />
+      <ValidatedTextField isRequired label="Last name" name="lastName" />
     </div>
+
     <div className={classnames(classes.row)}>
-      <TextField
+      <ValidatedTextField
+        isRequired
         label="Email"
-        onChange={editAuthor('email')}
-        type="email"
-        value={email}
+        name="email"
+        validators={[emailValidator]}
       />
-      <TextField
-        label="Affiliation"
-        onChange={editAuthor('affiliation')}
-        value={affiliation}
-      />
-      <Menu
-        onChange={editAuthor('country')}
-        options={countries}
-        value={country}
-      />
+      <ValidatedTextField isRequired label="Affiliation" name="affiliation" />
+      <MenuItem label="Country" name="country" options={countries} />
     </div>
   </div>
 )
@@ -81,10 +93,11 @@ const Author = ({
   lastName,
   email,
   affiliation,
+  country,
   isDragging,
   dragHandle,
   isOver,
-  ...rest
+  countryParser,
 }) => (
   <div
     className={classnames({
@@ -108,72 +121,59 @@ const Author = ({
       <div className={classnames(classes.row)}>
         <Label label="Email" value={email} />
         <Label label="Affiliation" value={affiliation} />
-        <Label label="Affiliation" value={affiliation} />
+        <Label label="Country" value={countryParser(country)} />
       </div>
     </div>
   </div>
 )
 
-const Authors = ({ author, authors, moveAuthor, addAuthor, editAuthor }) => (
+const Adder = compose(
+  reduxForm({
+    form: 'new-author',
+    onSubmit: (values, dispatch, { addAuthor, reset }) => {
+      addAuthor(values)
+      reset()
+    },
+  })(AuthorAdder),
+)
+
+const Authors = ({
+  author,
+  authors,
+  moveAuthor,
+  addAuthor,
+  editAuthor,
+  ...rest
+}) => (
   <div>
-    <AuthorAdder
-      addAuthor={addAuthor}
-      author={author}
-      editAuthor={editAuthor}
-    />
+    <Adder addAuthor={addAuthor} author={author} editAuthor={editAuthor} />
     <SortableList
       dragHandle={DragHandle}
       items={authors}
       listItem={Author}
       moveItem={moveAuthor}
+      {...rest}
     />
   </div>
 )
 
+const initialAuthor = {
+  firstName: '',
+  middleName: '',
+  lastName: '',
+  email: '',
+  affiliation: '',
+  country: 'ro',
+}
 export default compose(
-  withState('author', 'changeAuthor', {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    email: '',
-    affiliation: '',
-    country: 'ro',
-  }),
-  withState('authors', 'changeAuthors', [
-    {
-      firstName: 'Razvan',
-      middleName: 'Petru',
-      lastName: 'Tudosa',
-      email: 'rzv@gmail.com',
-      affiliation: 'rock',
-    },
-    {
-      firstName: 'Alexandru',
-      middleName: 'Ioan',
-      lastName: 'Munteanu',
-      email: 'alexmntn@gmail.com',
-      affiliation: 'rap',
-    },
-    {
-      firstName: 'Bogdan',
-      middleName: 'Alexandru',
-      lastName: 'Cochior',
-      email: 'bog1@gmail.com',
-      affiliation: 'metal',
-    },
-  ]),
+  withState('author', 'changeAuthor', initialAuthor),
+  withState('authors', 'changeAuthors', []),
   withHandlers({
-    addAuthor: ({ author, changeAuthors, changeAuthor }) => e => {
-      e.preventDefault()
+    countryParser: () => countryCode =>
+      countries.find(c => c.value === countryCode).label,
+    addAuthor: ({ changeAuthors, changeAuthor }) => author => {
       changeAuthors(prevAuthors => [author, ...prevAuthors])
-      changeAuthor(prev => ({
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        email: '',
-        affiliation: '',
-        country: 'ro',
-      }))
+      changeAuthor(prev => initialAuthor)
     },
     moveAuthor: ({ changeAuthors }) => (dragIndex, hoverIndex) => {
       changeAuthors(prev => SortableList.moveItem(prev, dragIndex, hoverIndex))

@@ -1,6 +1,7 @@
 .row {
   display: flex;
   flex-direction: row;
+  margin: 10px 0;
 }
 
 .hide {
@@ -9,6 +10,12 @@
 
 .dashed {
   border: 1px dashed #444 !important;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
 }
 
 .author {
@@ -33,12 +40,6 @@
     flex-direction: column;
     margin: 5px;
 
-    .label {
-      font-size: 14px;
-      font-weight: 300;
-      text-transform: uppercase;
-    }
-
     .value {
       font-size: 16px;
       font-weight: 600;
@@ -47,15 +48,37 @@
 }
 
 .adder {
-  background-color: aquamarine;
+  border: 1px solid #444;
   display: flex;
   flex-direction: column;
   margin: 10px 0;
-  padding: 5px;
+  padding: 10px;
+
+  .button {
+    background-color: #444;
+    border: none;
+    color: #eee;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    height: 24px;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: #666;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
 
   .title {
     font-size: 18px;
     font-weight: 500;
+    margin: 10px 0;
+    text-transform: uppercase;
   }
 }
 
@@ -66,4 +89,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.validated-text {
+  flex: 1;
+  margin-right: 20px;
 }
