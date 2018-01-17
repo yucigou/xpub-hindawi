@@ -3,6 +3,14 @@
   flex-direction: row;
 }
 
+.hide {
+  opacity: 0;
+}
+
+.dashed {
+  border: 1px dashed #444 !important;
+}
+
 .author {
   border: 1px solid #444;
   display: flex;

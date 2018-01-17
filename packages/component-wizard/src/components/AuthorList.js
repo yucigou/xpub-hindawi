@@ -83,10 +83,22 @@ const Author = ({
   affiliation,
   isDragging,
   dragHandle,
+  isOver,
+  ...rest
 }) => (
-  <div className={classnames(classes.author)}>
-    {dragHandle}
-    <div className={classnames(classes.container)}>
+  <div
+    className={classnames({
+      [classes.author]: true,
+      [classes.dashed]: isOver,
+    })}
+  >
+    {!isOver && dragHandle}
+    <div
+      className={classnames({
+        [classes.container]: true,
+        [classes.hide]: isOver,
+      })}
+    >
       <span className={classnames(classes.title)}>Author</span>
       <div className={classnames(classes.row)}>
         <Label label="First name" value={firstName} />
