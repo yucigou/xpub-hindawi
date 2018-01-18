@@ -6,7 +6,7 @@ import { get, debounce } from 'lodash'
 import { reduxForm } from 'redux-form'
 import { required } from 'xpub-validators'
 import { withRouter } from 'react-router-dom'
-import { compose, withHandlers, getContext } from 'recompose'
+import { compose, withHandlers, getContext, lifecycle } from 'recompose'
 import { TextField, Menu, Icon, ValidatedField, Button } from '@pubsweet/ui'
 import { actions } from 'pubsweet-client'
 
@@ -178,13 +178,19 @@ const Authors = ({
 
 export default compose(
   withRouter,
+  getContext({ version: PropTypes.object, project: PropTypes.object }),
   connect(
     (state, { match: { params: { version } } }) => ({
       authors: getFragmentAuthors(state, version),
     }),
     { addAuthor, setAuthors, updateFragment: actions.updateFragment },
   ),
-  getContext({ version: PropTypes.object, project: PropTypes.object }),
+  lifecycle({
+    componentDidMount() {
+      const { version, setAuthors } = this.props
+      setAuthors(version.authors, version.id)
+    },
+  }),
   withHandlers({
     dropItem: ({ updateFragment, authors, project, version }) =>
       debounce(() => {

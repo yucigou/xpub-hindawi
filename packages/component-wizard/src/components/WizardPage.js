@@ -5,16 +5,9 @@ import { actions } from 'pubsweet-client'
 import { withJournal } from 'xpub-journal'
 import { ConnectPage } from 'xpub-connect'
 import { selectCollection, selectFragment } from 'xpub-selectors'
-import {
-  compose,
-  withHandlers,
-  withState,
-  withContext,
-  lifecycle,
-} from 'recompose'
+import { compose, withHandlers, withState, withContext } from 'recompose'
 
 import Wizard from './Wizard'
-import { setAuthors } from '../redux/authors'
 
 export default compose(
   ConnectPage(({ match }) => [
@@ -37,16 +30,8 @@ export default compose(
         acc[f.name] = bindActionCreators(f, dispatch)
         return acc
       }, {}),
-      setAuthors: (authors, fragmentId) =>
-        dispatch(setAuthors(authors, fragmentId)),
     }),
   ),
-  lifecycle({
-    componentDidMount() {
-      const { version, setAuthors } = this.props
-      setAuthors(version.authors, version.id)
-    },
-  }),
   withState('step', 'changeStep', 0),
   withHandlers({
     getSteps: ({ journal: { wizard: { steps } } }) => () =>
