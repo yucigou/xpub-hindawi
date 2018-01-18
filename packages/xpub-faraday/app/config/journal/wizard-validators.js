@@ -1,4 +1,4 @@
-import { get } from 'lodash'
+import { get, isEmpty } from 'lodash'
 
 import manuscriptTypes from './manuscript-types'
 
@@ -7,7 +7,10 @@ const requiredTypes = manuscriptTypes
   .map(t => t.value)
 
 export const requiredBasedOnType = (value, formValues) => {
-  if (requiredTypes.includes(get(formValues, 'metadata.type'))) {
+  if (
+    requiredTypes.includes(get(formValues, 'metadata.type')) &&
+    isEmpty(get(formValues, 'metadata.abstract'))
+  ) {
     return 'Required'
   }
   return undefined

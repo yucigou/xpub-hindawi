@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { actions } from 'pubsweet-client'
 import { withJournal } from 'xpub-journal'
 import { ConnectPage } from 'xpub-connect'
@@ -16,13 +17,21 @@ export default compose(
       { id: match.params.version },
     ),
   ]),
-  connect((state, { match }) => {
-    const project = selectCollection(state, match.params.project)
-    const version = selectFragment(state, match.params.version)
-
-    return { project, version }
-  }),
   withJournal,
+  connect(
+    (state, { match }) => {
+      const project = selectCollection(state, match.params.project)
+      const version = selectFragment(state, match.params.version)
+
+      return { project, version }
+    },
+    (dispatch, { journal: { wizard } }) => ({
+      dispatchFns: wizard.dispatchFunctions.reduce((acc, f) => {
+        acc[f.name] = bindActionCreators(f, dispatch)
+        return acc
+      }, {}),
+    }),
+  ),
   withState('step', 'changeStep', 0),
   withHandlers({
     getSteps: ({ journal: { wizard: { steps } } }) => () =>
@@ -35,20 +44,29 @@ export default compose(
   }),
   withContext(
     {
-      goBack: PropTypes.func,
+      history: PropTypes.object,
       isFinal: PropTypes.bool,
       isFirst: PropTypes.bool,
       project: PropTypes.object,
       version: PropTypes.object,
       wizard: PropTypes.object,
+      dispatchFns: PropTypes.object,
     },
-    ({ history: { goBack }, step, project, version, journal: { wizard } }) => ({
-      goBack,
+    ({
+      history,
+      step,
+      project,
+      version,
+      journal: { wizard },
+      dispatchFns,
+    }) => ({
+      history,
       isFinal: step === wizard.steps.length - 1,
       isFirst: step === 0,
       project,
       version,
       wizard,
+      dispatchFns,
     }),
   ),
 )(Wizard)

@@ -41,12 +41,12 @@ const itemTarget = {
   },
 }
 
-const DragHandle = () => (
-  <div className={classnames(classes['drag-handle'])}>
-    <Icon>chevron_up</Icon>
-    <Icon>chevron_down</Icon>
-  </div>
-)
+// const DragHandle = () => (
+//   <div className={classnames(classes['drag-handle'])}>
+//     <Icon>chevron_up</Icon>
+//     <Icon>chevron_down</Icon>
+//   </div>
+// )
 
 const Item = ({
   connectDragPreview,

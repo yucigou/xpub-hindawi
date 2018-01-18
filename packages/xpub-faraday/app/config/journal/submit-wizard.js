@@ -113,7 +113,6 @@ export default {
           label: 'Conflict of interest details',
           validate: [required, min3Chars],
         },
-        {},
       ],
     },
     {

@@ -5,23 +5,28 @@ import { ValidatedField, Button } from '@pubsweet/ui'
 
 import classes from './WizardStep.local.scss'
 
-import AuthorList from './AuthorList'
-
 export default ({
   children: stepChildren,
   title,
+  subtitle,
   buttons,
   nextStep,
   prevStep,
   handleSubmit,
   isFinal,
   isFirst,
-  goBack,
+  history,
   formValues,
+  wizard,
+  dispatchFns,
 }) => (
   <div className={classnames(classes.step)}>
     <form className={classnames(classes.form)} onSubmit={handleSubmit}>
       <h3 className={classnames(classes.title)}>{title}</h3>
+      <p
+        className={classnames(classes.subtitle)}
+        dangerouslySetInnerHTML={{ __html: subtitle }}
+      />
       {stepChildren &&
         stepChildren.map(
           ({
@@ -29,6 +34,8 @@ export default ({
             validate,
             dependsOn,
             renderComponent: Comp,
+            format,
+            parse,
             ...rest
           }) => {
             if (
@@ -39,21 +46,28 @@ export default ({
             }
             return (
               <ValidatedField
-                component={input => <Comp {...rest} {...input} />}
+                component={input => (
+                  <Comp {...rest} {...input} {...dispatchFns} />
+                )}
+                format={format}
                 key={fieldId}
                 name={fieldId}
+                parse={parse}
                 validate={validate}
               />
             )
           },
         )}
-      <AuthorList />
       <div className={classnames(classes.buttons)}>
-        <Button onClick={isFirst ? goBack : prevStep}>
-          {isFirst ? 'Cancel' : 'Back'}
+        <Button onClick={isFirst ? () => history.push('/') : prevStep}>
+          {isFirst
+            ? `${wizard.cancelText || 'Cancel'}`
+            : `${wizard.backText || 'Back'}`}
         </Button>
         <Button primary type="submit">
-          {isFinal ? 'Finish' : 'Next'}
+          {isFinal
+            ? `${wizard.submitText || 'Submit Manuscript'}`
+            : `${wizard.nextText || 'Cancel'}`}
         </Button>
       </div>
     </form>
