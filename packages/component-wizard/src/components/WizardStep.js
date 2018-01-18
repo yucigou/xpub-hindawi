@@ -67,7 +67,7 @@ export default ({
         <Button primary type="submit">
           {isFinal
             ? `${wizard.submitText || 'Submit Manuscript'}`
-            : `${wizard.nextText || 'Cancel'}`}
+            : `${wizard.nextText || 'Next'}`}
         </Button>
       </div>
     </form>

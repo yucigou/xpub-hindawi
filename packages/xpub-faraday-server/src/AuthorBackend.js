@@ -44,7 +44,6 @@ const AuthorBackend = app => {
         fragment = await fragment.save()
         res.status(200).json(fragment)
       } catch (e) {
-        console.log(e)
         if (e.name === 'NotFoundError') {
           res.status(e.status).json({ error: 'Fragment not found' })
           return
