@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { debounce, pick } from 'lodash'
+import { debounce, pick, get } from 'lodash'
 import { actions } from 'pubsweet-client'
 import { reduxForm, formValueSelector } from 'redux-form'
 import { compose, getContext, withProps } from 'recompose'
@@ -30,7 +30,7 @@ export default compose(
   }),
   withProps(({ version, wizard }) => ({
     initialValues: pick(version, wizard.formSectionKeys),
-    readonly: !!version.submitted,
+    readonly: !!get(version, 'submitted'),
   })),
   connect((state, { wizard: { formSectionKeys } }) => ({
     formValues: formSectionKeys.reduce(
@@ -45,7 +45,11 @@ export default compose(
     form: 'wizard',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
-    onSubmit: (values, dispatch, { nextStep, isFinal }) => {
+    onSubmit: (
+      values,
+      dispatch,
+      { nextStep, isFinal, formValues, ...rest },
+    ) => {
       if (!isFinal) {
         nextStep()
       }

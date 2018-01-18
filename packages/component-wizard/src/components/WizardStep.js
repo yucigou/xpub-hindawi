@@ -27,6 +27,7 @@ export default ({
             validate,
             dependsOn,
             renderComponent: Comp,
+            type,
             ...rest
           }) => {
             if (
