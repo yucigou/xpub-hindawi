@@ -1,8 +1,12 @@
 const bodyParser = require('body-parser')
 
 const AuthorBackend = app => {
+  const authBearer = app.locals.passport.authenticate('bearer', {
+    session: false,
+  })
   app.post(
     '/api/fragments/:fragmentId/authors',
+    authBearer,
     bodyParser.json(),
     async (req, res, next) => {
       try {
@@ -26,9 +30,9 @@ const AuthorBackend = app => {
 
           const nameAuthors = fragment.authors.filter(
             author =>
-              author.first_name === req.body.first_name &&
-              author.middle_name === req.body.middle_name &&
-              author.last_name === req.body.last_name,
+              author.firstName === req.body.firstName &&
+              author.middleName === req.body.middleName &&
+              author.lastName === req.body.lastName,
           )
 
           if (nameAuthors.length > 0) {
@@ -40,6 +44,7 @@ const AuthorBackend = app => {
         fragment = await fragment.save()
         res.status(200).json(fragment)
       } catch (e) {
+        console.log(e)
         if (e.name === 'NotFoundError') {
           res.status(e.status).json({ error: 'Fragment not found' })
           return
@@ -55,6 +60,7 @@ const AuthorBackend = app => {
   )
   app.delete(
     '/api/fragments/:fragmentId/authors/:authorEmail',
+    authBearer,
     async (req, res, next) => {
       const { fragmentId, authorEmail } = req.params
       try {
@@ -63,7 +69,7 @@ const AuthorBackend = app => {
           res.status(404).json({ error: 'Fragment does not have any authors' })
           return
         }
-        // find author in authors list by email
+
         if (fragment.authors.length === 0) {
           res.status(404).json({ error: 'Fragment does not have any authors' })
           return

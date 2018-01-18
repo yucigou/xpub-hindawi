@@ -2,9 +2,6 @@ import React from 'react'
 import { compose } from 'recompose'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
-import classnames from 'classnames'
-import { Icon } from '@pubsweet/ui'
-import classes from './SortableList.local.scss'
 
 const itemSource = {
   beginDrag(props) {
@@ -41,33 +38,34 @@ const itemTarget = {
   },
 }
 
-// const DragHandle = () => (
-//   <div className={classnames(classes['drag-handle'])}>
-//     <Icon>chevron_up</Icon>
-//     <Icon>chevron_down</Icon>
-//   </div>
-// )
-
 const Item = ({
   connectDragPreview,
   connectDragSource,
   connectDropTarget,
   listItem,
+  dragHandle,
   ...rest
 }) =>
-  connectDragPreview(
-    <div style={{ display: 'flex' }}>
-      {connectDragSource(
-        <div className={classnames(classes['drag-handle'])}>
-          <Icon>chevron_up</Icon>
-          <Icon>chevron_down</Icon>
-        </div>,
-      )}
-      {connectDropTarget(
-        <div style={{ flex: 1 }}>{React.createElement(listItem, rest)}</div>,
-      )}
-    </div>,
-  )
+  dragHandle
+    ? connectDragPreview(
+        connectDropTarget(
+          <div style={{ flex: 1 }}>
+            {React.createElement(listItem, {
+              ...rest,
+              dragHandle: connectDragSource(
+                <div style={{ display: 'flex' }}>
+                  {React.createElement(dragHandle)}
+                </div>,
+              ),
+            })}
+          </div>,
+        ),
+      )
+    : connectDropTarget(
+        connectDragSource(
+          <div style={{ flex: 1 }}>{React.createElement(listItem, rest)}</div>,
+        ),
+      )
 
 const DecoratedItem = compose(
   DropTarget('item', itemTarget, (connect, monitor) => ({
@@ -81,15 +79,17 @@ const DecoratedItem = compose(
   })),
 )(Item)
 
-const SortableList = ({ items, moveItem, listItem }) => (
+const SortableList = ({ items, moveItem, listItem, dragHandle, ...rest }) => (
   <div>
     {items.map((item, i) => (
       <DecoratedItem
+        dragHandle={dragHandle}
         index={i}
         key={item.name || Math.random()}
         listItem={listItem}
         moveItem={moveItem}
         {...item}
+        {...rest}
       />
     ))}
   </div>

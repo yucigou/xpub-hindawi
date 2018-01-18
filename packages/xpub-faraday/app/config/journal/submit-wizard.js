@@ -9,6 +9,7 @@ import {
 } from '@pubsweet/ui'
 import uploadFile from 'xpub-upload'
 import { required, minChars, minSize } from 'xpub-validators'
+import { AuthorList } from 'pubsweet-component-wizard/src/components'
 
 import { declarations } from './'
 import issueTypes from './issues-types'
@@ -97,6 +98,10 @@ export default {
           title: 'Abstract',
           placeholder: 'Write an abstract',
           validate: [requiredBasedOnType],
+        },
+        {
+          fieldId: 'authors',
+          renderComponent: AuthorList,
         },
         {
           fieldId: 'conflicts.hasConflicts',
