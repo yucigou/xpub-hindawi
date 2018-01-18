@@ -29,13 +29,24 @@ module.exports = {
         message: Joi.string(),
       }),
       files: Joi.object({
-        manuscript: Joi.object({
-          name: Joi.string().required(),
-          type: Joi.string(),
-          size: Joi.number(),
-          url: Joi.string(),
-        }),
+        manuscript: Joi.any(),
+        manuscripts: Joi.array().items(
+          Joi.object({
+            name: Joi.string().required(),
+            type: Joi.string(),
+            size: Joi.number(),
+            url: Joi.string(),
+          }),
+        ),
         supplementary: Joi.array().items(
+          Joi.object({
+            name: Joi.string().required(),
+            type: Joi.string(),
+            size: Joi.number(),
+            url: Joi.string(),
+          }),
+        ),
+        coverLetter: Joi.array().items(
           Joi.object({
             name: Joi.string().required(),
             type: Joi.string(),
