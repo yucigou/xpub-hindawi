@@ -1,7 +1,7 @@
 import React from 'react'
 import { withJournal } from 'xpub-journal'
 
-const MetadataSections = ({ journal, sections }) => (
+const MetadataSections = ({ journal, sections = [] }) => (
   <span>
     {sections.map((section, index) => [
       index === 0 ? null : <span>, </span>,

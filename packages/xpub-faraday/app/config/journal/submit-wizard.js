@@ -7,7 +7,7 @@ import {
   TextField,
   Supplementary,
 } from '@pubsweet/ui'
-import uploadFile from 'xpub-upload'
+import uploadFileFn from 'xpub-upload'
 import { required, minChars, minSize } from 'xpub-validators'
 import { AuthorList } from 'pubsweet-component-wizard/src/components'
 
@@ -34,9 +34,12 @@ const journal = {
   value: 'hindawi-faraday',
 }
 
+const uploadFile = input => uploadFileFn(input)
+
 export default {
   showProgress: true,
   formSectionKeys: ['metadata', 'declarations', 'conflicts', 'notes', 'files'],
+  dispatchFunctions: [uploadFile],
   steps: [
     {
       label: 'Journal details',
@@ -107,6 +110,7 @@ export default {
           fieldId: 'conflicts.hasConflicts',
           renderComponent: yesNoWithLabel,
           label: 'Is there a potential conflict of interest?',
+          validate: [required],
         },
         {
           dependsOn: {
@@ -125,22 +129,19 @@ export default {
       title: 'Manuscript Files Upload',
       children: [
         {
-          fieldId: 'mainManuscripts',
+          fieldId: 'files.manuscripts',
           label: 'Main Manuscript',
           renderComponent: Supplementary,
-          uploadFile,
         },
         {
-          fieldId: 'supplementalFiles',
+          fieldId: 'files.supplementary',
           label: 'Supplemental Files',
           renderComponent: Supplementary,
-          uploadFile,
         },
         {
-          fieldId: 'coverLetter',
+          fieldId: 'files.coverLetter',
           label: 'Cover Letter',
           renderComponent: Supplementary,
-          uploadFile,
         },
       ],
     },

@@ -26,6 +26,7 @@
 
   .container {
     flex: 1;
+    padding: 10px;
   }
 
   .title {
@@ -94,4 +95,27 @@
 .validated-text {
   flex: 1;
   margin-right: 20px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.delete-button {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.corresponding {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
 }

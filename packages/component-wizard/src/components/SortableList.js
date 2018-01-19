@@ -36,6 +36,9 @@ const itemTarget = {
     }
     monitor.getItem().index = hoverIndex
   },
+  drop({ dropItem }) {
+    if (dropItem && typeof dropItem === 'function') dropItem()
+  },
 }
 
 const Item = ({

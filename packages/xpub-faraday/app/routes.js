@@ -7,6 +7,7 @@ import App from 'pubsweet-component-xpub-app/src/components'
 
 import {
   PrivateRoute,
+  SignupPage,
   LoginPage,
   LogoutPage,
 } from 'pubsweet-component-xpub-authentication/src/components'
@@ -20,6 +21,7 @@ import { WizardPage } from 'pubsweet-component-wizard/src/components'
 const Routes = () => (
   <App>
     <Route component={LoginPage} exact path="/login" />
+    <Route component={SignupPage} exact path="/signup" />
     <PrivateRoute component={DashboardPage} exact path="/" />
     <PrivateRoute component={LogoutPage} exact path="/logout" />
     <PrivateRoute
