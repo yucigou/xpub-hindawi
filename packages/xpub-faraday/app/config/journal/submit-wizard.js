@@ -28,6 +28,14 @@ const yesNoWithLabel = ({ label, ...rest }) => (
     <YesOrNo {...rest} />
   </div>
 )
+const Spacing = () => <div style={{ width: '100%', height: '15px' }} />
+const Label = ({ label }) => (
+  <label
+    style={{ display: 'inline-block', marginTop: '15px', marginBottom: '5px' }}
+  >
+    <b>{label}</b>
+  </label>
+)
 
 const journal = {
   label: 'Hindawi Faraday',
@@ -46,17 +54,25 @@ export default {
       title: 'Journal & Field Selection',
       children: [
         {
+          fieldId: 'label-Journal',
+          renderComponent: Label,
+          label: 'Journal',
+        },
+        {
           fieldId: 'metadata.journal',
           renderComponent: Menu,
-          label: 'Journal',
           options: [journal],
           value: journal.value,
           validate: [required],
         },
         {
+          fieldId: 'label-Issue',
+          renderComponent: Label,
+          label: 'Issue',
+        },
+        {
           fieldId: 'metadata.issue',
           renderComponent: Menu,
-          label: 'Issue',
           options: issueTypes,
           validate: [required],
         },
@@ -89,11 +105,23 @@ export default {
           title: 'Manuscript title',
         },
         {
+          fieldId: 'spacing-title',
+          renderComponent: Spacing,
+        },
+        {
+          fieldId: 'label-manuscriptType',
+          renderComponent: Label,
+          label: 'Manuscript Type',
+        },
+        {
           fieldId: 'metadata.type',
           renderComponent: Menu,
-          label: 'Manuscript type',
           options: manuscriptTypes,
           validate: [required],
+        },
+        {
+          fieldId: 'spacing-type',
+          renderComponent: Spacing,
         },
         {
           fieldId: 'metadata.abstract',
@@ -103,8 +131,17 @@ export default {
           validate: [requiredBasedOnType],
         },
         {
+          fieldId: 'spacing-abstract',
+          renderComponent: Spacing,
+        },
+        {
           fieldId: 'authors',
           renderComponent: AuthorList,
+          validate: [required],
+        },
+        {
+          fieldId: 'spacing-authors',
+          renderComponent: Spacing,
         },
         {
           fieldId: 'conflicts.hasConflicts',
