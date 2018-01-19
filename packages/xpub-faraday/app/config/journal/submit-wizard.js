@@ -15,7 +15,7 @@ import { declarations } from './'
 import issueTypes from './issues-types'
 import manuscriptTypes from './manuscript-types'
 
-import { requiredBasedOnType } from './wizard-validators'
+import { requiredBasedOnType, parseAbstract } from './wizard-validators'
 
 const min3Chars = minChars(3)
 const declarationsMinSize = minSize(declarations.options.length)
@@ -128,7 +128,7 @@ export default {
           renderComponent: AbstractEditor,
           title: 'Abstract',
           placeholder: 'Write an abstract',
-          validate: [requiredBasedOnType],
+          validate: [requiredBasedOnType, parseAbstract],
         },
         {
           fieldId: 'spacing-abstract',
@@ -166,14 +166,29 @@ export default {
       title: 'Manuscript Files Upload',
       children: [
         {
+          fieldId: 'label-manuscript',
+          renderComponent: Label,
+          label: 'Main Manuscript',
+        },
+        {
           fieldId: 'files.manuscripts',
           label: 'Main Manuscript',
           renderComponent: Supplementary,
         },
         {
+          fieldId: 'label-supplementary',
+          renderComponent: Label,
+          label: 'Supplemental Files',
+        },
+        {
           fieldId: 'files.supplementary',
           label: 'Supplemental Files',
           renderComponent: Supplementary,
+        },
+        {
+          fieldId: 'label-cover',
+          renderComponent: Label,
+          label: 'Cover Letter',
         },
         {
           fieldId: 'files.coverLetter',

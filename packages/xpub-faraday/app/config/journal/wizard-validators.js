@@ -15,3 +15,10 @@ export const requiredBasedOnType = (value, formValues) => {
   }
   return undefined
 }
+
+export const parseAbstract = value => {
+  if (value && value.replace('<p></p>', '').replace('<h1></h1>', '')) {
+    return undefined
+  }
+  return 'Required'
+}
