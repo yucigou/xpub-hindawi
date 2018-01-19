@@ -7,10 +7,7 @@ const component = require('..')
 const express = require('express')
 const fixtures = require('./fixtures/fixtures')
 const passport = require('passport')
-// const AnonymousStrategy = require('passport-anonymous').Strategy
-const jwt = require('jsonwebtoken')
 const BearerStrategy = require('passport-http-bearer').Strategy
-const config = require('config')
 
 function makeApp(response) {
   const app = express()
