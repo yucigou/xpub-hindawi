@@ -1,19 +1,20 @@
 const bodyParser = require('body-parser')
 
 const AuthorBackend = app => {
-  const authBearer = app.locals.passport.authenticate('bearer', {
+  let authBearer = app.locals.passport.authenticate('bearer', {
     session: false,
   })
+
+  if (process.env.NODE_ENV === 'test') {
+    authBearer = app.locals.passport.authenticate('anonymous')
+  }
+
   app.post(
     '/api/fragments/:fragmentId/authors',
     authBearer,
     bodyParser.json(),
     async (req, res, next) => {
       try {
-        if (!req.params.fragmentId) {
-          res.status(400).json({ error: 'Fragment ID is required' })
-          return
-        }
         let fragment = await app.locals.models.Fragment.find(
           req.params.fragmentId,
         )
@@ -24,19 +25,22 @@ const AuthorBackend = app => {
           )
 
           if (emailAuthors.length > 0) {
-            res.status(400).json({ error: 'Author already exists' })
+            res
+              .status(400)
+              .json({ error: 'Author with the same email already exists' })
             return
           }
 
-          const nameAuthors = fragment.authors.filter(
+          const submittingAuthors = fragment.authors.filter(
             author =>
-              author.firstName === req.body.firstName &&
-              author.middleName === req.body.middleName &&
-              author.lastName === req.body.lastName,
+              author.isSubmitting === true &&
+              author.isSubmitting === req.body.isSubmitting,
           )
 
-          if (nameAuthors.length > 0) {
-            res.status(400).json({ error: 'Author already exists' })
+          if (submittingAuthors.length > 0) {
+            res
+              .status(400)
+              .json({ error: 'There can only be one sumbitting author' })
             return
           }
         }
