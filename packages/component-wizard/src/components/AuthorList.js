@@ -7,7 +7,14 @@ import { reduxForm } from 'redux-form'
 import { actions } from 'pubsweet-client'
 import { required } from 'xpub-validators'
 import { withRouter } from 'react-router-dom'
-import { compose, withHandlers, getContext, lifecycle } from 'recompose'
+import { selectCurrentUser } from 'xpub-selectors'
+import {
+  compose,
+  withHandlers,
+  withProps,
+  getContext,
+  lifecycle,
+} from 'recompose'
 import { TextField, Menu, Icon, ValidatedField, Button } from '@pubsweet/ui'
 
 import { addAuthor, getFragmentAuthors, setAuthors } from '../redux/authors'
@@ -48,7 +55,22 @@ const MenuItem = ({ label, name, options }) => (
   </div>
 )
 
-const AuthorAdder = ({ authors, handleSubmit, ...rest }) => (
+const Label = ({ label, value }) => (
+  <div className={classnames(classes['label-container'])}>
+    <span className={classnames(classes.label)}>{label}</span>
+    <span className={classnames(classes.value)}>{value}</span>
+  </div>
+)
+
+const DragHandle = () => (
+  <div className={classnames(classes['drag-handle'])}>
+    <Icon>chevron_up</Icon>
+    <Icon size={16}>menu</Icon>
+    <Icon>chevron_down</Icon>
+  </div>
+)
+
+const AuthorAdder = ({ authors, handleSubmit }) => (
   <div className={classnames(classes.adder)}>
     <Button onClick={handleSubmit} primary>
       {authors.length === 0 ? '+ Add submitting author' : '+ Add author'}
@@ -83,20 +105,41 @@ const AuthorAdder = ({ authors, handleSubmit, ...rest }) => (
   </div>
 )
 
-const Label = ({ label, value }) => (
-  <div className={classnames(classes['label-container'])}>
-    <span className={classnames(classes.label)}>{label}</span>
-    <span className={classnames(classes.value)}>{value}</span>
-  </div>
-)
-
-const DragHandle = () => (
-  <div className={classnames(classes['drag-handle'])}>
-    <Icon>chevron_up</Icon>
-    <Icon size={16}>menu</Icon>
-    <Icon>chevron_down</Icon>
-  </div>
-)
+const Adder = compose(
+  connect(state => ({
+    currentUser: selectCurrentUser(state),
+  })),
+  withProps(({ currentUser }) => {
+    const { admin, email, username } = currentUser
+    if (!admin) {
+      return {
+        initialValues: {
+          author: {
+            email,
+            firstName: username,
+          },
+        },
+      }
+    }
+  }),
+  reduxForm({
+    form: 'author',
+    onSubmit: (values, dispatch, { authors, addAuthor, reset, match }) => {
+      const collectionId = get(match, 'params.project')
+      const fragmentId = get(match, 'params.version')
+      const isFirstAuthor = authors.length === 0
+      addAuthor(
+        {
+          ...values.author,
+          isSubmitting: isFirstAuthor,
+          isCorresponding: isFirstAuthor,
+        },
+        collectionId,
+        fragmentId,
+      ).then(reset)
+    },
+  }),
+)(AuthorAdder)
 
 const Author = ({
   firstName,
@@ -161,27 +204,6 @@ const Author = ({
       )}
     </div>
   </div>
-)
-
-const Adder = compose(
-  reduxForm({
-    form: 'author',
-    destroyOnUnmount: false,
-    onSubmit: (values, dispatch, { authors, addAuthor, reset, match }) => {
-      const collectionId = get(match, 'params.project')
-      const fragmentId = get(match, 'params.version')
-      const isFirstAuthor = authors.length === 0
-      addAuthor(
-        {
-          ...values.author,
-          isSubmitting: isFirstAuthor,
-          isCorresponding: isFirstAuthor,
-        },
-        collectionId,
-        fragmentId,
-      ).then(reset)
-    },
-  })(AuthorAdder),
 )
 
 const Authors = ({

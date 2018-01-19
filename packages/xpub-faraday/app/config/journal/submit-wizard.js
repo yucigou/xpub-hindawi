@@ -105,6 +105,7 @@ export default {
         {
           fieldId: 'authors',
           renderComponent: AuthorList,
+          validate: [required],
         },
         {
           fieldId: 'conflicts.hasConflicts',
