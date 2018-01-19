@@ -5,8 +5,19 @@ const author = {
   email: 'email@email.com',
   affiliation: 'University',
   country: '',
-  isCorresponding: true,
+  isCorresponding: false,
   isSubmitting: true,
+}
+
+const newAuthor = {
+  firstName: 'Robert',
+  middleName: '',
+  lastName: 'Smith',
+  email: 'email_robert@email.com',
+  affiliation: 'University',
+  country: '',
+  isCorresponding: true,
+  isSubmitting: false,
 }
 
 const invalidAuthor = {
@@ -46,4 +57,5 @@ module.exports = {
   invalidAuthor,
   fragment,
   newSubmittingAuthor,
+  newAuthor,
 }

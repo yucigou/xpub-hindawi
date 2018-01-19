@@ -66,4 +66,11 @@ describe('Author Backend API', () => {
       .post('/api/fragments/123-valid-id/authors')
       .send(fixtures.newSubmittingAuthor)
       .expect(400, '{"error":"There can only be one sumbitting author"}'))
+
+  it('should return success', () =>
+    makeApp(fixtures.fragment)
+      .post('/api/fragments/123-valid-id/authors')
+      .send(fixtures.newAuthor)
+      .expect(200, '')
+      .then(() => expect(fixtures.fragment.save).toHaveBeenCalled()))
 })
