@@ -1,7 +1,6 @@
 const bodyParser = require('body-parser')
 
 const AuthorBackend = app => {
-  console.log('===ENVIRONMENT:', process.env.NODE_ENV)
   let authBearer = app.locals.passport.authenticate('bearer', {
     session: false,
   })
