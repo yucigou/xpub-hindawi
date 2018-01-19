@@ -4,11 +4,11 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { get, debounce } from 'lodash'
 import { reduxForm } from 'redux-form'
+import { actions } from 'pubsweet-client'
 import { required } from 'xpub-validators'
 import { withRouter } from 'react-router-dom'
 import { compose, withHandlers, getContext, lifecycle } from 'recompose'
 import { TextField, Menu, Icon, ValidatedField, Button } from '@pubsweet/ui'
-import { actions } from 'pubsweet-client'
 
 import { addAuthor, getFragmentAuthors, setAuthors } from '../redux/authors'
 
@@ -47,12 +47,15 @@ const MenuItem = ({ label, name, options }) => (
     />
   </div>
 )
-const AuthorAdder = ({ addAuthor, handleSubmit, ...rest }) => (
+
+const AuthorAdder = ({ authors, handleSubmit, ...rest }) => (
   <div className={classnames(classes.adder)}>
     <Button onClick={handleSubmit} primary>
-      + Add author
+      {authors.length === 0 ? '+ Add submitting author' : '+ Add author'}
     </Button>
-    <span className={classnames(classes.title)}>Author</span>
+    <span className={classnames(classes.title)}>
+      {authors.length === 0 ? 'Submitting author' : 'Author'}
+    </span>
     <div className={classnames(classes.row)}>
       <ValidatedTextField
         isRequired
@@ -106,6 +109,11 @@ const Author = ({
   dragHandle,
   isOver,
   countryParser,
+  removeAuthor,
+  isSubmitting,
+  isCorresponding,
+  setAsCorresponding,
+  parseAuthorType,
 }) => (
   <div
     className={classnames({
@@ -120,7 +128,9 @@ const Author = ({
         [classes.hide]: isOver,
       })}
     >
-      <span className={classnames(classes.title)}>Author</span>
+      <span className={classnames(classes.title)}>
+        {parseAuthorType(isSubmitting, isCorresponding)}
+      </span>
       <div className={classnames(classes.row)}>
         <Label label="First name" value={firstName} />
         <Label label="Middle name" value={middleName} />
@@ -132,6 +142,24 @@ const Author = ({
         <Label label="Country" value={countryParser(country)} />
       </div>
     </div>
+    <div className={classnames(classes['button-container'])}>
+      {!isSubmitting && (
+        <div
+          className={classnames(classes['delete-button'])}
+          onClick={removeAuthor(email)}
+        >
+          <Icon>trash</Icon>
+        </div>
+      )}
+      {!isCorresponding && (
+        <div
+          className={classnames(classes.corresponding)}
+          onClick={setAsCorresponding(email)}
+        >
+          <Icon>mail</Icon>
+        </div>
+      )}
+    </div>
   </div>
 )
 
@@ -139,10 +167,19 @@ const Adder = compose(
   reduxForm({
     form: 'author',
     destroyOnUnmount: false,
-    onSubmit: (values, dispatch, { addAuthor, reset, match }) => {
+    onSubmit: (values, dispatch, { authors, addAuthor, reset, match }) => {
       const collectionId = get(match, 'params.project')
       const fragmentId = get(match, 'params.version')
-      addAuthor(values.author, collectionId, fragmentId).then(reset)
+      const isFirstAuthor = authors.length === 0
+      addAuthor(
+        {
+          ...values.author,
+          isSubmitting: isFirstAuthor,
+          isCorresponding: isFirstAuthor,
+        },
+        collectionId,
+        fragmentId,
+      ).then(reset)
     },
   })(AuthorAdder),
 )
@@ -162,6 +199,7 @@ const Authors = ({
     <Adder
       addAuthor={addAuthor}
       author={author}
+      authors={authors}
       editAuthor={editAuthor}
       match={match}
     />
@@ -183,7 +221,11 @@ export default compose(
     (state, { match: { params: { version } } }) => ({
       authors: getFragmentAuthors(state, version),
     }),
-    { addAuthor, setAuthors, updateFragment: actions.updateFragment },
+    {
+      addAuthor,
+      setAuthors,
+      updateFragment: actions.updateFragment,
+    },
   ),
   lifecycle({
     componentDidMount() {
@@ -201,6 +243,11 @@ export default compose(
       }, 500),
     countryParser: () => countryCode =>
       countries.find(c => c.value === countryCode).label,
+    parseAuthorType: () => (isSubmitting, isCorresponding) => {
+      if (isSubmitting) return 'Submitting author'
+      if (isCorresponding) return 'Corresponding author'
+      return 'Author'
+    },
     moveAuthor: ({
       authors,
       setAuthors,
@@ -211,6 +258,35 @@ export default compose(
     }) => (dragIndex, hoverIndex) => {
       const newAuthors = SortableList.moveItem(authors, dragIndex, hoverIndex)
       setAuthors(newAuthors, params.version)
+    },
+    removeAuthor: ({
+      authors,
+      updateFragment,
+      project,
+      version,
+      setAuthors,
+    }) => authorEmail => () => {
+      const newAuthors = authors.filter(a => a.email !== authorEmail)
+      updateFragment(project, {
+        ...version,
+        authors: newAuthors,
+      }).then(() => setAuthors(newAuthors, version.id))
+    },
+    setAsCorresponding: ({
+      authors,
+      updateFragment,
+      setAuthors,
+      version,
+      project,
+    }) => authorEmail => () => {
+      const newAuthors = authors.map(a => ({
+        ...a,
+        isCorresponding: a.isSubmitting || a.email === authorEmail,
+      }))
+      updateFragment(project, {
+        ...version,
+        authors: newAuthors,
+      }).then(() => setAuthors(newAuthors, version.id))
     },
   }),
 )(Authors)

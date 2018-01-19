@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import { ValidatedField, Button } from '@pubsweet/ui'
 
 import classes from './WizardStep.local.scss'
+import AuthorList from './AuthorList'
 
 export default ({
   children: stepChildren,
@@ -58,6 +59,7 @@ export default ({
             )
           },
         )}
+      <AuthorList />
       <div className={classnames(classes.buttons)}>
         <Button onClick={isFirst ? () => history.push('/') : prevStep}>
           {isFirst
