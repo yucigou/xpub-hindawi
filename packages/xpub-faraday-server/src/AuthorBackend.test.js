@@ -2,32 +2,21 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 process.env.SUPPRESS_NO_CONFIG_WARNING = true
 
 const bodyParser = require('body-parser')
-const express = require('express')
 const supertest = require('supertest')
 const component = require('..')
-
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlYmkiLCJpZCI6IjVlMTRiY2IyLWQ5ZTEtNDZjOS05ZDI0LTM3YTk4MDhmMjFmYiIsImlhdCI6MTUxNjExODAxMSwiZXhwIjoxNTE2MjA0NDExfQ.tqH0Nnpiec2c1FPL2K5fK4krHGN2SrYyMbqVSnYSpog'
-const author = {
-  first_name: 'marcel',
-  middle_name: 'sss',
-  last_name: 'iures',
-  email: 'email@ciment2.com',
-  affiliation: 'UTI',
-  country: '',
-  is_corresponding: true,
-  is_submitting: true,
-  save: jest.fn(),
-}
+const express = require('express')
+const fixtures = require('./fixtures/fixtures')
+const passport = require('passport')
+const AnonymousStrategy = require('passport-anonymous').Strategy
 
 function makeApp(response) {
   const app = express()
   app.use(bodyParser.json())
-  app.locals = {
-    passport: {
-      authenticate: jest.fn(() => () => Promise.resolve(true)),
-    },
-  }
+  // Passport strategies
+  app.use(passport.initialize())
+  passport.use('anonymous', new AnonymousStrategy())
+  app.locals.passport = passport
+
   app.locals.models = {
     Fragment: {
       find: jest.fn(
@@ -38,16 +27,43 @@ function makeApp(response) {
       ),
     },
   }
+
   component.backend()(app)
   return supertest(app)
 }
 
 describe('Author Backend API', () => {
-  it('should return error if fragment is not found', () =>
-    makeApp(new Error('Not Found'))
-      .post('/api/fragments/cf7b9ea6-47ac-4188-b0ef-f89cc17364fe/authors')
-      .set('Content-Type', 'application/json')
-      // .set('Authentication', `Bearer ${token}`)
-      .send(author)
-      .expect(404, '"error": "Fragment not found"'))
+  it('should return an error if fragment is not found', () => {
+    const error = new Error()
+    error.name = 'NotFoundError'
+    error.status = 404
+    return makeApp(error)
+      .post('/api/fragments/123/authors')
+      .send(fixtures.author)
+      .expect(404, '{"error":"Fragment not found"}')
+  })
+
+  it('should return an error if an author field is invalid', () => {
+    const error = new Error()
+    error.name = 'ValidationError'
+    error.status = 404
+    error.details = []
+    error.details.push({ message: 'firstName is required' })
+    return makeApp(error)
+      .post('/api/fragments/123/authors')
+      .send(fixtures.invalidAuthor)
+      .expect(404, '{"error":"firstName is required"}')
+  })
+
+  it('should return an error if an author already exists with the same email', () =>
+    makeApp(fixtures.fragment)
+      .post('/api/fragments/123-valid-id/authors')
+      .send(fixtures.author)
+      .expect(400, '{"error":"Author with the same email already exists"}'))
+
+  it('should return an error if there already is a submitting author', () =>
+    makeApp(fixtures.fragment)
+      .post('/api/fragments/123-valid-id/authors')
+      .send(fixtures.newSubmittingAuthor)
+      .expect(400, '{"error":"There can only be one sumbitting author"}'))
 })
