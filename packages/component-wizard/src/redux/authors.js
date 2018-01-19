@@ -1,16 +1,22 @@
 import { get } from 'lodash'
 import { actions } from 'pubsweet-client'
 import * as api from 'pubsweet-client/src/helpers/api'
+import { change } from 'redux-form'
 
 // constants
 export const SET_AUTHORS = 'authors/SET_AUTHORS'
 
-// actions
-export const setAuthors = (authors, fragmentId) => ({
+const _setAuthors = (authors, fragmentId) => ({
   type: SET_AUTHORS,
   authors,
   fragmentId,
 })
+
+// actions
+export const setAuthors = (authors, fragmentId) => dispatch => {
+  dispatch(_setAuthors(authors, fragmentId))
+  dispatch(change('wizard', 'authors', authors))
+}
 
 export const addAuthor = (author, collectionId, fragmentId) => dispatch =>
   api
