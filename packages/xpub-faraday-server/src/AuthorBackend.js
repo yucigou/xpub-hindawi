@@ -1,14 +1,9 @@
 const bodyParser = require('body-parser')
 
 const AuthorBackend = app => {
-  let authBearer = app.locals.passport.authenticate('bearer', {
+  const authBearer = app.locals.passport.authenticate('bearer', {
     session: false,
   })
-
-  if (process.env.NODE_ENV === 'test') {
-    authBearer = app.locals.passport.authenticate('anonymous')
-  }
-
   app.post(
     '/api/fragments/:fragmentId/authors',
     authBearer,

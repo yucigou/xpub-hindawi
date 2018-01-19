@@ -52,10 +52,18 @@ const fragment = {
   save: jest.fn(),
 }
 
+const user = {
+  type: 'user',
+  username: 'testuser',
+  email: 'test@example.com',
+  password: 'test',
+}
+
 module.exports = {
   author,
   invalidAuthor,
   fragment,
   newSubmittingAuthor,
   newAuthor,
+  user,
 }
