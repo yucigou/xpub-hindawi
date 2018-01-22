@@ -14,6 +14,7 @@ import {
   withProps,
   getContext,
   lifecycle,
+  withState,
 } from 'recompose'
 import { TextField, Menu, Icon, ValidatedField, Button } from '@pubsweet/ui'
 
@@ -70,38 +71,52 @@ const DragHandle = () => (
   </div>
 )
 
-const AuthorAdder = ({ authors, handleSubmit }) => (
+const AuthorAdder = ({ authors, editMode, setEditMode, handleSubmit }) => (
   <div className={classnames(classes.adder)}>
-    <Button onClick={handleSubmit} primary>
+    <Button onClick={setEditMode(true)} primary>
       {authors.length === 0 ? '+ Add submitting author' : '+ Add author'}
     </Button>
-    <span className={classnames(classes.title)}>
-      {authors.length === 0 ? 'Submitting author' : 'Author'}
-    </span>
-    <div className={classnames(classes.row)}>
-      <ValidatedTextField
-        isRequired
-        label="First name"
-        name="author.firstName"
-      />
-      <ValidatedTextField label="Middle name" name="author.middleName" />
-      <ValidatedTextField isRequired label="Last name" name="author.lastName" />
-    </div>
+    {editMode && (
+      <div className={classnames(classes['form-body'])}>
+        <span className={classnames(classes.title)}>
+          {authors.length === 0 ? 'Submitting author' : 'Author'}
+        </span>
+        <div className={classnames(classes.row)}>
+          <ValidatedTextField
+            isRequired
+            label="First name"
+            name="author.firstName"
+          />
+          <ValidatedTextField label="Middle name" name="author.middleName" />
+          <ValidatedTextField
+            isRequired
+            label="Last name"
+            name="author.lastName"
+          />
+        </div>
 
-    <div className={classnames(classes.row)}>
-      <ValidatedTextField
-        isRequired
-        label="Email"
-        name="author.email"
-        validators={[emailValidator]}
-      />
-      <ValidatedTextField
-        isRequired
-        label="Affiliation"
-        name="author.affiliation"
-      />
-      <MenuItem label="Country" name="author.country" options={countries} />
-    </div>
+        <div className={classnames(classes.row)}>
+          <ValidatedTextField
+            isRequired
+            label="Email"
+            name="author.email"
+            validators={[emailValidator]}
+          />
+          <ValidatedTextField
+            isRequired
+            label="Affiliation"
+            name="author.affiliation"
+          />
+          <MenuItem label="Country" name="author.country" options={countries} />
+        </div>
+        <div className={classnames(classes['form-buttons'])}>
+          <Button onClick={setEditMode(false)}>Cancel</Button>
+          <Button onClick={handleSubmit} primary>
+            Save
+          </Button>
+        </div>
+      </div>
+    )}
   </div>
 )
 
@@ -124,7 +139,11 @@ const Adder = compose(
   }),
   reduxForm({
     form: 'author',
-    onSubmit: (values, dispatch, { authors, addAuthor, reset, match }) => {
+    onSubmit: (
+      values,
+      dispatch,
+      { authors, addAuthor, setEditMode, reset, match },
+    ) => {
       const collectionId = get(match, 'params.project')
       const fragmentId = get(match, 'params.version')
       const isFirstAuthor = authors.length === 0
@@ -136,7 +155,10 @@ const Adder = compose(
         },
         collectionId,
         fragmentId,
-      ).then(reset)
+      ).then(() => {
+        reset()
+        setEditMode(false)()
+      })
     },
   }),
 )(AuthorAdder)
@@ -207,7 +229,6 @@ const Author = ({
 )
 
 const Authors = ({
-  author,
   authors,
   moveAuthor,
   addAuthor,
@@ -215,15 +236,18 @@ const Authors = ({
   match,
   version,
   dropItem,
+  editMode,
+  setEditMode,
   ...rest
 }) => (
   <div>
     <Adder
       addAuthor={addAuthor}
-      author={author}
       authors={authors}
       editAuthor={editAuthor}
+      editMode={editMode}
       match={match}
+      setEditMode={setEditMode}
     />
     <SortableList
       dragHandle={DragHandle}
@@ -255,7 +279,12 @@ export default compose(
       setAuthors(version.authors, version.id)
     },
   }),
+  withState('editMode', 'setEditMode', false),
   withHandlers({
+    setEditMode: ({ setEditMode }) => mode => e => {
+      e && e.preventDefault()
+      setEditMode(v => mode)
+    },
     dropItem: ({ updateFragment, authors, project, version }) =>
       debounce(() => {
         updateFragment(project, {
