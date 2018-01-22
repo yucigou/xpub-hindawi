@@ -9,6 +9,7 @@ import {
   lifecycle,
   withState,
 } from 'recompose'
+import { change } from 'redux-form'
 
 import {
   addAuthor,
@@ -86,6 +87,7 @@ export default compose(
       addAuthor,
       setAuthors,
       moveAuthors,
+      formChange: change,
     },
   ),
   lifecycle({
@@ -97,12 +99,14 @@ export default compose(
   withState('editMode', 'setEditMode', false),
   withState('editedAuthor', 'setEditedAuthor', -1),
   withHandlers({
-    setAuthorEdit: ({ setEditedAuthor }) => editedAuthor => e => {
+    setAuthorEdit: ({ setEditedAuthor, formChange }) => editedAuthor => e => {
       e && e.preventDefault && e.preventDefault()
+      formChange('wizard', 'editMode', editedAuthor > -1)
       setEditedAuthor(prev => editedAuthor)
     },
-    setEditMode: ({ setEditMode }) => mode => e => {
+    setEditMode: ({ setEditMode, formChange }) => mode => e => {
       e && e.preventDefault()
+      formChange('wizard', 'editMode', mode)
       setEditMode(v => mode)
     },
     dropItem: ({ authors, project, version, setAuthors }) => () => {

@@ -33,32 +33,24 @@ const AuthorAdder = ({ authors, editMode, setEditMode, handleSubmit }) => (
           {authors.length === 0 ? 'Submitting author' : 'Author'}
         </span>
         <div className={classnames(classes.row)}>
-          <ValidatedTextField
-            isRequired
-            label="First name"
-            name="author.firstName"
-          />
-          <ValidatedTextField label="Middle name" name="author.middleName" />
-          <ValidatedTextField
-            isRequired
-            label="Last name"
-            name="author.lastName"
-          />
+          <ValidatedTextField isRequired label="First name" name="firstName" />
+          <ValidatedTextField label="Middle name" name="middleName" />
+          <ValidatedTextField isRequired label="Last name" name="lastName" />
         </div>
 
         <div className={classnames(classes.row)}>
           <ValidatedTextField
             isRequired
             label="Email"
-            name="author.email"
+            name="email"
             validators={[emailValidator]}
           />
           <ValidatedTextField
             isRequired
             label="Affiliation"
-            name="author.affiliation"
+            name="affiliation"
           />
-          <MenuItem label="Country" name="author.country" options={countries} />
+          <MenuItem label="Country" name="country" options={countries} />
         </div>
         <div className={classnames(classes['form-buttons'])}>
           <Button onClick={setEditMode(false)}>Cancel</Button>
@@ -100,7 +92,7 @@ export default compose(
       const isFirstAuthor = authors.length === 0
       addAuthor(
         {
-          ...values.author,
+          ...values,
           isSubmitting: isFirstAuthor,
           isCorresponding: isFirstAuthor,
         },

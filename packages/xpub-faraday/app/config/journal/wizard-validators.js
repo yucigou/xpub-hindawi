@@ -22,3 +22,10 @@ export const requiredBasedOnType = (value, formValues) => {
   }
   return undefined
 }
+
+export const editModeEnabled = value => {
+  if (value) {
+    return 'You have some unsaved author details.'
+  }
+  return undefined
+}

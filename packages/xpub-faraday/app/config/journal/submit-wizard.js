@@ -14,8 +14,7 @@ import { AuthorList } from 'pubsweet-component-wizard/src/components/AuthorList'
 import { declarations } from './'
 import issueTypes from './issues-types'
 import manuscriptTypes from './manuscript-types'
-
-import { requiredBasedOnType } from './wizard-validators'
+import { requiredBasedOnType, editModeEnabled } from './wizard-validators'
 
 const min3Chars = minChars(3)
 const declarationsMinSize = minSize(declarations.options.length)
@@ -36,7 +35,6 @@ const Label = ({ label }) => (
     <b>{label}</b>
   </label>
 )
-
 const journal = {
   label: 'Hindawi Faraday',
   value: 'hindawi-faraday',
@@ -140,8 +138,9 @@ export default {
           validate: [required],
         },
         {
-          fieldId: 'spacing-authors',
+          fieldId: 'editMode',
           renderComponent: Spacing,
+          validate: [editModeEnabled],
         },
         {
           fieldId: 'conflicts.hasConflicts',

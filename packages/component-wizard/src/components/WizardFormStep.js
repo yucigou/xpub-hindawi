@@ -1,22 +1,32 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { debounce, pick, get } from 'lodash'
+import { debounce, pick, get, isEqual } from 'lodash'
 import { actions } from 'pubsweet-client'
-import { reduxForm, formValueSelector, SubmissionError } from 'redux-form'
 import { compose, getContext, withProps } from 'recompose'
+import { reduxForm, formValueSelector, SubmissionError } from 'redux-form'
 
 import WizardStep from './WizardStep'
 
 const wizardSelector = formValueSelector('wizard')
 
-const onChange = (values, dispatch, { project, version }) => {
-  dispatch(
-    actions.updateFragment(project, {
-      id: version.id,
-      rev: version.rev,
-      ...values,
-    }),
-  )
+const onChange = (
+  values,
+  dispatch,
+  { project, version, wizard: { formSectionKeys } },
+  prevValues,
+) => {
+  const prev = pick(prevValues, formSectionKeys)
+  const newValues = pick(values, formSectionKeys)
+  // TODO: fix it if this sucks down the road
+  if (!isEqual(prev, newValues)) {
+    dispatch(
+      actions.updateFragment(project, {
+        id: version.id,
+        rev: version.rev,
+        ...newValues,
+      }),
+    )
+  }
 }
 
 const submitManuscript = (values, dispatch, project, version, history) => {
@@ -74,13 +84,7 @@ export default compose(
     readonly: !!get(version, 'submitted'),
   })),
   connect((state, { wizard: { formSectionKeys } }) => ({
-    formValues: formSectionKeys.reduce(
-      (acc, el) => ({
-        ...acc,
-        [el]: wizardSelector(state, el),
-      }),
-      {},
-    ),
+    formValues: wizardSelector(state, ...formSectionKeys),
   })),
   reduxForm({
     form: 'wizard',

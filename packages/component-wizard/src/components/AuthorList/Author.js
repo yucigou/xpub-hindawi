@@ -20,7 +20,9 @@ export default ({
   isCorresponding,
   setAsCorresponding,
   parseAuthorType,
-  ...rest
+  editedAuthor,
+  setAuthorEdit,
+  index,
 }) => (
   <div
     className={classnames({
@@ -68,10 +70,10 @@ export default ({
           <Icon>mail</Icon>
         </div>
       )}
-      {rest.editedAuthor < 0 && (
+      {editedAuthor < 0 && (
         <div
           className={classnames(classes.corresponding)}
-          onClick={rest.setAuthorEdit(rest.index)}
+          onClick={setAuthorEdit(index)}
           title="Edit author"
         >
           <Icon>edit-2</Icon>
