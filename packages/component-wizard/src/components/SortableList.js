@@ -49,11 +49,8 @@ const Item = ({
   dragHandle,
   isEditing,
   ...rest
-}) => {
-  if (isEditing) {
-    return <div style={{ flex: 1 }}>{React.createElement(listItem, rest)}</div>
-  }
-  return dragHandle
+}) =>
+  dragHandle
     ? connectDragPreview(
         connectDropTarget(
           <div style={{ flex: 1 }}>
@@ -73,7 +70,6 @@ const Item = ({
           <div style={{ flex: 1 }}>{React.createElement(listItem, rest)}</div>,
         ),
       )
-}
 
 const DecoratedItem = compose(
   DropTarget('item', itemTarget, (connect, monitor) => ({
@@ -96,30 +92,18 @@ const SortableList = ({
   ...rest
 }) => (
   <div>
-    {items.map(
-      (item, i) =>
-        i === rest.editedAuthor ? (
-          React.createElement(editItem, {
-            key: item.name || Math.random(),
-            initialValues: {
-              edit: item,
-            },
-            index: i,
-            ...rest,
-          })
-        ) : (
-          <DecoratedItem
-            dragHandle={dragHandle}
-            index={i}
-            isEditing={rest.editedAuthor !== -1}
-            key={item.name || Math.random()}
-            listItem={listItem}
-            moveItem={moveItem}
-            {...item}
-            {...rest}
-          />
-        ),
-    )}
+    {items.map((item, i) => (
+      <DecoratedItem
+        dragHandle={dragHandle}
+        index={i}
+        isEditing={rest.editedAuthor !== -1}
+        key={item.name || Math.random()}
+        listItem={listItem}
+        moveItem={moveItem}
+        {...item}
+        {...rest}
+      />
+    ))}
   </div>
 )
 
