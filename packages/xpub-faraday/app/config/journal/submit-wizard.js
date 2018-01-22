@@ -14,7 +14,11 @@ import { AuthorList } from 'pubsweet-component-wizard/src/components/AuthorList'
 import { declarations } from './'
 import issueTypes from './issues-types'
 import manuscriptTypes from './manuscript-types'
-import { requiredBasedOnType, editModeEnabled } from './wizard-validators'
+import {
+  requiredBasedOnType,
+  editModeEnabled,
+  parseEmptyHtml,
+} from './wizard-validators'
 
 const min3Chars = minChars(3)
 const declarationsMinSize = minSize(declarations.options.length)
@@ -101,6 +105,7 @@ export default {
           renderComponent: TitleEditor,
           placeholder: 'Manuscript title',
           title: 'Manuscript title',
+          validate: [parseEmptyHtml],
         },
         {
           fieldId: 'spacing-title',
