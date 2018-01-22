@@ -6,7 +6,7 @@ const requiredTypes = manuscriptTypes
   .filter(t => t.abstractRequired)
   .map(t => t.value)
 
-const parseAbstract = value => {
+export const parseEmptyHtml = value => {
   if (value && value.replace('<p></p>', '').replace('<h1></h1>', '')) {
     return undefined
   }
@@ -16,7 +16,7 @@ const parseAbstract = value => {
 export const requiredBasedOnType = (value, formValues) => {
   if (
     requiredTypes.includes(get(formValues, 'metadata.type')) &&
-    (isEmpty(get(formValues, 'metadata.abstract')) || parseAbstract(value))
+    (isEmpty(get(formValues, 'metadata.abstract')) || parseEmptyHtml(value))
   ) {
     return 'Required'
   }

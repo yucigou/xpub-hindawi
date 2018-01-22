@@ -15,7 +15,7 @@ import { declarations } from './'
 import issueTypes from './issues-types'
 import manuscriptTypes from './manuscript-types'
 
-import { requiredBasedOnType } from './wizard-validators'
+import { requiredBasedOnType, parseEmptyHtml } from './wizard-validators'
 
 const min3Chars = minChars(3)
 const declarationsMinSize = minSize(declarations.options.length)
@@ -103,6 +103,7 @@ export default {
           renderComponent: TitleEditor,
           placeholder: 'Manuscript title',
           title: 'Manuscript title',
+          validate: [parseEmptyHtml],
         },
         {
           fieldId: 'spacing-title',
