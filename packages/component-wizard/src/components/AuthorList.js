@@ -4,7 +4,6 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
 import { reduxForm } from 'redux-form'
-import { actions } from 'pubsweet-client'
 import { required } from 'xpub-validators'
 import { withRouter } from 'react-router-dom'
 import { selectCurrentUser } from 'xpub-selectors'
@@ -125,6 +124,67 @@ const AuthorAdder = ({ authors, editMode, setEditMode, handleSubmit }) => (
   </div>
 )
 
+const AuthorEdit = ({ setAuthorEdit, handleSubmit }) => (
+  <div className={classnames(classes['editor-body'])}>
+    <div className={classnames(classes.row)}>
+      <ValidatedTextField isRequired label="First name" name="edit.firstName" />
+      <ValidatedTextField label="Middle name" name="edit.middleName" />
+      <ValidatedTextField isRequired label="Last name" name="edit.lastName" />
+    </div>
+
+    <div className={classnames(classes.row)}>
+      <ValidatedTextField
+        isRequired
+        label="Email"
+        name="edit.email"
+        validators={[emailValidator]}
+      />
+      <ValidatedTextField
+        isRequired
+        label="Affiliation"
+        name="edit.affiliation"
+      />
+      <MenuItem label="Country" name="edit.country" options={countries} />
+    </div>
+
+    <div className={classnames(classes['form-buttons'])}>
+      <Button onClick={setAuthorEdit(-1)}>Cancel</Button>
+      <Button onClick={handleSubmit} primary>
+        Save
+      </Button>
+    </div>
+  </div>
+)
+
+const Editor = compose(
+  withRouter,
+  getContext({ version: PropTypes.object, project: PropTypes.object }),
+  connect(
+    (state, { match: { params: { version } } }) => ({
+      authors: getFragmentAuthors(state, version),
+    }),
+    {
+      setAuthors,
+    },
+  ),
+  reduxForm({
+    form: 'edit',
+    onSubmit: (
+      values,
+      dispatch,
+      { setAuthorEdit, setAuthors, project, version, authors, index, ...rest },
+    ) => {
+      const newAuthors = [
+        ...authors.slice(0, index),
+        values.edit,
+        ...authors.slice(index + 1),
+      ]
+      setAuthors(newAuthors, version.id)
+      setTimeout(setAuthorEdit(-1), 100)
+    },
+  }),
+)(AuthorEdit)
+
 const Adder = compose(
   connect(state => ({
     currentUser: selectCurrentUser(state),
@@ -184,6 +244,7 @@ const Author = ({
   isCorresponding,
   setAsCorresponding,
   parseAuthorType,
+  ...rest
 }) => (
   <div
     className={classnames({
@@ -229,6 +290,12 @@ const Author = ({
           <Icon>mail</Icon>
         </div>
       )}
+      <div
+        className={classnames(classes.corresponding)}
+        onClick={rest.setAuthorEdit(rest.index)}
+      >
+        <Icon>edit-2</Icon>
+      </div>
     </div>
   </div>
 )
@@ -257,6 +324,7 @@ const Authors = ({
     <SortableList
       dragHandle={DragHandle}
       dropItem={dropItem}
+      editItem={Editor}
       items={authors}
       listItem={Author}
       moveItem={moveAuthor}
@@ -276,7 +344,6 @@ export default compose(
       addAuthor,
       setAuthors,
       moveAuthors,
-      updateFragment: actions.updateFragment,
     },
   ),
   lifecycle({
@@ -286,18 +353,17 @@ export default compose(
     },
   }),
   withState('editMode', 'setEditMode', false),
+  withState('editedAuthor', 'setEditedAuthor', -1),
   withHandlers({
+    setAuthorEdit: ({ setEditedAuthor }) => editedAuthor => e => {
+      e && e.preventDefault && e.preventDefault()
+      setEditedAuthor(prev => editedAuthor)
+    },
     setEditMode: ({ setEditMode }) => mode => e => {
       e && e.preventDefault()
       setEditMode(v => mode)
     },
-    dropItem: ({
-      updateFragment,
-      authors,
-      project,
-      version,
-      setAuthors,
-    }) => () => {
+    dropItem: ({ authors, project, version, setAuthors }) => () => {
       setAuthors(authors, version.id)
     },
     countryParser: () => countryCode =>
@@ -312,7 +378,6 @@ export default compose(
       moveAuthors,
       project,
       version,
-      updateFragment,
       match: { params },
     }) => (dragIndex, hoverIndex) => {
       const newAuthors = SortableList.moveItem(authors, dragIndex, hoverIndex)
@@ -320,7 +385,6 @@ export default compose(
     },
     removeAuthor: ({
       authors,
-      updateFragment,
       project,
       version,
       setAuthors,
@@ -330,7 +394,6 @@ export default compose(
     },
     setAsCorresponding: ({
       authors,
-      updateFragment,
       setAuthors,
       version,
       project,
