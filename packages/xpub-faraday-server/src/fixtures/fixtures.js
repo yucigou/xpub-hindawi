@@ -5,8 +5,19 @@ const author = {
   email: 'email@email.com',
   affiliation: 'University',
   country: '',
-  isCorresponding: true,
+  isCorresponding: false,
   isSubmitting: true,
+}
+
+const newAuthor = {
+  firstName: 'Robert',
+  middleName: '',
+  lastName: 'Smith',
+  email: 'email_robert@email.com',
+  affiliation: 'University',
+  country: '',
+  isCorresponding: true,
+  isSubmitting: false,
 }
 
 const invalidAuthor = {
@@ -41,9 +52,18 @@ const fragment = {
   save: jest.fn(),
 }
 
+const user = {
+  type: 'user',
+  username: 'testuser',
+  email: 'test@example.com',
+  password: 'test',
+}
+
 module.exports = {
   author,
   invalidAuthor,
   fragment,
   newSubmittingAuthor,
+  newAuthor,
+  user,
 }

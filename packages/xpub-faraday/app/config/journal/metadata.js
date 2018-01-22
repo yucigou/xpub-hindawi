@@ -1,5 +1,8 @@
+import React from 'react'
+import Logo from '../Logo'
+
 export default {
   issn: '2474-7394',
-  name: 'Hindawi Faraday',
+  name: <Logo srcUrl="/assets/hindawi-logo.png" />,
   logo: '/assets/hindawi-logo.png',
 }

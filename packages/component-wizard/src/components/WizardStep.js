@@ -24,10 +24,12 @@ export default ({
   <div className={classnames(classes.step)}>
     <form className={classnames(classes.form)} onSubmit={handleSubmit}>
       <h3 className={classnames(classes.title)}>{title}</h3>
-      <p
-        className={classnames(classes.subtitle)}
-        dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
-      />
+      {subtitle && (
+        <div
+          className={classnames(classes.subtitle)}
+          dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
+        />
+      )}
       {stepChildren &&
         stepChildren.map(
           ({

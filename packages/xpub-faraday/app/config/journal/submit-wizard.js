@@ -28,6 +28,14 @@ const yesNoWithLabel = ({ label, ...rest }) => (
     <YesOrNo {...rest} />
   </div>
 )
+const Spacing = () => <div style={{ width: '100%', height: '15px' }} />
+const Label = ({ label }) => (
+  <label
+    style={{ display: 'inline-block', marginTop: '15px', marginBottom: '5px' }}
+  >
+    <b>{label}</b>
+  </label>
+)
 
 const journal = {
   label: 'Hindawi Faraday',
@@ -43,20 +51,28 @@ export default {
   steps: [
     {
       label: 'Journal details',
-      title: 'Journal & Field Selection',
+      title: '1. Journal & Field Selection',
       children: [
+        {
+          fieldId: 'label-Journal',
+          renderComponent: Label,
+          label: 'Journal',
+        },
         {
           fieldId: 'metadata.journal',
           renderComponent: Menu,
-          label: 'Journal',
           options: [journal],
           value: journal.value,
           validate: [required],
         },
         {
+          fieldId: 'label-Issue',
+          renderComponent: Label,
+          label: 'Issue',
+        },
+        {
           fieldId: 'metadata.issue',
           renderComponent: Menu,
-          label: 'Issue',
           options: issueTypes,
           validate: [required],
         },
@@ -64,7 +80,7 @@ export default {
     },
     {
       label: 'Pre-submission checklist',
-      title: 'Pre-submission Checklist',
+      title: '2. Pre-submission Checklist',
       subtitle:
         'Before moving forward make sure you have all the needed details prepared by reviewing and checking off the items on this list.',
       children: [
@@ -78,7 +94,7 @@ export default {
     },
     {
       label: 'Manuscript & Authors Details',
-      title: 'Manuscript & Authors Details',
+      title: '3. Manuscript & Authors Details',
       subtitle:
         'Please provide the details of all the authors of this manuscript....',
       children: [
@@ -89,11 +105,23 @@ export default {
           title: 'Manuscript title',
         },
         {
+          fieldId: 'spacing-title',
+          renderComponent: Spacing,
+        },
+        {
+          fieldId: 'label-manuscriptType',
+          renderComponent: Label,
+          label: 'Manuscript Type',
+        },
+        {
           fieldId: 'metadata.type',
           renderComponent: Menu,
-          label: 'Manuscript type',
           options: manuscriptTypes,
           validate: [required],
+        },
+        {
+          fieldId: 'spacing-type',
+          renderComponent: Spacing,
         },
         {
           fieldId: 'metadata.abstract',
@@ -103,9 +131,17 @@ export default {
           validate: [requiredBasedOnType],
         },
         {
+          fieldId: 'spacing-abstract',
+          renderComponent: Spacing,
+        },
+        {
           fieldId: 'authors',
           renderComponent: AuthorList,
           validate: [required],
+        },
+        {
+          fieldId: 'spacing-authors',
+          renderComponent: Spacing,
         },
         {
           fieldId: 'conflicts.hasConflicts',
@@ -127,17 +163,32 @@ export default {
     },
     {
       label: 'Files upload',
-      title: 'Manuscript Files Upload',
+      title: '4. Manuscript Files Upload',
       children: [
+        {
+          fieldId: 'label-manuscript',
+          renderComponent: Label,
+          label: 'Main Manuscript',
+        },
         {
           fieldId: 'files.manuscripts',
           label: 'Main Manuscript',
           renderComponent: Supplementary,
         },
         {
+          fieldId: 'label-supplementary',
+          renderComponent: Label,
+          label: 'Supplemental Files',
+        },
+        {
           fieldId: 'files.supplementary',
           label: 'Supplemental Files',
           renderComponent: Supplementary,
+        },
+        {
+          fieldId: 'label-cover',
+          renderComponent: Label,
+          label: 'Cover Letter',
         },
         {
           fieldId: 'files.coverLetter',

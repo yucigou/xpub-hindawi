@@ -13,10 +13,7 @@ import {
 } from 'pubsweet-component-xpub-authentication/src/components'
 
 import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
-
-import { WizardPage } from 'pubsweet-component-wizard/src/components'
-
-// import { Wizard } from './component-wizard'
+import WizardPage from 'pubsweet-component-wizard/src/components/WizardPage'
 
 const Routes = () => (
   <App>
