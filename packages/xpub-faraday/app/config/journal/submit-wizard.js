@@ -15,7 +15,7 @@ import { declarations } from './'
 import issueTypes from './issues-types'
 import manuscriptTypes from './manuscript-types'
 
-import { requiredBasedOnType, parseAbstract } from './wizard-validators'
+import { requiredBasedOnType } from './wizard-validators'
 
 const min3Chars = minChars(3)
 const declarationsMinSize = minSize(declarations.options.length)
@@ -51,7 +51,7 @@ export default {
   steps: [
     {
       label: 'Journal details',
-      title: 'Journal & Field Selection',
+      title: '1. Journal & Field Selection',
       children: [
         {
           fieldId: 'label-Journal',
@@ -80,7 +80,7 @@ export default {
     },
     {
       label: 'Pre-submission checklist',
-      title: 'Pre-submission Checklist',
+      title: '2. Pre-submission Checklist',
       subtitle:
         'Before moving forward make sure you have all the needed details prepared by reviewing and checking off the items on this list.',
       children: [
@@ -94,7 +94,7 @@ export default {
     },
     {
       label: 'Manuscript & Authors Details',
-      title: 'Manuscript & Authors Details',
+      title: '3. Manuscript & Authors Details',
       subtitle:
         'Please provide the details of all the authors of this manuscript....',
       children: [
@@ -128,7 +128,7 @@ export default {
           renderComponent: AbstractEditor,
           title: 'Abstract',
           placeholder: 'Write an abstract',
-          validate: [requiredBasedOnType, parseAbstract],
+          validate: [requiredBasedOnType],
         },
         {
           fieldId: 'spacing-abstract',
@@ -163,7 +163,7 @@ export default {
     },
     {
       label: 'Files upload',
-      title: 'Manuscript Files Upload',
+      title: '4. Manuscript Files Upload',
       children: [
         {
           fieldId: 'label-manuscript',

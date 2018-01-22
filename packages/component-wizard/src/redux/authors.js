@@ -18,6 +18,10 @@ export const setAuthors = (authors, fragmentId) => dispatch => {
   dispatch(change('wizard', 'authors', authors))
 }
 
+export const moveAuthors = (authors, fragmentId) => dispatch => {
+  dispatch(_setAuthors(authors, fragmentId))
+}
+
 export const addAuthor = (author, collectionId, fragmentId) => dispatch =>
   api
     .create(`/fragments/${fragmentId}/authors`, author)

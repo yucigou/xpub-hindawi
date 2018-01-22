@@ -17,7 +17,12 @@ import {
 } from 'recompose'
 import { TextField, Menu, Icon, ValidatedField, Button } from '@pubsweet/ui'
 
-import { addAuthor, getFragmentAuthors, setAuthors } from '../redux/authors'
+import {
+  addAuthor,
+  getFragmentAuthors,
+  setAuthors,
+  moveAuthors,
+} from '../redux/authors'
 
 import classes from './AuthorList.local.scss'
 import SortableList from './SortableList'
@@ -246,6 +251,7 @@ export default compose(
     {
       addAuthor,
       setAuthors,
+      moveAuthors,
       updateFragment: actions.updateFragment,
     },
   ),
@@ -256,13 +262,15 @@ export default compose(
     },
   }),
   withHandlers({
-    dropItem: ({ updateFragment, authors, project, version }) =>
-      debounce(() => {
-        updateFragment(project, {
-          ...version,
-          authors,
-        })
-      }, 500),
+    dropItem: ({
+      updateFragment,
+      authors,
+      project,
+      version,
+      setAuthors,
+    }) => () => {
+      setAuthors(authors, version.id)
+    },
     countryParser: () => countryCode =>
       countries.find(c => c.value === countryCode).label,
     parseAuthorType: () => (isSubmitting, isCorresponding) => {
@@ -272,14 +280,14 @@ export default compose(
     },
     moveAuthor: ({
       authors,
-      setAuthors,
+      moveAuthors,
       project,
       version,
       updateFragment,
       match: { params },
     }) => (dragIndex, hoverIndex) => {
       const newAuthors = SortableList.moveItem(authors, dragIndex, hoverIndex)
-      setAuthors(newAuthors, params.version)
+      moveAuthors(newAuthors, params.version)
     },
     removeAuthor: ({
       authors,
@@ -289,10 +297,7 @@ export default compose(
       setAuthors,
     }) => authorEmail => () => {
       const newAuthors = authors.filter(a => a.email !== authorEmail)
-      updateFragment(project, {
-        ...version,
-        authors: newAuthors,
-      }).then(() => setAuthors(newAuthors, version.id))
+      setAuthors(newAuthors, version.id)
     },
     setAsCorresponding: ({
       authors,
@@ -305,10 +310,7 @@ export default compose(
         ...a,
         isCorresponding: a.isSubmitting || a.email === authorEmail,
       }))
-      updateFragment(project, {
-        ...version,
-        authors: newAuthors,
-      }).then(() => setAuthors(newAuthors, version.id))
+      setAuthors(newAuthors, version.id)
     },
   }),
 )(Authors)
