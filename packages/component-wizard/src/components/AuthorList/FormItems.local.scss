@@ -1,0 +1,31 @@
+.validated-text {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.label-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 5px;
+
+  .value {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.drag-handle {
+  align-items: center;
+  border-right: 1px solid #444;
+  cursor: move;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

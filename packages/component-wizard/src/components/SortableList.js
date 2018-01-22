@@ -47,6 +47,7 @@ const Item = ({
   connectDropTarget,
   listItem,
   dragHandle,
+  isEditing,
   ...rest
 }) =>
   dragHandle
@@ -82,12 +83,20 @@ const DecoratedItem = compose(
   })),
 )(Item)
 
-const SortableList = ({ items, moveItem, listItem, dragHandle, ...rest }) => (
+const SortableList = ({
+  items,
+  moveItem,
+  listItem,
+  dragHandle,
+  editItem,
+  ...rest
+}) => (
   <div>
     {items.map((item, i) => (
       <DecoratedItem
         dragHandle={dragHandle}
         index={i}
+        isEditing={rest.editedAuthor !== -1}
         key={item.name || Math.random()}
         listItem={listItem}
         moveItem={moveItem}

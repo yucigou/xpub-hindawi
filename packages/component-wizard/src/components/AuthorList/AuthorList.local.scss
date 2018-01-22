@@ -48,12 +48,34 @@
   }
 }
 
-.adder {
+.editor-body {
   border: 1px solid #444;
+  margin: 10px 0;
+  padding: 10px;
+
+  .form-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0 0 0;
+  }
+}
+
+.adder {
   display: flex;
   flex-direction: column;
   margin: 10px 0;
-  padding: 10px;
+
+  .form-body {
+    border: 1px solid #444;
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  .form-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0 0 0;
+  }
 
   .button {
     background-color: #444;
@@ -81,15 +103,6 @@
     margin: 10px 0;
     text-transform: uppercase;
   }
-}
-
-.drag-handle {
-  align-items: center;
-  border-right: 1px solid #444;
-  cursor: move;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .validated-text {

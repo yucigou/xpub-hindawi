@@ -14,8 +14,8 @@ const _setAuthors = (authors, fragmentId) => ({
 
 // actions
 export const setAuthors = (authors, fragmentId) => dispatch => {
-  dispatch(_setAuthors(authors, fragmentId))
   dispatch(change('wizard', 'authors', authors))
+  dispatch(_setAuthors(authors, fragmentId))
 }
 
 export const moveAuthors = (authors, fragmentId) => dispatch => {
