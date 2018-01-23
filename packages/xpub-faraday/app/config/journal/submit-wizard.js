@@ -9,7 +9,7 @@ import {
 } from '@pubsweet/ui'
 import uploadFileFn from 'xpub-upload'
 import { required, minChars, minSize } from 'xpub-validators'
-import { AuthorList } from 'pubsweet-component-wizard/src/components/AuthorList'
+import { AuthorList } from 'pubsweet-components-faraday/src/components'
 
 import { declarations } from './'
 import issueTypes from './issues-types'
