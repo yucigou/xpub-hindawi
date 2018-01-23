@@ -7,18 +7,26 @@ import { reduxForm, formValueSelector, SubmissionError } from 'redux-form'
 
 import WizardStep from './WizardStep'
 
+import {
+  getAutosave,
+  autosaveRequest,
+  autosaveFailure,
+  autosaveSuccess,
+} from '../redux/autosave'
+
 const wizardSelector = formValueSelector('wizard')
 
 const onChange = (
   values,
   dispatch,
-  { project, version, wizard: { formSectionKeys } },
+  { project, version, wizard: { formSectionKeys }, setLoader },
   prevValues,
 ) => {
   const prev = pick(prevValues, formSectionKeys)
   const newValues = pick(values, formSectionKeys)
-  // TODO: fix it if this sucks down the road
+  // TODO: fix this if it sucks down the road
   if (!isEqual(prev, newValues)) {
+    dispatch(autosaveRequest())
     dispatch(
       actions.updateFragment(project, {
         id: version.id,
@@ -26,6 +34,8 @@ const onChange = (
         ...newValues,
       }),
     )
+      .then(({ receivedAt }) => dispatch(autosaveSuccess(receivedAt)))
+      .catch(() => dispatch(autosaveFailure()))
   }
 }
 
@@ -85,6 +95,7 @@ export default compose(
   })),
   connect((state, { wizard: { formSectionKeys } }) => ({
     formValues: wizardSelector(state, ...formSectionKeys),
+    autosave: getAutosave(state),
   })),
   reduxForm({
     form: 'wizard',

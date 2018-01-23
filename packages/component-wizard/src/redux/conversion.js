@@ -1,5 +1,4 @@
 import { actions } from 'pubsweet-client'
-
 /* constants */
 
 export const CREATE_DRAFT_REQUEST = 'CREATE_DRAFT_REQUEST'

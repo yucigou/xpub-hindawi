@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import { ValidatedField, Button } from '@pubsweet/ui'
 
 import classes from './WizardStep.local.scss'
+import AutosaveIndicator from './AutosaveIndicator'
 
 export default ({
   children: stepChildren,
@@ -19,6 +20,7 @@ export default ({
   formValues,
   wizard,
   dispatchFns,
+  autosave,
   ...rest
 }) => (
   <div className={classnames(classes.step)}>
@@ -74,5 +76,6 @@ export default ({
         </Button>
       </div>
     </form>
+    <AutosaveIndicator {...autosave} />
   </div>
 )
