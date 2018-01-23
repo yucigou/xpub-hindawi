@@ -24,13 +24,11 @@ const items = [
 const Item = ({ isOver, isDragging, ...rest }) =>
   <div>`${rest.firstName} ${rest.lastName}`</div>
 
-const DragHandle
-
 <SortableList
   items={items}
   listItem={Item}
   moveItem={(dragIndex, hoverIndex) => change items}
-/>
+  />
 ```
 
 ### With custom drag handle
@@ -38,16 +36,16 @@ const DragHandle
 const DragHandle = () => <div>Drag me!</div>
 
 const ItemWithDragHandle = ({ dragHandle, ...rest }) => <div>
-  {dragHandle}
-  <span>Rest of the content.</span>
-</div>
+    {dragHandle}
+    <span>Rest of the content.</span>
+  </div>
 
 <SortableList
   ...
   listItem={ItemWithDragHandle}
   dragHandle={DragHandle}
   ...
-/>
+  />
 ```
 
 ### How to move items around
@@ -56,14 +54,14 @@ To move items of the parent container whenever `moveItem` function is called we 
 
 ```js
 const Container = ({ moveItem, items }) => <div>
-  ...
-  <SortableList
-    items={items}
-    listItem={Item}
-    moveItem={moveItem}
-  />
-  ...
-</div>
+    ...
+    <SortableList
+      items={items}
+      listItem={Item}
+      moveItem={moveItem}
+      />
+    ...
+  </div>
 ```
 Enhanced using recompose
 ```js
