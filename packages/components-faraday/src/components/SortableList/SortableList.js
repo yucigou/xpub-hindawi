@@ -37,8 +37,8 @@ const itemTarget = {
     }
     monitor.getItem().index = hoverIndex
   },
-  drop({ dropItem }) {
-    if (dropItem && typeof dropItem === 'function') dropItem()
+  drop({ dropItem, index }) {
+    if (dropItem && typeof dropItem === 'function') dropItem(index)
   },
 }
 
@@ -48,7 +48,6 @@ const Item = ({
   connectDropTarget,
   listItem,
   dragHandle,
-  isEditing,
   ...rest
 }) =>
   dragHandle
@@ -97,7 +96,6 @@ const SortableList = ({
       <DecoratedItem
         dragHandle={dragHandle}
         index={i}
-        isEditing={rest.editedAuthor !== -1}
         key={item.name || Math.random()}
         listItem={listItem}
         moveItem={moveItem}

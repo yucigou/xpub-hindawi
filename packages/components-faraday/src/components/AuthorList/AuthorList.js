@@ -65,7 +65,6 @@ const Authors = ({
       <SortableList
         dragHandle={DragHandle}
         dropItem={dropItem}
-        editedAuthor={editedAuthor}
         items={authors}
         listItem={Author}
         moveItem={moveAuthor}
