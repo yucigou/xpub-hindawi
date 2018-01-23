@@ -15,11 +15,18 @@ import {
 import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
 import WizardPage from 'pubsweet-component-wizard/src/components/WizardPage'
 
+const ConfirmationPage = () => <h1>Confirmation page</h1>
+
 const Routes = () => (
   <App>
     <Route component={LoginPage} exact path="/login" />
     <Route component={SignupPage} exact path="/signup" />
     <PrivateRoute component={DashboardPage} exact path="/" />
+    <PrivateRoute
+      component={ConfirmationPage}
+      exact
+      path="/confirmation-page"
+    />
     <PrivateRoute component={LogoutPage} exact path="/logout" />
     <PrivateRoute
       component={WizardPage}

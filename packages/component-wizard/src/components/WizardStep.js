@@ -21,6 +21,9 @@ export default ({
   wizard,
   dispatchFns,
   autosave,
+  confirmation,
+  toggleConfirmation,
+  wizard: { confirmationModal: ConfirmationModal },
   ...rest
 }) => (
   <div className={classnames(classes.step)}>
@@ -75,6 +78,11 @@ export default ({
             : `${wizard.nextText || 'Next'}`}
         </Button>
       </div>
+      {confirmation && (
+        <div className={classnames(classes.modal)}>
+          <ConfirmationModal toggleConfirming={toggleConfirmation} />
+        </div>
+      )}
     </form>
     <AutosaveIndicator {...autosave} />
   </div>
