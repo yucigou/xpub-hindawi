@@ -91,25 +91,22 @@ const SortableList = ({
   dragHandle,
   editItem,
   ...rest
-}) => {
-  console.log('Sortablelist', rest)
-  return (
-    <div>
-      {items.map((item, i) => (
-        <DecoratedItem
-          dragHandle={dragHandle}
-          index={i}
-          isEditing={rest.editedAuthor !== -1}
-          key={item.name || Math.random()}
-          listItem={listItem}
-          moveItem={moveItem}
-          {...item}
-          {...rest}
-        />
-      ))}
-    </div>
-  )
-}
+}) => (
+  <div>
+    {items.map((item, i) => (
+      <DecoratedItem
+        dragHandle={dragHandle}
+        index={i}
+        isEditing={rest.editedAuthor !== -1}
+        key={item.name || Math.random()}
+        listItem={listItem}
+        moveItem={moveItem}
+        {...item}
+        {...rest}
+      />
+    ))}
+  </div>
+)
 
 // helper function for sortable lists
 SortableList.moveItem = (items, dragIndex, hoverIndex) => {
