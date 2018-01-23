@@ -39,7 +39,7 @@ const DragHandle = () => <div>Drag me!</div>
 
 const ItemWithDragHandle = ({ dragHandle, ...rest }) => <div>
   {dragHandle}
-  <span>Rest of the item' content.</span>
+  <span>Rest of the content.</span>
 </div>
 
 <SortableList
