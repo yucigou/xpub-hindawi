@@ -29,7 +29,14 @@ const onChange = (
   }
 }
 
-const submitManuscript = (values, dispatch, project, version, history) => {
+const submitManuscript = (
+  values,
+  dispatch,
+  project,
+  version,
+  history,
+  redirectPath = '/',
+) => {
   dispatch(
     actions.updateFragment(project, {
       id: version.id,
@@ -48,7 +55,7 @@ const submitManuscript = (values, dispatch, project, version, history) => {
       ),
     )
     .then(() => {
-      history.push('/')
+      history.push(redirectPath)
     })
     .catch(error => {
       if (error.validationErrors) {
@@ -60,12 +67,31 @@ const submitManuscript = (values, dispatch, project, version, history) => {
 const onSubmit = (
   values,
   dispatch,
-  { nextStep, isFinal, history, project, version, ...rest },
+  {
+    nextStep,
+    isFinal,
+    history,
+    project,
+    version,
+    confirmation,
+    wizard: { confirmationModal, submissionRedirect },
+    toggleConfirmation,
+    ...rest
+  },
 ) => {
   if (!isFinal) {
     nextStep()
+  } else if (confirmationModal && !confirmation) {
+    toggleConfirmation()
   } else {
-    submitManuscript(values, dispatch, project, version, history)
+    submitManuscript(
+      values,
+      dispatch,
+      project,
+      version,
+      history,
+      submissionRedirect,
+    )
   }
 }
 
@@ -78,6 +104,8 @@ export default compose(
     version: PropTypes.object,
     wizard: PropTypes.object,
     dispatchFns: PropTypes.object,
+    confirmation: PropTypes.bool,
+    toggleConfirmation: PropTypes.func,
   }),
   withProps(({ version, wizard }) => ({
     initialValues: pick(version, wizard.formSectionKeys),
