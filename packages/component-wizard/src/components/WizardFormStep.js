@@ -74,7 +74,7 @@ const onSubmit = (
     project,
     version,
     confirmation,
-    wizard: { confirmationModal, submissionRedirect },
+    wizard: { confirmationModal, submissionRedirect, formSectionKeys },
     toggleConfirmation,
     ...rest
   },
@@ -84,8 +84,9 @@ const onSubmit = (
   } else if (confirmationModal && !confirmation) {
     toggleConfirmation()
   } else {
+    const newValues = pick(values, formSectionKeys)
     submitManuscript(
-      values,
+      newValues,
       dispatch,
       project,
       version,
