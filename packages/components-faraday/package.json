@@ -1,0 +1,19 @@
+{
+  "name": "pubsweet-components-faraday",
+  "version": "0.0.1",
+  "main": "src",
+  "license": "MIT",
+  "dependencies": {
+    "@pubsweet/ui": "^0.1.1",
+    "moment": "^2.20.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.2.2",
+    "recompose": "^0.26.0",
+    "redux": "^3.6.0",
+    "redux-form": "^7.0.3"
+  }
+}
