@@ -14,6 +14,7 @@ import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/Dash
 import WizardPage from 'pubsweet-component-wizard/src/components/WizardPage'
 import ManuscriptPage from 'pubsweet-component-xpub-manuscript/src/components/ManuscriptPage'
 import ConfirmationPage from 'pubsweet-components-faraday/src/components/UIComponents/ConfirmationPage'
+import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/NotFound'
 
 const Routes = () => (
   <App>
@@ -36,6 +37,7 @@ const Routes = () => (
       exact
       path="/projects/:project/versions/:version/manuscript"
     />
+    <Route component={NotFound} path="*" />
   </App>
 )
 
