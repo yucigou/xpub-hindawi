@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import App from 'pubsweet-component-xpub-app/src/components'
 
@@ -18,26 +18,28 @@ import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/No
 
 const Routes = () => (
   <App>
-    <Route component={LoginPage} exact path="/login" />
-    <Route component={SignupPage} exact path="/signup" />
-    <PrivateRoute component={DashboardPage} exact path="/" />
-    <PrivateRoute
-      component={ConfirmationPage}
-      exact
-      path="/confirmation-page"
-    />
-    <PrivateRoute component={LogoutPage} exact path="/logout" />
-    <PrivateRoute
-      component={WizardPage}
-      exact
-      path="/projects/:project/versions/:version/submit"
-    />
-    <PrivateRoute
-      component={ManuscriptPage}
-      exact
-      path="/projects/:project/versions/:version/manuscript"
-    />
-    <Route component={NotFound} path="*" />
+    <Switch>
+      <Route component={LoginPage} exact path="/login" />
+      <Route component={SignupPage} exact path="/signup" />
+      <PrivateRoute component={DashboardPage} exact path="/" />
+      <PrivateRoute
+        component={ConfirmationPage}
+        exact
+        path="/confirmation-page"
+      />
+      <PrivateRoute component={LogoutPage} exact path="/logout" />
+      <PrivateRoute
+        component={WizardPage}
+        exact
+        path="/projects/:project/versions/:version/submit"
+      />
+      <PrivateRoute
+        component={ManuscriptPage}
+        exact
+        path="/projects/:project/versions/:version/manuscript"
+      />
+      <Route component={NotFound} />
+    </Switch>
   </App>
 )
 

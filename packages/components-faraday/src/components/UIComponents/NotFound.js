@@ -1,8 +1,11 @@
 import React from 'react'
 import { Icon } from '@pubsweet/ui'
+import classnames from 'classnames'
+
+import classes from './UIComponents.local.scss'
 
 const NotFound = ({ history }) => (
-  <div style={{ width: '70vw', margin: '0 auto', textAlign: 'center' }}>
+  <div className={classnames(classes.container)}>
     <div>
       <Icon size={32}>cloud-off</Icon>
     </div>
