@@ -8,8 +8,9 @@ const express = require('express')
 const fixtures = require('./fixtures/fixtures')
 const passport = require('passport')
 const BearerStrategy = require('passport-http-bearer').Strategy
+const cloneDeep = require('lodash/cloneDeep')
 
-function makeApp(response) {
+function makeApp(fragment, user, existingUser, newUser) {
   const app = express()
   app.use(bodyParser.json())
   // Passport strategies
@@ -20,16 +21,26 @@ function makeApp(response) {
       done(null, fixtures.user, { scope: 'all' }),
     ),
   )
-
   app.locals.passport = passport
-
   app.locals.models = {
     Fragment: {
       find: jest.fn(
         () =>
-          response instanceof Error
-            ? Promise.reject(response)
-            : Promise.resolve(response),
+          fragment instanceof Error
+            ? Promise.reject(fragment)
+            : Promise.resolve(fragment),
+      ),
+    },
+    User: {
+      find: jest.fn(
+        () =>
+          user instanceof Error ? Promise.reject(user) : Promise.resolve(user),
+      ),
+      findByEmail: jest.fn(
+        () =>
+          existingUser instanceof Error
+            ? Promise.reject(existingUser)
+            : Promise.resolve(existingUser),
       ),
     },
   }
@@ -39,6 +50,9 @@ function makeApp(response) {
 }
 
 describe('Author Backend API', () => {
+  let testFixtures = {}
+  beforeEach(() => (testFixtures = cloneDeep(fixtures)))
+
   it('should return an error if fragment is not found', () => {
     const error = new Error()
     error.name = 'NotFoundError'
@@ -46,7 +60,7 @@ describe('Author Backend API', () => {
     return makeApp(error)
       .post('/api/fragments/123/authors')
       .set('Authorization', 'Bearer 123')
-      .send(fixtures.author)
+      .send(testFixtures.author)
       .expect(404, '{"error":"Fragment not found"}')
   })
 
@@ -59,29 +73,75 @@ describe('Author Backend API', () => {
     return makeApp(error)
       .post('/api/fragments/123/authors')
       .set('Authorization', 'Bearer 123')
-      .send(fixtures.invalidAuthor)
+      .send(testFixtures.invalidAuthor)
       .expect(404, '{"error":"firstName is required"}')
   })
 
   it('should return an error if an author already exists with the same email', () =>
-    makeApp(fixtures.fragment)
+    makeApp(testFixtures.fragment)
       .post('/api/fragments/123-valid-id/authors')
       .set('Authorization', 'Bearer 123')
-      .send(fixtures.author)
+      .send(testFixtures.author)
       .expect(400, '{"error":"Author with the same email already exists"}'))
 
   it('should return an error if there already is a submitting author', () =>
-    makeApp(fixtures.fragment)
+    makeApp(testFixtures.fragment)
       .post('/api/fragments/123-valid-id/authors')
       .set('Authorization', 'Bearer 123')
-      .send(fixtures.newSubmittingAuthor)
+      .send(testFixtures.newSubmittingAuthor)
       .expect(400, '{"error":"There can only be one sumbitting author"}'))
 
-  it('should return success', () =>
-    makeApp(fixtures.fragment)
+  it('should return success when saving a new author', () =>
+    makeApp(testFixtures.fragment, testFixtures.user)
       .post('/api/fragments/123-valid-id/authors')
       .set('Authorization', 'Bearer 123')
-      .send(fixtures.newAuthor)
+      .send(testFixtures.newAuthor)
       .expect(200, '')
-      .then(() => expect(fixtures.fragment.save).toHaveBeenCalled()))
+      .then(() => expect(testFixtures.fragment.save).toHaveBeenCalled()))
+
+  it('should return success when the admin adds a submitting author and the author already has a corresponding user account', () =>
+    makeApp(
+      testFixtures.adminFragment,
+      testFixtures.admin,
+      testFixtures.existingUser,
+    )
+      .post('/api/fragments/123-valid-id/authors')
+      .set('Authorization', 'Bearer 123')
+      .send(testFixtures.author)
+      .expect(200, '')
+      .then(() => {
+        expect(testFixtures.adminFragment.save).toHaveBeenCalled()
+        expect(testFixtures.adminFragment.owners.length).toBeGreaterThan(0)
+        expect(testFixtures.adminFragment.owners[0]).toBe('123987')
+      }))
+
+  // it('should return success when the admin adds a submitting author and creates a corresponding user account', () => {
+  //   const error = new Error()
+  //   error.name = 'NotFoundError'
+  //   error.status = 404
+  //   const newUser = {
+  //     username: `${testFixtures.author.firstName}${
+  //       testFixtures.author.lastName
+  //     }${Math.floor(Math.random() * 100)}`,
+  //     email: testFixtures.author.email,
+  //     password: 'test',
+  //     id: '888999',
+  //   }
+  //   // console.log(testFixtures.adminFragment)
+  //   return makeApp(
+  //     testFixtures.adminFragment,
+  //     testFixtures.admin,
+  //     error,
+  //     newUser,
+  //   )
+  //     .post('/api/fragments/123-valid-id/authors')
+  //     .set('Authorization', 'Bearer 123')
+  //     .send(testFixtures.author)
+  //     .expect(200, '')
+  //     .then(() => {
+  //       expect(testFixtures.adminFragment.save).toHaveBeenCalled()
+  //       expect(testFixtures.adminFragment.owners.length).toBeGreaterThan(0)
+  //       expect(testFixtures.adminFragment.owners[0]).toBe('888999')
+  //     })
+  // })
 })

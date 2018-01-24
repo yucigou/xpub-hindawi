@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser')
+const uuid = require('uuid')
 
 const AuthorBackend = app => {
   const authBearer = app.locals.passport.authenticate('bearer', {
@@ -39,7 +40,38 @@ const AuthorBackend = app => {
             return
           }
         }
+        req.body.id = uuid.v4()
         fragment.authors.push(req.body)
+        const reqUser = await app.locals.models.User.find(req.user)
+        if (reqUser.admin === true && req.body.isSubmitting === true) {
+          try {
+            // check if author has corresponding user
+            const user = await app.locals.models.User.findByEmail(
+              req.body.email,
+            )
+            fragment.owners.push(user.id)
+          } catch (e) {
+            if (e.name === 'NotFoundError') {
+              // create a new User account
+              const userBody = {
+                username: `${req.body.firstName}${
+                  req.body.lastName
+                }${Math.floor(Math.random() * 100)}`,
+                email: req.body.email,
+                password: uuid.v4(),
+              }
+              console.log(new app.locals.models.User())
+              let newUser = new app.locals.models.User(userBody)
+              console.log('user nou', newUser)
+              newUser = await newUser.save()
+              fragment.owners.push(newUser.id)
+            } else {
+              console.log('error naspa')
+              res.status(e.status).json(e)
+              return
+            }
+          }
+        }
         fragment = await fragment.save()
         res.status(200).json(fragment)
       } catch (e) {
