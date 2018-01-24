@@ -7,6 +7,7 @@ const author = {
   country: '',
   isCorresponding: false,
   isSubmitting: true,
+  id: '123',
 }
 
 const newAuthor = {
@@ -18,6 +19,7 @@ const newAuthor = {
   country: '',
   isCorresponding: true,
   isSubmitting: false,
+  id: '456',
 }
 
 const invalidAuthor = {
@@ -29,6 +31,7 @@ const invalidAuthor = {
   country: '',
   isCorresponding: false,
   isSubmitting: false,
+  id: '768',
 }
 
 const newSubmittingAuthor = {
@@ -40,6 +43,7 @@ const newSubmittingAuthor = {
   country: '',
   isCorresponding: false,
   isSubmitting: true,
+  id: '879',
 }
 
 const fragment = {
@@ -52,11 +56,38 @@ const fragment = {
   save: jest.fn(),
 }
 
+const adminFragment = {
+  type: 'fragment',
+  fragmentType: 'blogpost',
+  title: 'Just your admin blogpost',
+  source: '<blog></blog>',
+  presentation: '<p></p>',
+  authors: [],
+  save: jest.fn(),
+  owners: [],
+}
+
 const user = {
   type: 'user',
   username: 'testuser',
   email: 'test@example.com',
   password: 'test',
+}
+
+const admin = {
+  type: 'user',
+  username: 'admin',
+  email: 'admin@example.com',
+  password: 'test',
+  admin: true,
+}
+
+const existingUser = {
+  type: 'user',
+  username: 'authoruser',
+  email: 'email@email.com',
+  password: 'test',
+  id: '123987',
 }
 
 module.exports = {
@@ -66,4 +97,7 @@ module.exports = {
   newSubmittingAuthor,
   newAuthor,
   user,
+  admin,
+  adminFragment,
+  existingUser,
 }
