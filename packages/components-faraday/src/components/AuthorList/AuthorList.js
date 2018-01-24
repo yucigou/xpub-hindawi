@@ -10,6 +10,7 @@ import {
   withState,
 } from 'recompose'
 import { change } from 'redux-form'
+import { SortableList } from 'pubsweet-components-faraday/src/components'
 
 import {
   addAuthor,
@@ -17,8 +18,6 @@ import {
   setAuthors,
   moveAuthors,
 } from '../../redux/authors'
-
-import SortableList from '../SortableList'
 
 import Author from './Author'
 import StaticList from './StaticList'
@@ -66,7 +65,6 @@ const Authors = ({
       <SortableList
         dragHandle={DragHandle}
         dropItem={dropItem}
-        editedAuthor={editedAuthor}
         items={authors}
         listItem={Author}
         moveItem={moveAuthor}

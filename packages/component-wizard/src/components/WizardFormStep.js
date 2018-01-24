@@ -7,18 +7,26 @@ import { reduxForm, formValueSelector, SubmissionError } from 'redux-form'
 
 import WizardStep from './WizardStep'
 
+import {
+  getAutosave,
+  autosaveRequest,
+  autosaveFailure,
+  autosaveSuccess,
+} from '../redux/autosave'
+
 const wizardSelector = formValueSelector('wizard')
 
 const onChange = (
   values,
   dispatch,
-  { project, version, wizard: { formSectionKeys } },
+  { project, version, wizard: { formSectionKeys }, setLoader },
   prevValues,
 ) => {
   const prev = pick(prevValues, formSectionKeys)
   const newValues = pick(values, formSectionKeys)
-  // TODO: fix it if this sucks down the road
+  // TODO: fix this if it sucks down the road
   if (!isEqual(prev, newValues)) {
+    dispatch(autosaveRequest())
     dispatch(
       actions.updateFragment(project, {
         id: version.id,
@@ -26,10 +34,19 @@ const onChange = (
         ...newValues,
       }),
     )
+      .then(({ receivedAt }) => dispatch(autosaveSuccess(receivedAt)))
+      .catch(() => dispatch(autosaveFailure()))
   }
 }
 
-const submitManuscript = (values, dispatch, project, version, history) => {
+const submitManuscript = (
+  values,
+  dispatch,
+  project,
+  version,
+  history,
+  redirectPath = '/',
+) => {
   dispatch(
     actions.updateFragment(project, {
       id: version.id,
@@ -48,7 +65,7 @@ const submitManuscript = (values, dispatch, project, version, history) => {
       ),
     )
     .then(() => {
-      history.push('/')
+      history.push(redirectPath, { project: project.id, version: version.id })
     })
     .catch(error => {
       if (error.validationErrors) {
@@ -60,12 +77,32 @@ const submitManuscript = (values, dispatch, project, version, history) => {
 const onSubmit = (
   values,
   dispatch,
-  { nextStep, isFinal, history, project, version, ...rest },
+  {
+    nextStep,
+    isFinal,
+    history,
+    project,
+    version,
+    confirmation,
+    wizard: { confirmationModal, submissionRedirect, formSectionKeys },
+    toggleConfirmation,
+    ...rest
+  },
 ) => {
   if (!isFinal) {
     nextStep()
+  } else if (confirmationModal && !confirmation) {
+    toggleConfirmation()
   } else {
-    submitManuscript(values, dispatch, project, version, history)
+    const newValues = pick(values, formSectionKeys)
+    submitManuscript(
+      newValues,
+      dispatch,
+      project,
+      version,
+      history,
+      submissionRedirect,
+    )
   }
 }
 
@@ -78,6 +115,8 @@ export default compose(
     version: PropTypes.object,
     wizard: PropTypes.object,
     dispatchFns: PropTypes.object,
+    confirmation: PropTypes.bool,
+    toggleConfirmation: PropTypes.func,
   }),
   withProps(({ version, wizard }) => ({
     initialValues: pick(version, wizard.formSectionKeys),
@@ -85,6 +124,7 @@ export default compose(
   })),
   connect((state, { wizard: { formSectionKeys } }) => ({
     formValues: wizardSelector(state, ...formSectionKeys),
+    autosave: getAutosave(state),
   })),
   reduxForm({
     form: 'wizard',

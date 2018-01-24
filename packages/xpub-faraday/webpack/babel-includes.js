@@ -8,6 +8,7 @@ module.exports = [
   /pubsweet-[^/]+\/src/,
   /xpub-[^/]+\/src/,
   /component-[^/]+\/src/,
+  /components-[^/]+\/src/,
   /wax-[^/]+\/src/,
   /@pubsweet\/[^/]+\/src/,
 ]

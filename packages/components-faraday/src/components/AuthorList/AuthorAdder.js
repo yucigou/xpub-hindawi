@@ -72,10 +72,8 @@ export default compose(
     if (!admin) {
       return {
         initialValues: {
-          author: {
-            email,
-            firstName: username,
-          },
+          email,
+          firstName: username,
         },
       }
     }

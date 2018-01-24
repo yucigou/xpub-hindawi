@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import { ValidatedField, Button } from '@pubsweet/ui'
 
 import classes from './WizardStep.local.scss'
+import AutosaveIndicator from './AutosaveIndicator'
 
 export default ({
   children: stepChildren,
@@ -19,6 +20,10 @@ export default ({
   formValues,
   wizard,
   dispatchFns,
+  autosave,
+  confirmation,
+  toggleConfirmation,
+  wizard: { confirmationModal: ConfirmationModal },
   ...rest
 }) => (
   <div className={classnames(classes.step)}>
@@ -73,6 +78,12 @@ export default ({
             : `${wizard.nextText || 'Next'}`}
         </Button>
       </div>
+      {confirmation && (
+        <div className={classnames(classes.modal)}>
+          <ConfirmationModal toggleConfirming={toggleConfirmation} />
+        </div>
+      )}
     </form>
+    <AutosaveIndicator {...autosave} />
   </div>
 )

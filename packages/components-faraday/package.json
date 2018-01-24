@@ -1,5 +1,5 @@
 {
-  "name": "pubsweet-component-wizard",
+  "name": "pubsweet-components-faraday",
   "version": "0.0.1",
   "main": "src",
   "license": "MIT",
@@ -15,12 +15,5 @@
     "recompose": "^0.26.0",
     "redux": "^3.6.0",
     "redux-form": "^7.0.3"
-  },
-  "peerDependencies": {
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-redux": "^5.0.2",
-    "react-router-dom": "^4.2.2"
   }
 }

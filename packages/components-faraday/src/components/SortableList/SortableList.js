@@ -1,7 +1,8 @@
 import React from 'react'
 import { compose } from 'recompose'
 import { findDOMNode } from 'react-dom'
-import { DragSource, DropTarget } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragSource, DropTarget, DragDropContext } from 'react-dnd'
 
 const itemSource = {
   beginDrag(props) {
@@ -36,8 +37,8 @@ const itemTarget = {
     }
     monitor.getItem().index = hoverIndex
   },
-  drop({ dropItem }) {
-    if (dropItem && typeof dropItem === 'function') dropItem()
+  drop({ dropItem, index }) {
+    if (dropItem && typeof dropItem === 'function') dropItem(index)
   },
 }
 
@@ -47,7 +48,6 @@ const Item = ({
   connectDropTarget,
   listItem,
   dragHandle,
-  isEditing,
   ...rest
 }) =>
   dragHandle
@@ -96,7 +96,6 @@ const SortableList = ({
       <DecoratedItem
         dragHandle={dragHandle}
         index={i}
-        isEditing={rest.editedAuthor !== -1}
         key={item.name || Math.random()}
         listItem={listItem}
         moveItem={moveItem}
@@ -125,4 +124,4 @@ SortableList.moveItem = (items, dragIndex, hoverIndex) => {
   ]
 }
 
-export default SortableList
+export default DragDropContext(HTML5Backend)(SortableList)

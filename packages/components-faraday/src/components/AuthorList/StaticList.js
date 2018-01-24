@@ -10,6 +10,7 @@ export default ({
   editComponent,
   setAuthorEdit,
   parseAuthorType,
+  ...rest
 }) => (
   <div>
     {authors.map(
@@ -32,6 +33,7 @@ export default ({
             countryParser={countryParser}
             parseAuthorType={parseAuthorType}
             removeAuthor={removeAuthor}
+            {...rest}
           />
         ),
     )}

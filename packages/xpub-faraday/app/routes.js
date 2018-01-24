@@ -1,7 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import { DragDropContext } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
+import { Route, Switch } from 'react-router-dom'
 
 import App from 'pubsweet-component-xpub-app/src/components'
 
@@ -14,19 +12,35 @@ import {
 
 import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
 import WizardPage from 'pubsweet-component-wizard/src/components/WizardPage'
+import ManuscriptPage from 'pubsweet-component-xpub-manuscript/src/components/ManuscriptPage'
+import ConfirmationPage from 'pubsweet-components-faraday/src/components/UIComponents/ConfirmationPage'
+import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/NotFound'
 
 const Routes = () => (
   <App>
-    <Route component={LoginPage} exact path="/login" />
-    <Route component={SignupPage} exact path="/signup" />
-    <PrivateRoute component={DashboardPage} exact path="/" />
-    <PrivateRoute component={LogoutPage} exact path="/logout" />
-    <PrivateRoute
-      component={WizardPage}
-      exact
-      path="/projects/:project/versions/:version/submit"
-    />
+    <Switch>
+      <Route component={LoginPage} exact path="/login" />
+      <Route component={SignupPage} exact path="/signup" />
+      <PrivateRoute component={DashboardPage} exact path="/" />
+      <PrivateRoute
+        component={ConfirmationPage}
+        exact
+        path="/confirmation-page"
+      />
+      <PrivateRoute component={LogoutPage} exact path="/logout" />
+      <PrivateRoute
+        component={WizardPage}
+        exact
+        path="/projects/:project/versions/:version/submit"
+      />
+      <PrivateRoute
+        component={ManuscriptPage}
+        exact
+        path="/projects/:project/versions/:version/manuscript"
+      />
+      <Route component={NotFound} />
+    </Switch>
   </App>
 )
 
-export default DragDropContext(HTML5Backend)(Routes)
+export default Routes

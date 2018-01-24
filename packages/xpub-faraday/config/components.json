@@ -4,5 +4,6 @@
   "pubsweet-component-xpub-dashboard",
   "xpub-faraday-server",
   "pubsweet-component-ink-backend",
-  "pubsweet-component-wizard"
+  "pubsweet-component-wizard",
+  "pubsweet-components-faraday"
 ]

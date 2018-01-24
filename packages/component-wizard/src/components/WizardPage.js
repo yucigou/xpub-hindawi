@@ -33,6 +33,7 @@ export default compose(
     }),
   ),
   withState('step', 'changeStep', 0),
+  withState('confirmation', 'setConfirmation', false),
   withHandlers({
     getSteps: ({ journal: { wizard: { steps } } }) => () =>
       steps.map(w => w.label),
@@ -41,6 +42,8 @@ export default compose(
     },
     prevStep: ({ changeStep }) => () =>
       changeStep(step => (step <= 0 ? step : step - 1)),
+    toggleConfirmation: ({ setConfirmation }) => () =>
+      setConfirmation(confirmation => !confirmation),
   }),
   withContext(
     {
@@ -51,6 +54,8 @@ export default compose(
       version: PropTypes.object,
       wizard: PropTypes.object,
       dispatchFns: PropTypes.object,
+      confirmation: PropTypes.bool,
+      toggleConfirmation: PropTypes.func,
     },
     ({
       history,
@@ -59,6 +64,8 @@ export default compose(
       version,
       journal: { wizard },
       dispatchFns,
+      confirmation,
+      toggleConfirmation,
     }) => ({
       history,
       isFinal: step === wizard.steps.length - 1,
@@ -67,6 +74,8 @@ export default compose(
       version,
       wizard,
       dispatchFns,
+      confirmation,
+      toggleConfirmation,
     }),
   ),
 )(Wizard)
