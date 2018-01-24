@@ -65,7 +65,7 @@ const submitManuscript = (
       ),
     )
     .then(() => {
-      history.push(redirectPath)
+      history.push(redirectPath, { project: project.id, version: version.id })
     })
     .catch(error => {
       if (error.validationErrors) {

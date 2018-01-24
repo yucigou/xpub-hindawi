@@ -12,8 +12,8 @@ import {
 
 import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
 import WizardPage from 'pubsweet-component-wizard/src/components/WizardPage'
-
-const ConfirmationPage = () => <h1>Confirmation page</h1>
+import ManuscriptPage from 'pubsweet-component-xpub-manuscript/src/components/ManuscriptPage'
+import ConfirmationPage from 'pubsweet-components-faraday/src/components/UIComponents/ConfirmationPage'
 
 const Routes = () => (
   <App>
@@ -30,6 +30,11 @@ const Routes = () => (
       component={WizardPage}
       exact
       path="/projects/:project/versions/:version/submit"
+    />
+    <PrivateRoute
+      component={ManuscriptPage}
+      exact
+      path="/projects/:project/versions/:version/manuscript"
     />
   </App>
 )
