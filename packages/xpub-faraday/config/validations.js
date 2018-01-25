@@ -74,6 +74,7 @@ module.exports = {
           country: Joi.string().allow(''),
           isSubmitting: Joi.boolean(),
           isCorresponding: Joi.boolean(),
+          id: Joi.string().uuid(),
         }),
       ),
     },

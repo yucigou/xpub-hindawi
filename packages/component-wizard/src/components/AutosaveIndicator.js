@@ -1,8 +1,11 @@
 import React from 'react'
 import moment from 'moment'
+import { connect } from 'react-redux'
 import classnames from 'classnames'
 import { compose, withProps } from 'recompose'
 import { Icon } from '@pubsweet/ui'
+
+import { getAutosave } from '../redux/autosave'
 
 import classes from './AutosaveIndicator.local.scss'
 
@@ -10,38 +13,54 @@ const durationParser = lastUpdate => {
   const today = moment()
   const last = moment(lastUpdate)
   const duration = moment.duration(today.diff(last))
-  return `Last saved: ${duration.humanize()} ago.`
+  return `Progress saved ${duration.humanize()} ago.`
 }
 
-const Indicator = ({ isVisibile, isFetching, error, lastUpdate }) =>
+const Indicator = ({
+  isVisibile,
+  autosave: { isFetching, error, lastUpdate },
+}) =>
   isVisibile ? (
     <div className={classnames(classes.container)}>
       {isFetching && (
         <div className={classnames(classes['icon-container'])}>
           <div className={classnames(classes.rotate, classes.icon)}>
-            <Icon size={16}>refresh-cw</Icon>
+            <Icon size={16}>loader</Icon>
           </div>
           <span>Saving changes...</span>
         </div>
       )}
 
-      {!isFetching && lastUpdate && <span>{durationParser(lastUpdate)}</span>}
+      {!isFetching &&
+        lastUpdate && (
+          <div className={classnames(classes['icon-container'])}>
+            <div className={classnames(classes.icon)}>
+              <Icon size={16}>check-circle</Icon>
+            </div>
+            <span>{durationParser(lastUpdate)}</span>
+          </div>
+        )}
       {!isFetching &&
         error && (
           <div className={classnames(classes['icon-container'])}>
             <div className={classnames(classes.icon)}>
               <Icon color="red" size={16}>
-                slash
+                alert-triangle
               </Icon>
             </div>
-            <span className={classnames(classes['error-text'])}>{error}</span>
+            <span className={classnames(classes['error-text'])} title={error}>
+              Changes not saved
+            </span>
           </div>
         )}
     </div>
   ) : null
 
 export default compose(
-  withProps(({ isFetching, lastUpdate, error }) => ({
+  connect(state => ({
+    autosave: getAutosave(state),
+  })),
+  withProps(({ autosave: { isFetching, error, lastUpdate } }) => ({
     isVisibile: Boolean(isFetching || lastUpdate || error),
   })),
 )(Indicator)

@@ -1,69 +1,9 @@
-const author = {
-  firstName: 'Andrew',
-  middleName: '',
-  lastName: 'Smith',
-  email: 'email@email.com',
-  affiliation: 'University',
-  country: '',
-  isCorresponding: false,
-  isSubmitting: true,
-}
-
-const newAuthor = {
-  firstName: 'Robert',
-  middleName: '',
-  lastName: 'Smith',
-  email: 'email_robert@email.com',
-  affiliation: 'University',
-  country: '',
-  isCorresponding: true,
-  isSubmitting: false,
-}
-
-const invalidAuthor = {
-  firstName: '',
-  middleName: '',
-  lastName: 'Jones',
-  email: 'email2@email.com',
-  affiliation: 'University',
-  country: '',
-  isCorresponding: false,
-  isSubmitting: false,
-}
-
-const newSubmittingAuthor = {
-  firstName: 'Andrew',
-  middleName: '',
-  lastName: 'Smith',
-  email: 'email3@email.com',
-  affiliation: 'University',
-  country: '',
-  isCorresponding: false,
-  isSubmitting: true,
-}
-
-const fragment = {
-  type: 'fragment',
-  fragmentType: 'blogpost',
-  title: 'Just your regular blogpost',
-  source: '<blog></blog>',
-  presentation: '<p></p>',
-  authors: [author],
-  save: jest.fn(),
-}
-
-const user = {
-  type: 'user',
-  username: 'testuser',
-  email: 'test@example.com',
-  password: 'test',
-}
+const authors = require('./authors')
+const fragments = require('./fragments')
+const users = require('./users')
 
 module.exports = {
-  author,
-  invalidAuthor,
-  fragment,
-  newSubmittingAuthor,
-  newAuthor,
-  user,
+  authors,
+  users,
+  fragments,
 }

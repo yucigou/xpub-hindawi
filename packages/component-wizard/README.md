@@ -15,7 +15,7 @@ Configuration file must be under config `journal` (make use of `withJournal`) an
 | backText | Text to show on Back button - Go back 1 step | false | 'Back' | `string` |
 | nextText | Text to show on Back button - Go forward 1 step | false | 'Next' | `string` |
 | cancelText | Text to show on Cancel button - Go to `/`  | false | 'Back' | `string` |
-| submissionRedirect | Path to redirect user after submitting the form | false | `/` | `string` |
+| submissionRedirect | Path to redirect user after submitting the form. Passes as state `project` as project.id and `version` as version.id | false | `/` | `string` |
 | confirmationModal | If present, component will be rendered as a modal before submitting the form. Accepts `toggleConfirming` to close the modal and must have 2 buttons for submit and close modal (see below)  | false | none | `React Component` |
 | formSectionKeys | Redux form data model. Keys to be saved on the form. | true | [] | `array` |
 | dispatchFunctions | Functions to be dispatched in case a component needs a dispatched function (f.i. `uploadFile`) | true | none | `array` |

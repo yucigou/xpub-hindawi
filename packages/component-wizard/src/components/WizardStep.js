@@ -20,7 +20,6 @@ export default ({
   formValues,
   wizard,
   dispatchFns,
-  autosave,
   confirmation,
   toggleConfirmation,
   wizard: { confirmationModal: ConfirmationModal },
@@ -84,6 +83,6 @@ export default ({
         </div>
       )}
     </form>
-    <AutosaveIndicator {...autosave} />
+    <AutosaveIndicator />
   </div>
 )
