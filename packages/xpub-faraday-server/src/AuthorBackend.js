@@ -56,17 +56,14 @@ const AuthorBackend = app => {
               const userBody = {
                 username: `${req.body.firstName}${
                   req.body.lastName
-                }${Math.floor(Math.random() * 100)}`,
+                }${Math.floor(Math.random() * 1000)}`,
                 email: req.body.email,
                 password: uuid.v4(),
               }
-              console.log(new app.locals.models.User())
               let newUser = new app.locals.models.User(userBody)
-              console.log('user nou', newUser)
               newUser = await newUser.save()
               fragment.owners.push(newUser.id)
             } else {
-              console.log('error naspa')
               res.status(e.status).json(e)
               return
             }

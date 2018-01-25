@@ -10,7 +10,7 @@ const passport = require('passport')
 const BearerStrategy = require('passport-http-bearer').Strategy
 const cloneDeep = require('lodash/cloneDeep')
 
-function makeApp(fragment, user, existingUser, newUser) {
+function makeApp(fragment, user, existingUser) {
   const app = express()
   app.use(bodyParser.json())
   // Passport strategies
@@ -21,6 +21,7 @@ function makeApp(fragment, user, existingUser, newUser) {
       done(null, fixtures.user, { scope: 'all' }),
     ),
   )
+
   app.locals.passport = passport
   app.locals.models = {
     Fragment: {
@@ -44,6 +45,30 @@ function makeApp(fragment, user, existingUser, newUser) {
       ),
     },
   }
+  function UserMock(properties) {
+    this.type = 'user'
+    this.email = properties.email
+    this.username = properties.username
+    this.password = properties.password
+  }
+
+  UserMock.find = jest.fn(
+    () =>
+      user instanceof Error ? Promise.reject(user) : Promise.resolve(user),
+  )
+  UserMock.findByEmail = jest.fn(
+    () =>
+      existingUser instanceof Error
+        ? Promise.reject(existingUser)
+        : Promise.resolve(existingUser),
+  )
+
+  UserMock.prototype.save = jest.fn(() => {
+    this.id = '111222'
+    return Promise.resolve(this)
+  })
+
+  app.locals.models.User = UserMock
 
   component.backend()(app)
   return supertest(app)
@@ -115,33 +140,21 @@ describe('Author Backend API', () => {
         expect(testFixtures.adminFragment.owners[0]).toBe('123987')
       }))
 
-  // it('should return success when the admin adds a submitting author and creates a corresponding user account', () => {
-  //   const error = new Error()
-  //   error.name = 'NotFoundError'
-  //   error.status = 404
-  //   const newUser = {
-  //     username: `${testFixtures.author.firstName}${
-  //       testFixtures.author.lastName
-  //     }${Math.floor(Math.random() * 100)}`,
-  //     email: testFixtures.author.email,
-  //     password: 'test',
-  //     id: '888999',
-  //   }
-  //   // console.log(testFixtures.adminFragment)
-  //   return makeApp(
-  //     testFixtures.adminFragment,
-  //     testFixtures.admin,
-  //     error,
-  //     newUser,
-  //   )
-  //     .post('/api/fragments/123-valid-id/authors')
-  //     .set('Authorization', 'Bearer 123')
-  //     .send(testFixtures.author)
-  //     .expect(200, '')
-  //     .then(() => {
-  //       expect(testFixtures.adminFragment.save).toHaveBeenCalled()
-  //       expect(testFixtures.adminFragment.owners.length).toBeGreaterThan(0)
-  //       expect(testFixtures.adminFragment.owners[0]).toBe('888999')
-  //     })
-  // })
+  it('should return success when the admin adds a submitting author and creates a corresponding user account', () => {
+    const error = new Error()
+    error.name = 'NotFoundError'
+    error.status = 404
+
+    // console.log(testFixtures.adminFragment)
+    return makeApp(testFixtures.adminFragment, testFixtures.admin, error)
+      .post('/api/fragments/123-valid-id/authors')
+      .set('Authorization', 'Bearer 123')
+      .send(testFixtures.author)
+      .expect(200, '')
+      .then(() => {
+        expect(testFixtures.adminFragment.save).toHaveBeenCalled()
+        expect(testFixtures.adminFragment.owners.length).toBeGreaterThan(0)
+        expect(testFixtures.adminFragment.owners[0]).toBe('111222')
+      })
+  })
 })
