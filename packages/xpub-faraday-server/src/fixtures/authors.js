@@ -1,0 +1,48 @@
+const authors = {
+  standardAuthor: {
+    firstName: 'Andrew',
+    middleName: '',
+    lastName: 'Smith',
+    email: 'email@email.com',
+    affiliation: 'University',
+    country: '',
+    isCorresponding: false,
+    isSubmitting: true,
+    id: '123',
+  },
+  newAuthor: {
+    firstName: 'Robert',
+    middleName: '',
+    lastName: 'Smith',
+    email: 'email_robert@email.com',
+    affiliation: 'University',
+    country: '',
+    isCorresponding: true,
+    isSubmitting: false,
+    id: '456',
+  },
+  invalidAuthor: {
+    firstName: '',
+    middleName: '',
+    lastName: 'Jones',
+    email: 'email2@email.com',
+    affiliation: 'University',
+    country: '',
+    isCorresponding: false,
+    isSubmitting: false,
+    id: '768',
+  },
+  newSubmittingAuthor: {
+    firstName: 'Andrew',
+    middleName: '',
+    lastName: 'Smith',
+    email: 'email3@email.com',
+    affiliation: 'University',
+    country: '',
+    isCorresponding: false,
+    isSubmitting: true,
+    id: '879',
+  },
+}
+
+module.exports = authors

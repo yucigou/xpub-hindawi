@@ -63,9 +63,6 @@ const AuthorBackend = app => {
               let newUser = new app.locals.models.User(userBody)
               newUser = await newUser.save()
               fragment.owners.push(newUser.id)
-            } else {
-              res.status(e.status).json(e)
-              return
             }
           }
         }

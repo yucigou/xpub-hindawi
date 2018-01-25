@@ -10,15 +10,15 @@ const passport = require('passport')
 const BearerStrategy = require('passport-http-bearer').Strategy
 const cloneDeep = require('lodash/cloneDeep')
 
-function makeApp(fragment, user, existingUser) {
+function makeApp(fragment, standardUser, existingUser) {
   const app = express()
   app.use(bodyParser.json())
-  // Passport strategies
+
   app.use(passport.initialize())
   passport.use(
     'bearer',
     new BearerStrategy((token, done) =>
-      done(null, fixtures.user, { scope: 'all' }),
+      done(null, fixtures.users.standardUser, { scope: 'all' }),
     ),
   )
 
@@ -32,18 +32,7 @@ function makeApp(fragment, user, existingUser) {
             : Promise.resolve(fragment),
       ),
     },
-    User: {
-      find: jest.fn(
-        () =>
-          user instanceof Error ? Promise.reject(user) : Promise.resolve(user),
-      ),
-      findByEmail: jest.fn(
-        () =>
-          existingUser instanceof Error
-            ? Promise.reject(existingUser)
-            : Promise.resolve(existingUser),
-      ),
-    },
+    User: {},
   }
   function UserMock(properties) {
     this.type = 'user'
@@ -54,7 +43,9 @@ function makeApp(fragment, user, existingUser) {
 
   UserMock.find = jest.fn(
     () =>
-      user instanceof Error ? Promise.reject(user) : Promise.resolve(user),
+      standardUser instanceof Error
+        ? Promise.reject(standardUser)
+        : Promise.resolve(standardUser),
   )
   UserMock.findByEmail = jest.fn(
     () =>
@@ -85,7 +76,7 @@ describe('Author Backend API', () => {
     return makeApp(error)
       .post('/api/fragments/123/authors')
       .set('Authorization', 'Bearer 123')
-      .send(testFixtures.author)
+      .send(testFixtures.authors.standardAuthor)
       .expect(404, '{"error":"Fragment not found"}')
   })
 
@@ -98,63 +89,74 @@ describe('Author Backend API', () => {
     return makeApp(error)
       .post('/api/fragments/123/authors')
       .set('Authorization', 'Bearer 123')
-      .send(testFixtures.invalidAuthor)
+      .send(testFixtures.authors.invalidAuthor)
       .expect(404, '{"error":"firstName is required"}')
   })
 
   it('should return an error if an author already exists with the same email', () =>
-    makeApp(testFixtures.fragment)
+    makeApp(testFixtures.fragments.standardFragment)
       .post('/api/fragments/123-valid-id/authors')
       .set('Authorization', 'Bearer 123')
-      .send(testFixtures.author)
+      .send(testFixtures.authors.standardAuthor)
       .expect(400, '{"error":"Author with the same email already exists"}'))
 
   it('should return an error if there already is a submitting author', () =>
-    makeApp(testFixtures.fragment)
+    makeApp(testFixtures.fragments.standardFragment)
       .post('/api/fragments/123-valid-id/authors')
       .set('Authorization', 'Bearer 123')
-      .send(testFixtures.newSubmittingAuthor)
+      .send(testFixtures.authors.newSubmittingAuthor)
       .expect(400, '{"error":"There can only be one sumbitting author"}'))
 
   it('should return success when saving a new author', () =>
-    makeApp(testFixtures.fragment, testFixtures.user)
-      .post('/api/fragments/123-valid-id/authors')
-      .set('Authorization', 'Bearer 123')
-      .send(testFixtures.newAuthor)
-      .expect(200, '')
-      .then(() => expect(testFixtures.fragment.save).toHaveBeenCalled()))
-
-  it('should return success when the admin adds a submitting author and the author already has a corresponding user account', () =>
     makeApp(
-      testFixtures.adminFragment,
-      testFixtures.admin,
-      testFixtures.existingUser,
+      testFixtures.fragments.standardFragment,
+      testFixtures.users.standardUser,
     )
       .post('/api/fragments/123-valid-id/authors')
       .set('Authorization', 'Bearer 123')
-      .send(testFixtures.author)
+      .send(testFixtures.authors.newAuthor)
+      .expect(200, '')
+      .then(() =>
+        expect(testFixtures.fragments.standardFragment.save).toHaveBeenCalled(),
+      ))
+
+  it('should return success when the admin adds a submitting author and the author already has a corresponding user account', () =>
+    makeApp(
+      testFixtures.fragments.adminFragment,
+      testFixtures.users.admin,
+      testFixtures.users.existingUser,
+    )
+      .post('/api/fragments/123-valid-id/authors')
+      .set('Authorization', 'Bearer 123')
+      .send(testFixtures.authors.standardAuthor)
       .expect(200, '')
       .then(() => {
-        expect(testFixtures.adminFragment.save).toHaveBeenCalled()
-        expect(testFixtures.adminFragment.owners.length).toBeGreaterThan(0)
-        expect(testFixtures.adminFragment.owners[0]).toBe('123987')
+        expect(testFixtures.fragments.adminFragment.save).toHaveBeenCalled()
+        expect(
+          testFixtures.fragments.adminFragment.owners.length,
+        ).toBeGreaterThan(0)
+        expect(testFixtures.fragments.adminFragment.owners[0]).toBe('123987')
       }))
 
   it('should return success when the admin adds a submitting author and creates a corresponding user account', () => {
     const error = new Error()
     error.name = 'NotFoundError'
     error.status = 404
-
-    // console.log(testFixtures.adminFragment)
-    return makeApp(testFixtures.adminFragment, testFixtures.admin, error)
+    return makeApp(
+      testFixtures.fragments.adminFragment,
+      testFixtures.users.admin,
+      error,
+    )
       .post('/api/fragments/123-valid-id/authors')
       .set('Authorization', 'Bearer 123')
-      .send(testFixtures.author)
+      .send(testFixtures.authors.standardAuthor)
       .expect(200, '')
       .then(() => {
-        expect(testFixtures.adminFragment.save).toHaveBeenCalled()
-        expect(testFixtures.adminFragment.owners.length).toBeGreaterThan(0)
-        expect(testFixtures.adminFragment.owners[0]).toBe('111222')
+        expect(testFixtures.fragments.adminFragment.save).toHaveBeenCalled()
+        expect(
+          testFixtures.fragments.adminFragment.owners.length,
+        ).toBeGreaterThan(0)
+        expect(testFixtures.fragments.adminFragment.owners[0]).toBe('111222')
       })
   })
 })
