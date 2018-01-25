@@ -48,7 +48,13 @@ const uploadFile = input => uploadFileFn(input)
 
 export default {
   showProgress: true,
-  formSectionKeys: ['metadata', 'declarations', 'conflicts', 'notes', 'files'],
+  formSectionKeys: [
+    'metadata',
+    'declarations',
+    'conflicts',
+    'files',
+    'authors',
+  ],
   submissionRedirect: '/confirmation-page',
   dispatchFunctions: [uploadFile],
   steps: [

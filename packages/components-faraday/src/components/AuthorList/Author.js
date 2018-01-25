@@ -38,7 +38,7 @@ export default ({
       })}
     >
       <span className={classnames(classes.title)}>
-        {parseAuthorType(isSubmitting, isCorresponding)}
+        {parseAuthorType(isSubmitting, isCorresponding, index)}
       </span>
       <div className={classnames(classes.row)}>
         <Label label="First name" value={firstName} />
@@ -52,13 +52,13 @@ export default ({
       </div>
     </div>
     <div className={classnames(classes['button-container'])}>
-      {!isSubmitting && (
+      {editedAuthor < 0 && (
         <div
-          className={classnames(classes['delete-button'])}
-          onClick={removeAuthor(email)}
-          title="Delete author"
+          className={classnames(classes.corresponding)}
+          onClick={setAuthorEdit(index)}
+          title="Edit author"
         >
-          <Icon>trash</Icon>
+          <Icon>edit-2</Icon>
         </div>
       )}
       {!isCorresponding && (
@@ -70,13 +70,13 @@ export default ({
           <Icon>mail</Icon>
         </div>
       )}
-      {editedAuthor < 0 && (
+      {!isSubmitting && (
         <div
-          className={classnames(classes.corresponding)}
-          onClick={setAuthorEdit(index)}
-          title="Edit author"
+          className={classnames(classes['delete-button'])}
+          onClick={removeAuthor(email)}
+          title="Delete author"
         >
-          <Icon>edit-2</Icon>
+          <Icon>trash</Icon>
         </div>
       )}
     </div>

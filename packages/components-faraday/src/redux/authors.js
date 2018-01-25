@@ -24,7 +24,10 @@ export const moveAuthors = (authors, fragmentId) => dispatch => {
 
 export const addAuthor = (author, collectionId, fragmentId) => dispatch =>
   api
-    .create(`/fragments/${fragmentId}/authors`, author)
+    .create(
+      `/collections/${collectionId}/fragments/${fragmentId}/authors`,
+      author,
+    )
     .then(() =>
       dispatch(actions.getFragment({ id: collectionId }, { id: fragmentId })),
     )

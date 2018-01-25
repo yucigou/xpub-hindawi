@@ -67,9 +67,8 @@ export default compose(
   connect(state => ({
     currentUser: selectCurrentUser(state),
   })),
-  withProps(({ currentUser }) => {
-    const { admin, email, username } = currentUser
-    if (!admin) {
+  withProps(({ currentUser: { admin, username, email }, authors }) => {
+    if (!admin && authors.length === 0) {
       return {
         initialValues: {
           email,
@@ -80,6 +79,7 @@ export default compose(
   }),
   reduxForm({
     form: 'author',
+    enableReinitialize: true,
     onSubmit: (
       values,
       dispatch,
