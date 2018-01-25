@@ -38,7 +38,7 @@ export default ({
       })}
     >
       <span className={classnames(classes.title)}>
-        {parseAuthorType(isSubmitting, isCorresponding)}
+        {parseAuthorType(isSubmitting, isCorresponding, index)}
       </span>
       <div className={classnames(classes.row)}>
         <Label label="First name" value={firstName} />

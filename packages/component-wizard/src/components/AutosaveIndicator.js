@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import classnames from 'classnames'
 import { compose, withProps } from 'recompose'
 import { Icon } from '@pubsweet/ui'
+import { getFormValues } from 'redux-form'
 
 import { getAutosave } from '../redux/autosave'
 
@@ -57,10 +58,11 @@ const Indicator = ({
   ) : null
 
 export default compose(
-  connect(state => ({
+  connect((state, { formName }) => ({
     autosave: getAutosave(state),
+    form: !!getFormValues(formName || 'wizard')(state),
   })),
-  withProps(({ autosave: { isFetching, error, lastUpdate } }) => ({
-    isVisibile: Boolean(isFetching || lastUpdate || error),
+  withProps(({ autosave: { isFetching, error, lastUpdate }, form }) => ({
+    isVisibile: form && Boolean(isFetching || lastUpdate || error),
   })),
 )(Indicator)

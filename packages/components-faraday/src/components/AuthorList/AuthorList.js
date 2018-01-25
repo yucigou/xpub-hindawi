@@ -113,10 +113,10 @@ export default compose(
     },
     countryParser: () => countryCode =>
       countries.find(c => c.value === countryCode).label,
-    parseAuthorType: () => (isSubmitting, isCorresponding) => {
-      if (isSubmitting) return 'Submitting author'
-      if (isCorresponding) return 'Corresponding author'
-      return 'Author'
+    parseAuthorType: () => (isSubmitting, isCorresponding, index) => {
+      if (isSubmitting) return `#${index + 1} Submitting author`
+      if (isCorresponding) return `#${index + 1} Corresponding author`
+      return `#${index + 1} Author`
     },
     moveAuthor: ({
       authors,
