@@ -11,6 +11,7 @@ const users = {
     email: 'admin@example.com',
     password: 'test',
     admin: true,
+    id: 'admin123',
   },
   existingUser: {
     type: 'user',

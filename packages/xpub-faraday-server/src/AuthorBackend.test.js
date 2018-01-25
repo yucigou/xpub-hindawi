@@ -10,7 +10,7 @@ const passport = require('passport')
 const BearerStrategy = require('passport-http-bearer').Strategy
 const cloneDeep = require('lodash/cloneDeep')
 
-function makeApp(fragment, standardUser, existingUser) {
+function makeApp(collection, fragment, standardUser, existingUser) {
   const app = express()
   app.use(bodyParser.json())
 
@@ -33,6 +33,14 @@ function makeApp(fragment, standardUser, existingUser) {
       ),
     },
     User: {},
+    Collection: {
+      find: jest.fn(
+        () =>
+          collection instanceof Error
+            ? Promise.reject(collection)
+            : Promise.resolve(collection),
+      ),
+    },
   }
   function UserMock(properties) {
     this.type = 'user'
@@ -65,6 +73,7 @@ function makeApp(fragment, standardUser, existingUser) {
   return supertest(app)
 }
 
+const createAuthorUrl = '/api/collections/123/fragments/123/authors'
 describe('Author Backend API', () => {
   let testFixtures = {}
   beforeEach(() => (testFixtures = cloneDeep(fixtures)))
@@ -73,11 +82,22 @@ describe('Author Backend API', () => {
     const error = new Error()
     error.name = 'NotFoundError'
     error.status = 404
-    return makeApp(error)
-      .post('/api/fragments/123/authors')
+    return makeApp(testFixtures.collections.standardCollection, error)
+      .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
       .send(testFixtures.authors.standardAuthor)
-      .expect(404, '{"error":"Fragment not found"}')
+      .expect(404, '{"error":"Object not found"}')
+  })
+
+  it('should return an error if collection is not found', () => {
+    const error = new Error()
+    error.name = 'NotFoundError'
+    error.status = 404
+    return makeApp(error)
+      .post(createAuthorUrl)
+      .set('Authorization', 'Bearer 123')
+      .send(testFixtures.authors.standardAuthor)
+      .expect(404, '{"error":"Object not found"}')
   })
 
   it('should return an error if an author field is invalid', () => {
@@ -86,33 +106,40 @@ describe('Author Backend API', () => {
     error.status = 404
     error.details = []
     error.details.push({ message: 'firstName is required' })
-    return makeApp(error)
-      .post('/api/fragments/123/authors')
+    return makeApp(testFixtures.collections.standardCollection, error)
+      .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
       .send(testFixtures.authors.invalidAuthor)
       .expect(404, '{"error":"firstName is required"}')
   })
 
   it('should return an error if an author already exists with the same email', () =>
-    makeApp(testFixtures.fragments.standardFragment)
-      .post('/api/fragments/123-valid-id/authors')
+    makeApp(
+      testFixtures.collections.standardCollection,
+      testFixtures.fragments.standardFragment,
+    )
+      .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
       .send(testFixtures.authors.standardAuthor)
       .expect(400, '{"error":"Author with the same email already exists"}'))
 
   it('should return an error if there already is a submitting author', () =>
-    makeApp(testFixtures.fragments.standardFragment)
-      .post('/api/fragments/123-valid-id/authors')
+    makeApp(
+      testFixtures.collections.standardCollection,
+      testFixtures.fragments.standardFragment,
+    )
+      .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
       .send(testFixtures.authors.newSubmittingAuthor)
       .expect(400, '{"error":"There can only be one sumbitting author"}'))
 
   it('should return success when saving a new author', () =>
     makeApp(
+      fixtures.collections.standardCollection,
       testFixtures.fragments.standardFragment,
       testFixtures.users.standardUser,
     )
-      .post('/api/fragments/123-valid-id/authors')
+      .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
       .send(testFixtures.authors.newAuthor)
       .expect(200, '')
@@ -122,20 +149,30 @@ describe('Author Backend API', () => {
 
   it('should return success when the admin adds a submitting author and the author already has a corresponding user account', () =>
     makeApp(
+      testFixtures.collections.standardCollection,
       testFixtures.fragments.adminFragment,
       testFixtures.users.admin,
       testFixtures.users.existingUser,
     )
-      .post('/api/fragments/123-valid-id/authors')
+      .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
       .send(testFixtures.authors.standardAuthor)
       .expect(200, '')
       .then(() => {
         expect(testFixtures.fragments.adminFragment.save).toHaveBeenCalled()
         expect(
+          testFixtures.collections.standardCollection.save,
+        ).toHaveBeenCalled()
+        expect(
           testFixtures.fragments.adminFragment.owners.length,
         ).toBeGreaterThan(0)
+        expect(
+          testFixtures.collections.standardCollection.owners.length,
+        ).toBeGreaterThan(1)
         expect(testFixtures.fragments.adminFragment.owners[0]).toBe('123987')
+        expect(testFixtures.collections.standardCollection.owners[1]).toBe(
+          '123987',
+        )
       }))
 
   it('should return success when the admin adds a submitting author and creates a corresponding user account', () => {
@@ -143,20 +180,30 @@ describe('Author Backend API', () => {
     error.name = 'NotFoundError'
     error.status = 404
     return makeApp(
+      testFixtures.collections.standardCollection,
       testFixtures.fragments.adminFragment,
       testFixtures.users.admin,
       error,
     )
-      .post('/api/fragments/123-valid-id/authors')
+      .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
       .send(testFixtures.authors.standardAuthor)
       .expect(200, '')
       .then(() => {
         expect(testFixtures.fragments.adminFragment.save).toHaveBeenCalled()
         expect(
+          testFixtures.collections.standardCollection.save,
+        ).toHaveBeenCalled()
+        expect(
           testFixtures.fragments.adminFragment.owners.length,
         ).toBeGreaterThan(0)
+        expect(
+          testFixtures.collections.standardCollection.owners.length,
+        ).toBeGreaterThan(1)
         expect(testFixtures.fragments.adminFragment.owners[0]).toBe('111222')
+        expect(testFixtures.collections.standardCollection.owners[1]).toBe(
+          '111222',
+        )
       })
   })
 })

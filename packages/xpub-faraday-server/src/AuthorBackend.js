@@ -6,7 +6,7 @@ const AuthorBackend = app => {
     session: false,
   })
   app.post(
-    '/api/fragments/:fragmentId/authors',
+    '/api/collections/:collectionId/fragments/:fragmentId/authors',
     authBearer,
     bodyParser.json(),
     async (req, res, next) => {
@@ -14,6 +14,10 @@ const AuthorBackend = app => {
         let fragment = await app.locals.models.Fragment.find(
           req.params.fragmentId,
         )
+        const collection = await app.locals.models.Collection.find(
+          req.params.collectionId,
+        )
+
         fragment.authors = fragment.authors ? fragment.authors : []
         if (fragment.authors.length > 0) {
           const emailAuthors = fragment.authors.filter(
@@ -50,6 +54,7 @@ const AuthorBackend = app => {
               req.body.email,
             )
             fragment.owners.push(user.id)
+            collection.owners.push(user.id)
           } catch (e) {
             if (e.name === 'NotFoundError') {
               // create a new User account
@@ -63,14 +68,16 @@ const AuthorBackend = app => {
               let newUser = new app.locals.models.User(userBody)
               newUser = await newUser.save()
               fragment.owners.push(newUser.id)
+              collection.owners.push(newUser.id)
             }
           }
         }
         fragment = await fragment.save()
+        await collection.save()
         res.status(200).json(fragment)
       } catch (e) {
         if (e.name === 'NotFoundError') {
-          res.status(e.status).json({ error: 'Fragment not found' })
+          res.status(e.status).json({ error: 'Object not found' })
           return
         }
 
