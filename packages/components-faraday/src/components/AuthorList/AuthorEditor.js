@@ -79,8 +79,8 @@ export default compose(
         values.edit,
         ...authors.slice(index + 1),
       ]
+      setAuthorEdit(-1)()
       setAuthors(newAuthors, version.id)
-      setTimeout(setAuthorEdit(-1), 100)
     },
   }),
 )(AuthorEdit)

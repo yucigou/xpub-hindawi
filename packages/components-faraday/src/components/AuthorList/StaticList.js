@@ -33,6 +33,7 @@ export default ({
             countryParser={countryParser}
             parseAuthorType={parseAuthorType}
             removeAuthor={removeAuthor}
+            index={index}
             {...rest}
           />
         ),
