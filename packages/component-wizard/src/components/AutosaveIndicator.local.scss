@@ -2,7 +2,6 @@
   align-items: center;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 5px;
 }
 
 @keyframes rotating {
@@ -52,12 +51,16 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    margin: 0 10px 0 0;
+    margin: 0 5px 0 0;
+  }
+
+  span {
+    font-size: 12px;
   }
 }
 
 .error-text {
   color: red;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
 }

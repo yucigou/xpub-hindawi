@@ -34,14 +34,16 @@ export default (state = initialState, action) => {
         isFetching: true,
       }
     case AUTOSAVE_FAILURE:
+    case 'UPDATE_FRAGMENT_FAILURE':
       return {
         ...initialState,
         error: action.error,
       }
     case AUTOSAVE_SUCCESS:
+    case 'UPDATE_FRAGMENT_SUCCESS':
       return {
         ...initialState,
-        lastUpdate: action.lastUpdate,
+        lastUpdate: action.receivedAt,
       }
     default:
       return state

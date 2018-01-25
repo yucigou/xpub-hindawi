@@ -6,13 +6,7 @@ import { compose, getContext, withProps } from 'recompose'
 import { reduxForm, formValueSelector, SubmissionError } from 'redux-form'
 
 import WizardStep from './WizardStep'
-
-import {
-  getAutosave,
-  autosaveRequest,
-  autosaveFailure,
-  autosaveSuccess,
-} from '../redux/autosave'
+import { autosaveRequest } from '../redux/autosave'
 
 const wizardSelector = formValueSelector('wizard')
 
@@ -34,8 +28,6 @@ const onChange = (
         ...newValues,
       }),
     )
-      .then(({ receivedAt }) => dispatch(autosaveSuccess(receivedAt)))
-      .catch(() => dispatch(autosaveFailure()))
   }
 }
 
@@ -124,7 +116,6 @@ export default compose(
   })),
   connect((state, { wizard: { formSectionKeys } }) => ({
     formValues: wizardSelector(state, ...formSectionKeys),
-    autosave: getAutosave(state),
   })),
   reduxForm({
     form: 'wizard',
