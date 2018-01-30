@@ -53,7 +53,7 @@ const FileSection = ({
           </FilePicker>
         </div>
         <SortableList
-          beginDragProps={['index', 'name', 'listId']}
+          beginDragProps={['id', 'index', 'name', 'listId']}
           dragHandle={DragHandle}
           items={files}
           listId={listId}
@@ -71,9 +71,9 @@ export default compose(
     'item',
     {
       drop({ changeList, listId: toListId }, monitor) {
-        const { listId: fromListId, name } = monitor.getItem()
+        const { listId: fromListId, id } = monitor.getItem()
         if (toListId === fromListId) return
-        changeList(fromListId, toListId, name)
+        changeList(fromListId, toListId, id)
       },
       canDrop({ listId: toListId }, monitor) {
         const { listId: fromListId } = monitor.getItem()
