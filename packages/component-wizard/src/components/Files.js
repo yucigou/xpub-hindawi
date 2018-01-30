@@ -17,12 +17,14 @@ const Files = ({
   moveItem,
   removeFile,
   changeList,
+  dropItems,
   ...rest
 }) => (
   <div>
     <FileSection
       addFile={addFile('manuscripts')}
       changeList={changeList}
+      dropItems={dropItems}
       files={get(files, 'manuscripts') || []}
       isFirst
       listId="manuscripts"
@@ -76,6 +78,13 @@ export default compose(
     },
   }),
   withHandlers({
+    dropItems: ({ files, updateFragment, project, version }) => () => {
+      updateFragment(project, {
+        submitted: new Date(),
+        ...version,
+        files,
+      })
+    },
     changeList: ({ files, setFiles, updateFragment, project, version }) => (
       fromListId,
       toListId,
@@ -121,8 +130,15 @@ export default compose(
         })
       })
     },
-    moveItem: ({ setFiles, files }) => type => (dragIndex, hoverIndex) => {
-      setFiles(SortableList.moveItem(files[type], dragIndex, hoverIndex), type)
+    moveItem: ({
+      setFiles,
+      files,
+      project,
+      version,
+      updateFragment,
+    }) => type => (dragIndex, hoverIndex) => {
+      const newFiles = SortableList.moveItem(files[type], dragIndex, hoverIndex)
+      setFiles(newFiles, type)
     },
     removeFile: ({
       setFiles,

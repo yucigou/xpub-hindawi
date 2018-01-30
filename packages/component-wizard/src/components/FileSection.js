@@ -23,16 +23,17 @@ const FileSection = ({
   title,
   files,
   listId,
+  isOver,
   isLast,
   isFirst,
   addFile,
-  moveItem,
-  removeFile,
-  connectDropTarget,
-  isOver,
   canDrop,
-  connectFileDrop,
+  dropItems,
+  moveItem,
   isFileOver,
+  removeFile,
+  connectFileDrop,
+  connectDropTarget,
 }) =>
   connectFileDrop(
     connectDropTarget(
@@ -55,6 +56,7 @@ const FileSection = ({
         <SortableList
           beginDragProps={['id', 'index', 'name', 'listId']}
           dragHandle={DragHandle}
+          dropItem={dropItems}
           items={files}
           listId={listId}
           listItem={FileItem}
