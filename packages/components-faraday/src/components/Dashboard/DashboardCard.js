@@ -25,7 +25,7 @@ const DashboardCard = ({ project, listView, version }) => {
       </div>
       <div className={classes.rightSide}>
         <Icon>download</Icon>
-        <a href={`/projects/${project.id}/versions/${version.id}/manuscript`}>
+        <a href={`/projects/${project.id}/versions/${version.id}/submit`}>
           Details
         </a>
       </div>
