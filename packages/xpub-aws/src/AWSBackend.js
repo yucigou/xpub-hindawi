@@ -9,8 +9,8 @@ AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY,
   region: process.env.AWS_REGION,
 })
-const fileKey = uuid.v4()
 const AWSBackend = app => {
+  app.use(bodyParser.json())
   const authBearer = app.locals.passport.authenticate('bearer', {
     session: false,
   })
@@ -21,21 +21,28 @@ const AWSBackend = app => {
       bucket: process.env.AWS_BUCKET,
       contentType: multerS3.AUTO_CONTENT_TYPE,
       key: (req, file, cb) => {
-        // console.log('key cb:', fileKey)
-        cb(null, fileKey)
+        cb(null, uuid.v4())
       },
     }),
+    // fileFilter: (req, file, cb) => {
+    //   console.log('req in fileFilter', req.body.get('fileType'))
+    //   console.log('file in filter:', file)
+    //   if (req.body.fileType === 'supplementary') {
+    //     cb(null, false)
+    //     return
+    //   }
+    //   cb(null, true)
+    // },
   })
   app.post(
     '/api/aws-upload',
     authBearer,
-    bodyParser.json(),
     upload.single('file'),
     async (req, res) => {
       // console.log('FILE:', req.file)
       const params = {
         Bucket: process.env.AWS_BUCKET,
-        Key: fileKey,
+        Key: req.file.key,
       }
 
       s3.getSignedUrl('getObject', params, (err, data) => {
@@ -62,7 +69,7 @@ const AWSBackend = app => {
         res.status(err.statusCode).json({ error: err.message })
         return
       }
-      res.status(200).json()
+      res.status(204).json()
     })
   })
 }
