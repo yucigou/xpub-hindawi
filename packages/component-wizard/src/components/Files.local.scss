@@ -1,0 +1,30 @@
+.file-item {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  margin: 5px;
+
+  .info {
+    border-right: 1px solid black;
+    display: flex;
+    flex: 1;
+    padding: 2px 0;
+  }
+
+  .buttons {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 5px;
+
+    button {
+      border: none;
+      cursor: pointer;
+
+      &:active,
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
