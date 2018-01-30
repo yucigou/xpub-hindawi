@@ -133,17 +133,16 @@ export default compose(
       updateFragment,
     }) => type => id => e => {
       e.preventDefault()
-      deleteFile(id).then(() => {
-        const newFiles = files[type].filter(f => f.id !== id)
-        setFiles(newFiles, type)
-        updateFragment(project, {
-          submitted: new Date(),
-          ...version,
-          files: {
-            ...version.files,
-            [type]: newFiles,
-          },
-        })
+      deleteFile(id)
+      const newFiles = files[type].filter(f => f.id !== id)
+      setFiles(newFiles, type)
+      updateFragment(project, {
+        submitted: new Date(),
+        ...version,
+        files: {
+          ...version.files,
+          [type]: newFiles,
+        },
       })
     },
   }),

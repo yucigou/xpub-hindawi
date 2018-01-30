@@ -13,11 +13,13 @@ const parseFileSize = size => {
     return `${Math.floor(gbSize)} GB`
   } else if (Math.floor(mbSize)) {
     return `${Math.floor(mbSize)} MB`
+  } else if (Math.floor(kbSize)) {
+    return `${Math.floor(kbSize)} kB`
   }
-  return `${Math.floor(kbSize)} kB`
+  return `${size} bytes`
 }
 
-const FileItem = ({ dragHandle, name, size, id, removeFile }) => (
+const FileItem = ({ dragHandle, name, size, id, removeFile, ...rest }) => (
   <div className={classnames(classes['file-item'])}>
     {dragHandle}
     <div className={classnames(classes.info)}>
@@ -25,9 +27,9 @@ const FileItem = ({ dragHandle, name, size, id, removeFile }) => (
       <span>{parseFileSize(size)}</span>
     </div>
     <div className={classnames(classes.buttons)}>
-      <button title="Preview">
+      <a href={rest.signedUrl} target="_blank">
         <Icon color="#666">eye</Icon>
-      </button>
+      </a>
       <button onClick={removeFile(id)} title="Delete">
         <Icon color="#666">trash-2</Icon>
       </button>
