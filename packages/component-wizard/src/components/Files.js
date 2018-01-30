@@ -18,42 +18,39 @@ const Files = ({
   removeFile,
   changeList,
   ...rest
-}) => {
-  console.log('Files', rest)
-  return (
-    <div>
-      <FileSection
-        addFile={addFile('manuscripts')}
-        changeList={changeList}
-        files={get(files, 'manuscripts') || []}
-        isFirst
-        listId="manuscripts"
-        moveItem={moveItem('manuscripts')}
-        removeFile={removeFile('manuscripts')}
-        title="Main manuscript"
-      />
-      <FileSection
-        addFile={addFile('supplementary')}
-        changeList={changeList}
-        files={get(files, 'supplementary') || []}
-        listId="supplementary"
-        moveItem={moveItem('supplementary')}
-        removeFile={removeFile('supplementary')}
-        title="Supplementarry files"
-      />
-      <FileSection
-        addFile={addFile('coverLetter')}
-        changeList={changeList}
-        files={get(files, 'coverLetter') || []}
-        isLast
-        listId="coverLetter"
-        moveItem={moveItem('coverLetter')}
-        removeFile={removeFile('coverLetter')}
-        title="Cover letter"
-      />
-    </div>
-  )
-}
+}) => (
+  <div>
+    <FileSection
+      addFile={addFile('manuscripts')}
+      changeList={changeList}
+      files={get(files, 'manuscripts') || []}
+      isFirst
+      listId="manuscripts"
+      moveItem={moveItem('manuscripts')}
+      removeFile={removeFile('manuscripts')}
+      title="Main manuscript"
+    />
+    <FileSection
+      addFile={addFile('supplementary')}
+      changeList={changeList}
+      files={get(files, 'supplementary') || []}
+      listId="supplementary"
+      moveItem={moveItem('supplementary')}
+      removeFile={removeFile('supplementary')}
+      title="Supplementarry files"
+    />
+    <FileSection
+      addFile={addFile('coverLetter')}
+      changeList={changeList}
+      files={get(files, 'coverLetter') || []}
+      isLast
+      listId="coverLetter"
+      moveItem={moveItem('coverLetter')}
+      removeFile={removeFile('coverLetter')}
+      title="Cover letter"
+    />
+  </div>
+)
 
 export default compose(
   withRouter,
