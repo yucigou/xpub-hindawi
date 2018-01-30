@@ -48,6 +48,7 @@ const createFileData = (file, type) => {
     method: 'POST',
     headers: {
       Accept: 'text/plain',
+      'Content-Type': 'multipart/form-data',
     },
     body: data,
   }
