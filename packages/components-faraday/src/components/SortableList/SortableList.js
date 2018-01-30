@@ -1,4 +1,5 @@
 import React from 'react'
+import { pick } from 'lodash'
 import { compose } from 'recompose'
 import { findDOMNode } from 'react-dom'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -6,7 +7,9 @@ import { DragSource, DropTarget, DragDropContext } from 'react-dnd'
 
 const itemSource = {
   beginDrag(props) {
-    return { index: props.index }
+    console.log('beginning drag', props)
+    // return { index: props.index }
+    return pick(props, props.beginDragProps)
   },
 }
 
@@ -124,4 +127,5 @@ SortableList.moveItem = (items, dragIndex, hoverIndex) => {
   ]
 }
 
-export default DragDropContext(HTML5Backend)(SortableList)
+// export default DragDropContext(HTML5Backend)(SortableList)
+export default SortableList

@@ -1,0 +1,46 @@
+.drop-section {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+
+  .header {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+
+    .upload-button {
+      cursor: pointer;
+      display: flex;
+      margin-left: 5px;
+    }
+
+    .title {
+      margin: 5px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.no-border-top {
+  border-top: none;
+}
+
+.dashed-border {
+  border-bottom: 1px dashed black;
+}
+
+.drag-handle {
+  align-items: center;
+  border-right: 1px solid black;
+  cursor: move;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 10px;
+  padding: 3px;
+}
+
+.is-over {
+  background-color: #ddd;
+}

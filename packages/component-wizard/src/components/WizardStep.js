@@ -5,6 +5,7 @@ import { ValidatedField, Button } from '@pubsweet/ui'
 
 import classes from './WizardStep.local.scss'
 import AutosaveIndicator from './AutosaveIndicator'
+import Files from './Files'
 
 export default ({
   children: stepChildren,
@@ -65,6 +66,7 @@ export default ({
             )
           },
         )}
+      <Files />
       <div className={classnames(classes.buttons)}>
         <Button onClick={isFirst ? () => history.push('/') : prevStep}>
           {isFirst

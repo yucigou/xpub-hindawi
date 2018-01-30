@@ -31,9 +31,9 @@ export default ({
             key={a.firstName}
             {...a}
             countryParser={countryParser}
+            index={index}
             parseAuthorType={parseAuthorType}
             removeAuthor={removeAuthor}
-            index={index}
             {...rest}
           />
         ),
