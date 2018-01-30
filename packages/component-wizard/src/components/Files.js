@@ -9,7 +9,7 @@ import { SortableList } from 'pubsweet-components-faraday/src/components'
 
 import FileSection from './FileSection'
 
-import { uploadFile, setFiles, getFiles } from '../redux/files'
+import { uploadFile, setFiles, getFiles, deleteFile } from '../redux/files'
 
 const Files = ({
   files,
@@ -60,7 +60,12 @@ export default compose(
       isFetching: state.files.isFetching,
       files: getFiles(state),
     }),
-    { uploadFile, updateFragment: actions.updateFragment, setFiles },
+    {
+      uploadFile,
+      updateFragment: actions.updateFragment,
+      setFiles,
+      deleteFile,
+    },
   ),
   lifecycle({
     componentDidMount() {
@@ -128,11 +133,18 @@ export default compose(
       updateFragment,
     }) => type => id => e => {
       e.preventDefault()
-
-      // changeFiles(prev => ({
-      //   ...prev,
-      //   [type]: prev[type].filter(f => f.name !== name),
-      // }))
+      deleteFile(id).then(() => {
+        const newFiles = files[type].filter(f => f.id !== id)
+        setFiles(newFiles, type)
+        updateFragment(project, {
+          submitted: new Date(),
+          ...version,
+          files: {
+            ...version.files,
+            [type]: newFiles,
+          },
+        })
+      })
     },
   }),
 )(Files)

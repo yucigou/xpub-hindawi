@@ -57,6 +57,15 @@ const removeRequest = () => ({
   type: REMOVE_REQUEST,
 })
 
+const removeFailure = error => ({
+  type: REMOVE_FAILURE,
+  error,
+})
+
+const removeSuccess = () => ({
+  type: REMOVE_SUCCESS,
+})
+
 export const getFiles = state => state.files.files
 
 export const uploadFile = (file, type) => dispatch => {
@@ -72,6 +81,11 @@ export const uploadFile = (file, type) => dispatch => {
 export const deleteFile = fileId => dispatch => {
   dispatch(removeRequest())
   return remove(`/aws-delete/${fileId}`)
+    .then(r => {
+      dispatch(removeSuccess())
+      return r
+    })
+    .catch(err => dispatch(removeFailure(err.message)))
 }
 
 export default (state = initialState, action) => {
