@@ -2,13 +2,14 @@ const bodyParser = require('body-parser')
 const AWS = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
+const uuid = require('uuid')
 
 AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_KEY,
   accessKeyId: process.env.AWS_ACCESS_KEY,
   region: process.env.AWS_REGION,
 })
-
+const fileKey = uuid.v4()
 const AWSBackend = app => {
   const authBearer = app.locals.passport.authenticate('bearer', {
     session: false,
@@ -20,8 +21,8 @@ const AWSBackend = app => {
       bucket: process.env.AWS_BUCKET,
       contentType: multerS3.AUTO_CONTENT_TYPE,
       key: (req, file, cb) => {
-        // console.log('key cb:', file)
-        cb(null, file.originalname)
+        // console.log('key cb:', fileKey)
+        cb(null, fileKey)
       },
     }),
   })
@@ -34,7 +35,7 @@ const AWSBackend = app => {
       // console.log('FILE:', req.file)
       const params = {
         Bucket: process.env.AWS_BUCKET,
-        Key: req.file.originalname,
+        Key: fileKey,
       }
 
       s3.getSignedUrl('getObject', params, (err, data) => {
@@ -43,7 +44,7 @@ const AWSBackend = app => {
           return
         }
         res.status(200).json({
-          id: req.file.etag.replace(/["]+/g, ''),
+          id: req.file.key,
           name: req.file.originalname,
           size: req.file.size,
           signedUrl: data,
