@@ -41,8 +41,8 @@ const uploadSuccess = () => ({
 
 const createFileData = (file, type) => {
   const data = new FormData()
-  data.append('file', file)
   data.append('fileType', type)
+  data.append('file', file)
 
   return {
     method: 'POST',
