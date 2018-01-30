@@ -1,0 +1,103 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 60em;
+}
+
+.filtersContainer {
+  border-bottom: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0;
+  padding-bottom: 1em;
+}
+
+.filters {
+  > span {
+    border: 1px solid gray;
+    margin: 0 0.5em;
+    padding: 0 5px;
+  }
+}
+
+.section {
+  margin: 0.5em 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heading {
+  color: var(--color-primary);
+  font-size: 1.6em;
+  text-transform: uppercase;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  align-items: center;
+  border: 1px solid var(--color-primary);
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.5em 0;
+  padding: 0.5em;
+
+  .leftSide {
+    flex: 1 0 80%;
+    flex-direction: column;
+
+    .quickInfo {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .rightSide {
+    align-items: center;
+    border-left: 1px solid var(--color-primary);
+    display: flex;
+    flex: 1 0 15%;
+    justify-content: space-around;
+    padding: 0 0.5em;
+
+    span {
+      cursor: pointer;
+    }
+  }
+}
+
+.expandedView {
+  border-top: 1px solid var(--color-primary);
+  display: flex;
+  flex: 0 1 100%;
+  padding: 0.5em 0;
+}
+
+.column3 {
+  display: flex;
+  flex: 1 0 30%;
+  flex-direction: row;
+}
+
+.column2 {
+  margin: 0.5em;
+
+  > div {
+    margin: 0.5em 0;
+  }
+}
+
+.status {
+  border: 1px solid var(--color-primary);
+  margin: 0.5em 0;
+  padding: 0.2em 0.5em;
+  text-transform: uppercase;
+}
