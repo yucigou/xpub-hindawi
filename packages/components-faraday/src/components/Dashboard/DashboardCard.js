@@ -3,20 +3,24 @@ import { get, find } from 'lodash'
 import moment from 'moment'
 import { Icon } from '@pubsweet/ui'
 
+import { parseTitle } from './utils'
 import classes from './Dashboard.local.scss'
 
 const DashboardCard = ({ project, listView, version }) => {
   const author = find(get(version, 'authors'), a => a.isSubmitting)
   const submitted = get(version, 'submitted')
+  const title = parseTitle(version)
   // const abstract = get(version, 'metadata.abstract')
   const type = get(version, 'metadata.type')
 
   return (
     <div className={classes.card}>
       <div className={classes.leftSide}>
-        <div className={classes.title}>
-          {get(version, 'metadata.title') || 'Untitled'}
-        </div>
+        <div
+          className={classes.title}
+          dangerouslySetInnerHTML={{ __html: title }} // eslint-disable-line
+        />
+
         <div className={classes.quickInfo}>
           <div className={classes.status}>
             {get(project, 'status') || 'Draft'}
