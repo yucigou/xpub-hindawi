@@ -1,8 +1,9 @@
 import React from 'react'
-import { compose } from 'recompose'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { Icon } from '@pubsweet/ui'
 import { DropTarget } from 'react-dnd'
+import { compose, getContext } from 'recompose'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import { SortableList } from 'pubsweet-components-faraday/src/components'
 
@@ -34,6 +35,8 @@ const FileSection = ({
   removeFile,
   connectFileDrop,
   connectDropTarget,
+  allowedFileExtensions,
+  isFetching,
 }) =>
   connectFileDrop(
     connectDropTarget(
@@ -47,11 +50,20 @@ const FileSection = ({
       >
         <div className={classnames(classes.header)}>
           <span className={classnames(classes.title)}>{title}</span>
-          <FilePicker onUpload={addFile}>
-            <div className={classnames(classes['upload-button'])}>
-              <Icon>file-plus</Icon>
+          {!isFetching[listId] ? (
+            <FilePicker
+              allowedFileExtensions={allowedFileExtensions}
+              onUpload={addFile}
+            >
+              <div className={classnames(classes['upload-button'])}>
+                <Icon>file-plus</Icon>
+              </div>
+            </FilePicker>
+          ) : (
+            <div className={classnames(classes.rotate, classes.icon)}>
+              <Icon size={16}>loader</Icon>
             </div>
-          </FilePicker>
+          )}
         </div>
         <SortableList
           beginDragProps={['id', 'index', 'name', 'listId']}
@@ -69,6 +81,9 @@ const FileSection = ({
   )
 
 export default compose(
+  getContext({
+    isFetching: PropTypes.object,
+  }),
   DropTarget(
     'item',
     {
@@ -91,9 +106,13 @@ export default compose(
   DropTarget(
     NativeTypes.FILE,
     {
-      drop({ addFile }, monitor) {
+      drop({ addFile, allowedFileExtensions }, monitor) {
         const [file] = monitor.getItem().files
-        addFile(file)
+        const fileExtention = file.name.split('.')[1]
+
+        if (allowedFileExtensions.includes(fileExtention)) {
+          addFile(file)
+        }
       },
     },
     (connect, monitor) => ({

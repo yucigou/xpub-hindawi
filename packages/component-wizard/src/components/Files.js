@@ -4,12 +4,24 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { actions } from 'pubsweet-client'
 import { withRouter } from 'react-router-dom'
-import { compose, withHandlers, getContext, lifecycle } from 'recompose'
+import {
+  compose,
+  withHandlers,
+  getContext,
+  lifecycle,
+  withContext,
+} from 'recompose'
 import { SortableList } from 'pubsweet-components-faraday/src/components'
 
 import FileSection from './FileSection'
 
-import { uploadFile, setFiles, getFiles, deleteFile } from '../redux/files'
+import {
+  uploadFile,
+  setFiles,
+  deleteFile,
+  getFiles,
+  getRequestStatus,
+} from '../redux/files'
 
 const Files = ({
   files,
@@ -23,6 +35,7 @@ const Files = ({
   <div>
     <FileSection
       addFile={addFile('manuscripts')}
+      allowedFileExtensions={['pdf', 'doc', 'docx']}
       changeList={changeList}
       dropItems={dropItems}
       files={get(files, 'manuscripts') || []}
@@ -43,6 +56,7 @@ const Files = ({
     />
     <FileSection
       addFile={addFile('coverLetter')}
+      allowedFileExtensions={['pdf', 'doc', 'docx']}
       changeList={changeList}
       files={get(files, 'coverLetter') || []}
       isLast
@@ -59,7 +73,7 @@ export default compose(
   getContext({ version: PropTypes.object, project: PropTypes.object }),
   connect(
     state => ({
-      isFetching: state.files.isFetching,
+      isFetching: getRequestStatus(state),
       files: getFiles(state),
     }),
     {
@@ -162,4 +176,12 @@ export default compose(
       })
     },
   }),
+  withContext(
+    {
+      isFetching: PropTypes.object,
+    },
+    ({ isFetching }) => ({
+      isFetching,
+    }),
+  ),
 )(Files)

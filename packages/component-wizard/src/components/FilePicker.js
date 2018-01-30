@@ -3,8 +3,19 @@ import React, { Component } from 'react'
 class FilePicker extends Component {
   handleUpload = e => {
     const { onUpload } = this.props
+
     onUpload(e.target.files[0])
     this.fileInput.value = null
+  }
+
+  getAllowedTypes = () => {
+    const { allowedFileExtensions } = this.props
+
+    if (!allowedFileExtensions) {
+      return []
+    }
+
+    return allowedFileExtensions.map(ext => `.${ext}`)
   }
 
   render() {
@@ -12,6 +23,7 @@ class FilePicker extends Component {
     return (
       <div>
         <input
+          accept={this.getAllowedTypes()}
           onChange={this.handleUpload}
           ref={input => (this.fileInput = input)}
           style={{ display: 'none' }}
