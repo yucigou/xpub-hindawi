@@ -6,6 +6,8 @@ import { withJournal } from 'xpub-journal'
 import { ConnectPage } from 'xpub-connect'
 import { selectCollection, selectFragment } from 'xpub-selectors'
 import { compose, withHandlers, withState, withContext } from 'recompose'
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-dnd'
 
 import Wizard from './Wizard'
 
@@ -78,4 +80,5 @@ export default compose(
       toggleConfirmation,
     }),
   ),
+  DragDropContext(HTML5Backend),
 )(Wizard)
