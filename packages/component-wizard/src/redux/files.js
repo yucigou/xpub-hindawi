@@ -1,4 +1,4 @@
-import request from 'pubsweet-client/src/helpers/api'
+import request, { remove } from 'pubsweet-client/src/helpers/api'
 
 const initialState = {
   isFetching: false,
@@ -13,6 +13,10 @@ const initialState = {
 const UPLOAD_REQUEST = 'files/UPLOAD_REQUEST'
 const UPLOAD_FAILURE = 'files/UPLOAD_FAILURE'
 const UPLOAD_SUCCESS = 'files/UPLOAD_SUCCESS'
+
+const REMOVE_REQUEST = 'files/REMOVE_REQUEST'
+const REMOVE_FAILURE = 'files/REMOVE_FAILURE'
+const REMOVE_SUCCESS = 'files/REMOVE_SUCCESS'
 
 const SET_FILES = 'files/SET_FILES'
 
@@ -35,9 +39,10 @@ const uploadSuccess = () => ({
   type: UPLOAD_SUCCESS,
 })
 
-const createFileData = file => {
+const createFileData = (file, type) => {
   const data = new FormData()
   data.append('file', file)
+  data.append('fileType', type)
 
   return {
     method: 'POST',
@@ -48,16 +53,25 @@ const createFileData = file => {
   }
 }
 
+const removeRequest = () => ({
+  type: REMOVE_REQUEST,
+})
+
 export const getFiles = state => state.files.files
 
-export const uploadFile = file => dispatch => {
+export const uploadFile = (file, type) => dispatch => {
   dispatch(uploadRequest())
-  return request('/aws-upload', createFileData(file))
+  return request('/aws-upload', createFileData(file, type))
     .then(r => {
       dispatch(uploadSuccess())
       return r
     })
     .catch(err => dispatch(uploadFailure(err.message)))
+}
+
+export const deleteFile = fileId => dispatch => {
+  dispatch(removeRequest())
+  return remove(`/aws-delete/${fileId}`)
 }
 
 export default (state = initialState, action) => {

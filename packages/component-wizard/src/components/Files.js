@@ -102,7 +102,7 @@ export default compose(
       project,
       version,
     }) => type => file => {
-      uploadFile(file).then(fileResponse => {
+      uploadFile(file, type).then(fileResponse => {
         setFiles([...files[type], fileResponse], type)
         updateFragment(project, {
           submitted: new Date(),
@@ -119,8 +119,16 @@ export default compose(
     moveItem: ({ setFiles, files }) => type => (dragIndex, hoverIndex) => {
       setFiles(SortableList.moveItem(files[type], dragIndex, hoverIndex), type)
     },
-    removeFile: () => type => name => e => {
+    removeFile: ({
+      setFiles,
+      files,
+      deleteFile,
+      project,
+      version,
+      updateFragment,
+    }) => type => id => e => {
       e.preventDefault()
+
       // changeFiles(prev => ({
       //   ...prev,
       //   [type]: prev[type].filter(f => f.name !== name),
