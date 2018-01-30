@@ -40,7 +40,7 @@ const AWSBackend = app => {
 
       s3.getSignedUrl('getObject', params, (err, data) => {
         if (err) {
-          res.status(400).json({ error: err })
+          res.status(err.statusCode).json({ error: err.message })
           return
         }
         res.status(200).json({
@@ -52,6 +52,19 @@ const AWSBackend = app => {
       })
     },
   )
+  app.delete('/api/aws-delete/:fileId', authBearer, async (req, res) => {
+    const params = {
+      Bucket: process.env.AWS_BUCKET,
+      Key: req.params.fileId,
+    }
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        res.status(err.statusCode).json({ error: err.message })
+        return
+      }
+      res.status(200).json()
+    })
+  })
 }
 
 module.exports = AWSBackend
