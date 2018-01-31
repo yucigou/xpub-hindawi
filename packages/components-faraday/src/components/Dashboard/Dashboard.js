@@ -1,4 +1,5 @@
 import React from 'react'
+import { get } from 'lodash'
 import { Button } from '@pubsweet/ui'
 
 import classes from './Dashboard.local.scss'
@@ -22,8 +23,8 @@ const Dashboard = ({
     </div>
     <DashboardFilters changeView={changeViewMode} listView={listView} />
     <DashboardItems
-      dashboard={dashboard}
       deleteProject={deleteProject}
+      list={get(currentUser, 'admin') ? dashboard.all : dashboard.owner}
       listView={listView}
     />
   </div>

@@ -39,6 +39,7 @@ export default compose(
               reviewer => reviewer && reviewer.user === currentUser.id,
             ),
         ),
+        all: sortedCollections,
       }
 
       return { collections, conversion, currentUser, dashboard }

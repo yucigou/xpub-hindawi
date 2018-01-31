@@ -6,18 +6,17 @@ import classes from './Dashboard.local.scss'
 
 const DashboardItem = withVersion(Item)
 
-const DashboardItems = ({ dashboard, listView = true, deleteProject }) => (
+const DashboardItems = ({ list, listView = true, deleteProject }) => (
   <div>
-    {!dashboard.owner.length &&
-      !dashboard.reviewer.length && (
-        <div className={classes.empty}>
-          Nothing to do at the moment. Please upload a manuscript.
-        </div>
-      )}
+    {!list.length && (
+      <div className={classes.empty}>
+        Nothing to do at the moment. Please upload a manuscript.
+      </div>
+    )}
 
-    {!!dashboard.owner.length && (
+    {!!list.length && (
       <div className={classes.section}>
-        {dashboard.owner.map(p => (
+        {list.map(p => (
           <DashboardItem
             deleteProject={deleteProject}
             key={p.id}
