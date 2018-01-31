@@ -30,7 +30,6 @@ const FileSection = ({
   isFirst,
   addFile,
   canDrop,
-  dropItems,
   moveItem,
   isFileOver,
   removeFile,
@@ -40,6 +39,7 @@ const FileSection = ({
   isFetching,
   canDropFile,
   disabledFilepicker,
+  dropSortableFile,
 }) =>
   connectFileDrop(
     connectDropTarget(
@@ -82,7 +82,7 @@ const FileSection = ({
         <SortableList
           beginDragProps={['id', 'index', 'name', 'listId']}
           dragHandle={DragHandle}
-          dropItem={dropItems}
+          dropItem={dropSortableFile}
           items={files}
           listId={listId}
           listItem={FileItem}

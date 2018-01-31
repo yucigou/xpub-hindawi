@@ -41,8 +41,12 @@ const itemTarget = {
     }
     monitor.getItem().index = hoverIndex
   },
-  drop({ dropItem, index }) {
-    if (dropItem && typeof dropItem === 'function') dropItem(index)
+  drop({ dropItem, index, listId: toListId, ...rest }, monitor) {
+    const { listId: fromListId } = monitor.getItem()
+    // TODO: fix it for authors too
+    if (fromListId === toListId) {
+      if (dropItem && typeof dropItem === 'function') dropItem(index)
+    }
   },
 }
 

@@ -1,4 +1,5 @@
-import request, { remove } from 'pubsweet-client/src/helpers/api'
+import request, { remove, get } from 'pubsweet-client/src/helpers/api'
+import { change as changeForm } from 'redux-form'
 
 const initialState = {
   isFetching: {
@@ -22,14 +23,22 @@ const REMOVE_REQUEST = 'files/REMOVE_REQUEST'
 const REMOVE_FAILURE = 'files/REMOVE_FAILURE'
 const REMOVE_SUCCESS = 'files/REMOVE_SUCCESS'
 
-const SET_FILES = 'files/SET_FILES'
+const SET_ALL_FILES = 'files/SET_ALL_FILES'
 
 // action creators
-export const setFiles = (files, fileType) => ({
-  type: SET_FILES,
+const _setAllFiles = files => ({
+  type: SET_ALL_FILES,
   files,
-  fileType,
 })
+
+export const setAllFiles = files => dispatch => {
+  dispatch(changeForm('wizard', 'files', files))
+  dispatch(_setAllFiles(files))
+}
+
+export const moveFiles = files => dispatch => {
+  dispatch(_setAllFiles(files))
+}
 
 const uploadRequest = type => ({
   type: UPLOAD_REQUEST,
@@ -45,9 +54,10 @@ const uploadSuccess = () => ({
   type: UPLOAD_SUCCESS,
 })
 
-const createFileData = (file, type) => {
+const createFileData = (file, type, fragmentId) => {
   const data = new FormData()
   data.append('fileType', type)
+  data.append('framentId', fragmentId)
   data.append('file', file)
 
   return {
@@ -77,9 +87,9 @@ export const getFiles = state => state.files.files
 export const getRequestStatus = state => state.files.isFetching
 
 // thunked actions
-export const uploadFile = (file, type) => dispatch => {
+export const uploadFile = (file, type, fragmentId) => dispatch => {
   dispatch(uploadRequest(type))
-  return request('/aws-upload', createFileData(file, type))
+  return request('/aws-upload', createFileData(file, type, fragmentId))
     .then(r => {
       dispatch(uploadSuccess())
       return r
@@ -87,9 +97,9 @@ export const uploadFile = (file, type) => dispatch => {
     .catch(err => dispatch(uploadFailure(err.message)))
 }
 
-export const deleteFile = fileId => dispatch => {
+export const deleteFile = (fileId, fragmentId) => dispatch => {
   dispatch(removeRequest())
-  return remove(`/aws-delete/${fileId}`)
+  return remove(`/aws-delete/${fragmentId}/${fileId}`)
     .then(r => {
       dispatch(removeSuccess())
       return r
@@ -97,9 +107,17 @@ export const deleteFile = fileId => dispatch => {
     .catch(err => dispatch(removeFailure(err.message)))
 }
 
+export const getSignedUrl = (fileId, fragmentId) =>
+  get(`aws-signed-url/${fragmentId}/${fileId}`)
+
 // reducer
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_ALL_FILES:
+      return {
+        ...state,
+        files: action.files,
+      }
     case UPLOAD_REQUEST:
       return {
         ...state,
@@ -107,14 +125,6 @@ export default (state = initialState, action) => {
         isFetching: {
           ...state.isFetching,
           [action.fileType]: true,
-        },
-      }
-    case SET_FILES:
-      return {
-        ...state,
-        files: {
-          ...state.files,
-          [action.fileType]: action.files,
         },
       }
     case UPLOAD_FAILURE:
