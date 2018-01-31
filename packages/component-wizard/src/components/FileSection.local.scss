@@ -9,10 +9,26 @@
     display: flex;
     justify-content: flex-start;
 
+    .picker-container {
+      align-items: center;
+      display: flex;
+      flex: 1;
+    }
+
+    .error {
+      color: firebrick;
+      font-size: 14px;
+      margin-right: 5px;
+    }
+
     .upload-button {
       cursor: pointer;
       display: flex;
       margin-left: 5px;
+    }
+
+    .disabled-picker {
+      cursor: default;
     }
 
     .title {

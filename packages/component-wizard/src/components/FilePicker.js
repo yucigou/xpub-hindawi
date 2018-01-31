@@ -19,7 +19,7 @@ class FilePicker extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabled } = this.props
     return (
       <div>
         <input
@@ -32,7 +32,7 @@ class FilePicker extends Component {
         {React.cloneElement(children, {
           onClick: e => {
             e.preventDefault()
-            this.fileInput.click()
+            !disabled && this.fileInput.click()
           },
         })}
       </div>

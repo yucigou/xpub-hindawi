@@ -41,6 +41,7 @@ const Files = ({
       files={get(files, 'manuscripts') || []}
       isFirst
       listId="manuscripts"
+      maxFiles={Number.POSITIVE_INFINITY}
       moveItem={moveItem('manuscripts')}
       removeFile={removeFile('manuscripts')}
       title="Main manuscript"
@@ -50,6 +51,7 @@ const Files = ({
       changeList={changeList}
       files={get(files, 'supplementary') || []}
       listId="supplementary"
+      maxFiles={Number.POSITIVE_INFINITY}
       moveItem={moveItem('supplementary')}
       removeFile={removeFile('supplementary')}
       title="Supplementarry files"
@@ -61,6 +63,7 @@ const Files = ({
       files={get(files, 'coverLetter') || []}
       isLast
       listId="coverLetter"
+      maxFiles={1}
       moveItem={moveItem('coverLetter')}
       removeFile={removeFile('coverLetter')}
       title="Cover letter"

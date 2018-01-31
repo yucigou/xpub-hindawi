@@ -1,3 +1,4 @@
+export { default as Files } from './Files'
 export { default as Wizard } from './Wizard'
 export { default as Progress } from './Progress'
 export { default as WizardPage } from './WizardPage'
