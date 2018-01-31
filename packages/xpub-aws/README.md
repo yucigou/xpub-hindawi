@@ -53,6 +53,7 @@ Content-Type: text/plain
 This endpoint allows you to retrieve a file's signed URL that can be used to download the file.
 #### Request
 `GET /api/aws-signed-url/{fragmentId}/{fileId}`
+
 | URI Parameter | Requiered | Requirements | Description |
 | -------- | -------- | -------- | -------- |
 | fragmentId | Yes | String | The ID of the fragment to which the file belongs to |
@@ -69,6 +70,7 @@ HTTP/1.1 200
 ## Delete file [DELETE]
 #### Request
 `DELETE /api/aws-delete/{fragmentId}/{fileId}`
+
 | URI Parameter | Requiered | Requirements | Description |
 | -------- | -------- | -------- | -------- |
 | fragmentId | Yes | String | The ID of the fragment to which the file belongs to |
