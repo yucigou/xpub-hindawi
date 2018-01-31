@@ -2,7 +2,6 @@ import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { actions } from 'pubsweet-client'
 import { withRouter } from 'react-router-dom'
 import {
   compose,
@@ -17,10 +16,11 @@ import FileSection from './FileSection'
 
 import {
   uploadFile,
-  setFiles,
   deleteFile,
   getFiles,
   getRequestStatus,
+  setAllFiles,
+  moveFiles,
 } from '../redux/files'
 
 const Files = ({
@@ -29,7 +29,7 @@ const Files = ({
   moveItem,
   removeFile,
   changeList,
-  dropItems,
+  dropSortableFile,
   ...rest
 }) => (
   <div>
@@ -37,7 +37,7 @@ const Files = ({
       addFile={addFile('manuscripts')}
       allowedFileExtensions={['pdf', 'doc', 'docx']}
       changeList={changeList}
-      dropItems={dropItems}
+      dropSortableFile={dropSortableFile}
       files={get(files, 'manuscripts') || []}
       isFirst
       listId="manuscripts"
@@ -49,6 +49,7 @@ const Files = ({
     <FileSection
       addFile={addFile('supplementary')}
       changeList={changeList}
+      dropSortableFile={dropSortableFile}
       files={get(files, 'supplementary') || []}
       listId="supplementary"
       maxFiles={Number.POSITIVE_INFINITY}
@@ -60,6 +61,7 @@ const Files = ({
       addFile={addFile('coverLetter')}
       allowedFileExtensions={['pdf', 'doc', 'docx']}
       changeList={changeList}
+      dropSortableFile={dropSortableFile}
       files={get(files, 'coverLetter') || []}
       isLast
       listId="coverLetter"
@@ -81,102 +83,63 @@ export default compose(
     }),
     {
       uploadFile,
-      updateFragment: actions.updateFragment,
-      setFiles,
       deleteFile,
+      setAllFiles,
+      moveFiles,
     },
   ),
   lifecycle({
     componentDidMount() {
-      const { setFiles, version } = this.props
-      setFiles(version.files.manuscripts, 'manuscripts')
-      setFiles(version.files.supplementary, 'supplementary')
-      setFiles(version.files.coverLetter, 'coverLetter')
+      const { version, setAllFiles } = this.props
+      setAllFiles(version.files)
     },
   }),
   withHandlers({
-    dropItems: ({ files, updateFragment, project, version }) => () => {
-      updateFragment(project, {
-        submitted: new Date(),
-        ...version,
-        files,
-      })
+    dropSortableFile: ({ files, setAllFiles }) => () => {
+      setAllFiles(files)
     },
-    changeList: ({ files, setFiles, updateFragment, project, version }) => (
-      fromListId,
-      toListId,
-      id,
-    ) => {
+    changeList: ({ files, setAllFiles }) => (fromListId, toListId, id) => {
       const swappedFile = files[fromListId].find(f => f.id === id)
 
       const fromFiles = files[fromListId].filter(f => f.id !== id)
       const toFiles = [...files[toListId], swappedFile]
 
-      setFiles(fromFiles, fromListId)
-      setFiles(toFiles, toListId)
-
-      updateFragment(project, {
-        submitted: new Date(),
-        ...version,
-        files: {
-          ...version.files,
-          [fromListId]: fromFiles,
-          [toListId]: toFiles,
-        },
+      const newFiles = {
+        ...files,
+        [toListId]: toFiles,
+        [fromListId]: fromFiles,
+      }
+      setAllFiles(newFiles)
+    },
+    addFile: ({ files, uploadFile, setAllFiles, version }) => type => file => {
+      uploadFile(file, type, version.id).then(fileResponse => {
+        const newFiles = {
+          ...files,
+          [type]: [...files[type], fileResponse],
+        }
+        setAllFiles(newFiles)
       })
     },
-    addFile: ({
-      files,
-      setFiles,
-      uploadFile,
-      updateFragment,
-      project,
-      version,
-    }) => type => file => {
-      uploadFile(file, type).then(fileResponse => {
-        setFiles([...files[type], fileResponse], type)
-        updateFragment(project, {
-          submitted: new Date(),
-          ...version,
-          files: {
-            ...version.files,
-            [type]: version.files[type]
-              ? [...version.files[type], fileResponse]
-              : [fileResponse],
-          },
-        })
-      })
-    },
-    moveItem: ({
-      setFiles,
-      files,
-      project,
-      version,
-      updateFragment,
-    }) => type => (dragIndex, hoverIndex) => {
-      const newFiles = SortableList.moveItem(files[type], dragIndex, hoverIndex)
-      setFiles(newFiles, type)
+    moveItem: ({ moveFiles, files }) => type => (dragIndex, hoverIndex) => {
+      const newFiles = {
+        ...files,
+        [type]: SortableList.moveItem(files[type], dragIndex, hoverIndex),
+      }
+      moveFiles(newFiles)
     },
     removeFile: ({
-      setFiles,
+      setAllFiles,
       files,
       deleteFile,
-      project,
       version,
-      updateFragment,
     }) => type => id => e => {
       e.preventDefault()
-      deleteFile(id)
-      const newFiles = files[type].filter(f => f.id !== id)
-      setFiles(newFiles, type)
-      updateFragment(project, {
-        submitted: new Date(),
-        ...version,
-        files: {
-          ...version.files,
-          [type]: newFiles,
-        },
-      })
+      deleteFile(id, version.id)
+      const newFiles = {
+        ...files,
+        [type]: files[type].filter(f => f.id !== id),
+      }
+      setAllFiles(newFiles, type)
     },
   }),
   withContext(
