@@ -6,12 +6,12 @@ import DashboardItems from './DashboardItems'
 import DashboardFilters from './DashboardFilters'
 
 const Dashboard = ({
+  changeViewMode,
+  createDraftSubmission,
   currentUser,
   dashboard,
-  listView,
-  changeViewMode,
   deleteProject,
-  createDraftSubmission,
+  listView,
 }) => (
   <div className={classes.root}>
     <div className={classes.header}>
@@ -21,7 +21,11 @@ const Dashboard = ({
       </Button>
     </div>
     <DashboardFilters changeView={changeViewMode} listView={listView} />
-    <DashboardItems dashboard={dashboard} listView={listView} />
+    <DashboardItems
+      dashboard={dashboard}
+      deleteProject={deleteProject}
+      listView={listView}
+    />
   </div>
 )
 

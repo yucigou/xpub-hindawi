@@ -14,7 +14,7 @@ export default compose(
     actions.getTeams(),
     actions.getUsers(),
   ]),
-  withState('listView', 'changeView', false),
+  withState('listView', 'changeView', true),
   withHandlers({
     changeViewMode: ({ changeView }) => () => changeView(listView => !listView),
   }),

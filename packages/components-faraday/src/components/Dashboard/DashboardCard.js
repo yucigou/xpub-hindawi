@@ -6,7 +6,13 @@ import { Button, Icon } from '@pubsweet/ui'
 import { parseVersion, getFilesURL, downloadAll } from './utils'
 import classes from './Dashboard.local.scss'
 
-const DashboardCard = ({ project, listView, version }) => {
+const DashboardCard = ({
+  deleteProject,
+  history,
+  listView,
+  project,
+  version,
+}) => {
   const { submitted, author, title, type, version: vers } = parseVersion(
     version,
   )
@@ -39,10 +45,19 @@ const DashboardCard = ({ project, listView, version }) => {
         >
           <Icon>download</Icon>
         </div>
-
-        <a href={`/projects/${project.id}/versions/${version.id}/submit`}>
-          Details
-        </a>
+        <div className={classes.pointer} onClick={() => deleteProject(project)}>
+          <Icon>trash-2</Icon>
+        </div>
+        <div
+          className={classes.pointer}
+          onClick={() =>
+            history.push(
+              `/projects/${project.id}/versions/${version.id}/submit`,
+            )
+          }
+        >
+          <Icon>file-text</Icon>
+        </div>
       </div>
       {!listView && (
         <div className={classes.expandedView}>

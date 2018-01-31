@@ -1,12 +1,6 @@
 import React from 'react'
 import { AbstractEditor, TitleEditor } from 'xpub-edit'
-import {
-  Menu,
-  CheckboxGroup,
-  YesOrNo,
-  TextField,
-  Supplementary,
-} from '@pubsweet/ui'
+import { Menu, CheckboxGroup, YesOrNo, TextField } from '@pubsweet/ui'
 import uploadFileFn from 'xpub-upload'
 import { required, minChars, minSize } from 'xpub-validators'
 import { Files } from 'pubsweet-component-wizard/src/components/'

@@ -1,4 +1,6 @@
 import React from 'react'
+import { Icon } from '@pubsweet/ui'
+
 import classes from './Dashboard.local.scss'
 
 const DashboardFilters = ({
@@ -16,7 +18,12 @@ const DashboardFilters = ({
       <span> Status </span>
       <span> Newest on top </span>
     </div>
-    <div onClick={changeView}>View: {listView ? 'List' : 'Card'} </div>
+    <div className={classes.viewMode} onClick={changeView}>
+      <div className={classes.icon}>
+        {listView ? <Icon>list</Icon> : <Icon>credit-card</Icon>}
+      </div>
+      {listView ? ' List' : ' Card'} View
+    </div>
   </div>
 )
 
