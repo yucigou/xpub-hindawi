@@ -5,6 +5,7 @@ import { ValidatedField, Button } from '@pubsweet/ui'
 
 import classes from './WizardStep.local.scss'
 import AutosaveIndicator from './AutosaveIndicator'
+import Files from './Files'
 
 export default ({
   children: stepChildren,
