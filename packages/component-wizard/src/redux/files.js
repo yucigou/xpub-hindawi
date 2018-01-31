@@ -1,7 +1,11 @@
 import request, { remove } from 'pubsweet-client/src/helpers/api'
 
 const initialState = {
-  isFetching: false,
+  isFetching: {
+    manuscripts: false,
+    supplementary: false,
+    coverLetter: false,
+  },
   error: null,
   files: {
     manuscripts: [],
@@ -9,7 +13,7 @@ const initialState = {
     coverLetter: [],
   },
 }
-
+// constants
 const UPLOAD_REQUEST = 'files/UPLOAD_REQUEST'
 const UPLOAD_FAILURE = 'files/UPLOAD_FAILURE'
 const UPLOAD_SUCCESS = 'files/UPLOAD_SUCCESS'
@@ -20,14 +24,16 @@ const REMOVE_SUCCESS = 'files/REMOVE_SUCCESS'
 
 const SET_FILES = 'files/SET_FILES'
 
+// action creators
 export const setFiles = (files, fileType) => ({
   type: SET_FILES,
   files,
   fileType,
 })
 
-const uploadRequest = () => ({
+const uploadRequest = type => ({
   type: UPLOAD_REQUEST,
+  fileType: type,
 })
 
 const uploadFailure = error => ({
@@ -66,10 +72,13 @@ const removeSuccess = () => ({
   type: REMOVE_SUCCESS,
 })
 
+// selectors
 export const getFiles = state => state.files.files
+export const getRequestStatus = state => state.files.isFetching
 
+// thunked actions
 export const uploadFile = (file, type) => dispatch => {
-  dispatch(uploadRequest())
+  dispatch(uploadRequest(type))
   return request('/aws-upload', createFileData(file, type))
     .then(r => {
       dispatch(uploadSuccess())
@@ -88,13 +97,17 @@ export const deleteFile = fileId => dispatch => {
     .catch(err => dispatch(removeFailure(err.message)))
 }
 
+// reducer
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPLOAD_REQUEST:
       return {
         ...state,
-        isFetching: true,
         error: null,
+        isFetching: {
+          ...state.isFetching,
+          [action.fileType]: true,
+        },
       }
     case SET_FILES:
       return {
@@ -107,13 +120,13 @@ export default (state = initialState, action) => {
     case UPLOAD_FAILURE:
       return {
         ...state,
-        isFetching: false,
+        isFetching: initialState.isFetching,
         error: action.error,
       }
     case UPLOAD_SUCCESS:
       return {
         ...state,
-        isFetching: false,
+        isFetching: initialState.isFetching,
         error: null,
       }
     default:

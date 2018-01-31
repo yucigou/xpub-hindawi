@@ -4,12 +4,24 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { actions } from 'pubsweet-client'
 import { withRouter } from 'react-router-dom'
-import { compose, withHandlers, getContext, lifecycle } from 'recompose'
+import {
+  compose,
+  withHandlers,
+  getContext,
+  lifecycle,
+  withContext,
+} from 'recompose'
 import { SortableList } from 'pubsweet-components-faraday/src/components'
 
 import FileSection from './FileSection'
 
-import { uploadFile, setFiles, getFiles, deleteFile } from '../redux/files'
+import {
+  uploadFile,
+  setFiles,
+  deleteFile,
+  getFiles,
+  getRequestStatus,
+} from '../redux/files'
 
 const Files = ({
   files,
@@ -23,11 +35,13 @@ const Files = ({
   <div>
     <FileSection
       addFile={addFile('manuscripts')}
+      allowedFileExtensions={['pdf', 'doc', 'docx']}
       changeList={changeList}
       dropItems={dropItems}
       files={get(files, 'manuscripts') || []}
       isFirst
       listId="manuscripts"
+      maxFiles={Number.POSITIVE_INFINITY}
       moveItem={moveItem('manuscripts')}
       removeFile={removeFile('manuscripts')}
       title="Main manuscript"
@@ -37,16 +51,19 @@ const Files = ({
       changeList={changeList}
       files={get(files, 'supplementary') || []}
       listId="supplementary"
+      maxFiles={Number.POSITIVE_INFINITY}
       moveItem={moveItem('supplementary')}
       removeFile={removeFile('supplementary')}
       title="Supplementarry files"
     />
     <FileSection
       addFile={addFile('coverLetter')}
+      allowedFileExtensions={['pdf', 'doc', 'docx']}
       changeList={changeList}
       files={get(files, 'coverLetter') || []}
       isLast
       listId="coverLetter"
+      maxFiles={1}
       moveItem={moveItem('coverLetter')}
       removeFile={removeFile('coverLetter')}
       title="Cover letter"
@@ -59,7 +76,7 @@ export default compose(
   getContext({ version: PropTypes.object, project: PropTypes.object }),
   connect(
     state => ({
-      isFetching: state.files.isFetching,
+      isFetching: getRequestStatus(state),
       files: getFiles(state),
     }),
     {
@@ -162,4 +179,12 @@ export default compose(
       })
     },
   }),
+  withContext(
+    {
+      isFetching: PropTypes.object,
+    },
+    ({ isFetching }) => ({
+      isFetching,
+    }),
+  ),
 )(Files)
