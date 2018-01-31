@@ -45,59 +45,46 @@ const AWSBackend = app => {
       return cb(null, true)
     },
   })
-  app.post(
-    '/api/aws-upload',
-    authBearer,
-    upload.single('file'),
-    async (req, res) => {
-      if (req.fileValidationError !== undefined) {
-        return res.status(400).json({ error: req.fileValidationError })
-      }
+  app.post('/api/aws', authBearer, upload.single('file'), async (req, res) => {
+    if (req.fileValidationError !== undefined) {
+      return res.status(400).json({ error: req.fileValidationError })
+    }
 
+    res.status(200).json({
+      id: req.file.key,
+      name: req.file.originalname,
+      size: req.file.size,
+    })
+  })
+  app.get('/api/aws/:fragmentId/:fileId', authBearer, async (req, res) => {
+    const params = {
+      Bucket: process.env.AWS_BUCKET,
+      Key: `${req.params.fragmentId}${req.params.fileId}`,
+    }
+
+    s3.getSignedUrl('getObject', params, (err, data) => {
+      if (err) {
+        res.status(err.statusCode).json({ error: err.message })
+        return
+      }
       res.status(200).json({
-        id: req.file.key,
-        name: req.file.originalname,
-        size: req.file.size,
+        signedUrl: data,
       })
-    },
-  )
-  app.get(
-    '/api/aws-signed-url/:fragmentId/:fileId',
-    authBearer,
-    async (req, res) => {
-      const params = {
-        Bucket: process.env.AWS_BUCKET,
-        Key: `${req.params.fragmentId}${req.params.fileId}`,
+    })
+  })
+  app.delete('/api/aws/:fragmentId/:fileId', authBearer, async (req, res) => {
+    const params = {
+      Bucket: process.env.AWS_BUCKET,
+      Key: `${req.params.fragmentId}${req.params.fileId}`,
+    }
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        res.status(err.statusCode).json({ error: err.message })
+        return
       }
-
-      s3.getSignedUrl('getObject', params, (err, data) => {
-        if (err) {
-          res.status(err.statusCode).json({ error: err.message })
-          return
-        }
-        res.status(200).json({
-          signedUrl: data,
-        })
-      })
-    },
-  )
-  app.delete(
-    '/api/aws-delete/:fragmentId/:fileId',
-    authBearer,
-    async (req, res) => {
-      const params = {
-        Bucket: process.env.AWS_BUCKET,
-        Key: `${req.params.fragmentId}${req.params.fileId}`,
-      }
-      s3.deleteObject(params, (err, data) => {
-        if (err) {
-          res.status(err.statusCode).json({ error: err.message })
-          return
-        }
-        res.status(204).json()
-      })
-    },
-  )
+      res.status(204).json()
+    })
+  })
 }
 
 module.exports = AWSBackend

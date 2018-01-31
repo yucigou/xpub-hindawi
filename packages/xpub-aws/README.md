@@ -16,11 +16,11 @@ require('dotenv').config()
 ```
 
 # `xpub-aws` API
-A list of endpoints that help you upload, download and delete S3 files.\
+A list of endpoints that help you upload, download and delete S3 files.
 
 ## Upload a file [POST]
 #### Request
-`POST /api/aws-upload`
+`POST /api/aws`
 #### Request body
 ```
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryWfPNVh4wuWBlyEyQ
@@ -48,11 +48,11 @@ Content-Type: text/plain
 	"size": 452097
 }
 ```
----
+
 ## Retrieve file signed URL [GET]
 This endpoint allows you to retrieve a file's signed URL that can be used to download the file.
 #### Request
-`GET /api/aws-signed-url/{fragmentId}/{fileId}`
+`GET /api/aws/{fragmentId}/{fileId}`
 
 | URI Parameter | Requiered | Requirements | Description |
 | -------- | -------- | -------- | -------- |
@@ -66,10 +66,10 @@ HTTP/1.1 200
 	"signedUrl": "aws-url"
 }
 ```
----
+
 ## Delete file [DELETE]
 #### Request
-`DELETE /api/aws-delete/{fragmentId}/{fileId}`
+`DELETE /api/aws/{fragmentId}/{fileId}`
 
 | URI Parameter | Requiered | Requirements | Description |
 | -------- | -------- | -------- | -------- |
