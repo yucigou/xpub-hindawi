@@ -1,17 +1,18 @@
 import React from 'react'
-import { get, find } from 'lodash'
-import moment from 'moment'
-import { Icon } from '@pubsweet/ui'
+import { get, isEmpty } from 'lodash'
+import classnames from 'classnames'
+import { Button, Icon } from '@pubsweet/ui'
 
-import { parseTitle } from './utils'
+import { parseVersion, getFilesURL, downloadAll } from './utils'
 import classes from './Dashboard.local.scss'
 
 const DashboardCard = ({ project, listView, version }) => {
-  const author = find(get(version, 'authors'), a => a.isSubmitting)
-  const submitted = get(version, 'submitted')
-  const title = parseTitle(version)
-  // const abstract = get(version, 'metadata.abstract')
-  const type = get(version, 'metadata.type')
+  const { submitted, author, title, type, version: vers } = parseVersion(
+    version,
+  )
+  const files = getFilesURL(get(version, 'files'))
+  const status = get(project, 'status') || 'Draft'
+  const hasFiles = !isEmpty(files)
 
   return (
     <div className={classes.card}>
@@ -22,13 +23,23 @@ const DashboardCard = ({ project, listView, version }) => {
         />
 
         <div className={classes.quickInfo}>
-          <div className={classes.status}>
-            {get(project, 'status') || 'Draft'}
-          </div>
+          <div className={classes.status}>{status}</div>
+          <div className={classes.version}>{`v${vers} ${
+            submitted ? `- updated on ${submitted}` : ''
+          }`}</div>
         </div>
       </div>
       <div className={classes.rightSide}>
-        <Icon>download</Icon>
+        <div
+          className={classnames({
+            [classes.disabled]: !hasFiles,
+            [classes.pointer]: true,
+          })}
+          onClick={() => (hasFiles ? downloadAll(files) : null)}
+        >
+          <Icon>download</Icon>
+        </div>
+
         <a href={`/projects/${project.id}/versions/${version.id}/submit`}>
           Details
         </a>
@@ -41,7 +52,7 @@ const DashboardCard = ({ project, listView, version }) => {
               <div>Abstract</div>
             </div>
             <div className={classes.column2}>
-              <div>{author ? author.firstName : 'N/A'}</div>
+              <div>{author}</div>
               <a>View</a>
             </div>
           </div>
@@ -51,11 +62,9 @@ const DashboardCard = ({ project, listView, version }) => {
               <div>Type</div>
             </div>
             <div className={classes.column2}>
+              <div>{submitted}</div>
               <div>
-                {submitted ? moment(submitted).format('DD-MM-YYYY') : 'N/A'}
-              </div>
-              <div>
-                <span className={classes.status}>{type || 'N/A'}</span>
+                <span className={classes.status}>{type}</span>
               </div>
             </div>
           </div>
@@ -65,8 +74,12 @@ const DashboardCard = ({ project, listView, version }) => {
               <div>Reviewers</div>
             </div>
             <div className={classes.column2}>
-              <div>Invite</div>
-              <div>Invite</div>
+              <Button className={classes.button} primary>
+                Invite
+              </Button>
+              <Button className={classes.button} primary>
+                Invite
+              </Button>
             </div>
           </div>
         </div>

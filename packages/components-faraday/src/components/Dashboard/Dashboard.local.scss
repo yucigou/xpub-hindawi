@@ -55,6 +55,7 @@
     flex-direction: column;
 
     .quickInfo {
+      align-items: center;
       display: flex;
       flex-direction: row;
     }
@@ -67,10 +68,6 @@
     flex: 1 0 15%;
     justify-content: space-around;
     padding: 0 0.5em;
-
-    span {
-      cursor: pointer;
-    }
   }
 }
 
@@ -88,9 +85,13 @@
 }
 
 .column2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 0.5em;
 
-  > div {
+  > div,
+  > a {
     margin: 0.5em 0;
   }
 }
@@ -100,4 +101,25 @@
   margin: 0.5em 0;
   padding: 0.2em 0.5em;
   text-transform: uppercase;
+}
+
+.button {
+  margin: 0.3em 0.5em;
+  padding: 0 0.5em;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.disabled {
+  cursor: not-allowed;
+
+  svg {
+    stroke: gray;
+  }
+}
+
+.version {
+  margin-left: 1em;
 }
