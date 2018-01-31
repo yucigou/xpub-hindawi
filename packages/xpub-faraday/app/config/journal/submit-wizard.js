@@ -9,6 +9,7 @@ import {
 } from '@pubsweet/ui'
 import uploadFileFn from 'xpub-upload'
 import { required, minChars, minSize } from 'xpub-validators'
+import { Files } from 'pubsweet-component-wizard/src/components/'
 import { AuthorList } from 'pubsweet-components-faraday/src/components'
 
 import { declarations } from './'
@@ -177,35 +178,39 @@ export default {
       title: '4. Manuscript Files Upload',
       children: [
         {
-          fieldId: 'label-manuscript',
-          renderComponent: Label,
-          label: 'Main Manuscript',
+          fieldId: 'file-upload',
+          renderComponent: Files,
         },
-        {
-          fieldId: 'files.manuscripts',
-          label: 'Main Manuscript',
-          renderComponent: Supplementary,
-        },
-        {
-          fieldId: 'label-supplementary',
-          renderComponent: Label,
-          label: 'Supplemental Files',
-        },
-        {
-          fieldId: 'files.supplementary',
-          label: 'Supplemental Files',
-          renderComponent: Supplementary,
-        },
-        {
-          fieldId: 'label-cover',
-          renderComponent: Label,
-          label: 'Cover Letter',
-        },
-        {
-          fieldId: 'files.coverLetter',
-          label: 'Cover Letter',
-          renderComponent: Supplementary,
-        },
+        // {
+        //   fieldId: 'label-manuscript',
+        //   renderComponent: Label,
+        //   label: 'Main Manuscript',
+        // },
+        // {
+        //   fieldId: 'files.manuscripts',
+        //   label: 'Main Manuscript',
+        //   renderComponent: Supplementary,
+        // },
+        // {
+        //   fieldId: 'label-supplementary',
+        //   renderComponent: Label,
+        //   label: 'Supplemental Files',
+        // },
+        // {
+        //   fieldId: 'files.supplementary',
+        //   label: 'Supplemental Files',
+        //   renderComponent: Supplementary,
+        // },
+        // {
+        //   fieldId: 'label-cover',
+        //   renderComponent: Label,
+        //   label: 'Cover Letter',
+        // },
+        // {
+        //   fieldId: 'files.coverLetter',
+        //   label: 'Cover Letter',
+        //   renderComponent: Supplementary,
+        // },
       ],
     },
   ],

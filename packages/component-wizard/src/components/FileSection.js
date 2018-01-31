@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { Icon } from '@pubsweet/ui'
 import { DropTarget } from 'react-dnd'
-import { compose, getContext } from 'recompose'
 import { NativeTypes } from 'react-dnd-html5-backend'
+import { compose, getContext, withHandlers, withState } from 'recompose'
 import { SortableList } from 'pubsweet-components-faraday/src/components'
 
 import FileItem from './FileItem'
@@ -21,6 +21,7 @@ const DragHandle = () => (
 )
 
 const FileSection = ({
+  error,
   title,
   files,
   listId,
@@ -37,6 +38,8 @@ const FileSection = ({
   connectDropTarget,
   allowedFileExtensions,
   isFetching,
+  canDropFile,
+  disabledFilepicker,
 }) =>
   connectFileDrop(
     connectDropTarget(
@@ -49,21 +52,32 @@ const FileSection = ({
         })}
       >
         <div className={classnames(classes.header)}>
-          <span className={classnames(classes.title)}>{title}</span>
-          {!isFetching[listId] ? (
-            <FilePicker
-              allowedFileExtensions={allowedFileExtensions}
-              onUpload={addFile}
-            >
-              <div className={classnames(classes['upload-button'])}>
-                <Icon>file-plus</Icon>
+          <div className={classnames(classes['picker-container'])}>
+            <span className={classnames(classes.title)}>{title}</span>
+            {!isFetching[listId] ? (
+              <FilePicker
+                allowedFileExtensions={allowedFileExtensions}
+                disabled={disabledFilepicker()}
+                onUpload={addFile}
+              >
+                <div
+                  className={classnames({
+                    [classes['upload-button']]: true,
+                    [classes['disabled-picker']]: disabledFilepicker(),
+                  })}
+                >
+                  <Icon color={disabledFilepicker() ? '#999' : '#333'}>
+                    file-plus
+                  </Icon>
+                </div>
+              </FilePicker>
+            ) : (
+              <div className={classnames(classes.rotate, classes.icon)}>
+                <Icon size={16}>loader</Icon>
               </div>
-            </FilePicker>
-          ) : (
-            <div className={classnames(classes.rotate, classes.icon)}>
-              <Icon size={16}>loader</Icon>
-            </div>
-          )}
+            )}
+          </div>
+          <span className={classnames(classes.error)}>{error}</span>
         </div>
         <SortableList
           beginDragProps={['id', 'index', 'name', 'listId']}
@@ -75,7 +89,7 @@ const FileSection = ({
           moveItem={moveItem}
           removeFile={removeFile}
         />
-        <FileDropzone />
+        <FileDropzone label="Drag files here or use the add button." />
       </div>,
     ),
   )
@@ -84,15 +98,35 @@ export default compose(
   getContext({
     isFetching: PropTypes.object,
   }),
+  withState('error', 'setError', ''),
+  withHandlers({
+    clearError: ({ setError }) => () => {
+      setError(e => '')
+    },
+  }),
+  withHandlers({
+    setError: ({ setError, clearError }) => err => {
+      setError(e => err, () => setTimeout(clearError, 3000))
+    },
+    disabledFilepicker: ({ files, maxFiles }) => () => files.length >= maxFiles,
+  }),
   DropTarget(
     'item',
     {
-      drop({ changeList, listId: toListId }, monitor) {
+      drop(
+        { changeList, listId: toListId, maxFiles, files, setError },
+        monitor,
+      ) {
         const { listId: fromListId, id } = monitor.getItem()
+        if (files.length >= maxFiles) {
+          setError('No more files of this type can be added.')
+          return
+        }
+
         if (toListId === fromListId) return
         changeList(fromListId, toListId, id)
       },
-      canDrop({ listId: toListId }, monitor) {
+      canDrop({ listId: toListId, setError }, monitor) {
         const { listId: fromListId } = monitor.getItem()
         return toListId !== fromListId
       },
@@ -106,18 +140,32 @@ export default compose(
   DropTarget(
     NativeTypes.FILE,
     {
-      drop({ addFile, allowedFileExtensions }, monitor) {
+      drop(
+        { files, maxFiles, addFile, allowedFileExtensions, setError },
+        monitor,
+      ) {
         const [file] = monitor.getItem().files
         const fileExtention = file.name.split('.')[1]
 
-        if (allowedFileExtensions.includes(fileExtention)) {
+        if (files.length >= maxFiles) {
+          setError('No more files of this type can be added.')
+          return
+        }
+
+        if (
+          allowedFileExtensions &&
+          allowedFileExtensions.includes(fileExtention)
+        ) {
           addFile(file)
+        } else {
+          setError('File type not allowed for these kind of files.')
         }
       },
     },
     (connect, monitor) => ({
       connectFileDrop: connect.dropTarget(),
       isFileOver: monitor.isOver(),
+      canDropFile: monitor.canDrop(),
     }),
   ),
 )(FileSection)
