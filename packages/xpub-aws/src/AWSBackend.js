@@ -21,28 +21,53 @@ const AWSBackend = app => {
       bucket: process.env.AWS_BUCKET,
       contentType: multerS3.AUTO_CONTENT_TYPE,
       key: (req, file, cb) => {
-        cb(null, uuid.v4())
+        const fileKey = `${req.body.fragmentId}/${uuid.v4()}`
+        cb(null, fileKey)
       },
     }),
-    // fileFilter: (req, file, cb) => {
-    //   console.log('req in fileFilter', req.body.get('fileType'))
-    //   console.log('file in filter:', file)
-    //   if (req.body.fileType === 'supplementary') {
-    //     cb(null, false)
-    //     return
-    //   }
-    //   cb(null, true)
-    // },
+    fileFilter: (req, file, cb) => {
+      if (
+        req.body.fileType === 'manuscripts' ||
+        req.body.fileType === 'coverLetter'
+      ) {
+        if (
+          file.mimetype === 'application/pdf' ||
+          file.mimetype === 'application/msword' ||
+          file.mimetype ===
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ) {
+          return cb(null, true)
+        }
+        req.fileValidationError = 'Only Word documents and PDFs are allowed'
+        return cb(null, false)
+      }
+
+      return cb(null, true)
+    },
   })
   app.post(
     '/api/aws-upload',
     authBearer,
     upload.single('file'),
     async (req, res) => {
-      // console.log('FILE:', req.file)
+      if (req.fileValidationError !== undefined) {
+        return res.status(400).json({ error: req.fileValidationError })
+      }
+
+      res.status(200).json({
+        id: req.file.key,
+        name: req.file.originalname,
+        size: req.file.size,
+      })
+    },
+  )
+  app.get(
+    '/api/aws-signed-url/:fragmentId/:fileId',
+    authBearer,
+    async (req, res) => {
       const params = {
         Bucket: process.env.AWS_BUCKET,
-        Key: req.file.key,
+        Key: `${req.params.fragmentId}${req.params.fileId}`,
       }
 
       s3.getSignedUrl('getObject', params, (err, data) => {
@@ -51,27 +76,28 @@ const AWSBackend = app => {
           return
         }
         res.status(200).json({
-          id: req.file.key,
-          name: req.file.originalname,
-          size: req.file.size,
           signedUrl: data,
         })
       })
     },
   )
-  app.delete('/api/aws-delete/:fileId', authBearer, async (req, res) => {
-    const params = {
-      Bucket: process.env.AWS_BUCKET,
-      Key: req.params.fileId,
-    }
-    s3.deleteObject(params, (err, data) => {
-      if (err) {
-        res.status(err.statusCode).json({ error: err.message })
-        return
+  app.delete(
+    '/api/aws-delete/:fragmentId/:fileId',
+    authBearer,
+    async (req, res) => {
+      const params = {
+        Bucket: process.env.AWS_BUCKET,
+        Key: `${req.params.fragmentId}${req.params.fileId}`,
       }
-      res.status(204).json()
-    })
-  })
+      s3.deleteObject(params, (err, data) => {
+        if (err) {
+          res.status(err.statusCode).json({ error: err.message })
+          return
+        }
+        res.status(204).json()
+      })
+    },
+  )
 }
 
 module.exports = AWSBackend
