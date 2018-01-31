@@ -57,7 +57,7 @@ const uploadSuccess = () => ({
 const createFileData = (file, type, fragmentId) => {
   const data = new FormData()
   data.append('fileType', type)
-  data.append('framentId', fragmentId)
+  data.append('fragmentId', fragmentId)
   data.append('file', file)
 
   return {
