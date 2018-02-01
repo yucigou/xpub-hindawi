@@ -19,7 +19,15 @@ const parseFileSize = size => {
   return `${size} bytes`
 }
 
-const FileItem = ({ dragHandle, name, size, id, removeFile, ...rest }) => (
+const FileItem = ({
+  dragHandle,
+  name,
+  size,
+  id,
+  removeFile,
+  previewFile,
+  ...rest
+}) => (
   <div className={classnames(classes['file-item'])}>
     {dragHandle}
     <div className={classnames(classes.info)}>
@@ -27,9 +35,9 @@ const FileItem = ({ dragHandle, name, size, id, removeFile, ...rest }) => (
       <span>{parseFileSize(size)}</span>
     </div>
     <div className={classnames(classes.buttons)}>
-      <a href={rest.signedUrl} target="_blank">
+      <button onClick={previewFile(id)}>
         <Icon color="#666">eye</Icon>
-      </a>
+      </button>
       <button onClick={removeFile(id)} title="Delete">
         <Icon color="#666">trash-2</Icon>
       </button>

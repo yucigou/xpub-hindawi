@@ -21,6 +21,7 @@ import {
   getRequestStatus,
   setAllFiles,
   moveFiles,
+  getSignedUrl,
 } from '../redux/files'
 
 const Files = ({
@@ -30,6 +31,7 @@ const Files = ({
   removeFile,
   changeList,
   dropSortableFile,
+  previewFile,
   ...rest
 }) => (
   <div>
@@ -43,6 +45,7 @@ const Files = ({
       listId="manuscripts"
       maxFiles={Number.POSITIVE_INFINITY}
       moveItem={moveItem('manuscripts')}
+      previewFile={previewFile}
       removeFile={removeFile('manuscripts')}
       title="Main manuscript"
     />
@@ -54,6 +57,7 @@ const Files = ({
       listId="supplementary"
       maxFiles={Number.POSITIVE_INFINITY}
       moveItem={moveItem('supplementary')}
+      previewFile={previewFile}
       removeFile={removeFile('supplementary')}
       title="Supplementarry files"
     />
@@ -67,6 +71,7 @@ const Files = ({
       listId="coverLetter"
       maxFiles={1}
       moveItem={moveItem('coverLetter')}
+      previewFile={previewFile}
       removeFile={removeFile('coverLetter')}
       title="Cover letter"
     />
@@ -86,6 +91,7 @@ export default compose(
       deleteFile,
       setAllFiles,
       moveFiles,
+      getSignedUrl,
     },
   ),
   lifecycle({
@@ -95,6 +101,12 @@ export default compose(
     },
   }),
   withHandlers({
+    previewFile: ({ getSignedUrl }) => fileId => e => {
+      e.preventDefault()
+      getSignedUrl(fileId).then(({ signedUrl }) => {
+        window.open(signedUrl)
+      })
+    },
     dropSortableFile: ({ files, setAllFiles }) => () => {
       setAllFiles(files)
     },
@@ -134,7 +146,7 @@ export default compose(
       version,
     }) => type => id => e => {
       e.preventDefault()
-      deleteFile(id, version.id)
+      deleteFile(id)
       const newFiles = {
         ...files,
         [type]: files[type].filter(f => f.id !== id),
