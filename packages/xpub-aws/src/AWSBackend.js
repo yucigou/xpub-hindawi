@@ -59,7 +59,7 @@ const AWSBackend = app => {
   app.get('/api/aws/:fragmentId/:fileId', authBearer, async (req, res) => {
     const params = {
       Bucket: process.env.AWS_BUCKET,
-      Key: `${req.params.fragmentId}${req.params.fileId}`,
+      Key: `${req.params.fragmentId}/${req.params.fileId}`,
     }
 
     s3.getSignedUrl('getObject', params, (err, data) => {
@@ -75,7 +75,7 @@ const AWSBackend = app => {
   app.delete('/api/aws/:fragmentId/:fileId', authBearer, async (req, res) => {
     const params = {
       Bucket: process.env.AWS_BUCKET,
-      Key: `${req.params.fragmentId}${req.params.fileId}`,
+      Key: `${req.params.fragmentId}/${req.params.fileId}`,
     }
     s3.deleteObject(params, (err, data) => {
       if (err) {
