@@ -114,12 +114,30 @@ export default compose(
     'item',
     {
       drop(
-        { changeList, listId: toListId, maxFiles, files, setError },
+        {
+          changeList,
+          listId: toListId,
+          maxFiles,
+          files,
+          setError,
+          allowedFileExtensions,
+          ...pm
+        },
         monitor,
       ) {
-        const { listId: fromListId, id } = monitor.getItem()
+        const { listId: fromListId, id, name } = monitor.getItem()
+        const fileExtention = name.split('.')[1]
+
+        if (
+          allowedFileExtensions &&
+          !allowedFileExtensions.includes(fileExtention)
+        ) {
+          setError('Invalid file type.')
+          return
+        }
+
         if (files.length >= maxFiles) {
-          setError('No more files of this type can be added.')
+          setError('No more files can be added to this section.')
           return
         }
 
@@ -148,7 +166,7 @@ export default compose(
         const fileExtention = file.name.split('.')[1]
 
         if (files.length >= maxFiles) {
-          setError('No more files of this type can be added.')
+          setError('No more files can be added to this section.')
           return
         }
 
@@ -158,7 +176,7 @@ export default compose(
         ) {
           addFile(file)
         } else {
-          setError('File type not allowed for these kind of files.')
+          setError('Invalid file type.')
         }
       },
     },

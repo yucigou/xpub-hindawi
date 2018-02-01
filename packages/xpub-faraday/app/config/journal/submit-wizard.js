@@ -13,6 +13,7 @@ import {
   requiredBasedOnType,
   editModeEnabled,
   parseEmptyHtml,
+  requiredFiles,
 } from './wizard-validators'
 
 const min3Chars = minChars(3)
@@ -174,37 +175,8 @@ export default {
         {
           fieldId: 'file-upload',
           renderComponent: Files,
+          validate: [requiredFiles],
         },
-        // {
-        //   fieldId: 'label-manuscript',
-        //   renderComponent: Label,
-        //   label: 'Main Manuscript',
-        // },
-        // {
-        //   fieldId: 'files.manuscripts',
-        //   label: 'Main Manuscript',
-        //   renderComponent: Supplementary,
-        // },
-        // {
-        //   fieldId: 'label-supplementary',
-        //   renderComponent: Label,
-        //   label: 'Supplemental Files',
-        // },
-        // {
-        //   fieldId: 'files.supplementary',
-        //   label: 'Supplemental Files',
-        //   renderComponent: Supplementary,
-        // },
-        // {
-        //   fieldId: 'label-cover',
-        //   renderComponent: Label,
-        //   label: 'Cover Letter',
-        // },
-        // {
-        //   fieldId: 'files.coverLetter',
-        //   label: 'Cover Letter',
-        //   renderComponent: Supplementary,
-        // },
       ],
     },
   ],

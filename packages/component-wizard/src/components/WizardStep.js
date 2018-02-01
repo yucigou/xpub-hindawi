@@ -66,7 +66,6 @@ export default ({
             )
           },
         )}
-      <Files />
       <div className={classnames(classes.buttons)}>
         <Button onClick={isFirst ? () => history.push('/') : prevStep}>
           {isFirst
