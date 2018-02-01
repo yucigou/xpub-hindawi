@@ -43,7 +43,7 @@ Content-Type: text/plain
 #### Response
 ```json
 {
-	"id": "unique-file-id",
+	"id": "fragment-id/file-id",
 	"name": "Document Name.doc",
 	"size": 452097
 }
@@ -52,11 +52,10 @@ Content-Type: text/plain
 ## Retrieve file signed URL [GET]
 This endpoint allows you to retrieve a file's signed URL that can be used to download the file.
 #### Request
-`GET /api/aws/{fragmentId}/{fileId}`
+`GET /api/aws/{fileId}`
 
 | URI Parameter | Requiered | Requirements | Description |
 | -------- | -------- | -------- | -------- |
-| fragmentId | Yes | String | The ID of the fragment to which the file belongs to |
 | fileId | Yes | String | The ID of the file |
 
 #### Response
@@ -69,11 +68,10 @@ HTTP/1.1 200
 
 ## Delete file [DELETE]
 #### Request
-`DELETE /api/aws/{fragmentId}/{fileId}`
+`DELETE /api/aws/{fileId}`
 
 | URI Parameter | Requiered | Requirements | Description |
 | -------- | -------- | -------- | -------- |
-| fragmentId | Yes | String | The ID of the fragment to which the file belongs to |
 | fileId | Yes | String | The ID of the file |
 
 #### Response
