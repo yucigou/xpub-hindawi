@@ -40,6 +40,7 @@ const FileSection = ({
   canDropFile,
   disabledFilepicker,
   dropSortableFile,
+  previewFile,
 }) =>
   connectFileDrop(
     connectDropTarget(
@@ -87,6 +88,7 @@ const FileSection = ({
           listId={listId}
           listItem={FileItem}
           moveItem={moveItem}
+          previewFile={previewFile}
           removeFile={removeFile}
         />
         <FileDropzone label="Drag files here or use the add button." />
