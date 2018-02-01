@@ -15,10 +15,23 @@
 }
 
 .filters {
+  align-items: flex-end;
+  display: flex;
+
   > span {
     border: 1px solid gray;
     margin: 0 0.5em;
     padding: 0 5px;
+  }
+
+  .filter-group {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+
+    > span {
+      margin-left: 10px;
+    }
   }
 }
 
