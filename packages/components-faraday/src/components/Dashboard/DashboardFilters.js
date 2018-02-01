@@ -31,17 +31,25 @@ const DashboardFilters = ({
   listView,
   changeFilter,
   changeSort,
+  getFilterOptions,
+  changeFilterValue,
 }) => (
   <div className={classes.filtersContainer}>
     <div className={classes.filters}>
       Filter view:
       <div className={classes['filter-group']}>
         <span>Owner</span>
-        <Menu onChange={changeFilter('owner')} options={ownerFilterOptions} />
+        <Menu
+          onChange={changeFilterValue('owner')}
+          options={getFilterOptions('owner')}
+        />
       </div>
       <div className={classes['filter-group']}>
         <span>Status</span>
-        <Menu onChange={changeFilter('status')} options={statusFilterOptions} />
+        <Menu
+          onChange={changeFilterValue('status')}
+          options={getFilterOptions('status')}
+        />
       </div>
       <div className={classes['filter-group']}>
         <span>Sort</span>

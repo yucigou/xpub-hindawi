@@ -1,12 +1,15 @@
-import { compose, withState, withHandlers } from 'recompose'
+import { get } from 'lodash'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { actions } from 'pubsweet-client'
-import { newestFirst, selectCurrentUser } from 'xpub-selectors'
 import { ConnectPage } from 'xpub-connect'
+import { withRouter } from 'react-router-dom'
+import { compose, withState, withHandlers } from 'recompose'
+import { newestFirst, selectCurrentUser } from 'xpub-selectors'
 import { createDraftSubmission } from 'pubsweet-component-wizard/src/redux/conversion'
 
 import Dashboard from './Dashboard'
+
+import withFilters from './withFilters'
 
 export default compose(
   ConnectPage(() => [
@@ -51,4 +54,38 @@ export default compose(
     }),
   ),
   withRouter,
+  withFilters({
+    status: {
+      options: [
+        { label: 'All', value: 'all' },
+        { label: 'Submitted', value: 'submitted' },
+        { label: 'Draft', value: 'draft' },
+      ],
+      filterFn: filterValue => item => {
+        if (filterValue === 'all' || filterValue === '') return true
+        const itemStatus = get(item, 'status')
+        if (!itemStatus && filterValue === 'draft') {
+          return true
+        }
+        return itemStatus === filterValue
+      },
+    },
+    owner: {
+      options: [
+        { label: 'Everyone', value: 'all' },
+        { label: 'My work', value: 'me' },
+        { label: `Other's work`, value: 'other' },
+      ],
+      filterFn: (filterValue, { currentUser }) => item => {
+        if (filterValue === 'all' || filterValue === '') return true
+        const itemOwnerIds = item.owners.map(o => o.id)
+        if (filterValue === 'me') {
+          return itemOwnerIds.includes(currentUser.id)
+        } else if (filterValue === 'other') {
+          return !itemOwnerIds.includes(currentUser.id)
+        }
+        return false
+      },
+    },
+  }),
 )(Dashboard)

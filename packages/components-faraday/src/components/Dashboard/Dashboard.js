@@ -17,6 +17,11 @@ const Dashboard = ({
   listView,
   filters,
   getItems,
+  getFilterOptions,
+  changeFilterValue,
+  filterValues,
+  filterItems,
+  ...rest
 }) => (
   <div className={classes.root}>
     <div className={classes.header}>
@@ -25,7 +30,12 @@ const Dashboard = ({
         New
       </Button>
     </div>
-    <DashboardFilters changeView={changeViewMode} listView={listView} />
+    <DashboardFilters
+      changeFilterValue={changeFilterValue}
+      changeView={changeViewMode}
+      getFilterOptions={getFilterOptions}
+      listView={listView}
+    />
     <DashboardItems
       deleteProject={deleteProject}
       list={getItems()}
@@ -40,33 +50,18 @@ export default compose(
     sortOrder: state.filters.sortValue,
   })),
   withHandlers({
-    getItems: ({ filters, sortOrder, currentUser, dashboard }) => () => {
+    getItems: ({
+      filters,
+      sortOrder,
+      currentUser,
+      dashboard,
+      filterItems,
+    }) => () => {
       const userItems = get(currentUser, 'admin')
         ? dashboard.all
         : dashboard.owner
-      const statusItems =
-        filters.status === 'all'
-          ? userItems
-          : userItems.filter(item => {
-              const itemStatus = get(item, 'status')
-              if (!itemStatus && filters.status === 'draft') {
-                return true
-              }
-              return itemStatus === filters.status
-            })
-      const ownerItems =
-        filters.owner === 'all'
-          ? statusItems
-          : statusItems.filter(item => {
-              const itemOwnerIds = item.owners.map(o => o.id)
-              if (filters.owner === 'me') {
-                return itemOwnerIds.includes(currentUser.id)
-              } else if (filters.owner === 'other') {
-                return !itemOwnerIds.includes(currentUser.id)
-              }
-              return false
-            })
-      return ownerItems.sort((a, b) => {
+
+      return filterItems(userItems).sort((a, b) => {
         if (sortOrder === 'newest') return a.created - b.created < 0
         return a.created - b.created > 0
       })
