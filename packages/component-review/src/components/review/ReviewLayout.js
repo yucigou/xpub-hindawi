@@ -22,9 +22,12 @@ const ReviewLayout = ({
   const editorSections = []
 
   versions.forEach(version => {
-    const review = version.reviewers.find(
-      review => review.reviewer === reviewer.id,
-    )
+    let review
+    if (version.reviewers) {
+      review = version.reviewers.find(
+        review => review.reviewer === reviewer._reviewer.id,
+      )
+    }
 
     if (review && review.submitted) {
       const submittedMoment = moment(review.submitted)
@@ -48,7 +51,12 @@ const ReviewLayout = ({
       // TODO: need to include unreviewed versions?
       editorSections.push({
         content: (
-          <SimpleEditor content={version.source} layout="bare" readOnly />
+          <SimpleEditor
+            content={version.source}
+            key={key}
+            layout="bare"
+            readOnly
+          />
         ),
         key,
         label,
@@ -60,7 +68,7 @@ const ReviewLayout = ({
     review => review.reviewer === reviewer.id,
   )
 
-  if (!review || !review.submitted) {
+  if (currentVersion.submitted && (!review || !review.submitted)) {
     const submittedMoment = moment()
     const key = submittedMoment.format('x')
     const label = submittedMoment.format('YYYY-MM-DD')
@@ -86,7 +94,12 @@ const ReviewLayout = ({
 
     editorSections.push({
       content: (
-        <SimpleEditor content={currentVersion.source} layout="bare" readOnly />
+        <SimpleEditor
+          content={currentVersion.source}
+          key={key}
+          layout="bare"
+          readOnly
+        />
       ),
       key,
       label,

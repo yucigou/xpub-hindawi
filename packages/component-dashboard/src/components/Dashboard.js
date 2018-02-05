@@ -42,7 +42,12 @@ const Dashboard = ({
         <div className={classes.heading}>My Submissions</div>
         {dashboard.owner.map(project => (
           <OwnerItemWithVersion
-            deleteProject={deleteProject}
+            deleteProject={() =>
+              // eslint-disable-next-line no-alert
+              window.confirm(
+                'Are you sure you want to delete this submission?',
+              ) && deleteProject(project)
+            }
             key={project.id}
             project={project}
           />
