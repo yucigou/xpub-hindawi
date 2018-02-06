@@ -3,12 +3,14 @@ import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { change as changeForm } from 'redux-form'
 import {
   compose,
-  withHandlers,
-  getContext,
   lifecycle,
+  withState,
+  getContext,
   withContext,
+  withHandlers,
 } from 'recompose'
 import { SortableList } from 'pubsweet-components-faraday/src/components'
 
@@ -17,10 +19,7 @@ import FileSection from './FileSection'
 import {
   uploadFile,
   deleteFile,
-  getFiles,
   getRequestStatus,
-  setAllFiles,
-  moveFiles,
   getSignedUrl,
 } from '../redux/files'
 
@@ -84,20 +83,27 @@ export default compose(
   connect(
     state => ({
       isFetching: getRequestStatus(state),
-      files: getFiles(state),
     }),
     {
+      changeForm,
       uploadFile,
       deleteFile,
-      setAllFiles,
-      moveFiles,
       getSignedUrl,
     },
   ),
+  withState('files', 'setFiles', {
+    manuscripts: [],
+    coverLetter: [],
+    supplementary: [],
+  }),
   lifecycle({
     componentDidMount() {
-      const { version, setAllFiles } = this.props
-      setAllFiles(version.files)
+      const { version: { files }, setFiles } = this.props
+      setFiles(prev => ({
+        manuscripts: get(files, 'manuscripts') || [],
+        coverLetter: get(files, 'coverLetter') || [],
+        supplementary: get(files, 'supplementary') || [],
+      }))
     },
   }),
   withHandlers({
@@ -107,10 +113,15 @@ export default compose(
         window.open(signedUrl)
       })
     },
-    dropSortableFile: ({ files, setAllFiles }) => () => {
-      setAllFiles(files)
+    dropSortableFile: ({ files, setFiles, changeForm }) => () => {
+      setFiles(files)
+      changeForm('wizard', 'files', files)
     },
-    changeList: ({ files, setAllFiles }) => (fromListId, toListId, id) => {
+    changeList: ({ files, setFiles, changeForm }) => (
+      fromListId,
+      toListId,
+      id,
+    ) => {
       const swappedFile = files[fromListId].find(f => f.id === id)
 
       const fromFiles = files[fromListId].filter(f => f.id !== id)
@@ -121,26 +132,38 @@ export default compose(
         [toListId]: toFiles,
         [fromListId]: fromFiles,
       }
-      setAllFiles(newFiles)
+      setFiles(newFiles)
+      changeForm('wizard', 'files', files)
     },
-    addFile: ({ files, uploadFile, setAllFiles, version }) => type => file => {
+    addFile: ({
+      files,
+      uploadFile,
+      setFiles,
+      changeForm,
+      version,
+    }) => type => file => {
       uploadFile(file, type, version.id).then(fileResponse => {
         const newFiles = {
           ...files,
           [type]: [...files[type], fileResponse],
         }
-        setAllFiles(newFiles)
+        setFiles(newFiles)
+        changeForm('wizard', 'files', newFiles)
       })
     },
-    moveItem: ({ moveFiles, files }) => type => (dragIndex, hoverIndex) => {
+    moveItem: ({ moveFiles, files, setFiles }) => type => (
+      dragIndex,
+      hoverIndex,
+    ) => {
       const newFiles = {
         ...files,
         [type]: SortableList.moveItem(files[type], dragIndex, hoverIndex),
       }
-      moveFiles(newFiles)
+      setFiles(newFiles)
     },
     removeFile: ({
-      setAllFiles,
+      setFiles,
+      changeForm,
       files,
       deleteFile,
       version,
@@ -151,7 +174,8 @@ export default compose(
         ...files,
         [type]: files[type].filter(f => f.id !== id),
       }
-      setAllFiles(newFiles, type)
+      setFiles(newFiles, type)
+      changeForm('wizard', 'files', files)
     },
   }),
   withContext(
