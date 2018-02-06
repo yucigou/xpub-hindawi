@@ -21,7 +21,7 @@ import {
   deleteFile,
   getRequestStatus,
   getSignedUrl,
-} from '../redux/files'
+} from '../../redux/files'
 
 const Files = ({
   files,

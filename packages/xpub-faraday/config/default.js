@@ -46,5 +46,17 @@ module.exports = {
       'editoria-typescript': '2',
     },
   },
-  publicKeys: ['pubsweet-client', 'authsome', 'validations'],
+  'pubsweet-component-aws-s3': {
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+    sender: process.env.PUBSWEET_EMAIL_SENDER || 'dev@mailinator.com',
+    validations: path.resolve(__dirname, 'upload-validations.js'),
+  },
+  publicKeys: [
+    'pubsweet-client',
+    'authsome',
+    'validations',
+    'pubsweet-component-aws-s3',
+  ],
 }

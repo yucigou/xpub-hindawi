@@ -1,6 +1,12 @@
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const uuid = require('uuid')
+const Joi = require('joi')
+const _ = require('lodash')
+const config = require('config')
+
+const s3Config = _.get(config, 'pubsweet-component-aws-s3')
+const uploadValidations = require(s3Config.validations)
 
 const setupMulter = s3 => {
   const upload = multer({
@@ -22,21 +28,16 @@ const setupMulter = s3 => {
 }
 
 const validateFile = (req, file, cb) => {
-  if (
-    req.body.fileType === 'manuscripts' ||
-    req.body.fileType === 'coverLetter'
-  ) {
-    if (
-      file.mimetype === 'application/pdf' ||
-      file.mimetype === 'application/msword' ||
-      file.mimetype ===
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ) {
-      return cb(null, true)
-    }
-    req.fileValidationError = 'Only Word documents and PDFs are allowed'
+  const fileType = req.body.fileType
+  const mimetype = file.mimetype
+
+  const valid = Joi.validate({ [fileType]: mimetype }, uploadValidations)
+
+  if (valid.error) {
+    req.fileValidationError = valid.error.message
     return cb(null, false)
   }
+
   return cb(null, true)
 }
 

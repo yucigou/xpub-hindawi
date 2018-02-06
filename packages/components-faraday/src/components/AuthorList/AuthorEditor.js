@@ -1,14 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { connect } from 'react-redux'
+import { compose } from 'recompose'
 import { Button } from '@pubsweet/ui'
+import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
-import { withRouter } from 'react-router-dom'
-import { compose, getContext } from 'recompose'
 
+import { Spinner } from '../UIComponents'
+import { getAuthorFetching } from '../../redux/authors'
 import { ValidatedTextField, MenuItem } from './FormItems'
-import { getFragmentAuthors, setAuthors } from '../../redux/authors'
 
 import classes from './AuthorList.local.scss'
 
@@ -24,7 +23,7 @@ const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
 const emailValidator = value =>
   emailRegex.test(value) ? undefined : 'Invalid email'
 
-const AuthorEdit = ({ setAuthorEdit, handleSubmit }) => (
+const AuthorEdit = ({ isFetching, setAuthorEdit, handleSubmit }) => (
   <div className={classnames(classes['editor-body'])}>
     <div className={classnames(classes.row)}>
       <ValidatedTextField isRequired label="First name" name="edit.firstName" />
@@ -49,30 +48,27 @@ const AuthorEdit = ({ setAuthorEdit, handleSubmit }) => (
 
     <div className={classnames(classes['form-buttons'])}>
       <Button onClick={setAuthorEdit(-1)}>Cancel</Button>
-      <Button onClick={handleSubmit} primary>
-        Save
-      </Button>
+      {!isFetching ? (
+        <Button onClick={handleSubmit} primary>
+          Save
+        </Button>
+      ) : (
+        <Spinner />
+      )}
     </div>
   </div>
 )
 
 export default compose(
-  withRouter,
-  getContext({ version: PropTypes.object, project: PropTypes.object }),
-  connect(
-    (state, { match: { params: { version } } }) => ({
-      authors: getFragmentAuthors(state, version),
-    }),
-    {
-      setAuthors,
-    },
-  ),
+  connect(state => ({
+    isFetching: getAuthorFetching(state),
+  })),
   reduxForm({
     form: 'edit',
     onSubmit: (
       values,
       dispatch,
-      { setAuthorEdit, setAuthors, project, version, authors, index, ...rest },
+      { setAuthorEdit, setAuthors, authors, index, changeForm },
     ) => {
       const newAuthors = [
         ...authors.slice(0, index),
@@ -80,7 +76,7 @@ export default compose(
         ...authors.slice(index + 1),
       ]
       setAuthorEdit(-1)()
-      setAuthors(newAuthors, version.id)
+      setAuthors(newAuthors)
     },
   }),
 )(AuthorEdit)

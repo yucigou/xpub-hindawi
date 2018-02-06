@@ -7,7 +7,9 @@ import { reduxForm } from 'redux-form'
 import { compose, withProps } from 'recompose'
 import { selectCurrentUser } from 'xpub-selectors'
 
+import { Spinner } from '../UIComponents/'
 import classes from './AuthorList.local.scss'
+import { getAuthorFetching } from '../../redux/authors'
 import { MenuItem, ValidatedTextField } from './FormItems'
 
 const countries = [
@@ -22,7 +24,13 @@ const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
 const emailValidator = value =>
   emailRegex.test(value) ? undefined : 'Invalid email'
 
-const AuthorAdder = ({ authors, editMode, setEditMode, handleSubmit }) => (
+const AuthorAdder = ({
+  authors,
+  editMode,
+  setEditMode,
+  handleSubmit,
+  isFetching,
+}) => (
   <div className={classnames(classes.adder)}>
     <Button onClick={setEditMode(true)} primary>
       {authors.length === 0 ? '+ Add submitting author' : '+ Add author'}
@@ -54,9 +62,13 @@ const AuthorAdder = ({ authors, editMode, setEditMode, handleSubmit }) => (
         </div>
         <div className={classnames(classes['form-buttons'])}>
           <Button onClick={setEditMode(false)}>Cancel</Button>
-          <Button onClick={handleSubmit} primary>
-            Save
-          </Button>
+          {!isFetching ? (
+            <Button onClick={handleSubmit} primary>
+              Save
+            </Button>
+          ) : (
+            <Spinner />
+          )}
         </div>
       </div>
     )}
@@ -66,6 +78,7 @@ const AuthorAdder = ({ authors, editMode, setEditMode, handleSubmit }) => (
 export default compose(
   connect(state => ({
     currentUser: selectCurrentUser(state),
+    isFetching: getAuthorFetching(state),
   })),
   withProps(({ currentUser: { admin, username, email }, authors }) => {
     if (!admin && authors.length === 0) {
@@ -83,7 +96,7 @@ export default compose(
     onSubmit: (
       values,
       dispatch,
-      { authors, addAuthor, setEditMode, reset, match },
+      { authors, addAuthor, setEditMode, setFormAuthors, reset, match },
     ) => {
       const collectionId = get(match, 'params.project')
       const fragmentId = get(match, 'params.version')
@@ -96,7 +109,9 @@ export default compose(
         },
         collectionId,
         fragmentId,
-      ).then(() => {
+      ).then(author => {
+        const newAuthors = [...authors, author]
+        setFormAuthors(newAuthors)
         reset()
         setEditMode(false)()
       })

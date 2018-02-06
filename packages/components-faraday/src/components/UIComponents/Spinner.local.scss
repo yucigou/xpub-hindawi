@@ -1,0 +1,44 @@
+@keyframes rotating {
+  from {
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  -webkit-animation: rotating 1.8s linear infinite;
+  -moz-animation: rotating 1.8s linear infinite;
+  -ms-animation: rotating 1.8s linear infinite;
+  -o-animation: rotating 1.8s linear infinite;
+  animation: rotating 1.8s linear infinite;
+}
+
+.icon {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 5px 0 0;
+}

@@ -1,49 +1,64 @@
 import { get } from 'lodash'
-import { actions } from 'pubsweet-client'
 import * as api from 'pubsweet-client/src/helpers/api'
-import { change } from 'redux-form'
 
 // constants
-export const SET_AUTHORS = 'authors/SET_AUTHORS'
-
-const _setAuthors = (authors, fragmentId) => ({
-  type: SET_AUTHORS,
-  authors,
-  fragmentId,
-})
+const REQUEST = 'authors/REQUEST'
+const FAILURE = 'authors/FAILURE'
+const SUCCESS = 'authors/SUCCESS'
 
 // actions
-export const setAuthors = (authors, fragmentId) => dispatch => {
-  dispatch(change('wizard', 'authors', authors))
-  dispatch(_setAuthors(authors, fragmentId))
-}
+export const authorRequest = () => ({
+  type: REQUEST,
+})
 
-export const moveAuthors = (authors, fragmentId) => dispatch => {
-  dispatch(_setAuthors(authors, fragmentId))
-}
+export const authorFaiure = error => ({
+  type: FAILURE,
+  error,
+})
 
-export const addAuthor = (author, collectionId, fragmentId) => dispatch =>
-  api
+export const authorSuccess = () => ({
+  type: SUCCESS,
+})
+
+export const addAuthor = (author, collectionId, fragmentId) => dispatch => {
+  dispatch(authorRequest())
+  return api
     .create(
       `/collections/${collectionId}/fragments/${fragmentId}/authors`,
       author,
     )
-    .then(() =>
-      dispatch(actions.getFragment({ id: collectionId }, { id: fragmentId })),
-    )
-    .then(({ fragment: { authors, id } }) => dispatch(setAuthors(authors, id)))
+    .then(author => {
+      dispatch(authorSuccess())
+      return author
+    })
+    .catch(err => dispatch(authorFaiure(err)))
+}
 
 // selectors
 export const getFragmentAuthors = (state, fragmentId) =>
   get(state, `authors.${fragmentId}`) || []
 
-export default (state = {}, action) => {
+export const getAuthorFetching = state => state.authors.isFetching
+export const getAuthorError = state => state.authors.error
+
+const initialState = { isFetching: false, error: null }
+
+export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_AUTHORS:
+    case 'UPDATE_FRAGMENT_REQUEST':
+    case REQUEST:
       return {
-        ...state,
-        [action.fragmentId]: action.authors,
+        ...initialState,
+        isFetching: true,
       }
+    case FAILURE:
+      return {
+        ...initialState,
+        error: action.error,
+      }
+    case 'UPDATE_FRAGMENT_SUCCESS':
+    case SUCCESS:
+      return initialState
     default:
       return state
   }

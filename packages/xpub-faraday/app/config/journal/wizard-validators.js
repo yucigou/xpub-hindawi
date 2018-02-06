@@ -31,7 +31,8 @@ export const editModeEnabled = value => {
 }
 
 export const requiredFiles = (valus, formValues) => {
-  if (get(formValues, 'files.manuscripts').length === 0) {
+  const manuscripts = get(formValues, 'files.manuscripts')
+  if (manuscripts && manuscripts.length === 0) {
     return 'At least one main manuscript file is needed.'
   }
   return undefined
