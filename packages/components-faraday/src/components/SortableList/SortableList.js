@@ -93,6 +93,7 @@ const DecoratedItem = compose(
 
 const SortableList = ({
   items,
+  itemKey = 'id',
   moveItem,
   listItem,
   dragHandle,
@@ -104,7 +105,7 @@ const SortableList = ({
       <DecoratedItem
         dragHandle={dragHandle}
         index={i}
-        key={item.id}
+        key={item[itemKey]}
         listItem={listItem}
         moveItem={moveItem}
         {...item}

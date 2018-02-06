@@ -2,13 +2,15 @@ A sortable list implemented with `react-dnd`.
 
 ## Props
 
-|    Prop    |                                                                 Description                                                                  | Required |        Default        |
-| :--------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :------: | :-------------------: |
-|   items    |                                                       The items of the sortable list.                                                        |   true   |          []           |
-|  listItem  | A React component that will be rendered for each item of the list. Receives `isDragging`, `isOver` and all other props from the items array. |   true   |         none          |
-|  moveItem  |       Function to be called when moving an item through the list. SortableList will provide the dragIndex of hoverIndex of the items.        |   true   | SortableList.moveItem |
-| dragHandle |                            A React component for the drag handle. If not present, the whole item can be dragged.                             |  false   |         none          |
-|  dropItem  |                            Function to be called when dropping an item. The index of the dragged item is passed.                             |  false   |         none          |
+|    Prop    |                                                                 Description                                                                  | Required |        Default        | Type |
+| :--------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :------: | :-------------------: | :---: |
+|   items    |                                                       The items of the sortable list.                                                        |   true   |          []           | Array |
+| itemKey | Value used for key when mapping over items. | true | 'id' | string |
+|  listItem  | A React component that will be rendered for each item of the list. Receives `isDragging`, `isOver` and all other props from the items array. |   true   |         none          | React component |
+|  moveItem  |       Function to be called when moving an item through the list. SortableList will provide the dragIndex of hoverIndex of the items.        |   true   | none | function  |
+| dragHandle |                            A React component for the drag handle. If not present, the whole item can be dragged.                             |  false   |         none          | React component |
+|  dropItem  |                            Function to be called when dropping an item. The index of the dragged item is passed.                             |  false   |         none          | function |
+| beginDragProps | Array of keys to pick from the dragged object when beginning drag.  | false | [] | Array(string) |
 
 ## Usage
 
