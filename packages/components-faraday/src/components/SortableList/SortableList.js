@@ -104,7 +104,7 @@ const SortableList = ({
       <DecoratedItem
         dragHandle={dragHandle}
         index={i}
-        key={item.name || Math.random()}
+        key={item.id}
         listItem={listItem}
         moveItem={moveItem}
         {...item}

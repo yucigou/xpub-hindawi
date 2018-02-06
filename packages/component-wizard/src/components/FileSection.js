@@ -5,7 +5,10 @@ import { Icon } from '@pubsweet/ui'
 import { DropTarget } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import { compose, getContext, withHandlers, withState } from 'recompose'
-import { SortableList } from 'pubsweet-components-faraday/src/components'
+import {
+  SortableList,
+  Spinner,
+} from 'pubsweet-components-faraday/src/components'
 
 import FileItem from './FileItem'
 import FilePicker from './FilePicker'
@@ -73,9 +76,7 @@ const FileSection = ({
                 </div>
               </FilePicker>
             ) : (
-              <div className={classnames(classes.rotate, classes.icon)}>
-                <Icon size={16}>loader</Icon>
-              </div>
+              <Spinner />
             )}
           </div>
           <span className={classnames(classes.error)}>{error}</span>

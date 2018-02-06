@@ -5,6 +5,7 @@ import Author from './Author'
 export default ({
   authors,
   editIndex,
+  setFormAuthors,
   removeAuthor,
   countryParser,
   editComponent,
@@ -14,22 +15,24 @@ export default ({
 }) => (
   <div>
     {authors.map(
-      (a, index) =>
+      (author, index) =>
         index === editIndex ? (
           React.createElement(editComponent, {
             key: 'author-editor',
+            authors,
             index,
             initialValues: {
-              edit: a,
+              edit: author,
             },
+            setAuthors: setFormAuthors,
             setAuthorEdit,
             countryParser,
             parseAuthorType,
           })
         ) : (
           <Author
-            key={a.firstName}
-            {...a}
+            key={author.firstName}
+            {...author}
             countryParser={countryParser}
             index={index}
             parseAuthorType={parseAuthorType}
