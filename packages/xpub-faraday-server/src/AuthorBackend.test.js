@@ -9,6 +9,8 @@ const fixtures = require('./fixtures/fixtures')
 const passport = require('passport')
 const BearerStrategy = require('passport-http-bearer').Strategy
 const cloneDeep = require('lodash/cloneDeep')
+const UserMock = require('./mocks/User')
+const Fragment = require('./mocks/Fragment')
 
 function makeApp(collection, fragment, standardUser, existingUser) {
   const app = express()
@@ -21,7 +23,6 @@ function makeApp(collection, fragment, standardUser, existingUser) {
       done(null, fixtures.users.standardUser, { scope: 'all' }),
     ),
   )
-
   app.locals.passport = passport
   app.locals.models = {
     Fragment: {
@@ -42,12 +43,6 @@ function makeApp(collection, fragment, standardUser, existingUser) {
       ),
     },
   }
-  function UserMock(properties) {
-    this.type = 'user'
-    this.email = properties.email
-    this.username = properties.username
-    this.password = properties.password
-  }
 
   UserMock.find = jest.fn(
     () =>
@@ -62,11 +57,6 @@ function makeApp(collection, fragment, standardUser, existingUser) {
         : Promise.resolve(existingUser),
   )
 
-  UserMock.prototype.save = jest.fn(() => {
-    this.id = '111222'
-    return Promise.resolve(this)
-  })
-
   app.locals.models.User = UserMock
 
   component.backend()(app)
@@ -74,6 +64,18 @@ function makeApp(collection, fragment, standardUser, existingUser) {
 }
 
 const createAuthorUrl = '/api/collections/123/fragments/123/authors'
+const getNewFragment = authors => {
+  const fragProps = {
+    type: 'fragment',
+    fragmentType: 'blogpost',
+    title: 'Just your regular blogpost',
+    source: '<blog></blog>',
+    presentation: '<p></p>',
+    authors,
+    owners: [],
+  }
+  return new Fragment(fragProps)
+}
 describe('Author Backend API', () => {
   let testFixtures = {}
   beforeEach(() => (testFixtures = cloneDeep(fixtures)))
@@ -113,97 +115,96 @@ describe('Author Backend API', () => {
       .expect(404, '{"error":"firstName is required"}')
   })
 
-  it('should return an error if an author already exists with the same email', () =>
-    makeApp(
+  it('should return an error if an author already exists with the same email', () => {
+    const fragment = getNewFragment([testFixtures.authors.standardAuthor])
+    return makeApp(testFixtures.collections.standardCollection, fragment)
+      .post(createAuthorUrl)
+      .set('Authorization', 'Bearer 123')
+      .send(testFixtures.authors.standardAuthor)
+      .expect(400, '{"error":"Author with the same email already exists"}')
+  })
+
+  it('should return an error if there already is a submitting author', () => {
+    const fragment = getNewFragment([testFixtures.authors.standardAuthor])
+    return makeApp(testFixtures.collections.standardCollection, fragment)
+      .post(createAuthorUrl)
+      .set('Authorization', 'Bearer 123')
+      .send(testFixtures.authors.newSubmittingAuthor)
+      .expect(400, '{"error":"There can only be one sumbitting author"}')
+  })
+
+  it('should return success when saving a new author', () => {
+    const fragment = getNewFragment([])
+
+    return makeApp(
+      fixtures.collections.standardCollection,
+      fragment,
+      testFixtures.users.standardUser,
+    )
+      .post(createAuthorUrl)
+      .set('Authorization', 'Bearer 123')
+      .send(testFixtures.authors.newAuthor)
+      .expect(200)
+      .then(() => expect(fragment.save).toHaveBeenCalled())
+  })
+
+  it('should return success when the admin adds a submitting author and the author already has a corresponding user account', () => {
+    const fragment = getNewFragment([])
+
+    return makeApp(
       testFixtures.collections.standardCollection,
-      testFixtures.fragments.standardFragment,
+      fragment,
+      testFixtures.users.admin,
+      testFixtures.users.existingUser,
     )
       .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
       .send(testFixtures.authors.standardAuthor)
-      .expect(400, '{"error":"Author with the same email already exists"}'))
+      .expect(200)
+      .then(() => {
+        expect(fragment.save).toHaveBeenCalled()
+        expect(
+          testFixtures.collections.standardCollection.save,
+        ).toHaveBeenCalled()
+        expect(fragment.owners.length).toBeGreaterThan(0)
+        expect(
+          testFixtures.collections.standardCollection.owners.length,
+        ).toBeGreaterThan(1)
+        expect(fragment.owners[0]).toBe('123987')
+        expect(testFixtures.collections.standardCollection.owners[1]).toBe(
+          '123987',
+        )
+      })
+  })
 
-  it('should return an error if there already is a submitting author', () =>
-    makeApp(
+  it('should return success when the admin adds a submitting author and creates a corresponding user account', () => {
+    const error = new Error()
+    error.name = 'NotFoundError'
+    error.status = 404
+    const fragment = getNewFragment([])
+    return makeApp(
       testFixtures.collections.standardCollection,
-      testFixtures.fragments.standardFragment,
+      fragment,
+      testFixtures.users.admin,
+      error,
     )
       .post(createAuthorUrl)
       .set('Authorization', 'Bearer 123')
-      .send(testFixtures.authors.newSubmittingAuthor)
-      .expect(400, '{"error":"There can only be one sumbitting author"}'))
-
-  // it('should return success when saving a new author', () =>
-  //   makeApp(
-  //     fixtures.collections.standardCollection,
-  //     testFixtures.fragments.standardFragment,
-  //     testFixtures.users.standardUser,
-  //   )
-  //     .post(createAuthorUrl)
-  //     .set('Authorization', 'Bearer 123')
-  //     .send(testFixtures.authors.newAuthor)
-  //     .expect(200, '')
-  //     .then(() =>
-  //       expect(testFixtures.fragments.standardFragment.save).toHaveBeenCalled(),
-  //     ))
-
-  // it('should return success when the admin adds a submitting author and the author already has a corresponding user account', () =>
-  //   makeApp(
-  //     testFixtures.collections.standardCollection,
-  //     testFixtures.fragments.adminFragment,
-  //     testFixtures.users.admin,
-  //     testFixtures.users.existingUser,
-  //   )
-  //     .post(createAuthorUrl)
-  //     .set('Authorization', 'Bearer 123')
-  //     .send(testFixtures.authors.standardAuthor)
-  //     .expect(200, '')
-  //     .then(() => {
-  //       expect(testFixtures.fragments.adminFragment.save).toHaveBeenCalled()
-  //       expect(
-  //         testFixtures.collections.standardCollection.save,
-  //       ).toHaveBeenCalled()
-  //       expect(
-  //         testFixtures.fragments.adminFragment.owners.length,
-  //       ).toBeGreaterThan(0)
-  //       expect(
-  //         testFixtures.collections.standardCollection.owners.length,
-  //       ).toBeGreaterThan(1)
-  //       expect(testFixtures.fragments.adminFragment.owners[0]).toBe('123987')
-  //       expect(testFixtures.collections.standardCollection.owners[1]).toBe(
-  //         '123987',
-  //       )
-  //     }))
-
-  // it('should return success when the admin adds a submitting author and creates a corresponding user account', () => {
-  //   const error = new Error()
-  //   error.name = 'NotFoundError'
-  //   error.status = 404
-  //   return makeApp(
-  //     testFixtures.collections.standardCollection,
-  //     testFixtures.fragments.adminFragment,
-  //     testFixtures.users.admin,
-  //     error,
-  //   )
-  //     .post(createAuthorUrl)
-  //     .set('Authorization', 'Bearer 123')
-  //     .send(testFixtures.authors.standardAuthor)
-  //     .expect(200, '')
-  //     .then(() => {
-  //       expect(testFixtures.fragments.adminFragment.save).toHaveBeenCalled()
-  //       expect(
-  //         testFixtures.collections.standardCollection.save,
-  //       ).toHaveBeenCalled()
-  //       expect(
-  //         testFixtures.fragments.adminFragment.owners.length,
-  //       ).toBeGreaterThan(0)
-  //       expect(
-  //         testFixtures.collections.standardCollection.owners.length,
-  //       ).toBeGreaterThan(1)
-  //       expect(testFixtures.fragments.adminFragment.owners[0]).toBe('111222')
-  //       expect(testFixtures.collections.standardCollection.owners[1]).toBe(
-  //         '111222',
-  //       )
-  //     })
-  // })
+      .send(testFixtures.authors.standardAuthor)
+      .expect(200)
+      .then(() => {
+        expect(fragment.save).toHaveBeenCalled()
+        expect(
+          testFixtures.collections.standardCollection.save,
+        ).toHaveBeenCalled()
+        expect(fragment.owners.length).toBeGreaterThan(0)
+        expect(
+          testFixtures.collections.standardCollection.owners.length,
+        ).toBeGreaterThan(1)
+        expect(fragment.owners[0]).toBe('111222')
+        expect(testFixtures.collections.standardCollection.owners[1]).toBe(
+          '111222',
+        )
+      })
+  })
 })

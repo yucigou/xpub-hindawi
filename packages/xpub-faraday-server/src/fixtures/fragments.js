@@ -8,7 +8,7 @@ const fragments = {
     source: '<blog></blog>',
     presentation: '<p></p>',
     authors: [authors.standardAuthor],
-    save: jest.fn(),
+    save: () => fragments.standardFragment,
   },
 
   adminFragment: {
@@ -18,7 +18,7 @@ const fragments = {
     source: '<blog></blog>',
     presentation: '<p></p>',
     authors: [],
-    save: jest.fn(),
+    save: () => fragments.adminFragment,
     owners: [],
   },
 }
