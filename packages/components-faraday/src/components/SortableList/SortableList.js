@@ -132,5 +132,4 @@ SortableList.moveItem = (items, dragIndex, hoverIndex) => {
   ]
 }
 
-// export default DragDropContext(HTML5Backend)(SortableList)
 export default SortableList

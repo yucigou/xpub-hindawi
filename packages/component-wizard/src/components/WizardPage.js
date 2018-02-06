@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { actions } from 'pubsweet-client'
+import { bindActionCreators } from 'redux'
 import { withJournal } from 'xpub-journal'
 import { ConnectPage } from 'xpub-connect'
-import { selectCollection, selectFragment } from 'xpub-selectors'
-import { compose, withHandlers, withState, withContext } from 'recompose'
-import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
+import { selectCollection, selectFragment } from 'xpub-selectors'
+import {
+  compose,
+  withHandlers,
+  withState,
+  withContext,
+  toClass,
+} from 'recompose'
 
 import Wizard from './Wizard'
 
@@ -81,4 +87,5 @@ export default compose(
     }),
   ),
   DragDropContext(HTML5Backend),
+  toClass,
 )(Wizard)

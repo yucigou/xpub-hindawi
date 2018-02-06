@@ -1,5 +1,4 @@
 import request, { remove, get } from 'pubsweet-client/src/helpers/api'
-import { change as changeForm } from 'redux-form'
 
 const initialState = {
   isFetching: {
@@ -8,11 +7,6 @@ const initialState = {
     coverLetter: false,
   },
   error: null,
-  files: {
-    manuscripts: [],
-    supplementary: [],
-    coverLetter: [],
-  },
 }
 // constants
 const UPLOAD_REQUEST = 'files/UPLOAD_REQUEST'
@@ -23,23 +17,7 @@ const REMOVE_REQUEST = 'files/REMOVE_REQUEST'
 const REMOVE_FAILURE = 'files/REMOVE_FAILURE'
 const REMOVE_SUCCESS = 'files/REMOVE_SUCCESS'
 
-const SET_ALL_FILES = 'files/SET_ALL_FILES'
-
 // action creators
-const _setAllFiles = files => ({
-  type: SET_ALL_FILES,
-  files,
-})
-
-export const setAllFiles = files => dispatch => {
-  dispatch(changeForm('wizard', 'files', files))
-  dispatch(_setAllFiles(files))
-}
-
-export const moveFiles = files => dispatch => {
-  dispatch(_setAllFiles(files))
-}
-
 const uploadRequest = type => ({
   type: UPLOAD_REQUEST,
   fileType: type,
@@ -83,7 +61,6 @@ const removeSuccess = () => ({
 })
 
 // selectors
-export const getFiles = state => state.files.files
 export const getRequestStatus = state => state.files.isFetching
 
 // thunked actions
@@ -112,11 +89,6 @@ export const getSignedUrl = fileId => dispatch => get(`/aws/${fileId}`)
 // reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_ALL_FILES:
-      return {
-        ...state,
-        files: action.files,
-      }
     case UPLOAD_REQUEST:
       return {
         ...state,
