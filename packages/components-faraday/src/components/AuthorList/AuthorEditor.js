@@ -1,8 +1,12 @@
 import React from 'react'
 import classnames from 'classnames'
+import { compose } from 'recompose'
 import { Button } from '@pubsweet/ui'
+import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 
+import { Spinner } from '../UIComponents'
+import { getAuthorFetching } from '../../redux/authors'
 import { ValidatedTextField, MenuItem } from './FormItems'
 
 import classes from './AuthorList.local.scss'
@@ -19,7 +23,7 @@ const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
 const emailValidator = value =>
   emailRegex.test(value) ? undefined : 'Invalid email'
 
-const AuthorEdit = ({ setAuthorEdit, handleSubmit }) => (
+const AuthorEdit = ({ isFetching, setAuthorEdit, handleSubmit }) => (
   <div className={classnames(classes['editor-body'])}>
     <div className={classnames(classes.row)}>
       <ValidatedTextField isRequired label="First name" name="edit.firstName" />
@@ -44,26 +48,35 @@ const AuthorEdit = ({ setAuthorEdit, handleSubmit }) => (
 
     <div className={classnames(classes['form-buttons'])}>
       <Button onClick={setAuthorEdit(-1)}>Cancel</Button>
-      <Button onClick={handleSubmit} primary>
-        Save
-      </Button>
+      {!isFetching ? (
+        <Button onClick={handleSubmit} primary>
+          Save
+        </Button>
+      ) : (
+        <Spinner />
+      )}
     </div>
   </div>
 )
 
-export default reduxForm({
-  form: 'edit',
-  onSubmit: (
-    values,
-    dispatch,
-    { setAuthorEdit, setAuthors, authors, index, changeForm },
-  ) => {
-    const newAuthors = [
-      ...authors.slice(0, index),
-      values.edit,
-      ...authors.slice(index + 1),
-    ]
-    setAuthorEdit(-1)()
-    setAuthors(newAuthors)
-  },
-})(AuthorEdit)
+export default compose(
+  connect(state => ({
+    isFetching: getAuthorFetching(state),
+  })),
+  reduxForm({
+    form: 'edit',
+    onSubmit: (
+      values,
+      dispatch,
+      { setAuthorEdit, setAuthors, authors, index, changeForm },
+    ) => {
+      const newAuthors = [
+        ...authors.slice(0, index),
+        values.edit,
+        ...authors.slice(index + 1),
+      ]
+      setAuthorEdit(-1)()
+      setAuthors(newAuthors)
+    },
+  }),
+)(AuthorEdit)
