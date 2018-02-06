@@ -83,7 +83,7 @@ export default compose(
     onSubmit: (
       values,
       dispatch,
-      { authors, addAuthor, setEditMode, reset, match },
+      { authors, addAuthor, setEditMode, setFormAuthors, reset, match },
     ) => {
       const collectionId = get(match, 'params.project')
       const fragmentId = get(match, 'params.version')
@@ -96,7 +96,9 @@ export default compose(
         },
         collectionId,
         fragmentId,
-      ).then(() => {
+      ).then(author => {
+        const newAuthors = [...authors, author]
+        setFormAuthors(newAuthors)
         reset()
         setEditMode(false)()
       })

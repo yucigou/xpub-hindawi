@@ -38,6 +38,7 @@ const Authors = ({
   editMode,
   setEditMode,
   editedAuthor,
+  setFormAuthors,
   ...rest
 }) => (
   <div>
@@ -48,12 +49,14 @@ const Authors = ({
       editMode={editMode}
       match={match}
       setEditMode={setEditMode}
+      setFormAuthors={setFormAuthors}
     />
     {editedAuthor > -1 ? (
       <StaticList
         authors={authors}
         editComponent={AuthorEditor}
         editIndex={editedAuthor}
+        setFormAuthors={setFormAuthors}
         {...rest}
       />
     ) : (
