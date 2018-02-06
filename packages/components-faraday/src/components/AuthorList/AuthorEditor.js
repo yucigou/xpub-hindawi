@@ -1,14 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { connect } from 'react-redux'
 import { Button } from '@pubsweet/ui'
 import { reduxForm } from 'redux-form'
-import { withRouter } from 'react-router-dom'
-import { compose, getContext } from 'recompose'
 
 import { ValidatedTextField, MenuItem } from './FormItems'
-import { getFragmentAuthors, setAuthors } from '../../redux/authors'
 
 import classes from './AuthorList.local.scss'
 
@@ -56,31 +51,19 @@ const AuthorEdit = ({ setAuthorEdit, handleSubmit }) => (
   </div>
 )
 
-export default compose(
-  withRouter,
-  getContext({ version: PropTypes.object, project: PropTypes.object }),
-  connect(
-    (state, { match: { params: { version } } }) => ({
-      authors: getFragmentAuthors(state, version),
-    }),
-    {
-      setAuthors,
-    },
-  ),
-  reduxForm({
-    form: 'edit',
-    onSubmit: (
-      values,
-      dispatch,
-      { setAuthorEdit, setAuthors, project, version, authors, index, ...rest },
-    ) => {
-      const newAuthors = [
-        ...authors.slice(0, index),
-        values.edit,
-        ...authors.slice(index + 1),
-      ]
-      setAuthorEdit(-1)()
-      setAuthors(newAuthors, version.id)
-    },
-  }),
-)(AuthorEdit)
+export default reduxForm({
+  form: 'edit',
+  onSubmit: (
+    values,
+    dispatch,
+    { setAuthorEdit, setAuthors, authors, index, changeForm },
+  ) => {
+    const newAuthors = [
+      ...authors.slice(0, index),
+      values.edit,
+      ...authors.slice(index + 1),
+    ]
+    setAuthorEdit(-1)()
+    setAuthors(newAuthors)
+  },
+})(AuthorEdit)

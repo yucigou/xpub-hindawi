@@ -9,15 +9,10 @@ import {
   lifecycle,
   withState,
 } from 'recompose'
-import { change } from 'redux-form'
+import { change as changeForm } from 'redux-form'
 import { SortableList } from 'pubsweet-components-faraday/src/components'
 
-import {
-  addAuthor,
-  getFragmentAuthors,
-  setAuthors,
-  moveAuthors,
-} from '../../redux/authors'
+import { addAuthor } from '../../redux/authors'
 
 import Author from './Author'
 import StaticList from './StaticList'
@@ -79,38 +74,38 @@ const Authors = ({
 export default compose(
   withRouter,
   getContext({ version: PropTypes.object, project: PropTypes.object }),
-  connect(
-    (state, { match: { params: { version } } }) => ({
-      authors: getFragmentAuthors(state, version),
-    }),
-    {
-      addAuthor,
-      setAuthors,
-      moveAuthors,
-      formChange: change,
-    },
-  ),
+  connect(null, {
+    addAuthor,
+    changeForm,
+  }),
+  withState('authors', 'setAuthors', []),
   lifecycle({
     componentDidMount() {
       const { version, setAuthors } = this.props
-      setAuthors(version.authors, version.id)
+      setAuthors(version.authors)
     },
   }),
   withState('editMode', 'setEditMode', false),
   withState('editedAuthor', 'setEditedAuthor', -1),
   withHandlers({
-    setAuthorEdit: ({ setEditedAuthor, formChange }) => editedAuthor => e => {
+    setFormAuthors: ({ setAuthors, changeForm }) => authors => {
+      setAuthors(authors)
+      changeForm('wizard', 'authors', authors)
+    },
+  }),
+  withHandlers({
+    setAuthorEdit: ({ setEditedAuthor, changeForm }) => editedAuthor => e => {
       e && e.preventDefault && e.preventDefault()
-      formChange('wizard', 'editMode', editedAuthor > -1)
+      changeForm('wizard', 'editMode', editedAuthor > -1)
       setEditedAuthor(prev => editedAuthor)
     },
-    setEditMode: ({ setEditMode, formChange }) => mode => e => {
+    setEditMode: ({ setEditMode, changeForm }) => mode => e => {
       e && e.preventDefault()
-      formChange('wizard', 'editMode', mode)
+      changeForm('wizard', 'editMode', mode)
       setEditMode(v => mode)
     },
-    dropItem: ({ authors, project, version, setAuthors }) => () => {
-      setAuthors(authors, version.id)
+    dropItem: ({ authors, setFormAuthors }) => () => {
+      setFormAuthors(authors)
     },
     countryParser: () => countryCode =>
       countries.find(c => c.value === countryCode).label,
@@ -119,36 +114,23 @@ export default compose(
       if (isCorresponding) return `#${index + 1} Corresponding author`
       return `#${index + 1} Author`
     },
-    moveAuthor: ({
-      authors,
-      moveAuthors,
-      project,
-      version,
-      match: { params },
-    }) => (dragIndex, hoverIndex) => {
+    moveAuthor: ({ authors, setAuthors, changeForm }) => (
+      dragIndex,
+      hoverIndex,
+    ) => {
       const newAuthors = SortableList.moveItem(authors, dragIndex, hoverIndex)
-      moveAuthors(newAuthors, params.version)
+      setAuthors(newAuthors)
     },
-    removeAuthor: ({
-      authors,
-      project,
-      version,
-      setAuthors,
-    }) => authorEmail => () => {
+    removeAuthor: ({ authors, setFormAuthors }) => authorEmail => () => {
       const newAuthors = authors.filter(a => a.email !== authorEmail)
-      setAuthors(newAuthors, version.id)
+      setFormAuthors(newAuthors)
     },
-    setAsCorresponding: ({
-      authors,
-      setAuthors,
-      version,
-      project,
-    }) => authorEmail => () => {
+    setAsCorresponding: ({ authors, setFormAuthors }) => authorEmail => () => {
       const newAuthors = authors.map(a => ({
         ...a,
         isCorresponding: a.isSubmitting || a.email === authorEmail,
       }))
-      setAuthors(newAuthors, version.id)
+      setFormAuthors(newAuthors)
     },
   }),
 )(Authors)

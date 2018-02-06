@@ -2,6 +2,7 @@ import React from 'react'
 import { get } from 'lodash'
 import classnames from 'classnames'
 import { ValidatedField, Button } from '@pubsweet/ui'
+import { AuthorList } from 'pubsweet-components-faraday/src/components'
 
 import classes from './WizardStep.local.scss'
 import AutosaveIndicator from './AutosaveIndicator'
@@ -65,6 +66,8 @@ export default ({
             )
           },
         )}
+
+      <AuthorList />
       <div className={classnames(classes.buttons)}>
         <Button onClick={isFirst ? () => history.push('/') : prevStep}>
           {isFirst
