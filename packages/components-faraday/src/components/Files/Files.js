@@ -1,6 +1,7 @@
 import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { change as changeForm } from 'redux-form'
@@ -15,12 +16,14 @@ import {
 import { SortableList } from 'pubsweet-components-faraday/src/components'
 
 import FileSection from './FileSection'
+import classes from './Files.local.scss'
 
 import {
   uploadFile,
   deleteFile,
   getRequestStatus,
   getSignedUrl,
+  getFileError,
 } from '../../redux/files'
 
 const Files = ({
@@ -31,9 +34,20 @@ const Files = ({
   changeList,
   dropSortableFile,
   previewFile,
+  error,
   ...rest
 }) => (
   <div>
+    {error && (
+      <div
+        className={classnames({
+          [classes['error-container']]: true,
+          [classes.hidden]: !error,
+        })}
+      >
+        Error uploading file, please try again.
+      </div>
+    )}
     <FileSection
       addFile={addFile('manuscripts')}
       allowedFileExtensions={['pdf', 'doc', 'docx']}
@@ -83,6 +97,7 @@ export default compose(
   connect(
     state => ({
       isFetching: getRequestStatus(state),
+      error: getFileError(state),
     }),
     {
       changeForm,
@@ -142,14 +157,16 @@ export default compose(
       changeForm,
       version,
     }) => type => file => {
-      uploadFile(file, type, version.id).then(fileResponse => {
-        const newFiles = {
-          ...files,
-          [type]: [...files[type], fileResponse],
-        }
-        setFiles(newFiles)
-        changeForm('wizard', 'files', newFiles)
-      })
+      uploadFile(file, type, version.id)
+        .then(file => {
+          const newFiles = {
+            ...files,
+            [type]: [...files[type], file],
+          }
+          setFiles(newFiles)
+          changeForm('wizard', 'files', newFiles)
+        })
+        .catch(e => console.error(`Couldn't upload file.`, e))
     },
     moveItem: ({ moveFiles, files, setFiles }) => type => (
       dragIndex,

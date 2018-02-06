@@ -56,22 +56,28 @@ const removeFailure = error => ({
   error,
 })
 
-const removeSuccess = () => ({
+const removeSuccess = file => ({
   type: REMOVE_SUCCESS,
+  file,
 })
 
 // selectors
 export const getRequestStatus = state => state.files.isFetching
+export const getFileError = state => state.files.error
 
 // thunked actions
 export const uploadFile = (file, type, fragmentId) => dispatch => {
   dispatch(uploadRequest(type))
-  return request('/aws', createFileData(file, type, fragmentId))
-    .then(r => {
+  return request('/aws', createFileData(file, type, fragmentId)).then(
+    r => {
       dispatch(uploadSuccess())
       return r
-    })
-    .catch(err => dispatch(uploadFailure(err.message)))
+    },
+    error => {
+      dispatch(uploadFailure(error))
+      throw error
+    },
+  )
 }
 
 export const deleteFile = fileId => dispatch => {

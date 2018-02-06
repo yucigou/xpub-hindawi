@@ -12,7 +12,6 @@ import {
 
 import FileItem from './FileItem'
 import FilePicker from './FilePicker'
-import FileDropzone from './FileDropzone'
 import classes from './FileSection.local.scss'
 
 const DragHandle = () => (
@@ -92,7 +91,9 @@ const FileSection = ({
           previewFile={previewFile}
           removeFile={removeFile}
         />
-        <FileDropzone label="Drag files here or use the add button." />
+        <div className={classnames(classes.dropzone)}>
+          <span>Drag files here or use the add button.</span>
+        </div>
       </div>,
     ),
   )

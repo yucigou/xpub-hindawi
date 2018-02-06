@@ -1,30 +1,10 @@
-.file-item {
-  align-items: center;
-  border: 1px solid black;
+.error-container {
+  color: firebrick;
   display: flex;
-  margin: 5px;
+  justify-content: flex-end;
+  margin: 5px 0;
+}
 
-  .info {
-    border-right: 1px solid black;
-    display: flex;
-    flex: 1;
-    padding: 2px 0;
-  }
-
-  .buttons {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    margin: 0 5px;
-
-    button {
-      border: none;
-      cursor: pointer;
-
-      &:active,
-      &:focus {
-        outline: none;
-      }
-    }
-  }
+.hidden {
+  opacity: 0;
 }
