@@ -72,9 +72,10 @@ const AuthorBackend = app => {
             }
           }
         }
+        console.log('FRAG', fragment)
         fragment = await fragment.save()
         await collection.save()
-        res.status(200).json(fragment)
+        res.status(200).json(fragment.authors[fragment.authors.length - 1])
       } catch (e) {
         if (e.name === 'NotFoundError') {
           res.status(e.status).json({ error: 'Object not found' })
