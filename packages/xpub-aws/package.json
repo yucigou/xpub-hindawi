@@ -15,9 +15,12 @@
   },
   "dependencies": {
     "aws-sdk": "^2.185.0",
+    "aws-sdk-mock": "^1.7.0",
     "body-parser": "^1.17.2",
+    "mock-aws-s3": "^2.6.0",
     "multer": "^1.3.0",
     "multer-s3": "^2.7.0",
+    "node-mocks-http": "^1.6.6",
     "nodemailer": "^4.4.2"
   },
   "peerDependencies": {
