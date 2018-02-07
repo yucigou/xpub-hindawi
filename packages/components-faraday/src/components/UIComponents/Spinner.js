@@ -4,9 +4,11 @@ import { Icon } from '@pubsweet/ui'
 
 import classes from './Spinner.local.scss'
 
-const Spinner = () => (
+const Spinner = ({ icon = 'loader', size = 16, color = '#444' }) => (
   <div className={classnames(classes.rotate, classes.icon)}>
-    <Icon size={16}>loader</Icon>
+    <Icon color={color} size={size}>
+      {icon}
+    </Icon>
   </div>
 )
 
