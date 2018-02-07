@@ -12,7 +12,7 @@ const setupMulter = s3 => {
   const upload = multer({
     storage: multerS3({
       s3,
-      bucket: process.env.AWS_BUCKET,
+      bucket: s3Config.bucket,
       contentType: (req, file, cb) => {
         cb(null, file.mimetype)
       },
@@ -28,8 +28,8 @@ const setupMulter = s3 => {
 }
 
 const validateFile = (req, file, cb) => {
-  const fileType = req.body.fileType
-  const mimetype = file.mimetype
+  const { fileType } = req.body
+  const { mimetype } = file
 
   const valid = Joi.validate({ [fileType]: mimetype }, uploadValidations)
 

@@ -122,10 +122,11 @@ export default compose(
     },
   }),
   withHandlers({
-    previewFile: ({ getSignedUrl }) => fileId => e => {
+    previewFile: ({ getSignedUrl, files, getFileName }) => fileId => e => {
       e.preventDefault()
-      getSignedUrl(fileId).then(({ signedUrl }) => {
-        window.open(signedUrl)
+      const windowReference = window.open()
+      getSignedUrl(fileId).then(({ signedUrl, ...rest }) => {
+        windowReference.location = signedUrl
       })
     },
     dropSortableFile: ({ files, setFiles, changeForm }) => () => {

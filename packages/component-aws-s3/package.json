@@ -1,7 +1,7 @@
 {
-  "name": "xpub-aws",
+  "name": "pubsweet-components-aws-s3",
   "version": "0.0.1",
-  "description": "xpub aws configured for faraday",
+  "description": "xpub aws s3 configured for faraday",
   "license": "MIT",
   "files": [
     "src"
@@ -15,9 +15,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.185.0",
-    "aws-sdk-mock": "^1.7.0",
     "body-parser": "^1.17.2",
-    "mock-aws-s3": "^2.6.0",
     "multer": "^1.3.0",
     "multer-s3": "^2.7.0",
     "node-mocks-http": "^1.6.6",

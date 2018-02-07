@@ -1,6 +1,6 @@
 # AWS S3 File Upload
 
-In order to use `xpub-aws` you first need to have a `.env` file containing AWS data in the root folder of the starting point of your applications.
+In order to use `component-xpub-aws-s3` you first need to have a `.env` file containing AWS data in the root folder of the starting point of your applications.
 
 The `.env` file should look like this:
 ```bash
@@ -15,12 +15,12 @@ Then, as soon as possible in your app you should add the `dotenv` package:
 require('dotenv').config()
 ```
 
-# `xpub-aws` API
+# `component-xpub-aws-s3` API
 A list of endpoints that help you upload, download and delete S3 files.
 
 ## Upload a file [POST]
 #### Request
-`POST /api/aws`
+`POST /api/file`
 #### Request body
 ```
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryWfPNVh4wuWBlyEyQ
@@ -52,7 +52,7 @@ Content-Type: text/plain
 ## Retrieve file signed URL [GET]
 This endpoint allows you to retrieve a file's signed URL that can be used to download the file.
 #### Request
-`GET /api/aws/{fileId}`
+`GET /api/file/{fileId}`
 
 | URI Parameter | Requiered | Requirements | Description |
 | -------- | -------- | -------- | -------- |
@@ -68,7 +68,7 @@ HTTP/1.1 200
 
 ## Delete file [DELETE]
 #### Request
-`DELETE /api/aws/{fileId}`
+`DELETE /api/file/{fileId}`
 
 | URI Parameter | Requiered | Requirements | Description |
 | -------- | -------- | -------- | -------- |
