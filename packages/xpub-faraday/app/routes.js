@@ -12,7 +12,7 @@ import {
 
 // import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
 import DashboardPage from 'pubsweet-components-faraday/src/components/Dashboard'
-import WizardPage from 'pubsweet-component-wizard/src/components/WizardPage'
+import { Wizard } from 'pubsweet-component-wizard/src/components'
 import ManuscriptPage from 'pubsweet-component-xpub-manuscript/src/components/ManuscriptPage'
 import ConfirmationPage from 'pubsweet-components-faraday/src/components/UIComponents/ConfirmationPage'
 import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/NotFound'
@@ -30,7 +30,7 @@ const Routes = () => (
       />
       <PrivateRoute component={LogoutPage} exact path="/logout" />
       <PrivateRoute
-        component={WizardPage}
+        component={Wizard}
         exact
         path="/projects/:project/versions/:version/submit"
       />

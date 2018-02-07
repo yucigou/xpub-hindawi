@@ -1,11 +1,9 @@
 import React from 'react'
 import classnames from 'classnames'
+import { Steps } from 'pubsweet-components-faraday/src/components'
 
 import classes from './Wizard.local.scss'
 import WizardFormStep from './WizardFormStep'
-import Progress from './Progress'
-
-const { Step } = Progress
 
 export default ({
   journal: { wizard: { showProgress, steps } },
@@ -16,11 +14,11 @@ export default ({
 }) => (
   <div className={classnames(classes.container)}>
     {showProgress && (
-      <Progress currentStep={step}>
+      <Steps currentStep={step}>
         {getSteps().map((step, index) => (
-          <Step index={index} key={step} title={step} />
+          <Steps.Step key={step} title={step} />
         ))}
-      </Progress>
+      </Steps>
     )}
     <WizardFormStep {...steps[step]} nextStep={nextStep} prevStep={prevStep} />
   </div>
