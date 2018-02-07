@@ -1,6 +1,7 @@
 const path = require('path')
 const components = require('./components.json')
 const logger = require('winston')
+require('dotenv').config()
 
 const environment = process.env.NODE_ENV || 'development'
 
@@ -47,16 +48,23 @@ module.exports = {
     },
   },
   'pubsweet-component-aws-s3': {
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    region: process.env.AWS_REGION,
-    sender: process.env.PUBSWEET_EMAIL_SENDER || 'dev@mailinator.com',
+    secretAccessKey: process.env.AWS_S3_SECRET_KEY,
+    accessKeyId: process.env.AWS_S3_ACCESS_KEY,
+    region: process.env.AWS_S3_REGION,
+    bucket: process.env.AWS_S3_BUCKET,
     validations: path.resolve(__dirname, 'upload-validations.js'),
+  },
+  'pubsweet-component-aws-ses': {
+    secretAccessKey: process.env.AWS_SES_SECRET_KEY,
+    accessKeyId: process.env.AWS_SES_ACCESS_KEY,
+    region: process.env.AWS_SES_REGION,
+    sender: process.env.EMAIL_SENDER,
   },
   publicKeys: [
     'pubsweet-client',
     'authsome',
     'validations',
     'pubsweet-component-aws-s3',
+    'pubsweet-component-aws-ses',
   ],
 }

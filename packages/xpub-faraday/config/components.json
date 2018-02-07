@@ -6,5 +6,6 @@
   "pubsweet-component-ink-backend",
   "pubsweet-component-wizard",
   "pubsweet-components-faraday",
-  "xpub-aws"
+  "pubsweet-components-aws-s3",
+  "pubsweet-components-aws-ses"
 ]
