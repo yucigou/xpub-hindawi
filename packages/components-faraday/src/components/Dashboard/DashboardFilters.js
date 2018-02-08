@@ -6,18 +6,6 @@ import { compose, withHandlers } from 'recompose'
 import classes from './Dashboard.local.scss'
 import { changeFilter, changeSort } from './redux/filters'
 
-const statusFilterOptions = [
-  { label: 'All', value: 'all' },
-  { label: 'Submitted', value: 'submitted' },
-  { label: 'Draft', value: 'draft' },
-]
-
-const ownerFilterOptions = [
-  { label: 'Everyone', value: 'all' },
-  { label: 'My work', value: 'me' },
-  { label: `Other's work`, value: 'other' },
-]
-
 const sortOptions = [
   { label: 'Newest first', value: 'newest' },
   { label: 'Oldest first', value: 'oldest' },

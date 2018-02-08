@@ -13,8 +13,9 @@ Spinning icon used when loading or waiting for API calls to finish.
 ## Examples
 
 ```js
-import { Spinner } from 'pubsweet-components-faraday/src/components'
+<Spinner />
+```
 
-<Spinner /> // renders the default spinner
-<Spinner color="pink" size={40} icon="compass" /> // renders a huge pink spinning compass
+```js
+<Spinner color="pink" size={40} icon="compass" />
 ```

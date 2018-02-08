@@ -5,18 +5,12 @@ import { Button } from '@pubsweet/ui'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 
+import countries from './countries'
 import { Spinner } from '../UIComponents'
 import { getAuthorFetching } from '../../redux/authors'
 import { ValidatedTextField, MenuItem } from './FormItems'
 
 import classes from './AuthorList.local.scss'
-
-const countries = [
-  { label: 'Romania', value: 'ro' },
-  { label: 'United Kingdom', value: 'uk' },
-  { label: 'Germany', value: 'de' },
-  { label: 'France', value: 'fr' },
-]
 
 const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
 
