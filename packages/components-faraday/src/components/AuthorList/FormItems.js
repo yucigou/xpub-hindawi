@@ -21,7 +21,7 @@ export const ValidatedTextField = ({
 }
 
 export const MenuItem = ({ label, name, options }) => (
-  <div className={classnames(classes['validated-text'])}>
+  <div className={classnames(classes['validated-text'], classes['fix-height'])}>
     <span className={classnames(classes.label)}>{label}</span>
     <ValidatedField
       component={input => <Menu {...input} options={options} />}

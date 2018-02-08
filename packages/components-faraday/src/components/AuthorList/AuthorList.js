@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 import { withRouter } from 'react-router-dom'
 import {
   compose,
@@ -15,17 +16,11 @@ import { SortableList } from 'pubsweet-components-faraday/src/components'
 import { addAuthor } from '../../redux/authors'
 
 import Author from './Author'
+import countries from './countries'
 import StaticList from './StaticList'
 import AuthorAdder from './AuthorAdder'
 import AuthorEditor from './AuthorEditor'
 import { DragHandle } from './FormItems'
-
-const countries = [
-  { label: 'Romania', value: 'ro' },
-  { label: 'United Kingdom', value: 'uk' },
-  { label: 'Germany', value: 'de' },
-  { label: 'France', value: 'fr' },
-]
 
 const Authors = ({
   authors,
@@ -111,7 +106,7 @@ export default compose(
       setFormAuthors(authors)
     },
     countryParser: () => countryCode =>
-      countries.find(c => c.value === countryCode).label,
+      get(countries.find(c => c.value === countryCode), 'label'),
     parseAuthorType: () => (isSubmitting, isCorresponding, index) => {
       if (isSubmitting) return `#${index + 1} Submitting author`
       if (isCorresponding) return `#${index + 1} Corresponding author`

@@ -21,6 +21,13 @@
   }
 }
 
+.fix-height {
+  div[class^='Menu-local_options-'] {
+    height: 250px;
+    overflow-y: scroll;
+  }
+}
+
 .drag-handle {
   align-items: center;
   border-right: 1px solid #444;
