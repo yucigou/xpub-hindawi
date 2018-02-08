@@ -14,7 +14,7 @@ export default ({
 }) => (
   <div className={classnames(classes.container)}>
     {showProgress && (
-      <Steps currentStep={step}>
+      <Steps currentStep={step} margin="0 20px 60px 0">
         {getSteps().map((step, index) => (
           <Steps.Step key={step} title={step} />
         ))}

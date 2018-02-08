@@ -1,6 +1,6 @@
 # Steps
 
-`Steps` is a navigation bar that guides users through the steps of a task. Use it whenever there is a sequence of tasks or steps that need to be done.
+`Steps` is a navigation bar that guides users through the steps of a task. Use it whenever there is a sequence of tasks or steps that need to be done. By default the `Steps` modules has a `Step` and `Separator` default components, but custom components with different styles can be used as shown in the examples below.
 
 ## Props
 
