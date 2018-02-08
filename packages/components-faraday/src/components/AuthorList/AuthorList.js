@@ -61,7 +61,7 @@ const Authors = ({
       />
     ) : (
       <SortableList
-        beginDragProps={['index']}
+        beginDragProps={['index', 'lastName']}
         dragHandle={DragHandle}
         dropItem={dropItem}
         editedAuthor={editedAuthor}

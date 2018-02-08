@@ -129,9 +129,17 @@ export default compose(
         windowReference.location = signedUrl
       })
     },
-    dropSortableFile: ({ files, setFiles, changeForm }) => () => {
-      setFiles(files)
-      changeForm('wizard', 'files', files)
+    dropSortableFile: ({ files, setFiles, changeForm }) => (
+      otherProps,
+      dragProps,
+    ) => {
+      // do something if the files is not changing list
+      const { listId: fromListId } = otherProps
+      const { listId: toListId } = dragProps
+      if (fromListId === toListId) {
+        setFiles(files)
+        changeForm('wizard', 'files', files)
+      }
     },
     changeList: ({ files, setFiles, changeForm }) => (
       fromListId,
@@ -149,7 +157,7 @@ export default compose(
         [fromListId]: fromFiles,
       }
       setFiles(newFiles)
-      changeForm('wizard', 'files', files)
+      changeForm('wizard', 'files', newFiles)
     },
     addFile: ({
       files,

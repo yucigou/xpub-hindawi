@@ -125,7 +125,6 @@ export default compose(
           files,
           setError,
           allowedFileExtensions,
-          ...pm
         },
         monitor,
       ) {
@@ -144,7 +143,6 @@ export default compose(
           setError('No more files can be added to this section.')
           return
         }
-
         if (toListId === fromListId) return
         changeList(fromListId, toListId, id)
       },
