@@ -150,3 +150,36 @@
 .version {
   margin-left: 1em;
 }
+
+.modal {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.modalContent {
+  border: 1px solid var(--color-primary);
+  height: 50vw;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  width: 50vw;
+
+  .modalText {
+    height: calc(100% - 60px);
+    overflow-y: scroll;
+    padding-right: 10px;
+  }
+
+  button {
+    bottom: 20px;
+    position: absolute;
+    right: 20px;
+  }
+}

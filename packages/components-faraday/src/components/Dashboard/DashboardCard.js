@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { get, isEmpty } from 'lodash'
 import classnames from 'classnames'
 import { Button, Icon } from '@pubsweet/ui'
+import { compose, getContext } from 'recompose'
 
 import { parseVersion, getFilesURL, downloadAll } from './utils'
 import classes from './Dashboard.local.scss'
@@ -12,6 +14,7 @@ const DashboardCard = ({
   listView,
   project,
   version,
+  setModal,
 }) => {
   const { submitted, author, title, type, version: vers } = parseVersion(
     version,
@@ -19,6 +22,7 @@ const DashboardCard = ({
   const files = getFilesURL(get(version, 'files'))
   const status = get(project, 'status') || 'Draft'
   const hasFiles = !isEmpty(files)
+  const abstract = get(version, 'metadata.abstract')
 
   return (
     <div className={classes.card}>
@@ -68,7 +72,11 @@ const DashboardCard = ({
             </div>
             <div className={classes.column2}>
               <div>{author}</div>
-              <a>View</a>
+              {abstract && (
+                <a href="#" onClick={setModal(abstract)}>
+                  view
+                </a>
+              )}
             </div>
           </div>
           <div className={classes.column3}>
@@ -103,4 +111,8 @@ const DashboardCard = ({
   )
 }
 
-export default DashboardCard
+export default compose(
+  getContext({
+    setModal: PropTypes.func,
+  }),
+)(DashboardCard)
