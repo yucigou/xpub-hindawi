@@ -16,6 +16,7 @@ import { Wizard } from 'pubsweet-component-wizard/src/components'
 import ManuscriptPage from 'pubsweet-component-xpub-manuscript/src/components/ManuscriptPage'
 import ConfirmationPage from 'pubsweet-components-faraday/src/components/UIComponents/ConfirmationPage'
 import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/NotFound'
+import AdminPage from 'pubsweet-components-faraday/src/components/Admin'
 
 const Routes = () => (
   <App>
@@ -28,6 +29,7 @@ const Routes = () => (
         exact
         path="/confirmation-page"
       />
+      <PrivateRoute component={AdminPage} exact path="/admin" />
       <PrivateRoute component={LogoutPage} exact path="/logout" />
       <PrivateRoute
         component={Wizard}
