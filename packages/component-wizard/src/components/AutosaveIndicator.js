@@ -1,14 +1,14 @@
 import React from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
-import classnames from 'classnames'
 import { compose, withProps } from 'recompose'
+// import { Icon, Spinner } from '@pubsweet/ui'
 import { Icon } from '@pubsweet/ui'
+import styled from 'styled-components'
 import { getFormValues } from 'redux-form'
 
+import Spinner from 'pubsweet-components-faraday/src/components/UIComponents/Spinner'
 import { getAutosave } from '../redux/autosave'
-
-import classes from './AutosaveIndicator.local.scss'
 
 const durationParser = lastUpdate => {
   const today = moment()
@@ -19,42 +19,43 @@ const durationParser = lastUpdate => {
 
 const Indicator = ({
   isVisibile,
+  progressText = 'Saving changes...',
+  errorText = 'Changes not saved',
+  successText,
   autosave: { isFetching, error, lastUpdate },
 }) =>
   isVisibile ? (
-    <div className={classnames(classes.container)}>
+    <Root>
       {isFetching && (
-        <div className={classnames(classes['icon-container'])}>
-          <div className={classnames(classes.rotate, classes.icon)}>
-            <Icon size={16}>loader</Icon>
-          </div>
-          <span>Saving changes...</span>
-        </div>
+        <AutoSaveContainer>
+          <Spinner icon="loader" size={16} />
+          <Info>{progressText}</Info>
+        </AutoSaveContainer>
       )}
 
       {!isFetching &&
         lastUpdate && (
-          <div className={classnames(classes['icon-container'])}>
-            <div className={classnames(classes.icon)}>
+          <AutoSaveContainer>
+            <IconContainer>
               <Icon size={16}>check-circle</Icon>
-            </div>
-            <span>{durationParser(lastUpdate)}</span>
-          </div>
+            </IconContainer>
+            <Info>{successText || durationParser(lastUpdate)}</Info>
+          </AutoSaveContainer>
         )}
       {!isFetching &&
         error && (
-          <div className={classnames(classes['icon-container'])}>
-            <div className={classnames(classes.icon)}>
-              <Icon color="red" size={16}>
+          <AutoSaveContainer>
+            <IconContainer>
+              <Icon color="var(--color-danger)" size={16}>
                 alert-triangle
               </Icon>
-            </div>
-            <span className={classnames(classes['error-text'])} title={error}>
-              Changes not saved
-            </span>
-          </div>
+            </IconContainer>
+            <Info error="var(--color-danger)" title={error}>
+              {errorText}
+            </Info>
+          </AutoSaveContainer>
         )}
-    </div>
+    </Root>
   ) : null
 
 export default compose(
@@ -66,3 +67,24 @@ export default compose(
     isVisibile: form && Boolean(isFetching || lastUpdate || error),
   })),
 )(Indicator)
+
+const Root = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+`
+const AutoSaveContainer = styled.div`
+  align-items: center;
+  display: flex;
+  padding: 5px;
+`
+const IconContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`
+const Info = styled.span`
+  font-size: 12px;
+  margin-left: 5px;
+  color: ${({ error }) => error || ''};
+`

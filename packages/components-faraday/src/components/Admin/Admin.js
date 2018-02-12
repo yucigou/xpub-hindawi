@@ -1,21 +1,24 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
-import classes from './Admin.local.scss'
-
-const Admin = ({ users }) => (
-  <div className={classes.root}>
+const Admin = ({ users = [] }) => (
+  <Root>
     <h2>Admin</h2>
     <ul>
       {users.map((u, i) => (
-        <li key={i}>
+        <li key={u.id}>
           {u.username} - {u.email}
         </li>
       ))}
     </ul>
-  </div>
+  </Root>
 )
 
-Admin.propTypes = {}
-
 export default Admin
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 60em;
+`
