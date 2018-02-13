@@ -11,7 +11,7 @@ import {
   withState,
 } from 'recompose'
 import { change as changeForm } from 'redux-form'
-import { SortableList } from 'pubsweet-components-faraday/src/components'
+import { SortableList } from 'pubsweet-component-sortable-list/src/components'
 
 import { addAuthor } from '../../redux/authors'
 
