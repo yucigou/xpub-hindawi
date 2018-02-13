@@ -1,5 +1,5 @@
 import React from 'react'
-import { get } from 'lodash'
+import { get, isEmpty } from 'lodash'
 import { Button } from '@pubsweet/ui'
 import { connect } from 'react-redux'
 import { compose, withHandlers } from 'recompose'
@@ -21,6 +21,8 @@ const Dashboard = ({
   changeFilterValue,
   filterValues,
   filterItems,
+  abstractModal,
+  setModal,
   ...rest
 }) => (
   <div className={classes.root}>
@@ -41,6 +43,17 @@ const Dashboard = ({
       list={getItems()}
       listView={listView}
     />
+    {!isEmpty(abstractModal) && (
+      <div className={classes.modal}>
+        <div className={classes.modalContent}>
+          <div
+            className={classes.modalText}
+            dangerouslySetInnerHTML={{ __html: abstractModal }} // eslint-disable-line
+          />
+          <Button onClick={setModal()}>Close</Button>
+        </div>
+      </div>
+    )}
   </div>
 )
 
