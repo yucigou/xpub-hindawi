@@ -31,7 +31,7 @@
     "pubsweet-component-xpub-submit": "^0.0.2",
     "pubsweet-server": "1.0.5",
     "pubsweet-components-aws-s3": "^0.0.1",
-    "pubsweet-components-aws-ses": "^0.0.1",
+    "pubsweet-component-admin": "^0.0.1",
     "react": "^15.6.1",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
