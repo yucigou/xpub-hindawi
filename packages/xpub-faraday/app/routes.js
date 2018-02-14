@@ -1,8 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import App from 'pubsweet-component-xpub-app/src/components'
-
 import {
   PrivateRoute,
   SignupPage,
@@ -20,8 +18,10 @@ import AdminPage from 'pubsweet-components-faraday/src/components/Admin'
 import AddEditUser from 'pubsweet-components-faraday/src/components/Admin/AddEditUser'
 import SignUpInvitationPage from 'pubsweet-components-faraday/src/components/SignUp/SignUpInvitationPage'
 
+import FaradayApp from './FaradayApp'
+
 const Routes = () => (
-  <App>
+  <FaradayApp>
     <Switch>
       <Route component={LoginPage} exact path="/login" />
       <Route component={SignupPage} exact path="/signup" />
@@ -52,7 +52,7 @@ const Routes = () => (
       />
       <Route component={NotFound} />
     </Switch>
-  </App>
+  </FaradayApp>
 )
 
 export default Routes

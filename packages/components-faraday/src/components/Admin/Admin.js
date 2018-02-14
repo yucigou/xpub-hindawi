@@ -124,11 +124,12 @@ const Admin = ({
   decrementPage,
   page,
   itemsPerPage,
+  history,
 }) => (
   <div>
     <Header>
       <span>Users</span>
-      <AddButton>
+      <AddButton onClick={() => history.push('/')}>
         <Icon color="#667080">plus-circle</Icon>
         Add User
       </AddButton>
