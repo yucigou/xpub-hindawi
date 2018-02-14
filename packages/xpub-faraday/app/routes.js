@@ -39,7 +39,6 @@ const Routes = () => (
         path="/admin/users/edit/:userId"
       />
       <PrivateRoute component={LogoutPage} exact path="/logout" />
-      <PrivateRoute component={SignUpInvitationPage} exact path="/invite" />
       <PrivateRoute
         component={Wizard}
         exact
@@ -50,6 +49,7 @@ const Routes = () => (
         exact
         path="/projects/:project/versions/:version/manuscript"
       />
+      <Route component={SignUpInvitationPage} exact path="/invite" />
       <Route component={NotFound} />
     </Switch>
   </FaradayApp>

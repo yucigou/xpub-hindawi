@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import styled from 'styled-components'
 import { actions } from 'pubsweet-client'
+import { create } from 'pubsweet-client/src/helpers/api'
 import { withJournal } from 'xpub-journal'
 import { ConnectPage } from 'xpub-connect'
 import { selectUser } from 'xpub-selectors'
@@ -15,6 +16,15 @@ import EditUserForm from './EditUserForm'
 
 const getRoleOptions = journal =>
   map(journal.roles, (value, key) => ({ label: value, value: key }))
+
+const onSubmit = (values, dispatch, { isEdit }) => {
+  if (!isEdit) {
+    create('/users/invite', values).then(
+      r => r,
+      // err => console.log(err),
+    )
+  }
+}
 
 const AddEditUser = ({ handleSubmit, journal, isEdit, user }) => (
   <Root>
@@ -54,7 +64,7 @@ export default compose(
   withProps(({ user }) => ({ initialValues: user })),
   reduxForm({
     form: 'userManagement',
-    onSubmit: values => values,
+    onSubmit,
   }),
 )(AddEditUser)
 
