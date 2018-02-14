@@ -6,7 +6,9 @@ import { withState, withHandlers, compose } from 'recompose'
 
 const AppBar = ({ expanded, toggleMenu, brand, user, goTo }) => (
   <Root>
-    {brand}
+    {React.cloneElement(brand, {
+      onClick: goTo('/'),
+    })}
     {user && (
       <User>
         <div onClick={toggleMenu}>

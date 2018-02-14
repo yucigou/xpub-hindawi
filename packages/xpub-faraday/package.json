@@ -21,7 +21,6 @@
     "prop-types": "^15.5.10",
     "pubsweet": "^1.1.1",
     "pubsweet-client": "^1.1.1",
-    "pubsweet-component-admin": "^0.0.1",
     "pubsweet-component-ink-backend": "^0.1.1",
     "pubsweet-component-ink-frontend": "^0.2.3",
     "pubsweet-component-xpub-app": "^0.0.2",
