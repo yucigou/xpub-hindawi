@@ -4,7 +4,7 @@ const querystring = require('querystring')
 const SES = require('pubsweet-components-aws-ses')
 const config = require('config')
 
-const resetUrl = config.get('admin-reset-password.url')
+const resetUrl = config.get('invite-reset-password.url')
 
 module.exports = {
   setupEmail: async (email, emailType, token, comment = '') => {
@@ -37,14 +37,11 @@ module.exports = {
   },
 }
 
-const readFile = path => {
-  const file = fs.readFileSync(path, { encoding: 'utf-8' }, (err, file) => {
+const readFile = path =>
+  fs.readFileSync(path, { encoding: 'utf-8' }, (err, file) => {
     if (err) {
       throw err
     } else {
       return file
     }
   })
-
-  return file
-}

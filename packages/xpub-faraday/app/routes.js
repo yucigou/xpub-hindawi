@@ -19,6 +19,7 @@ import {
   AdminUsers,
 } from 'pubsweet-components-faraday/src/components/Admin'
 import AddEditUser from 'pubsweet-components-faraday/src/components/Admin/AddEditUser'
+import SignUpInvitationPage from 'pubsweet-components-faraday/src/components/SignUp/SignUpInvitationPage'
 
 import FaradayApp from './FaradayApp'
 
@@ -42,6 +43,7 @@ const Routes = () => (
         path="/admin/users/edit/:userId"
       />
       <PrivateRoute component={LogoutPage} exact path="/logout" />
+      <PrivateRoute component={SignUpInvitationPage} exact path="/invite" />
       <PrivateRoute
         component={Wizard}
         exact

@@ -1,7 +1,7 @@
 {
-  "name": "pubsweet-component-admin",
+  "name": "pubsweet-component-invite",
   "version": "0.0.1",
-  "description": "admin component for pubsweet",
+  "description": "invite component for pubsweet",
   "license": "MIT",
   "files": [
     "src"
