@@ -182,7 +182,11 @@ const Invite = app => {
         if (user) {
           if (token !== user.passwordResetToken) {
             res.status(400).json({ error: 'invalid request' })
-            logger.error('admin pw reset tokens do not match')
+            logger.error(
+              `invite pw reset tokens do not match: REQ ${token} vs. DB ${
+                user.passwordResetToken
+              }`,
+            )
             return
           }
 
@@ -195,10 +199,10 @@ const Invite = app => {
       } catch (e) {
         if (e.name === 'NotFoundError') {
           res.status(404).json({ error: 'user not found' })
-          logger.error('admin pw reset on non-existing user')
+          logger.error('invite pw reset on non-existing user')
         } else if (e.name === 'ValidationError') {
           res.status(400).json({ error: e.details[0].message })
-          logger.error('admin pw reset validation error')
+          logger.error('invite pw reset validation error')
         }
         res.status(400).json({ error: e })
         logger.error(e)
