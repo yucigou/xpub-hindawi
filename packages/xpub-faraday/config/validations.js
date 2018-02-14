@@ -86,8 +86,8 @@ module.exports = {
     },
   ],
   user: {
-    name: Joi.string(), // TODO: add "name" to the login form
-    roles: Joi.object(),
+    name: Joi.string(),
+    roles: Joi.array(),
     isConfirmed: Joi.boolean(),
     firstName: Joi.string().allow(''),
     lastName: Joi.string().allow(''),

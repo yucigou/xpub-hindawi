@@ -60,10 +60,10 @@ module.exports = {
     region: process.env.AWS_SES_REGION,
     sender: process.env.EMAIL_SENDER,
   },
-  'admin-reset-password': {
+  'invite-reset-password': {
     url:
-      process.env.PUBSWEET_ADMIN_PASSWORD_RESET_URL ||
-      'http://localhost:3000/admin/password-reset',
+      process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL ||
+      'http://localhost:3000/invite/password-reset',
   },
   publicKeys: [
     'pubsweet-client',
