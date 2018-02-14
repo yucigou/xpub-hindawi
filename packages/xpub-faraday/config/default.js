@@ -25,7 +25,7 @@ module.exports = {
   'pubsweet-client': {
     API_ENDPOINT: '/api',
     'login-redirect': '/',
-    'redux-log': false,
+    'redux-log': true,
     theme: process.env.PUBSWEET_THEME,
   },
   'mail-transport': {
@@ -63,7 +63,7 @@ module.exports = {
   'invite-reset-password': {
     url:
       process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL ||
-      'http://localhost:3000/invite/password-reset',
+      'http://localhost:3000/invite',
   },
   publicKeys: [
     'pubsweet-client',

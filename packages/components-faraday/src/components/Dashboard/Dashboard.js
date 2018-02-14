@@ -23,14 +23,24 @@ const Dashboard = ({
   filterItems,
   abstractModal,
   setModal,
+  history,
   ...rest
 }) => (
   <div className={classes.root}>
     <div className={classes.header}>
       <div className={classes.heading}>Manuscripts</div>
-      <Button onClick={createDraftSubmission} primary>
-        New
-      </Button>
+      <div className={classes.headerButtons}>
+        <Button
+          className={classes['admin-button']}
+          onClick={() => history.push('admin')}
+          primary
+        >
+          Admin dashboard
+        </Button>
+        <Button onClick={createDraftSubmission} primary>
+          New
+        </Button>
+      </div>
     </div>
     <DashboardFilters
       changeFilterValue={changeFilterValue}

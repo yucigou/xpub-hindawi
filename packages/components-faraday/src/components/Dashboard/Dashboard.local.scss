@@ -67,6 +67,14 @@
   justify-content: space-between;
 }
 
+.headerButtons {
+  display: flex;
+
+  .admin-button {
+    margin-right: 15px;
+  }
+}
+
 .heading {
   color: var(--color-primary);
   font-size: 1.6em;
