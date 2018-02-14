@@ -1,4 +1,5 @@
 import { get } from 'lodash'
+import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { actions } from 'pubsweet-client'
 import { ConnectPage } from 'xpub-connect'
