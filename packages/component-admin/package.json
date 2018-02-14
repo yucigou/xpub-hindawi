@@ -1,7 +1,7 @@
 {
-  "name": "pubsweet-components-aws-ses",
-  "version": "0.2.0",
-  "description": "xpub aws ses configured for faraday",
+  "name": "pubsweet-component-admin",
+  "version": "0.0.1",
+  "description": "admin component for pubsweet",
   "license": "MIT",
   "files": [
     "src"
@@ -14,10 +14,7 @@
     "url": "https://gitlab.coko.foundation/xpub/xpub"
   },
   "dependencies": {
-    "aws-sdk": "^2.185.0",
-    "body-parser": "^1.17.2",
-    "node-mocks-http": "^1.6.6",
-    "nodemailer": "^4.4.2"
+    "body-parser": "^1.17.2"
   },
   "peerDependencies": {
     "@pubsweet/logger": "^0.0.1",

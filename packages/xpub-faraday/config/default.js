@@ -25,7 +25,7 @@ module.exports = {
   'pubsweet-client': {
     API_ENDPOINT: '/api',
     'login-redirect': '/',
-    'redux-log': false,
+    'redux-log': true,
     theme: process.env.PUBSWEET_THEME,
   },
   'mail-transport': {
@@ -59,6 +59,11 @@ module.exports = {
     accessKeyId: process.env.AWS_SES_ACCESS_KEY,
     region: process.env.AWS_SES_REGION,
     sender: process.env.EMAIL_SENDER,
+  },
+  'admin-reset-password': {
+    url:
+      process.env.PUBSWEET_ADMIN_PASSWORD_RESET_URL ||
+      'http://localhost:3000/admin/password-reset',
   },
   publicKeys: [
     'pubsweet-client',
