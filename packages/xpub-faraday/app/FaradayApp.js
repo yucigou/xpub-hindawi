@@ -9,15 +9,6 @@ import { AppBar } from 'pubsweet-components-faraday/src/components'
 const App = ({ children, currentUser, journal }) => (
   <Root>
     <AppBar brand={journal.metadata.name} user={currentUser} />
-    {/* <AppBar
-      brandLink="/"
-      brandName={journal.metadata.name}
-      loginLink="/login"
-      logo={journal.metadata.logo}
-      logoutLink="/logout"
-      userName={currentUser ? currentUser.username : null}
-    /> */}
-
     <MainContainer>{children}</MainContainer>
   </Root>
 )
@@ -28,7 +19,7 @@ const Root = styled.div`
 
 const MainContainer = styled.div`
   padding: 8px;
-  margin-top: 50px;
+  margin-top: 20px;
 `
 
 export default compose(

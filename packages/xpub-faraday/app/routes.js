@@ -14,7 +14,10 @@ import { Wizard } from 'pubsweet-component-wizard/src/components'
 import ManuscriptPage from 'pubsweet-component-xpub-manuscript/src/components/ManuscriptPage'
 import ConfirmationPage from 'pubsweet-components-faraday/src/components/UIComponents/ConfirmationPage'
 import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/NotFound'
-import AdminPage from 'pubsweet-components-faraday/src/components/Admin'
+import {
+  AdminDashboard,
+  AdminUsers,
+} from 'pubsweet-components-faraday/src/components/Admin'
 import AddEditUser from 'pubsweet-components-faraday/src/components/Admin/AddEditUser'
 
 import FaradayApp from './FaradayApp'
@@ -30,7 +33,8 @@ const Routes = () => (
         exact
         path="/confirmation-page"
       />
-      <PrivateRoute component={AdminPage} exact path="/admin" />
+      <PrivateRoute component={AdminDashboard} exact path="/admin" />
+      <PrivateRoute component={AdminUsers} exact path="/admin/users" />
       <PrivateRoute component={AddEditUser} exact path="/admin/users/add" />
       <PrivateRoute
         component={AddEditUser}

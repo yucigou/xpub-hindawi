@@ -4,102 +4,6 @@ import { Icon, Menu } from '@pubsweet/ui'
 
 import { Pagination } from './'
 
-const AddButton = styled.button`
-  align-items: center;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  font-family: Helvetica;
-  font-size: 12px;
-  text-align: left;
-  color: #667080;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-`
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  & span {
-    font-family: Helvetica;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: left;
-    color: #667080;
-  }
-`
-
-const SubHeader = styled.div`
-  align-items: center;
-  border-bottom: 1px solid #667080;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 20px;
-  padding-bottom: 10px;
-
-  > div:first-child {
-    display: flex;
-    align-items: center;
-  }
-
-  span {
-    font-family: Helvetica;
-    font-size: 14px;
-    text-align: left;
-    color: #667080;
-  }
-`
-
-const Table = styled.table`
-  border-spacing: 0;
-  border-collapse: collapse;
-  margin-top: 10px;
-  width: 100vw;
-
-  & thead tr {
-    height: 40px;
-    border-bottom: 1px solid #667080;
-    font-family: Helvetica;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: left;
-    color: #667080;
-  }
-`
-
-const Row = styled.tr`
-  border-bottom: 1px solid #667080;
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 14px;
-  height: 40px;
-  text-align: left;
-`
-
-const Status = styled.td`
-  & span {
-    border: solid 1px #667080;
-    text-transform: uppercase;
-    font-family: Helvetica;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: left;
-    color: #667080;
-    padding: 2px 10px;
-  }
-`
-
-const Input = styled.input`
-  height: 20px;
-  width: 20px;
-`
-
 const TableRow = ({ toggleUser, selected, email, username, type }) => (
   <Row>
     <td>
@@ -196,9 +100,98 @@ const Admin = ({
 
 export default Admin
 
-const Root = styled.div`
+const AddButton = styled.button`
+  align-items: center;
+  border: none;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
-  margin: auto;
-  max-width: 60em;
+  font-family: Helvetica;
+  font-size: 12px;
+  text-align: left;
+  color: #667080;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+`
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & span {
+    font-family: Helvetica;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+    color: #667080;
+  }
+`
+
+const SubHeader = styled.div`
+  align-items: center;
+  border-bottom: 1px solid #667080;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-bottom: 10px;
+
+  > div:first-child {
+    display: flex;
+    align-items: center;
+  }
+
+  span {
+    font-family: Helvetica;
+    font-size: 14px;
+    text-align: left;
+    color: #667080;
+  }
+`
+
+const Table = styled.table`
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-top: 10px;
+  width: 100vw;
+
+  & thead tr {
+    height: 40px;
+    border-bottom: 1px solid #667080;
+    font-family: Helvetica;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    color: #667080;
+  }
+`
+
+const Row = styled.tr`
+  border-bottom: 1px solid #667080;
+  color: #667080;
+  font-family: Helvetica;
+  font-size: 14px;
+  height: 40px;
+  text-align: left;
+`
+
+const Status = styled.td`
+  & span {
+    border: solid 1px #667080;
+    text-transform: uppercase;
+    font-family: Helvetica;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    color: #667080;
+    padding: 2px 10px;
+  }
+`
+
+const Input = styled.input`
+  height: 20px;
+  width: 20px;
 `
