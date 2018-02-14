@@ -76,4 +76,6 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   margin: 10px 0;
+  align-items: center;
+  justify-content: space-evenly;
 `

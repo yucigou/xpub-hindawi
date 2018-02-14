@@ -194,10 +194,3 @@ const Admin = ({
 )
 
 export default Admin
-
-const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  max-width: 60em;
-`

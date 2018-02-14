@@ -18,6 +18,7 @@ import ConfirmationPage from 'pubsweet-components-faraday/src/components/UICompo
 import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/NotFound'
 import AdminPage from 'pubsweet-components-faraday/src/components/Admin'
 import AddEditUser from 'pubsweet-components-faraday/src/components/Admin/AddEditUser'
+import SignUpInvitationPage from 'pubsweet-components-faraday/src/components/SignUp/SignUpInvitationPage'
 
 const Routes = () => (
   <App>
@@ -38,6 +39,7 @@ const Routes = () => (
         path="/admin/users/edit/:userId"
       />
       <PrivateRoute component={LogoutPage} exact path="/logout" />
+      <PrivateRoute component={SignUpInvitationPage} exact path="/invite" />
       <PrivateRoute
         component={Wizard}
         exact

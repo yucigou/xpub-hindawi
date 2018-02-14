@@ -63,7 +63,7 @@ module.exports = {
   'admin-reset-password': {
     url:
       process.env.PUBSWEET_ADMIN_PASSWORD_RESET_URL ||
-      'http://localhost:3000/admin/password-reset',
+      'http://localhost:3000/invite',
   },
   publicKeys: [
     'pubsweet-client',
