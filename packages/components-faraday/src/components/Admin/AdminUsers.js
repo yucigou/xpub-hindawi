@@ -1,6 +1,12 @@
 import React from 'react'
+import { get } from 'lodash'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Icon, Menu } from '@pubsweet/ui'
+import { actions } from 'pubsweet-client'
+import { ConnectPage } from 'xpub-connect'
+import { withRouter } from 'react-router-dom'
+import { compose, withState, withHandlers } from 'recompose'
 
 import { Pagination } from './'
 
@@ -20,7 +26,7 @@ const TableRow = ({ toggleUser, selected, email, username, type }) => (
   </Row>
 )
 
-const Admin = ({
+const Users = ({
   users,
   toggleUser,
   toggleAllUsers,
@@ -98,8 +104,34 @@ const Admin = ({
   </div>
 )
 
-export default Admin
+export default compose(
+  ConnectPage(() => [actions.getUsers()]),
+  withRouter,
+  connect(state => ({ currentUsers: get(state, 'users.users') })),
+  withState('users', 'setUsers', props =>
+    props.currentUsers.map(u => ({ ...u, selected: false })),
+  ),
+  withState('itemsPerPage', 'setItemsPerPage', 50),
+  withState('page', 'setPage', 0),
+  withHandlers({
+    incrementPage: ({ setPage }) => () => {
+      setPage(p => p + 1)
+    },
+    decrementPage: ({ setPage }) => () => {
+      setPage(p => (p > 0 ? p - 1 : p))
+    },
+    toggleUser: ({ setUsers }) => user => () => {
+      setUsers(prev =>
+        prev.map(u => (u.id === user.id ? { ...u, selected: !u.selected } : u)),
+      )
+    },
+    toggleAllUsers: ({ setUsers }) => () => {
+      setUsers(users => users.map(u => ({ ...u, selected: !u.selected })))
+    },
+  }),
+)(Users)
 
+// #region styled-components
 const AddButton = styled.button`
   align-items: center;
   border: none;
@@ -195,3 +227,4 @@ const Input = styled.input`
   height: 20px;
   width: 20px;
 `
+// #endregion
