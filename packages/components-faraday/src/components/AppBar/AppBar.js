@@ -1,5 +1,6 @@
 import React from 'react'
 import { Icon } from '@pubsweet/ui'
+import { get } from 'lodash'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { withState, withHandlers, compose } from 'recompose'
@@ -13,7 +14,9 @@ const AppBar = ({ expanded, toggleMenu, brand, user, goTo }) => (
       <User>
         <div onClick={toggleMenu}>
           <Icon color="#667080">user</Icon>
-          <span>{user.username}</span>
+          <span>
+            {get(user, 'firstName') || get(user, 'username') || 'User'}
+          </span>
           <Icon color="#667080">chevron-down</Icon>
         </div>
         {expanded && (
@@ -22,11 +25,12 @@ const AppBar = ({ expanded, toggleMenu, brand, user, goTo }) => (
             <DropdownOption onClick={goTo('admin')}>
               Admin dashboard
             </DropdownOption>
-            <DropdownOption>Logout</DropdownOption>
+            <DropdownOption onClick={goTo('/logout')}>Logout</DropdownOption>
           </Dropdown>
         )}
       </User>
     )}
+    {expanded && <ToggleOverlay onClick={toggleMenu} />}
   </Root>
 )
 
@@ -87,6 +91,15 @@ const DropdownOption = styled.div`
   }
 `
 
+const ToggleOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+`
+
 export default compose(
   withRouter,
   withState('expanded', 'setExpanded', false),
@@ -95,8 +108,8 @@ export default compose(
       setExpanded(v => !v)
     },
     goTo: ({ setExpanded, history }) => path => () => {
-      history.push(path)
       setExpanded(v => false)
+      history.push(path)
     },
   }),
 )(AppBar)
