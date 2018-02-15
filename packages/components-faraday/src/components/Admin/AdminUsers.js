@@ -10,18 +10,27 @@ import { compose, withState, withHandlers } from 'recompose'
 
 import { Pagination } from './'
 
-const TableRow = ({ toggleUser, selected, email, username, type }) => (
+const TableRow = ({
+  toggleUser,
+  selected,
+  email,
+  roles,
+  username,
+  firstName = '',
+  lastName = '',
+  affiliation,
+  isConfirmed,
+}) => (
   <Row>
     <td>
       <Input checked={selected} onClick={toggleUser} type="checkbox" />
     </td>
     <td>{email}</td>
-    <td>{username}</td>
-    <td>affiliation here</td>
-    <td>country here</td>
-    <td>{type}</td>
+    <td>{`${firstName} ${lastName}`}</td>
+    <td>{affiliation}</td>
+    <td>{roles && roles.map(r => <div key={r}>{r}</div>)}</td>
     <Status>
-      <span>status</span>
+      <span>{isConfirmed ? 'Confirmed' : 'Invited'}</span>
     </Status>
   </Row>
 )
@@ -90,7 +99,6 @@ const Users = ({
           <td>Email</td>
           <td>Full name</td>
           <td>Affiliation</td>
-          <td>Country</td>
           <td>Roles</td>
           <td>Status</td>
         </tr>
