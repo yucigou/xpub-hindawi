@@ -4,6 +4,7 @@ const uuid = require('uuid')
 const crypto = require('crypto')
 const mailService = require('pubsweet-component-mail-service')
 const get = require('lodash/get')
+const pick = require('lodash/pick')
 
 const Invite = app => {
   app.use(bodyParser.json())
@@ -11,7 +12,7 @@ const Invite = app => {
     session: false,
   })
   app.post('/api/users/invite/:collectionId?', authBearer, async (req, res) => {
-    const { email, role } = req.body
+    const { email, role, firstName, lastName, affiliation, title } = req.body
     if (!checkForUndefinedParams(email, role)) {
       res.status(400).json({ error: 'Email and role are required' })
       logger.error('some parameters are missing')
@@ -87,12 +88,16 @@ const Invite = app => {
       }
 
       const userBody = {
-        username: uuid.v4().slice(0, 7),
+        username: uuid.v4().slice(0, 8),
         email,
         password: uuid.v4(),
         roles: [role],
         passwordResetToken: crypto.randomBytes(32).toString('hex'),
         isConfirmed: false,
+        firstName,
+        lastName,
+        affiliation,
+        title,
       }
       let newUser = new app.locals.models.User(userBody)
       newUser = await newUser.save()
@@ -143,6 +148,40 @@ const Invite = app => {
       res.status(200).json(newUser)
     }
   })
+  app.get('/api/users/invite', async (req, res) => {
+    const { email, token } = req.query
+    if (!checkForUndefinedParams(email, token)) {
+      res.status(400).json({ error: 'missing required params' })
+      return
+    }
+
+    try {
+      const user = await app.locals.models.User.findByEmail(email)
+      if (user) {
+        if (token !== user.passwordResetToken) {
+          res.status(400).json({ error: 'invalid request' })
+          logger.error(
+            `invite pw reset tokens do not match: REQ ${token} vs. DB ${
+              user.passwordResetToken
+            }`,
+          )
+          return
+        }
+
+        const resBody = pick(user, [
+          'firstName',
+          'lastName',
+          'affiliation',
+          'title',
+        ])
+
+        res.status(200).json(resBody)
+      }
+    } catch (e) {
+      res.status(404).json({ error: 'user not found' })
+      logger.error('invite pw reset on non-existing user')
+    }
+  })
   app.post(
     '/api/users/invite/password/reset',
     bodyParser.json(),
@@ -153,16 +192,31 @@ const Invite = app => {
         email,
         firstName,
         lastName,
-        middleName,
         affiliation,
-        position,
         title,
       } = req.body
 
       if (
-        !checkForUndefinedParams(token, password, email, firstName, lastName)
+        !checkForUndefinedParams(
+          token,
+          password,
+          email,
+          firstName,
+          lastName,
+          affiliation,
+        )
       ) {
         res.status(400).json({ error: 'missing required params' })
+        return
+      }
+
+      if (password.length < 7) {
+        res
+          .status(400)
+          .json({ error: 'password needs to be at least 7 characters long' })
+        logger.error(
+          `the user added an invalid password length: ${password.length}`,
+        )
         return
       }
 
@@ -170,9 +224,7 @@ const Invite = app => {
         password,
         firstName,
         lastName,
-        middleName,
         affiliation,
-        position,
         title,
         isConfirmed: true,
       }

@@ -91,9 +91,7 @@ module.exports = {
     isConfirmed: Joi.boolean(),
     firstName: Joi.string().allow(''),
     lastName: Joi.string().allow(''),
-    middleName: Joi.string().allow(''),
     affiliation: Joi.string().allow(''),
-    position: Joi.string().allow(''),
     title: Joi.string().allow(''),
   },
   team: {
