@@ -82,7 +82,7 @@ const Invite = app => {
       }
     } catch (e) {
       if (e.name !== 'NotFoundError') {
-        res.status(500).json({ error: e })
+        res.status(500).json({ error: e.details[0].message })
         logger.error(e)
         return
       }
@@ -155,32 +155,26 @@ const Invite = app => {
       return
     }
 
-    try {
-      const user = await app.locals.models.User.findByEmail(email)
-      if (user) {
-        if (token !== user.passwordResetToken) {
-          res.status(400).json({ error: 'invalid request' })
-          logger.error(
-            `invite pw reset tokens do not match: REQ ${token} vs. DB ${
-              user.passwordResetToken
-            }`,
-          )
-          return
-        }
-
-        const resBody = pick(user, [
-          'firstName',
-          'lastName',
-          'affiliation',
-          'title',
-        ])
-
-        res.status(200).json(resBody)
-      }
-    } catch (e) {
-      res.status(404).json({ error: 'user not found' })
-      logger.error('invite pw reset on non-existing user')
+    const validateResponse = await validateEmailAndToken(
+      email,
+      token,
+      app.locals.models.User,
+    )
+    if (validateResponse.success === false) {
+      res
+        .status(validateResponse.status)
+        .json({ error: validateResponse.message })
+      return
     }
+
+    const resBody = pick(validateResponse.user, [
+      'firstName',
+      'lastName',
+      'affiliation',
+      'title',
+    ])
+
+    res.status(200).json(resBody)
   })
   app.post(
     '/api/users/invite/password/reset',
@@ -229,36 +223,27 @@ const Invite = app => {
         isConfirmed: true,
       }
 
-      try {
-        const user = await app.locals.models.User.findByEmail(email)
-        if (user) {
-          if (token !== user.passwordResetToken) {
-            res.status(400).json({ error: 'invalid request' })
-            logger.error(
-              `invite pw reset tokens do not match: REQ ${token} vs. DB ${
-                user.passwordResetToken
-              }`,
-            )
-            return
-          }
-
-          let newUser = Object.assign(user, updateFields, user)
-          delete newUser.passwordResetToken
-
-          newUser = await newUser.save()
-          res.status(200).json(newUser)
-        }
-      } catch (e) {
-        if (e.name === 'NotFoundError') {
-          res.status(404).json({ error: 'user not found' })
-          logger.error('invite pw reset on non-existing user')
-        } else if (e.name === 'ValidationError') {
-          res.status(400).json({ error: e.details[0].message })
-          logger.error('invite pw reset validation error')
-        }
-        res.status(400).json({ error: e })
-        logger.error(e)
+      const validateResponse = await validateEmailAndToken(
+        email,
+        token,
+        app.locals.models.User,
+      )
+      if (validateResponse.success === false) {
+        res
+          .status(validateResponse.status)
+          .json({ error: validateResponse.message })
+        return
       }
+
+      let newUser = Object.assign(
+        validateResponse.user,
+        updateFields,
+        validateResponse.user,
+      )
+      delete newUser.passwordResetToken
+
+      newUser = await newUser.save()
+      res.status(200).json(newUser)
     },
   )
 }
@@ -269,6 +254,49 @@ const checkForUndefinedParams = (...params) => {
   }
 
   return true
+}
+
+const validateEmailAndToken = async (email, token, userModel) => {
+  try {
+    const user = await userModel.findByEmail(email)
+    if (user) {
+      if (token !== user.passwordResetToken) {
+        logger.error(
+          `invite pw reset tokens do not match: REQ ${token} vs. DB ${
+            user.passwordResetToken
+          }`,
+        )
+        return {
+          success: false,
+          status: 400,
+          message: 'invalid request',
+        }
+      }
+      return { success: true, user }
+    }
+  } catch (e) {
+    if (e.name === 'NotFoundError') {
+      logger.error('invite pw reset on non-existing user')
+      return {
+        success: false,
+        status: 404,
+        message: 'user not found',
+      }
+    } else if (e.name === 'ValidationError') {
+      logger.error('invite pw reset validation error')
+      return {
+        success: false,
+        status: 400,
+        message: e.details[0].message,
+      }
+    }
+    logger.error(e)
+    return {
+      success: false,
+      status: 500,
+      message: e.details[0].message,
+    }
+  }
 }
 
 module.exports = Invite
