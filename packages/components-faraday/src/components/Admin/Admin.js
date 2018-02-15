@@ -33,7 +33,7 @@ const Admin = ({
   <div>
     <Header>
       <span>Users</span>
-      <AddButton onClick={() => history.push('/')}>
+      <AddButton onClick={() => history.push('/admin/urers/add')}>
         <Icon color="#667080">plus-circle</Icon>
         Add User
       </AddButton>

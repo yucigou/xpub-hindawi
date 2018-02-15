@@ -1,16 +1,45 @@
+import { get } from 'lodash'
 import { withJournal } from 'xpub-journal'
+import { login } from 'pubsweet-component-xpub-authentication/src/redux/login'
+import { SubmissionError } from 'redux-form'
 import { create } from 'pubsweet-client/src/helpers/api'
 import { compose, withState, withProps, withHandlers } from 'recompose'
 
 import SignUpInvitation from './SignUpInvitationForm'
 
+const loginUser = (dispatch, values, history) =>
+  dispatch(login(values))
+    .then(() => {
+      history.push('/')
+    })
+    .catch(error => {
+      const err = get(error, 'response')
+      if (err) {
+        const errorMessage = get(JSON.parse(err), 'error')
+        throw new SubmissionError({
+          password: errorMessage || 'Something went wrong',
+        })
+      }
+    })
+
 const confirmUser = (email, token) => (values, dispatch, { history }) => {
   const request = { ...values, email, token }
   if (values) {
-    create('/users/invite/password/reset', request).then(
-      r => history.push('/'),
-      // err => console.log(err),
-    )
+    return create('/users/invite/password/reset', request)
+      .then(r => {
+        const { username } = r
+        const { password } = values
+        loginUser(dispatch, { username, password }, history)
+      })
+      .catch(error => {
+        const err = get(error, 'response')
+        if (err) {
+          const errorMessage = get(JSON.parse(err), 'error')
+          throw new SubmissionError({
+            password: errorMessage || 'Something went wrong',
+          })
+        }
+      })
   }
 }
 
