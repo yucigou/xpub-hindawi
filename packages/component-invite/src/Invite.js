@@ -5,7 +5,9 @@ const crypto = require('crypto')
 const mailService = require('pubsweet-component-mail-service')
 const get = require('lodash/get')
 const pick = require('lodash/pick')
+const config = require('config')
 
+const configRoles = config.get('roles')
 const Invite = app => {
   app.use(bodyParser.json())
   const authBearer = app.locals.passport.authenticate('bearer', {
@@ -19,42 +21,33 @@ const Invite = app => {
       return
     }
 
+    const hasInviteRight = existingRole =>
+      configRoles.inviteRights[existingRole].includes(role)
     const collectionId = get(req, 'params.collectionId')
     const reqUser = await app.locals.models.User.find(req.user)
     let collection
-    if (collectionId) {
+    if (collectionId && reqUser.roles !== undefined) {
+      if (!configRoles.collection.includes(role)) {
+        res
+          .status(400)
+          .json({ error: `Role ${role} cannot be set on collections` })
+        logger.error(`invitation has been attempted with invalid role: ${role}`)
+        return
+      }
+
+      if (!reqUser.roles.some(hasInviteRight)) {
+        res.status(403).json({
+          error: `${reqUser.roles} cannot invite a ${role}`,
+        })
+        logger.error(`incorrect role when inviting a user`)
+        return
+      }
       try {
-        if (role !== 'reviewer' && role !== 'handlingEditor') {
-          res.status(400).json({ error: 'Role does not exist for collections' })
-          logger.error(
-            `invitation has been attempted with invalid role: ${role}`,
-          )
-          return
-        }
-        if (reqUser.roles === undefined) {
-          res
-            .status(403)
-            .json({ error: 'Only HE or EiC can invite users to collection' })
-          logger.error(`request user does not have any defined roles`)
-          return
-        }
-        if (role === 'reviewer' && !reqUser.roles.includes('handlingEditor')) {
-          res.status(403).json({ error: 'Only HE can invite reviewers' })
-          logger.error(`incorrect role when inviting a reviewer`)
-          return
-        } else if (
-          role === 'handlingEditor' &&
-          !reqUser.roles.includes('editorInChief')
-        ) {
-          res.status(403).json({ error: 'Only EiC can invite HE' })
-          logger.error(`incorrect role when inviting a handling editor`)
-          return
-        }
         collection = await app.locals.models.Collection.find(collectionId)
       } catch (e) {
         if (e.name === 'NotFoundError') {
           res.status(404).json({ error: 'Collection not found' })
-          logger.error(`invalid collection id when inviting ${role}`)
+          logger.error(`invalid collection id when inviting a ${role}`)
           return
         }
 
@@ -62,13 +55,23 @@ const Invite = app => {
         logger.error(e)
         return
       }
-    } else if (role !== 'editorInChief') {
-      res.status(400).json({ error: 'Collection id is required' })
-      logger.error('missing collection id when trying to invite reviewer/HE')
+    } else if (reqUser.admin === true) {
+      reqUser.roles = []
+      reqUser.roles.push('admin') // this should be moved in pubsweet server
+    } else {
+      res.status(403).json({
+        error: `${reqUser.roles ||
+          'undefined roles'} cannot invite a ${role} without a collection`,
+      })
+      logger.error(`request user does not have any defined roles`)
       return
-    } else if (reqUser.admin !== true) {
-      res.status(403).json({ error: 'Only an admin can invite EiC' })
-      logger.error('non-admin user tried to invite an EiC')
+    }
+
+    if (!reqUser.roles.some(hasInviteRight)) {
+      res.status(403).json({
+        error: `${reqUser.roles} cannot invite a ${role}`,
+      })
+      logger.error(`incorrect role when inviting a ${role}`)
       return
     }
 
@@ -98,6 +101,7 @@ const Invite = app => {
         lastName,
         affiliation,
         title,
+        admin: role === 'admin',
       }
       let newUser = new app.locals.models.User(userBody)
       newUser = await newUser.save()
@@ -180,30 +184,12 @@ const Invite = app => {
     '/api/users/invite/password/reset',
     bodyParser.json(),
     async (req, res) => {
-      const {
-        token,
-        password,
-        email,
-        firstName,
-        lastName,
-        affiliation,
-        title,
-      } = req.body
-
-      if (
-        !checkForUndefinedParams(
-          token,
-          password,
-          email,
-          firstName,
-          lastName,
-          affiliation,
-        )
-      ) {
+      if (!checkForUndefinedParams(req.body)) {
         res.status(400).json({ error: 'missing required params' })
         return
       }
 
+      const { password } = req.body
       if (password.length < 7) {
         res
           .status(400)
@@ -216,22 +202,27 @@ const Invite = app => {
 
       const updateFields = {
         password,
-        firstName,
-        lastName,
-        affiliation,
-        title,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        affiliation: req.body.affiliation,
+        title: req.body.title,
         isConfirmed: true,
       }
 
       const validateResponse = await validateEmailAndToken(
-        email,
-        token,
+        req.body.email,
+        req.body.token,
         app.locals.models.User,
       )
       if (validateResponse.success === false) {
         res
           .status(validateResponse.status)
           .json({ error: validateResponse.message })
+        return
+      }
+
+      if (validateResponse.user.isConfirmed) {
+        res.status(400).json({ error: 'User is already confirmed' })
         return
       }
 
