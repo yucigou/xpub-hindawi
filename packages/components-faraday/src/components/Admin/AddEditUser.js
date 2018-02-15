@@ -1,7 +1,7 @@
 import React from 'react'
 import { get, map } from 'lodash'
 import { connect } from 'react-redux'
-import { reduxForm } from 'redux-form'
+import { reduxForm, SubmissionError } from 'redux-form'
 import styled from 'styled-components'
 import { actions } from 'pubsweet-client'
 import { create } from 'pubsweet-client/src/helpers/api'
@@ -17,12 +17,19 @@ import EditUserForm from './EditUserForm'
 const getRoleOptions = journal =>
   map(journal.roles, (value, key) => ({ label: value, value: key }))
 
-const onSubmit = (values, dispatch, { isEdit }) => {
+const onSubmit = (values, dispatch, { isEdit, history }) => {
   if (!isEdit) {
-    create('/users/invite', values).then(
-      r => r,
-      // err => console.log(err),
-    )
+    return create('/users/invite', values)
+      .then(r => history.push('/admin/users'))
+      .catch(error => {
+        const err = get(error, 'response')
+        if (err) {
+          const errorMessage = get(JSON.parse(err), 'error')
+          throw new SubmissionError({
+            role: errorMessage || 'Something went wrong',
+          })
+        }
+      })
   }
 }
 
