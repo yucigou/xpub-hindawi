@@ -4,28 +4,51 @@ import { ValidatedField, TextField, Menu } from '@pubsweet/ui'
 
 import { required } from 'xpub-validators'
 
-const AddUserForm = ({ roles }) => {
-  const roleOptions = roles.filter(r => r.value === 'editorInChief')
+const AddUserForm = ({ roles, journal }) => {
+  const roleOptions = roles.filter(r =>
+    ['editorInChief', 'author', 'admin'].includes(r.value),
+  )
   return (
     <div>
       <h3>Add user</h3>
       <Row>
         <RowItem>
-          <Label> Email</Label>
+          <Label> Email*</Label>
           <ValidatedField
             component={TextField}
             name="email"
             validate={[required]}
           />
         </RowItem>
-      </Row>
-      <Row>
         <RowItem>
-          <Label> Role</Label>
+          <Label> Role*</Label>
           <ValidatedField
             component={input => <Menu {...input} options={roleOptions} />}
             name="role"
             validate={[required]}
+          />
+        </RowItem>
+      </Row>
+      <Row>
+        <RowItem>
+          <Label> First name </Label>
+          <ValidatedField component={TextField} name="firstName" />
+        </RowItem>
+        <RowItem>
+          <Label> Last name </Label>
+          <ValidatedField component={TextField} name="lastName" />
+        </RowItem>
+      </Row>
+      <Row>
+        <RowItem>
+          <Label> Affiliation </Label>
+          <ValidatedField component={TextField} name="affiliation" />
+        </RowItem>
+        <RowItem>
+          <Label> Title </Label>
+          <ValidatedField
+            component={input => <Menu {...input} options={journal.title} />}
+            name="title"
           />
         </RowItem>
       </Row>

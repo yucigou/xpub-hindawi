@@ -4,11 +4,11 @@ import { reduxForm } from 'redux-form'
 import { required } from 'xpub-validators'
 import { Button, ValidatedField, TextField, Menu } from '@pubsweet/ui'
 
-const Step0 = ({ journal, handleSubmit }) => (
+const Step0 = ({ journal, handleSubmit, initialValues }) => (
   <FormContainer onSubmit={handleSubmit}>
     <Row>
       <RowItem>
-        <Label> First name </Label>
+        <Label> First name* </Label>
         <ValidatedField
           component={TextField}
           name="firstName"
@@ -16,27 +16,17 @@ const Step0 = ({ journal, handleSubmit }) => (
         />
       </RowItem>
       <RowItem>
-        <Label> Affiliation </Label>
-        <ValidatedField component={TextField} name="affiliation" />
-      </RowItem>
-    </Row>
-    <Row>
-      <RowItem>
-        <Label> Middle name </Label>
-        <ValidatedField component={TextField} name="middleName" />
-      </RowItem>
-      <RowItem>
-        <Label> Position </Label>
+        <Label> Affiliation* </Label>
         <ValidatedField
           component={TextField}
-          name="position"
+          name="affiliation"
           validate={[required]}
         />
       </RowItem>
     </Row>
     <Row>
       <RowItem>
-        <Label> Last name </Label>
+        <Label> Last name* </Label>
         <ValidatedField
           component={TextField}
           name="lastName"
@@ -44,7 +34,7 @@ const Step0 = ({ journal, handleSubmit }) => (
         />
       </RowItem>
       <RowItem>
-        <Label> Title </Label>
+        <Label> Title* </Label>
         <ValidatedField
           component={input => <Menu {...input} options={journal.title} />}
           name="title"
@@ -63,6 +53,7 @@ const Step0 = ({ journal, handleSubmit }) => (
 export default reduxForm({
   form: 'signUpInvitation',
   destroyOnUnmount: false,
+  enableReinitialize: true,
   forceUnregisterOnUnmount: true,
 })(Step0)
 

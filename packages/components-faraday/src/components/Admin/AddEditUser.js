@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { reduxForm, SubmissionError } from 'redux-form'
 import styled from 'styled-components'
 import { actions } from 'pubsweet-client'
-import { create } from 'pubsweet-client/src/helpers/api'
+import { create, update } from 'pubsweet-client/src/helpers/api'
 import { withJournal } from 'xpub-journal'
 import { ConnectPage } from 'xpub-connect'
 import { selectUser } from 'xpub-selectors'
@@ -26,20 +26,38 @@ const onSubmit = (values, dispatch, { isEdit, history }) => {
         if (err) {
           const errorMessage = get(JSON.parse(err), 'error')
           throw new SubmissionError({
-            role: errorMessage || 'Something went wrong',
+            email: errorMessage || 'Something went wrong',
           })
         }
       })
   }
+
+  return update(`/users/${values.id}`, values)
+    .then(() => {
+      history.push('/admin/users')
+    })
+    .catch(error => {
+      const err = get(error, 'response')
+      if (err) {
+        const errorMessage = get(JSON.parse(err), 'error')
+        throw new SubmissionError({
+          roles: errorMessage || 'Something went wrong',
+        })
+      }
+    })
 }
 
 const AddEditUser = ({ handleSubmit, journal, isEdit, user }) => (
   <Root>
     <FormContainer onSubmit={handleSubmit}>
       {isEdit ? (
-        <EditUserForm roles={getRoleOptions(journal)} user={user} />
+        <EditUserForm
+          journal={journal}
+          roles={getRoleOptions(journal)}
+          user={user}
+        />
       ) : (
-        <AddUserForm roles={getRoleOptions(journal)} />
+        <AddUserForm journal={journal} roles={getRoleOptions(journal)} />
       )}
       <Row>
         <Button primary type="submit">
