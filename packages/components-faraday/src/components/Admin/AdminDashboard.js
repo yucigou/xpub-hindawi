@@ -1,7 +1,6 @@
 import React from 'react'
 import { Icon } from '@pubsweet/ui'
 import styled from 'styled-components'
-import { withRouter } from 'react-router-dom'
 
 const AdminDashboard = ({ history }) => (
   <Root>
@@ -29,6 +28,9 @@ const AdminDashboard = ({ history }) => (
   </Root>
 )
 
+export default AdminDashboard
+
+// #region Styled components
 const Root = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,5 +74,4 @@ const Card = styled.div`
     text-align: center;
   }
 `
-
-export default withRouter(AdminDashboard)
+// #endregion
