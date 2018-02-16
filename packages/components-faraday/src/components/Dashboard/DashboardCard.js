@@ -75,9 +75,12 @@ const DashboardCard = ({
             <div className={classes.column2}>
               <div>{author}</div>
               {abstract && (
-                <a href="#" onClick={setModal(abstract)}>
-                  view
-                </a>
+                <ViewAbstractContainer onClick={setModal(metadata)}>
+                  <Icon color="#667080" size={18}>
+                    eye
+                  </Icon>
+                  <span>View</span>
+                </ViewAbstractContainer>
               )}
             </div>
           </div>
@@ -108,14 +111,6 @@ const DashboardCard = ({
             </div>
           </div>
         </div>
-      )}
-      {abstract && (
-        <ViewAbstractContainer onClick={setModal(metadata)}>
-          <Icon color="#667080" size={18}>
-            eye
-          </Icon>
-          <span>View Abstract</span>
-        </ViewAbstractContainer>
       )}
     </div>
   )
