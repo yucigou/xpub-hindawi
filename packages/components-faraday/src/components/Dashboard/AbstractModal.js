@@ -77,6 +77,7 @@ const AbstractModal = ({ abstractModal, onClose }) => {
   const isOpen = !!abstractModal
   return (
     <Modal
+      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={onClose}
       shouldCloseOnOverlayClick
