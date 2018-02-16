@@ -11,6 +11,7 @@ const SignUpInvitation = ({
   step,
   nextStep,
   submitConfirmation,
+  initialValues,
 }) => (
   <Root>
     <Title>Add New Account Details</Title>
@@ -19,8 +20,20 @@ const SignUpInvitation = ({
       your password.
     </Subtitle>
     <Email>{email}</Email>
-    {step === 0 && <Step0 journal={journal} onSubmit={nextStep} />}
-    {step === 1 && <Step1 journal={journal} onSubmit={submitConfirmation} />}
+    {step === 0 && (
+      <Step0
+        initialValues={initialValues}
+        journal={journal}
+        onSubmit={nextStep}
+      />
+    )}
+    {step === 1 && (
+      <Step1
+        initialValues={initialValues}
+        journal={journal}
+        onSubmit={submitConfirmation}
+      />
+    )}
   </Root>
 )
 
