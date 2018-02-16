@@ -68,7 +68,7 @@ export const getFileError = state => state.files.error
 // thunked actions
 export const uploadFile = (file, type, fragmentId) => dispatch => {
   dispatch(uploadRequest(type))
-  return request('/aws', createFileData(file, type, fragmentId)).then(
+  return request('/file', createFileData(file, type, fragmentId)).then(
     r => {
       dispatch(uploadSuccess())
       return r
@@ -82,7 +82,7 @@ export const uploadFile = (file, type, fragmentId) => dispatch => {
 
 export const deleteFile = fileId => dispatch => {
   dispatch(removeRequest())
-  return remove(`/aws/${fileId}`)
+  return remove(`/file/${fileId}`)
     .then(r => {
       dispatch(removeSuccess())
       return r
@@ -90,7 +90,7 @@ export const deleteFile = fileId => dispatch => {
     .catch(err => dispatch(removeFailure(err.message)))
 }
 
-export const getSignedUrl = fileId => dispatch => get(`/aws/${fileId}`)
+export const getSignedUrl = fileId => dispatch => get(`/file/${fileId}`)
 
 // reducer
 export default (state = initialState, action) => {

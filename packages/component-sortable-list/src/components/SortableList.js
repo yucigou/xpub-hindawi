@@ -89,7 +89,7 @@ const DecoratedItem = compose(
 )(Item)
 
 const SortableList = ({
-  items,
+  items = [],
   itemKey = 'id',
   moveItem,
   listItem,

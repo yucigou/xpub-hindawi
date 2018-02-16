@@ -39,14 +39,14 @@ const Root = styled.div`
   position: relative;
 `
 
-const Title = styled.span`
+const Title = styled.div`
   font-family: Helvetica;
   font-size: 18px;
   text-align: left;
   color: #667080;
 `
 
-const Subtitle = styled.span`
+const Subtitle = styled.div`
   color: #667080;
   font-family: Helvetica;
   font-size: 14px;
