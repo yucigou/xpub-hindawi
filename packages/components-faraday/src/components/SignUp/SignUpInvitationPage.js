@@ -68,9 +68,13 @@ export default compose(
     componentDidMount() {
       const { email, token } = this.props
       const encodedUri = `?email=${encodeURIComponent(email)}&token=${token}`
-      request(`/users/invite${encodedUri}`).then(res => {
-        this.setState({ initialValues: res })
-      })
+      request(`/users/invite${encodedUri}`)
+        .then(res => {
+          this.setState({ initialValues: res })
+        })
+        .catch(err => {
+          this.setState({ error: err.response })
+        })
     },
   }),
 )(SignUpInvitation)

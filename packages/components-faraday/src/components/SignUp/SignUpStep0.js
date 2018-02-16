@@ -1,54 +1,58 @@
 import React from 'react'
 import styled from 'styled-components'
 import { reduxForm } from 'redux-form'
+import { isUndefined } from 'lodash'
 import { required } from 'xpub-validators'
 import { Button, ValidatedField, TextField, Menu } from '@pubsweet/ui'
 
-const Step0 = ({ journal, handleSubmit, initialValues }) => (
-  <FormContainer onSubmit={handleSubmit}>
-    <Row>
-      <RowItem>
-        <Label> First name* </Label>
-        <ValidatedField
-          component={TextField}
-          name="firstName"
-          validate={[required]}
-        />
-      </RowItem>
-      <RowItem>
-        <Label> Affiliation* </Label>
-        <ValidatedField
-          component={TextField}
-          name="affiliation"
-          validate={[required]}
-        />
-      </RowItem>
-    </Row>
-    <Row>
-      <RowItem>
-        <Label> Last name* </Label>
-        <ValidatedField
-          component={TextField}
-          name="lastName"
-          validate={[required]}
-        />
-      </RowItem>
-      <RowItem>
-        <Label> Title* </Label>
-        <ValidatedField
-          component={input => <Menu {...input} options={journal.title} />}
-          name="title"
-          validate={[required]}
-        />
-      </RowItem>
-    </Row>
-    <Row>
-      <Button primary type="submit">
-        CONFIRM & PROCEED TO SET PASSWORD
-      </Button>
-    </Row>
-  </FormContainer>
-)
+const Step0 = ({ journal, handleSubmit, initialValues }) =>
+  !isUndefined(initialValues) ? (
+    <FormContainer onSubmit={handleSubmit}>
+      <Row>
+        <RowItem>
+          <Label> First name* </Label>
+          <ValidatedField
+            component={TextField}
+            name="firstName"
+            validate={[required]}
+          />
+        </RowItem>
+        <RowItem>
+          <Label> Affiliation* </Label>
+          <ValidatedField
+            component={TextField}
+            name="affiliation"
+            validate={[required]}
+          />
+        </RowItem>
+      </Row>
+      <Row>
+        <RowItem>
+          <Label> Last name* </Label>
+          <ValidatedField
+            component={TextField}
+            name="lastName"
+            validate={[required]}
+          />
+        </RowItem>
+        <RowItem>
+          <Label> Title* </Label>
+          <ValidatedField
+            component={input => <Menu {...input} options={journal.title} />}
+            name="title"
+            validate={[required]}
+          />
+        </RowItem>
+      </Row>
+      <Row>
+        <Button primary type="submit">
+          CONFIRM & PROCEED TO SET PASSWORD
+        </Button>
+      </Row>
+    </FormContainer>
+  ) : (
+    <div>Loading...</div>
+  )
 
 export default reduxForm({
   form: 'signUpInvitation',

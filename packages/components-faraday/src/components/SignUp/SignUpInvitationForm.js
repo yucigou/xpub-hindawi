@@ -12,6 +12,7 @@ const SignUpInvitation = ({
   nextStep,
   submitConfirmation,
   initialValues,
+  error,
 }) => (
   <Root>
     <Title>Add New Account Details</Title>
@@ -20,6 +21,7 @@ const SignUpInvitation = ({
       your password.
     </Subtitle>
     <Email>{email}</Email>
+    {error && <Err>Token expired or Something went wrong.</Err>}
     {step === 0 && (
       <Step0
         initialValues={initialValues}
@@ -67,4 +69,8 @@ const Email = styled.div`
   font-weight: normal;
   text-align: center;
   margin: 10px auto;
+`
+const Err = styled.div`
+  color: red;
+  text-align: center;
 `
