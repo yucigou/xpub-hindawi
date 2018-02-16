@@ -1,10 +1,10 @@
 import React from 'react'
-import { get, isEmpty } from 'lodash'
+import { get } from 'lodash'
 import { Button } from '@pubsweet/ui'
-import { connect } from 'react-redux'
 import { compose, withHandlers } from 'recompose'
 
 import classes from './Dashboard.local.scss'
+import AbstractModal from './AbstractModal'
 import DashboardItems from './DashboardItems'
 import DashboardFilters from './DashboardFilters'
 
@@ -45,25 +45,11 @@ const Dashboard = ({
       list={getItems()}
       listView={listView}
     />
-    {!isEmpty(abstractModal) && (
-      <div className={classes.modal}>
-        <div className={classes.modalContent}>
-          <div
-            className={classes.modalText}
-            dangerouslySetInnerHTML={{ __html: abstractModal }} // eslint-disable-line
-          />
-          <Button onClick={setModal()}>Close</Button>
-        </div>
-      </div>
-    )}
+    <AbstractModal abstractModal={abstractModal} onClose={setModal()} />
   </div>
 )
 
 export default compose(
-  connect(state => ({
-    filters: state.filters.filter,
-    sortOrder: state.filters.sortValue,
-  })),
   withHandlers({
     getItems: ({
       filters,
