@@ -31,6 +31,34 @@ const customStyles = {
   },
 }
 
+const AbstractModal = ({ abstractModal, onClose }) => {
+  const isOpen = !!abstractModal
+  return (
+    <Modal
+      ariaHideApp={false}
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      shouldCloseOnOverlayClick
+      style={customStyles}
+    >
+      <Root>
+        <CloseIcon onClick={onClose}>
+          <Icon color="#667080">x</Icon>
+        </CloseIcon>
+        <Title
+          dangerouslySetInnerHTML={{ __html: get(abstractModal, 'title') }}
+        />
+        <Subtitle>Abstract</Subtitle>
+        <Content
+          dangerouslySetInnerHTML={{ __html: get(abstractModal, 'abstract') }}
+        />
+      </Root>
+    </Modal>
+  )
+}
+
+export default AbstractModal
+
 // #region styled-components
 const Root = styled.div`
   background-color: #fff;
@@ -72,31 +100,3 @@ const CloseIcon = styled.div`
   right: 5px;
 `
 // #endregion
-
-const AbstractModal = ({ abstractModal, onClose }) => {
-  const isOpen = !!abstractModal
-  return (
-    <Modal
-      ariaHideApp={false}
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      shouldCloseOnOverlayClick
-      style={customStyles}
-    >
-      <Root>
-        <CloseIcon onClick={onClose}>
-          <Icon color="#667080">x</Icon>
-        </CloseIcon>
-        <Title
-          dangerouslySetInnerHTML={{ __html: get(abstractModal, 'title') }}
-        />
-        <Subtitle>Abstract</Subtitle>
-        <Content
-          dangerouslySetInnerHTML={{ __html: get(abstractModal, 'abstract') }}
-        />
-      </Root>
-    </Modal>
-  )
-}
-
-export default AbstractModal

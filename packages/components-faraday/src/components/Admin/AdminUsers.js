@@ -59,82 +59,90 @@ const Users = ({
   itemsPerPage,
   history,
   journal,
-}) => (
-  <div>
-    <Header>
-      <BreadCrumbs>
-        <span>Admin Dashboard</span>
-        <span>Users</span>
-      </BreadCrumbs>
-      <AddButton onClick={() => history.push('/admin/users/add')}>
-        <Icon color="#667080">plus-circle</Icon>
-        &nbsp; Add User
-      </AddButton>
-    </Header>
-    <SubHeader>
-      <div>
-        <span>Bulk actions: </span>
-        <Menu
-          onChange={value => value}
-          options={[
-            { value: 'deactivate', label: 'Deactivate' },
-            { value: 'activate', label: 'Activate' },
-          ]}
-          value="activate"
-        />
-
-        <Menu
-          onChange={value => value}
-          options={[
-            { value: 'sort', label: 'SORT' },
-            { value: 'unsort', label: 'UNSORT' },
-          ]}
-          value="sort"
-        />
-
-        <Icon color="#667080" size={24}>
-          search
-        </Icon>
-      </div>
-      <Pagination
-        decrementPage={decrementPage}
-        incrementPage={incrementPage}
-        itemsPerPage={itemsPerPage}
-        page={page}
-      />
-    </SubHeader>
-
-    <Table>
-      <thead>
-        <tr>
-          <td>
-            <Input
-              checked={users.every(u => u.selected)}
-              onClick={toggleAllUsers}
-              type="checkbox"
-            />
-          </td>
-          <td>Email</td>
-          <td>Full name</td>
-          <td>Affiliation</td>
-          <td width="200">Roles</td>
-          <td>Status</td>
-          <td width="50" />
-        </tr>
-      </thead>
-      <tbody>
-        {users.map(u => (
-          <TableRow
-            key={u.id}
-            {...u}
-            roleOptions={journal.roles}
-            toggleUser={toggleUser(u)}
+}) => {
+  const slicedUsers = users.slice(
+    page * itemsPerPage,
+    itemsPerPage * (page + 1),
+  )
+  return (
+    <div>
+      <Header>
+        <BreadCrumbs>
+          <span>Admin Dashboard</span>
+          <span>Users</span>
+        </BreadCrumbs>
+        <AddButton onClick={() => history.push('/admin/users/add')}>
+          <Icon color="#667080">plus-circle</Icon>
+          &nbsp; Add User
+        </AddButton>
+      </Header>
+      <SubHeader>
+        <div>
+          <span>Bulk actions: </span>
+          <Menu
+            onChange={value => value}
+            options={[
+              { value: 'deactivate', label: 'Deactivate' },
+              { value: 'activate', label: 'Activate' },
+            ]}
+            value="activate"
           />
-        ))}
-      </tbody>
-    </Table>
-  </div>
-)
+
+          <Menu
+            onChange={value => value}
+            options={[
+              { value: 'sort', label: 'SORT' },
+              { value: 'unsort', label: 'UNSORT' },
+            ]}
+            value="sort"
+          />
+
+          <Icon color="#667080" size={24}>
+            search
+          </Icon>
+        </div>
+        <Pagination
+          decrementPage={decrementPage}
+          hasMore={itemsPerPage * (page + 1) < users.length}
+          incrementPage={incrementPage}
+          itemsPerPage={itemsPerPage}
+          maxLength={users.length}
+          page={page}
+        />
+      </SubHeader>
+
+      <Table>
+        <thead>
+          <tr>
+            <td>
+              <Input
+                checked={users.every(u => u.selected)}
+                onClick={toggleAllUsers}
+                type="checkbox"
+              />
+            </td>
+            <td>Email</td>
+            <td>Full name</td>
+            <td>Affiliation</td>
+            <td width="200">Roles</td>
+            <td>Status</td>
+            <td width="50" />
+          </tr>
+        </thead>
+        <tbody>
+          {slicedUsers.map(u => (
+            <TableRow
+              key={u.id}
+              {...u}
+              roleOptions={journal.roles}
+              toggleUser={toggleUser(u)}
+            />
+          ))}
+        </tbody>
+      </Table>
+    </div>
+  )
+}
 
 export default compose(
   ConnectPage(() => [actions.getUsers()]),
@@ -144,11 +152,13 @@ export default compose(
   withState('users', 'setUsers', props =>
     props.currentUsers.map(u => ({ ...u, selected: false })),
   ),
-  withState('itemsPerPage', 'setItemsPerPage', 50),
+  withState('itemsPerPage', 'setItemsPerPage', 20),
   withState('page', 'setPage', 0),
   withHandlers({
-    incrementPage: ({ setPage }) => () => {
-      setPage(p => p + 1)
+    incrementPage: ({ setPage, page, itemsPerPage, users }) => () => {
+      if (page * itemsPerPage + itemsPerPage < users.length) {
+        setPage(p => p + 1)
+      }
     },
     decrementPage: ({ setPage }) => () => {
       setPage(p => (p > 0 ? p - 1 : p))
