@@ -17,6 +17,7 @@ import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/No
 import {
   AdminDashboard,
   AdminUsers,
+  AdminRoute,
 } from 'pubsweet-components-faraday/src/components/Admin'
 import AddEditUser from 'pubsweet-components-faraday/src/components/Admin/AddEditUser'
 import SignUpInvitationPage from 'pubsweet-components-faraday/src/components/SignUp/SignUpInvitationPage'
@@ -34,10 +35,10 @@ const Routes = () => (
         exact
         path="/confirmation-page"
       />
-      <PrivateRoute component={AdminDashboard} exact path="/admin" />
-      <PrivateRoute component={AdminUsers} exact path="/admin/users" />
-      <PrivateRoute component={AddEditUser} exact path="/admin/users/add" />
-      <PrivateRoute
+      <AdminRoute component={AdminDashboard} exact path="/admin" />
+      <AdminRoute component={AdminUsers} exact path="/admin/users" />
+      <AdminRoute component={AddEditUser} exact path="/admin/users/add" />
+      <AdminRoute
         component={AddEditUser}
         exact
         path="/admin/users/edit/:userId"
