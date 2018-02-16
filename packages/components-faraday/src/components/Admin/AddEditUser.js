@@ -1,5 +1,5 @@
 import React from 'react'
-import { get, map } from 'lodash'
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { reduxForm, SubmissionError } from 'redux-form'
 import styled from 'styled-components'
@@ -13,13 +13,12 @@ import { compose, withProps, withHandlers, withState } from 'recompose'
 
 import AddUserForm from './AddUserForm'
 import EditUserForm from './EditUserForm'
-
-const getRoleOptions = journal =>
-  map(journal.roles, (value, key) => ({ label: value, value: key }))
+import { getRoleOptions, setAdmin, parseUpdateUser } from './utils'
 
 const onSubmit = (values, dispatch, { isEdit, history }) => {
   if (!isEdit) {
-    return create('/users/invite', values)
+    const newValues = setAdmin(values)
+    return create('/users/invite', newValues)
       .then(r => history.push('/admin/users'))
       .catch(error => {
         const err = get(error, 'response')
@@ -32,7 +31,7 @@ const onSubmit = (values, dispatch, { isEdit, history }) => {
       })
   }
 
-  return update(`/users/${values.id}`, values)
+  return update(`/users/${values.id}`, parseUpdateUser(values))
     .then(() => {
       history.push('/admin/users')
     })
@@ -47,7 +46,7 @@ const onSubmit = (values, dispatch, { isEdit, history }) => {
     })
 }
 
-const AddEditUser = ({ handleSubmit, journal, isEdit, user }) => (
+const AddEditUser = ({ handleSubmit, journal, isEdit, user, history }) => (
   <Root>
     <FormContainer onSubmit={handleSubmit}>
       {isEdit ? (
@@ -60,6 +59,7 @@ const AddEditUser = ({ handleSubmit, journal, isEdit, user }) => (
         <AddUserForm journal={journal} roles={getRoleOptions(journal)} />
       )}
       <Row>
+        <Button onClick={history.goBack}>Back</Button>
         <Button primary type="submit">
           Save user
         </Button>

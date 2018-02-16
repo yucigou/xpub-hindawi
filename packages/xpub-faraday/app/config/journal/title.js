@@ -23,8 +23,4 @@ export default [
     label: 'Professor',
     value: 'prof',
   },
-  {
-    label: 'Other',
-    value: 'other',
-  },
 ]
