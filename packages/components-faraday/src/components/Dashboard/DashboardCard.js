@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { get, isEmpty } from 'lodash'
 import classnames from 'classnames'
+import { get, isEmpty } from 'lodash'
+import styled from 'styled-components'
 import { Button, Icon } from '@pubsweet/ui'
 import { compose, getContext } from 'recompose'
 
@@ -23,6 +24,7 @@ const DashboardCard = ({
   const status = get(project, 'status') || 'Draft'
   const hasFiles = !isEmpty(files)
   const abstract = get(version, 'metadata.abstract')
+  const metadata = get(version, 'metadata')
 
   return (
     <div className={classes.card}>
@@ -107,9 +109,32 @@ const DashboardCard = ({
           </div>
         </div>
       )}
+      {abstract && (
+        <ViewAbstractContainer onClick={setModal(metadata)}>
+          <Icon color="#667080" size={18}>
+            eye
+          </Icon>
+          <span>View Abstract</span>
+        </ViewAbstractContainer>
+      )}
     </div>
   )
 }
+
+const ViewAbstractContainer = styled.div`
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+
+  & > span {
+    color: #667080;
+    font-family: Helvetica;
+    font-size: 14px;
+    margin-left: 8px;
+    text-align: left;
+    text-decoration: underline;
+  }
+`
 
 export default compose(
   getContext({

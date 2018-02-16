@@ -19,17 +19,16 @@ export default compose(
     actions.getUsers(),
   ]),
   withState('listView', 'changeView', true),
-  withState('abstractModal', 'setAbstractModal', ''),
+  withState('abstractModal', 'setAbstractModal', null),
   withHandlers({
     changeViewMode: ({ changeView }) => () => changeView(listView => !listView),
-    setModal: ({ setAbstractModal }) => abstract => () => {
-      setAbstractModal(abstract)
+    setModal: ({ setAbstractModal }) => (metadata = null) => () => {
+      setAbstractModal(metadata)
     },
   }),
   connect(
     state => {
-      const { collections } = state
-      const { conversion } = state
+      const { collections, conversion } = state
       const currentUser = selectCurrentUser(state)
 
       const sortedCollections = newestFirst(collections)
@@ -49,7 +48,6 @@ export default compose(
         ),
         all: sortedCollections,
       }
-
       return { collections, conversion, currentUser, dashboard }
     },
     (dispatch, { history }) => ({
@@ -95,7 +93,7 @@ export default compose(
   }),
   withContext(
     {
-      abstractModal: PropTypes.string,
+      abstractModal: PropTypes.object,
       setModal: PropTypes.func,
     },
     ({ abstractModal, setModal }) => ({
