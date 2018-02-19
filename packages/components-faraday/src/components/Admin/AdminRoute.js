@@ -2,48 +2,26 @@ import React from 'react'
 import { get } from 'lodash'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import { Route, Redirect, withRouter } from 'react-router-dom'
-import { actions } from 'pubsweet-client'
+import { Redirect, withRouter } from 'react-router-dom'
+import { AuthenticatedComponent } from 'pubsweet-client'
 
-const PrivateRoute = ({
+const AdminRoute = ({
   currentUser,
-  getCurrentUser,
   redirectPath = '/',
   component: Component,
   ...rest
-}) => (
-  <Route
-    {...rest}
-    render={props => {
-      if (!currentUser.user && !currentUser.isFetching) {
-        getCurrentUser()
-        return <div>loading…</div>
-      }
-
-      if (!get(currentUser, 'user.admin') || !currentUser.isAuthenticated) {
-        return (
-          <Redirect
-            to={{
-              pathname: redirectPath,
-              state: { from: props.location },
-            }}
-          />
-        )
-      }
-
-      return <Component {...props} />
-    }}
-  />
-)
+}) => {
+  const isAdmin = get(currentUser, 'user.admin')
+  return (
+    <AuthenticatedComponent>
+      {isAdmin ? <Component {...rest} /> : <Redirect to="/" />}
+    </AuthenticatedComponent>
+  )
+}
 
 export default compose(
   withRouter,
-  connect(
-    state => ({
-      currentUser: state.currentUser,
-    }),
-    {
-      getCurrentUser: actions.getCurrentUser,
-    },
-  ),
-)(PrivateRoute)
+  connect(state => ({
+    currentUser: state.currentUser,
+  })),
+)(AdminRoute)
