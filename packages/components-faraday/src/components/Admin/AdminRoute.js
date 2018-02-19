@@ -15,13 +15,11 @@ const PrivateRoute = ({
   <Route
     {...rest}
     render={props => {
-      if (!currentUser.isFetched) {
-        if (!currentUser.isFetching) {
-          getCurrentUser()
-        }
-
+      if (!currentUser.user && !currentUser.isFetching) {
+        getCurrentUser()
         return <div>loading…</div>
       }
+
       if (!get(currentUser, 'user.admin') || !currentUser.isAuthenticated) {
         return (
           <Redirect
