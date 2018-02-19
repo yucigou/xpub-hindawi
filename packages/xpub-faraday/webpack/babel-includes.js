@@ -5,10 +5,12 @@ const path = require('path')
 
 module.exports = [
   path.join(__dirname, '..', 'app'),
-  /pubsweet-[^/]+\/src/,
   /xpub-[^/]+\/src/,
   /component-[^/]+\/src/,
   /components-[^/]+\/src/,
   /wax-[^/]+\/src/,
-  /@pubsweet\/[^/]+\/src/,
+  /pubsweet-[^/\\]+\/(?!node_modules)/,
+  /@pubsweet\/[^/\\]+\/(?!node_modules)/,
+  // include other packages when this repo is mounted in a workspace
+  /packages\/[^/\\]+\/(?!node_modules)/,
 ]

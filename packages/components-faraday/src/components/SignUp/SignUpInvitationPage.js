@@ -1,7 +1,7 @@
 import { get } from 'lodash'
 import request, { create } from 'pubsweet-client/src/helpers/api'
 import { withJournal } from 'xpub-journal'
-import { login } from 'pubsweet-component-xpub-authentication/src/redux/login'
+import { loginUser } from 'pubsweet-component-login/actions'
 import { SubmissionError } from 'redux-form'
 import {
   compose,
@@ -13,8 +13,8 @@ import {
 
 import SignUpInvitation from './SignUpInvitationForm'
 
-const loginUser = (dispatch, values, history) =>
-  dispatch(login(values))
+const login = (dispatch, values, history) =>
+  dispatch(loginUser(values))
     .then(() => {
       history.push('/')
     })
@@ -35,7 +35,7 @@ const confirmUser = (email, token, history) => (values, dispatch) => {
       .then(r => {
         const { username } = r
         const { password } = values
-        loginUser(dispatch, { username, password }, history)
+        login(dispatch, { username, password }, history)
       })
       .catch(error => {
         const err = get(error, 'response')

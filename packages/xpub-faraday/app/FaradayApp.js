@@ -3,12 +3,17 @@ import 'xpub-bootstrap'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import { actions } from 'pubsweet-client'
 import { withJournal } from 'xpub-journal'
 import { AppBar } from 'pubsweet-components-faraday/src/components'
 
-const App = ({ children, currentUser, journal }) => (
+const App = ({ children, currentUser, journal, logoutUser }) => (
   <Root>
-    <AppBar brand={journal.metadata.name} user={currentUser} />
+    <AppBar
+      brand={journal.metadata.name}
+      onLogoutClick={logoutUser}
+      user={currentUser}
+    />
     <MainContainer>{children}</MainContainer>
   </Root>
 )
@@ -23,8 +28,11 @@ const MainContainer = styled.div`
 `
 
 export default compose(
-  connect(state => ({
-    currentUser: state.currentUser.user,
-  })),
+  connect(
+    state => ({
+      currentUser: state.currentUser.user,
+    }),
+    { logoutUser: actions.logoutUser },
+  ),
   withJournal,
 )(App)

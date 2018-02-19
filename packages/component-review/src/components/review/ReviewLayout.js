@@ -53,6 +53,7 @@ const ReviewLayout = ({
         content: (
           <SimpleEditor
             content={version.source}
+            editing="selection"
             key={key}
             layout="bare"
             readOnly
@@ -65,7 +66,7 @@ const ReviewLayout = ({
   }, [])
 
   const review = currentVersion.reviewers.find(
-    review => review.reviewer === reviewer.id,
+    review => review.id === reviewer.id,
   )
 
   if (currentVersion.submitted && (!review || !review.submitted)) {
@@ -96,6 +97,7 @@ const ReviewLayout = ({
       content: (
         <SimpleEditor
           content={currentVersion.source}
+          editing="selection"
           key={key}
           layout="bare"
           readOnly

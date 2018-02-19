@@ -6,7 +6,15 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { withState, withHandlers, compose } from 'recompose'
 
-const AppBar = ({ expanded, toggleMenu, brand, user, goTo, currentUser }) => (
+const AppBar = ({
+  expanded,
+  toggleMenu,
+  brand,
+  user,
+  goTo,
+  currentUser,
+  onLogoutClick,
+}) => (
   <Root>
     {React.cloneElement(brand, {
       onClick: goTo('/'),
@@ -28,7 +36,7 @@ const AppBar = ({ expanded, toggleMenu, brand, user, goTo, currentUser }) => (
                 Admin dashboard
               </DropdownOption>
             )}
-            <DropdownOption onClick={goTo('/logout')}>Logout</DropdownOption>
+            <DropdownOption onClick={onLogoutClick}>Logout</DropdownOption>
           </Dropdown>
         )}
       </User>

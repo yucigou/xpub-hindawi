@@ -3,7 +3,7 @@ import { get } from 'lodash'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { Route, Redirect, withRouter } from 'react-router-dom'
-import { getCurrentUser } from 'pubsweet-component-xpub-authentication/src/redux/currentUser'
+import { actions } from 'pubsweet-client'
 
 const PrivateRoute = ({
   currentUser,
@@ -45,7 +45,7 @@ export default compose(
       currentUser: state.currentUser,
     }),
     {
-      getCurrentUser,
+      getCurrentUser: actions.getCurrentUser,
     },
   ),
 )(PrivateRoute)
