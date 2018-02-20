@@ -6,6 +6,9 @@
   "files": [
     "src"
   ],
+  "scripts": {
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "https://gitlab.coko.foundation/xpub/xpub"
@@ -22,5 +25,12 @@
   "devDependencies": {
     "jest": "^22.1.1",
     "supertest": "^3.0.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.s?css$": "identity-obj-proxy"
+    },
+    "transformIgnorePatterns": ["/node_modules/(?!@?pubsweet)"],
+    "testPathIgnorePatterns": ["/node_modules", "config/"]
   }
 }

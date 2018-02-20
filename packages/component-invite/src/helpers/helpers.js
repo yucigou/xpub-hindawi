@@ -1,4 +1,6 @@
 const logger = require('@pubsweet/logger')
+const uuid = require('uuid')
+const crypto = require('crypto')
 
 const checkForUndefinedParams = (...params) => {
   if (params.includes(undefined)) {
@@ -86,9 +88,75 @@ const handleNotFoundError = async (error, item) => {
   return response
 }
 
+const createNewTeam = async (collectionId, emailType, user, TeamModel) => {
+  let permissions, group, name
+  switch (user.roles[0]) {
+    case 'handlingEditor':
+      emailType = 'invite-handling-editor'
+      permissions = 'editor'
+      group = 'editor'
+      name = 'Handling Editor'
+      break
+    case 'reviewer':
+      emailType = 'invite-reviewer'
+      permissions = 'reviewer'
+      group = 'reviewer'
+      name = 'Reviewer'
+      break
+    default:
+      break
+  }
+
+  const teamBody = {
+    teamType: {
+      name: user.roles[0],
+      permissions,
+    },
+    group,
+    name,
+    object: {
+      type: 'collection',
+      id: collectionId,
+    },
+    members: [user.id],
+  }
+  const team = new TeamModel(teamBody)
+  await team.save()
+  return emailType
+}
+
+const createNewUser = async (
+  email,
+  role,
+  firstName,
+  lastName,
+  affiliation,
+  title,
+  UserModel,
+) => {
+  const userBody = {
+    username: uuid.v4().slice(0, 8),
+    email,
+    password: uuid.v4(),
+    roles: [role],
+    passwordResetToken: crypto.randomBytes(32).toString('hex'),
+    isConfirmed: false,
+    firstName,
+    lastName,
+    affiliation,
+    title,
+    admin: role === 'admin',
+  }
+  let newUser = new UserModel(userBody)
+  newUser = await newUser.save()
+  return newUser
+}
+
 module.exports = {
   checkForUndefinedParams,
   validateEmailAndToken,
   hasInviteRight,
   handleNotFoundError,
+  createNewTeam,
+  createNewUser,
 }
