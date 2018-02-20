@@ -6,6 +6,7 @@
   "dependencies": {
     "@pubsweet/ui": "^0.1.1",
     "moment": "^2.20.1",
+    "portal-modal": "^1.0.3",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dnd": "^2.5.4",
