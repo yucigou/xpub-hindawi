@@ -1,3 +1,5 @@
+/* eslint-disable func-names-any */
+
 function User(properties) {
   this.type = 'user'
   this.email = properties.email
@@ -5,7 +7,7 @@ function User(properties) {
   this.password = properties.password
 }
 
-User.prototype.save = jest.fn(() => {
+User.prototype.save = jest.fn(function saveUser() {
   this.id = '111222'
   return Promise.resolve(this)
 })

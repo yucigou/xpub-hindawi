@@ -6,9 +6,6 @@
   "files": [
     "src"
   ],
-  "scripts": {
-    "test": "jest"
-  },
   "repository": {
     "type": "git",
     "url": "https://gitlab.coko.foundation/xpub/xpub"
