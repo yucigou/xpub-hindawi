@@ -6,7 +6,12 @@ import classes from './Dashboard.local.scss'
 
 const DashboardItem = withVersion(Item)
 
-const DashboardItems = ({ list, listView = true, deleteProject }) => (
+const DashboardItems = ({
+  list,
+  listView = true,
+  deleteProject,
+  showAbstractModal,
+}) => (
   <div>
     {!list.length && (
       <div className={classes.empty}>
@@ -22,6 +27,7 @@ const DashboardItems = ({ list, listView = true, deleteProject }) => (
             key={p.id}
             listView={listView}
             project={p}
+            showAbstractModal={showAbstractModal}
           />
         ))}
       </div>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { get } from 'lodash'
 import { Button } from '@pubsweet/ui'
-import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { withModal } from 'pubsweet-component-modal/src/components'
 
@@ -23,9 +22,7 @@ const Dashboard = ({
   changeFilterValue,
   filterValues,
   filterItems,
-  abstractModal,
-  setModal,
-  showModal,
+  showAbstractModal,
   ...rest
 }) => (
   <div className={classes.root}>
@@ -34,17 +31,6 @@ const Dashboard = ({
       <div className={classes.headerButtons}>
         <Button onClick={createDraftSubmission} primary>
           New
-        </Button>
-        <Button
-          onClick={() =>
-            showModal({
-              onConfirm: () => alert('confirm'),
-              costel: true,
-            })
-          }
-          primary
-        >
-          Show modal
         </Button>
       </div>
     </div>
@@ -58,34 +44,22 @@ const Dashboard = ({
       deleteProject={deleteProject}
       list={getItems()}
       listView={listView}
+      showAbstractModal={showAbstractModal}
     />
-    <AbstractModal abstractModal={abstractModal} onClose={setModal()} />
   </div>
-)
-
-const ModalRoot = styled.div`
-  width: 300px;
-  height: 400px;
-  background-color: gray;
-`
-
-const ModalComponent = ({ hideModal, dismissable, onConfirm, costel }) => (
-  <ModalRoot onClick={dismissable ? hideModal : null}>
-    This is our custom modal component.
-    <div>
-      <button onClick={onConfirm}>Yes</button>
-      <button onClick={hideModal}>Hide modal</button>
-      <span>{costel ? 'e costel' : 'nu e'}</span>
-    </div>
-  </ModalRoot>
 )
 
 export default compose(
   withModal({
-    modalComponent: ModalComponent,
-    overlayColor: 'rgba(255, 0,0,0.8)',
+    modalComponent: AbstractModal,
   }),
   withHandlers({
+    showAbstractModal: ({ showModal }) => metadata => () => {
+      showModal({
+        metadata,
+        dismissable: true,
+      })
+    },
     getItems: ({
       filters,
       sortOrder,

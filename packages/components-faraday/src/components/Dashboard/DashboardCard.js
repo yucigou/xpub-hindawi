@@ -1,10 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { get, isEmpty } from 'lodash'
 import styled from 'styled-components'
 import { Button, Icon } from '@pubsweet/ui'
-import { compose, getContext } from 'recompose'
 
 import { parseVersion, getFilesURL, downloadAll } from './utils'
 import classes from './Dashboard.local.scss'
@@ -15,7 +13,7 @@ const DashboardCard = ({
   listView,
   project,
   version,
-  setModal,
+  showAbstractModal,
 }) => {
   const { submitted, author, title, type, version: vers } = parseVersion(
     version,
@@ -75,7 +73,7 @@ const DashboardCard = ({
             <div className={classes.column2}>
               <div>{author}</div>
               {abstract && (
-                <ViewAbstractContainer onClick={setModal(metadata)}>
+                <ViewAbstractContainer onClick={showAbstractModal(metadata)}>
                   <Icon color="#667080" size={18}>
                     eye
                   </Icon>
@@ -131,8 +129,4 @@ const ViewAbstractContainer = styled.div`
   }
 `
 
-export default compose(
-  getContext({
-    setModal: PropTypes.func,
-  }),
-)(DashboardCard)
+export default DashboardCard

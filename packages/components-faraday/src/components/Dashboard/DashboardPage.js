@@ -1,10 +1,9 @@
 import { get } from 'lodash'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { actions } from 'pubsweet-client'
 import { ConnectPage } from 'xpub-connect'
 import { withRouter } from 'react-router-dom'
-import { compose, withState, withHandlers, withContext } from 'recompose'
+import { compose, withState, withHandlers } from 'recompose'
 import { newestFirst, selectCurrentUser } from 'xpub-selectors'
 import { createDraftSubmission } from 'pubsweet-component-wizard/src/redux/conversion'
 
@@ -19,12 +18,8 @@ export default compose(
     actions.getUsers(),
   ]),
   withState('listView', 'changeView', true),
-  withState('abstractModal', 'setAbstractModal', null),
   withHandlers({
     changeViewMode: ({ changeView }) => () => changeView(listView => !listView),
-    setModal: ({ setAbstractModal }) => (metadata = null) => () => {
-      setAbstractModal(metadata)
-    },
   }),
   connect(
     state => {
@@ -91,14 +86,4 @@ export default compose(
       },
     },
   }),
-  withContext(
-    {
-      abstractModal: PropTypes.object,
-      setModal: PropTypes.func,
-    },
-    ({ abstractModal, setModal }) => ({
-      abstractModal,
-      setModal,
-    }),
-  ),
 )(Dashboard)
