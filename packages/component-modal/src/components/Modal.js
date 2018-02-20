@@ -16,7 +16,10 @@ class Modal extends React.Component {
   render() {
     const { component: Component, overlayColor, ...rest } = this.props
     return ReactDOM.createPortal(
-      <ModalRoot overlayColor={overlayColor}>
+      <ModalRoot
+        onClick={rest.dismissable ? rest.hideModal : null}
+        overlayColor={overlayColor}
+      >
         <Component {...rest} />
       </ModalRoot>,
       modalRoot,
