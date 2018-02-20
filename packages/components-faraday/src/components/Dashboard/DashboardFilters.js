@@ -1,10 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Icon, Menu } from '@pubsweet/ui'
 import { compose, withHandlers } from 'recompose'
 
 import classes from './Dashboard.local.scss'
-import { changeFilter, changeSort } from './redux/filters'
 
 const sortOptions = [
   { label: 'Newest first', value: 'newest' },
@@ -54,7 +52,6 @@ const DashboardFilters = ({
 )
 
 export default compose(
-  connect(null, { changeFilter, changeSort }),
   withHandlers({
     changeFilter: ({ changeFilter }) => filterKey => value => {
       changeFilter(filterKey, value)

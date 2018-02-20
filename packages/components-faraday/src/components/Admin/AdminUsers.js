@@ -5,24 +5,47 @@ import styled from 'styled-components'
 import { Icon, Menu } from '@pubsweet/ui'
 import { actions } from 'pubsweet-client'
 import { ConnectPage } from 'xpub-connect'
+import { withJournal } from 'xpub-journal'
 import { withRouter } from 'react-router-dom'
 import { compose, withState, withHandlers } from 'recompose'
 
 import { Pagination } from './'
 
-const TableRow = ({ toggleUser, selected, email, username, type }) => (
+const TableRow = ({
+  toggleUser,
+  selected,
+  id,
+  email,
+  roles,
+  username,
+  title = '',
+  firstName = '',
+  lastName = '',
+  affiliation,
+  isConfirmed,
+  roleOptions,
+}) => (
   <Row>
     <td>
       <Input checked={selected} onClick={toggleUser} type="checkbox" />
     </td>
     <td>{email}</td>
-    <td>{username}</td>
-    <td>affiliation here</td>
-    <td>country here</td>
-    <td>{type}</td>
-    <Status>
-      <span>status</span>
-    </Status>
+    <td>{`${firstName} ${lastName}`}</td>
+    <td>{affiliation}</td>
+    <td>
+      {roles &&
+        roles.map((r, i, arr) => (
+          <Role key={r}>{`${roleOptions[r]}${
+            i !== arr.length - 1 ? ', ' : ''
+          }`}</Role>
+        ))}
+    </td>
+    <td>
+      <Tag>{isConfirmed ? 'Confirmed' : 'Invited'}</Tag>
+    </td>
+    <td>
+      <Action href={`/admin/users/edit/${id}`}>Edit</Action>
+    </td>
   </Row>
 )
 
@@ -35,87 +58,107 @@ const Users = ({
   page,
   itemsPerPage,
   history,
-}) => (
-  <div>
-    <Header>
-      <span>Users</span>
-      <AddButton onClick={() => history.push('/admin/users/add')}>
-        <Icon color="#667080">plus-circle</Icon>
-        Add User
-      </AddButton>
-    </Header>
-    <SubHeader>
-      <div>
-        <span>Bulk actions: </span>
-        <Menu
-          onChange={value => value}
-          options={[
-            { value: 'deactivate', label: 'Deactivate' },
-            { value: 'activate', label: 'Activate' },
-          ]}
-          value="activate"
+  journal,
+}) => {
+  const slicedUsers = users.slice(
+    page * itemsPerPage,
+    itemsPerPage * (page + 1),
+  )
+  return (
+    <div>
+      <Header>
+        <BreadCrumbs>
+          <span>Admin Dashboard</span>
+          <span>Users</span>
+        </BreadCrumbs>
+        <AddButton onClick={() => history.push('/admin/users/add')}>
+          <Icon color="#667080">plus-circle</Icon>
+          &nbsp; Add User
+        </AddButton>
+      </Header>
+      <SubHeader>
+        <div>
+          <span>Bulk actions: </span>
+          <Menu
+            onChange={value => value}
+            options={[
+              { value: 'deactivate', label: 'Deactivate' },
+              { value: 'activate', label: 'Activate' },
+            ]}
+            value="activate"
+          />
+
+          <Menu
+            onChange={value => value}
+            options={[
+              { value: 'sort', label: 'SORT' },
+              { value: 'unsort', label: 'UNSORT' },
+            ]}
+            value="sort"
+          />
+
+          <Icon color="#667080" size={24}>
+            search
+          </Icon>
+        </div>
+        <Pagination
+          decrementPage={decrementPage}
+          hasMore={itemsPerPage * (page + 1) < users.length}
+          incrementPage={incrementPage}
+          itemsPerPage={itemsPerPage}
+          maxLength={users.length}
+          page={page}
         />
+      </SubHeader>
 
-        <Menu
-          onChange={value => value}
-          options={[
-            { value: 'sort', label: 'SORT' },
-            { value: 'unsort', label: 'UNSORT' },
-          ]}
-          value="sort"
-        />
-
-        <Icon color="#667080" size={24}>
-          search
-        </Icon>
-      </div>
-      <Pagination
-        decrementPage={decrementPage}
-        incrementPage={incrementPage}
-        itemsPerPage={itemsPerPage}
-        page={page}
-      />
-    </SubHeader>
-
-    <Table>
-      <thead>
-        <tr>
-          <td>
-            <Input
-              checked={users.every(u => u.selected)}
-              onClick={toggleAllUsers}
-              type="checkbox"
+      <Table>
+        <thead>
+          <tr>
+            <td>
+              <Input
+                checked={users.every(u => u.selected)}
+                onClick={toggleAllUsers}
+                type="checkbox"
+              />
+            </td>
+            <td>Email</td>
+            <td>Full name</td>
+            <td>Affiliation</td>
+            <td width="200">Roles</td>
+            <td>Status</td>
+            <td width="50" />
+          </tr>
+        </thead>
+        <tbody>
+          {slicedUsers.map(u => (
+            <TableRow
+              key={u.id}
+              {...u}
+              roleOptions={journal.roles}
+              toggleUser={toggleUser(u)}
             />
-          </td>
-          <td>Email</td>
-          <td>Full name</td>
-          <td>Affiliation</td>
-          <td>Country</td>
-          <td>Roles</td>
-          <td>Status</td>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map(u => (
-          <TableRow key={u.id} {...u} toggleUser={toggleUser(u)} />
-        ))}
-      </tbody>
-    </Table>
-  </div>
-)
+          ))}
+        </tbody>
+      </Table>
+    </div>
+  )
+}
 
 export default compose(
   ConnectPage(() => [actions.getUsers()]),
   withRouter,
+  withJournal,
   connect(state => ({ currentUsers: get(state, 'users.users') })),
   withState('users', 'setUsers', props =>
     props.currentUsers.map(u => ({ ...u, selected: false })),
   ),
-  withState('itemsPerPage', 'setItemsPerPage', 50),
+  withState('itemsPerPage', 'setItemsPerPage', 20),
   withState('page', 'setPage', 0),
   withHandlers({
-    incrementPage: ({ setPage }) => () => {
-      setPage(p => p + 1)
+    incrementPage: ({ setPage, page, itemsPerPage, users }) => () => {
+      if (page * itemsPerPage + itemsPerPage < users.length) {
+        setPage(p => p + 1)
+      }
     },
     decrementPage: ({ setPage }) => () => {
       setPage(p => (p > 0 ? p - 1 : p))
@@ -152,13 +195,24 @@ const Header = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`
 
+const BreadCrumbs = styled.div`
   & span {
-    font-family: Helvetica;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 17px;
     text-align: left;
     color: #667080;
+
+    &:after {
+      content: '>';
+      padding: 0 10px;
+    }
+    &:last-child {
+      font-size: 24px;
+      font-weight: bold;
+      &:after {
+        content: '';
+    }
   }
 `
 
@@ -188,7 +242,7 @@ const Table = styled.table`
   border-spacing: 0;
   border-collapse: collapse;
   margin-top: 10px;
-  width: 100vw;
+  width: 100%;
 
   & thead tr {
     height: 40px;
@@ -208,19 +262,37 @@ const Row = styled.tr`
   font-size: 14px;
   height: 40px;
   text-align: left;
+  &:hover {
+    background-color: #e6e7e9;
+    a {
+      display: block;
+    }
+  }
 `
 
-const Status = styled.td`
-  & span {
-    border: solid 1px #667080;
-    text-transform: uppercase;
-    font-family: Helvetica;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: left;
-    color: #667080;
-    padding: 2px 10px;
-  }
+const Tag = styled.span`
+  border: solid 1px #667080;
+  text-transform: uppercase;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+  color: #667080;
+  padding: 2px 10px;
+  margin-right: 5px;
+`
+
+const Role = styled.span`
+  height: 17px;
+  font-size: 14px;
+  text-align: left;
+  color: #667080;
+  text-transform: uppercase;
+`
+
+const Action = styled.a`
+  color: #667080;
+  display: none;
 `
 
 const Input = styled.input`

@@ -13,13 +13,15 @@ import classes from './AuthorList.local.scss'
 import { getAuthorFetching } from '../../redux/authors'
 import { MenuItem, ValidatedTextField } from './FormItems'
 
-const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
+const emailRegex = new RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
+)
 
 const emailValidator = value =>
   emailRegex.test(value) ? undefined : 'Invalid email'
 
 const AuthorAdder = ({
-  authors,
+  authors = [],
   editMode,
   setEditMode,
   handleSubmit,
@@ -90,7 +92,7 @@ export default compose(
     onSubmit: (
       values,
       dispatch,
-      { authors, addAuthor, setEditMode, setFormAuthors, reset, match },
+      { authors = [], addAuthor, setEditMode, setFormAuthors, reset, match },
     ) => {
       const collectionId = get(match, 'params.project')
       const fragmentId = get(match, 'params.version')

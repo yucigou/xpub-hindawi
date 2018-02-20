@@ -1,10 +1,11 @@
 [
-  "pubsweet-component-xpub-app",
-  "pubsweet-component-xpub-authentication",
+  "pubsweet-component-login",
+  "pubsweet-component-signup",
   "pubsweet-component-xpub-dashboard",
   "xpub-faraday-server",
   "pubsweet-component-ink-backend",
   "pubsweet-component-wizard",
+  "pubsweet-component-modal",
   "pubsweet-components-faraday",
   "pubsweet-components-aws-s3",
   "pubsweet-component-invite"

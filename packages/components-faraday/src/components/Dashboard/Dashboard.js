@@ -1,10 +1,11 @@
 import React from 'react'
-import { get, isEmpty } from 'lodash'
+import { get } from 'lodash'
 import { Button } from '@pubsweet/ui'
-import { connect } from 'react-redux'
 import { compose, withHandlers } from 'recompose'
+import { withModal } from 'pubsweet-component-modal/src/components'
 
 import classes from './Dashboard.local.scss'
+import AbstractModal from './AbstractModal'
 import DashboardItems from './DashboardItems'
 import DashboardFilters from './DashboardFilters'
 
@@ -21,8 +22,7 @@ const Dashboard = ({
   changeFilterValue,
   filterValues,
   filterItems,
-  abstractModal,
-  setModal,
+  showAbstractModal,
   ...rest
 }) => (
   <div className={classes.root}>
@@ -44,27 +44,22 @@ const Dashboard = ({
       deleteProject={deleteProject}
       list={getItems()}
       listView={listView}
+      showAbstractModal={showAbstractModal}
     />
-    {!isEmpty(abstractModal) && (
-      <div className={classes.modal}>
-        <div className={classes.modalContent}>
-          <div
-            className={classes.modalText}
-            dangerouslySetInnerHTML={{ __html: abstractModal }} // eslint-disable-line
-          />
-          <Button onClick={setModal()}>Close</Button>
-        </div>
-      </div>
-    )}
   </div>
 )
 
 export default compose(
-  connect(state => ({
-    filters: state.filters.filter,
-    sortOrder: state.filters.sortValue,
-  })),
+  withModal({
+    modalComponent: AbstractModal,
+  }),
   withHandlers({
+    showAbstractModal: ({ showModal }) => metadata => () => {
+      showModal({
+        metadata,
+        dismissable: true,
+      })
+    },
     getItems: ({
       filters,
       sortOrder,

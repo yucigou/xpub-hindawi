@@ -1,14 +1,10 @@
 import React from 'react'
+// import { withProps } from 'recompose'
 import { Route, Switch } from 'react-router-dom'
+import { AuthenticatedComponent } from 'pubsweet-client'
+import Login from 'pubsweet-component-login/LoginContainer'
+import Signup from 'pubsweet-component-signup/SignupContainer'
 
-import {
-  PrivateRoute,
-  SignupPage,
-  LoginPage,
-  LogoutPage,
-} from 'pubsweet-component-xpub-authentication/src/components'
-
-// import DashboardPage from 'pubsweet-component-xpub-dashboard/src/components/DashboardPage'
 import DashboardPage from 'pubsweet-components-faraday/src/components/Dashboard'
 import { Wizard } from 'pubsweet-component-wizard/src/components'
 import ManuscriptPage from 'pubsweet-component-xpub-manuscript/src/components/ManuscriptPage'
@@ -17,32 +13,43 @@ import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/No
 import {
   AdminDashboard,
   AdminUsers,
+  AdminRoute,
 } from 'pubsweet-components-faraday/src/components/Admin'
 import AddEditUser from 'pubsweet-components-faraday/src/components/Admin/AddEditUser'
 import SignUpInvitationPage from 'pubsweet-components-faraday/src/components/SignUp/SignUpInvitationPage'
 
 import FaradayApp from './FaradayApp'
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      <AuthenticatedComponent>
+        <Component {...props} />
+      </AuthenticatedComponent>
+    )}
+  />
+)
+
 const Routes = () => (
   <FaradayApp>
     <Switch>
-      <Route component={LoginPage} exact path="/login" />
-      <Route component={SignupPage} exact path="/signup" />
+      <Route component={Login} exact path="/login" />
+      <Route component={Signup} exact path="/signup" />
       <PrivateRoute component={DashboardPage} exact path="/" />
       <PrivateRoute
         component={ConfirmationPage}
         exact
         path="/confirmation-page"
       />
-      <PrivateRoute component={AdminDashboard} exact path="/admin" />
-      <PrivateRoute component={AdminUsers} exact path="/admin/users" />
-      <PrivateRoute component={AddEditUser} exact path="/admin/users/add" />
-      <PrivateRoute
+      <AdminRoute component={AdminDashboard} exact path="/admin" />
+      <AdminRoute component={AdminUsers} exact path="/admin/users" />
+      <AdminRoute component={AddEditUser} exact path="/admin/users/add" />
+      <AdminRoute
         component={AddEditUser}
         exact
         path="/admin/users/edit/:userId"
       />
-      <PrivateRoute component={LogoutPage} exact path="/logout" />
       <PrivateRoute
         component={Wizard}
         exact

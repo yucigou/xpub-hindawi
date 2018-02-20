@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ValidatedField, TextField, Menu } from '@pubsweet/ui'
+import { ValidatedField, TextField, Menu, CheckboxGroup } from '@pubsweet/ui'
 
 import { required } from 'xpub-validators'
 
-const EditUserForm = ({ roles, user }) => {
+const EditUserForm = ({ roles, journal, user }) => {
   const roleOptions = roles.filter(r =>
-    ['editorInChief', 'author'].includes(r.value),
+    ['editorInChief', 'author', 'admin'].includes(r.value),
   )
   return (
     <div>
@@ -14,7 +14,7 @@ const EditUserForm = ({ roles, user }) => {
       <h5>{user.email}</h5>
       <Row>
         <RowItem>
-          <Label> First name </Label>
+          <Label> First name* </Label>
           <ValidatedField
             component={TextField}
             name="firstName"
@@ -22,11 +22,7 @@ const EditUserForm = ({ roles, user }) => {
           />
         </RowItem>
         <RowItem>
-          <Label> Middle name </Label>
-          <ValidatedField component={TextField} name="middleName" />
-        </RowItem>
-        <RowItem>
-          <Label> Last name </Label>
+          <Label> Last name* </Label>
           <ValidatedField
             component={TextField}
             name="lastName"
@@ -36,7 +32,7 @@ const EditUserForm = ({ roles, user }) => {
       </Row>
       <Row>
         <RowItem>
-          <Label> Affiliation </Label>
+          <Label> Affiliation* </Label>
           <ValidatedField
             component={TextField}
             name="affiliation"
@@ -44,14 +40,21 @@ const EditUserForm = ({ roles, user }) => {
           />
         </RowItem>
         <RowItem>
-          <Label> Title </Label>
-          <ValidatedField component={TextField} name="title" />
-        </RowItem>
-        <RowItem>
-          <Label> Role</Label>
+          <Label> Title* </Label>
           <ValidatedField
-            component={input => <Menu {...input} options={roleOptions} />}
-            name="role"
+            component={input => <Menu {...input} options={journal.title} />}
+            name="title"
+          />
+        </RowItem>
+      </Row>
+      <Row>
+        <RowItem>
+          <Label> Roles*</Label>
+          <ValidatedField
+            component={input => (
+              <CheckboxGroup {...input} options={roleOptions} />
+            )}
+            name="roles"
           />
         </RowItem>
       </Row>

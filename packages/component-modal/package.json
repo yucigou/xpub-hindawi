@@ -1,0 +1,11 @@
+{
+  "name": "pubsweet-component-modal",
+  "version": "0.0.1",
+  "main": "src",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7"
+  }
+}

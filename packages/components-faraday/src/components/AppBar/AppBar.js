@@ -1,11 +1,20 @@
 import React from 'react'
-import { Icon } from '@pubsweet/ui'
 import { get } from 'lodash'
+import { Icon } from '@pubsweet/ui'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { withState, withHandlers, compose } from 'recompose'
 
-const AppBar = ({ expanded, toggleMenu, brand, user, goTo }) => (
+const AppBar = ({
+  expanded,
+  toggleMenu,
+  brand,
+  user,
+  goTo,
+  currentUser,
+  onLogoutClick,
+}) => (
   <Root>
     {React.cloneElement(brand, {
       onClick: goTo('/'),
@@ -22,10 +31,12 @@ const AppBar = ({ expanded, toggleMenu, brand, user, goTo }) => (
         {expanded && (
           <Dropdown>
             <DropdownOption>Settings</DropdownOption>
-            <DropdownOption onClick={goTo('admin')}>
-              Admin dashboard
-            </DropdownOption>
-            <DropdownOption onClick={goTo('/logout')}>Logout</DropdownOption>
+            {currentUser.admin && (
+              <DropdownOption onClick={goTo('admin')}>
+                Admin dashboard
+              </DropdownOption>
+            )}
+            <DropdownOption onClick={onLogoutClick}>Logout</DropdownOption>
           </Dropdown>
         )}
       </User>
@@ -34,6 +45,7 @@ const AppBar = ({ expanded, toggleMenu, brand, user, goTo }) => (
   </Root>
 )
 
+// #region styled-components
 const Root = styled.div`
   align-items: center;
   box-shadow: 0 1px 0 0 #667080;
@@ -99,9 +111,13 @@ const ToggleOverlay = styled.div`
   right: 0;
   opacity: 0;
 `
+// #endregion
 
 export default compose(
   withRouter,
+  connect(state => ({
+    currentUser: get(state, 'currentUser.user'),
+  })),
   withState('expanded', 'setExpanded', false),
   withHandlers({
     toggleMenu: ({ setExpanded }) => () => {

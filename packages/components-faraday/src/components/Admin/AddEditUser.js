@@ -1,10 +1,10 @@
 import React from 'react'
-import { get, map } from 'lodash'
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { reduxForm, SubmissionError } from 'redux-form'
 import styled from 'styled-components'
 import { actions } from 'pubsweet-client'
-import { create } from 'pubsweet-client/src/helpers/api'
+import { create, update } from 'pubsweet-client/src/helpers/api'
 import { withJournal } from 'xpub-journal'
 import { ConnectPage } from 'xpub-connect'
 import { selectUser } from 'xpub-selectors'
@@ -13,35 +13,53 @@ import { compose, withProps, withHandlers, withState } from 'recompose'
 
 import AddUserForm from './AddUserForm'
 import EditUserForm from './EditUserForm'
-
-const getRoleOptions = journal =>
-  map(journal.roles, (value, key) => ({ label: value, value: key }))
+import { getRoleOptions, setAdmin, parseUpdateUser } from './utils'
 
 const onSubmit = (values, dispatch, { isEdit, history }) => {
   if (!isEdit) {
-    return create('/users/invite', values)
+    const newValues = setAdmin(values)
+    return create('/users/invite', newValues)
       .then(r => history.push('/admin/users'))
       .catch(error => {
         const err = get(error, 'response')
         if (err) {
           const errorMessage = get(JSON.parse(err), 'error')
           throw new SubmissionError({
-            role: errorMessage || 'Something went wrong',
+            email: errorMessage || 'Something went wrong',
           })
         }
       })
   }
+
+  return update(`/users/${values.id}`, parseUpdateUser(values))
+    .then(() => {
+      history.push('/admin/users')
+    })
+    .catch(error => {
+      const err = get(error, 'response')
+      if (err) {
+        const errorMessage = get(JSON.parse(err), 'error')
+        throw new SubmissionError({
+          roles: errorMessage || 'Something went wrong',
+        })
+      }
+    })
 }
 
-const AddEditUser = ({ handleSubmit, journal, isEdit, user }) => (
+const AddEditUser = ({ handleSubmit, journal, isEdit, user, history }) => (
   <Root>
     <FormContainer onSubmit={handleSubmit}>
       {isEdit ? (
-        <EditUserForm roles={getRoleOptions(journal)} user={user} />
+        <EditUserForm
+          journal={journal}
+          roles={getRoleOptions(journal)}
+          user={user}
+        />
       ) : (
-        <AddUserForm roles={getRoleOptions(journal)} />
+        <AddUserForm journal={journal} roles={getRoleOptions(journal)} />
       )}
       <Row>
+        <Button onClick={history.goBack}>Back</Button>
         <Button primary type="submit">
           Save user
         </Button>
