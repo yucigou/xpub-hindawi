@@ -72,17 +72,16 @@ const Authors = ({
 export default compose(
   withRouter,
   getContext({ version: PropTypes.object, project: PropTypes.object }),
-  connect(null, {
-    addAuthor,
-    changeForm,
-  }),
-  withState('authors', 'setAuthors', []),
-  lifecycle({
-    componentDidMount() {
-      const { version, setAuthors } = this.props
-      setAuthors(version.authors)
+  connect(
+    state => ({
+      currentUser: state.currentUser.user,
+    }),
+    {
+      addAuthor,
+      changeForm,
     },
-  }),
+  ),
+  withState('authors', 'setAuthors', []),
   withState('editMode', 'setEditMode', false),
   withState('editedAuthor', 'setEditedAuthor', -1),
   withHandlers({
@@ -129,6 +128,12 @@ export default compose(
         isCorresponding: a.isSubmitting || a.email === authorEmail,
       }))
       setFormAuthors(newAuthors)
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { version, setAuthors } = this.props
+      setAuthors(version.authors)
     },
   }),
 )(Authors)

@@ -1,3 +1,4 @@
+import { pick } from 'lodash'
 import { actions } from 'pubsweet-client'
 /* constants */
 
@@ -15,8 +16,27 @@ export const createDraftSuccess = draft => ({
 })
 
 /* actions */
-export const createDraftSubmission = history => dispatch =>
-  dispatch(actions.createCollection()).then(({ collection }) => {
+export const createDraftSubmission = history => (dispatch, getState) => {
+  const currentUser = getState().currentUser.user
+  let authors = []
+  if (!currentUser.admin) {
+    authors = [
+      {
+        ...pick(currentUser, [
+          'affiliation',
+          'email',
+          'firstName',
+          'lastName',
+          'middleName',
+          'country',
+        ]),
+        isSubmitting: true,
+        isCorresponding: true,
+      },
+    ]
+  }
+
+  return dispatch(actions.createCollection()).then(({ collection }) => {
     if (!collection.id) {
       throw new Error('Failed to create a project')
     }
@@ -28,6 +48,7 @@ export const createDraftSubmission = history => dispatch =>
         files: {
           supplementary: [],
         },
+        authors,
         fragmentType: 'version',
         metadata: {},
         version: 1,
@@ -41,7 +62,7 @@ export const createDraftSubmission = history => dispatch =>
       }, 1000)
     })
   })
-
+}
 /* reducer */
 
 const initialState = {

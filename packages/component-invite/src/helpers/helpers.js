@@ -88,17 +88,15 @@ const handleNotFoundError = async (error, item) => {
   return response
 }
 
-const createNewTeam = async (collectionId, emailType, user, TeamModel) => {
+const createNewTeam = async (collectionId, user, TeamModel) => {
   let permissions, group, name
   switch (user.roles[0]) {
     case 'handlingEditor':
-      emailType = 'invite-handling-editor'
       permissions = 'editor'
       group = 'editor'
       name = 'Handling Editor'
       break
     case 'reviewer':
-      emailType = 'invite-reviewer'
       permissions = 'reviewer'
       group = 'reviewer'
       name = 'Reviewer'
@@ -122,7 +120,6 @@ const createNewTeam = async (collectionId, emailType, user, TeamModel) => {
   }
   const team = new TeamModel(teamBody)
   await team.save()
-  return emailType
 }
 
 const createNewUser = async (
