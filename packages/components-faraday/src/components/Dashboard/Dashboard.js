@@ -10,12 +10,10 @@ import DashboardItems from './DashboardItems'
 import DashboardFilters from './DashboardFilters'
 
 const Dashboard = ({
-  changeViewMode,
   createDraftSubmission,
   currentUser,
   dashboard,
   deleteProject,
-  listView,
   filters,
   getItems,
   getFilterOptions,
@@ -36,14 +34,11 @@ const Dashboard = ({
     </div>
     <DashboardFilters
       changeFilterValue={changeFilterValue}
-      changeView={changeViewMode}
       getFilterOptions={getFilterOptions}
-      listView={listView}
     />
     <DashboardItems
       deleteProject={deleteProject}
       list={getItems()}
-      listView={listView}
       showAbstractModal={showAbstractModal}
     />
   </div>

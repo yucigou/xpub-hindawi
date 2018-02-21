@@ -44,7 +44,7 @@ const validateEmailAndToken = async (email, token, userModel) => {
         message: e.details[0].message,
       }
     }
-    logger.error(e)
+    logger.error('internal server error')
     return {
       success: false,
       status: 500,
