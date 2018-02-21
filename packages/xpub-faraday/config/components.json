@@ -1,7 +1,6 @@
 [
   "pubsweet-component-login",
   "pubsweet-component-signup",
-  "pubsweet-component-xpub-dashboard",
   "xpub-faraday-server",
   "pubsweet-component-ink-backend",
   "pubsweet-component-wizard",
