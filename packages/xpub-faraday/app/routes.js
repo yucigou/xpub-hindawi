@@ -1,5 +1,4 @@
 import React from 'react'
-// import { withProps } from 'recompose'
 import { Route, Switch } from 'react-router-dom'
 import { AuthenticatedComponent } from 'pubsweet-client'
 import Login from 'pubsweet-component-login/LoginContainer'

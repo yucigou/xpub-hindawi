@@ -32,7 +32,7 @@ const AppBar = ({
           <Dropdown>
             <DropdownOption>Settings</DropdownOption>
             {currentUser.admin && (
-              <DropdownOption onClick={goTo('admin')}>
+              <DropdownOption onClick={goTo('/admin')}>
                 Admin dashboard
               </DropdownOption>
             )}
