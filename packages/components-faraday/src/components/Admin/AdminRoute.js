@@ -2,7 +2,7 @@ import React from 'react'
 import { get } from 'lodash'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import { Redirect, withRouter } from 'react-router-dom'
+import { Redirect, withRouter, Route } from 'react-router-dom'
 import { AuthenticatedComponent } from 'pubsweet-client'
 
 const AdminRoute = ({
@@ -13,9 +13,14 @@ const AdminRoute = ({
 }) => {
   const isAdmin = get(currentUser, 'user.admin')
   return (
-    <AuthenticatedComponent>
-      {isAdmin ? <Component {...rest} /> : <Redirect to="/" />}
-    </AuthenticatedComponent>
+    <Route
+      {...rest}
+      render={props => (
+        <AuthenticatedComponent>
+          {isAdmin ? <Component {...props} /> : <Redirect to="/" />}
+        </AuthenticatedComponent>
+      )}
+    />
   )
 }
 
