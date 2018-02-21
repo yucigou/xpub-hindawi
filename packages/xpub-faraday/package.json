@@ -73,6 +73,7 @@
     "setupdb": "pubsweet setupdb ./",
     "reset": "pubsweet setupdb --clobber ./",
     "start": "pubsweet start",
+    "start-now": "echo $secret > config/local-development.json && npm run start",
     "build": "NODE_ENV=production pubsweet build"
   }
 }

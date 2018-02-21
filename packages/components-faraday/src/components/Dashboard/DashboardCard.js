@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { get, isEmpty } from 'lodash'
 import styled from 'styled-components'
 import { Button, Icon } from '@pubsweet/ui'
+import { compose, getContext } from 'recompose'
 
 import { parseVersion, getFilesURL, downloadAll } from './utils'
 
@@ -11,6 +13,8 @@ const DashboardCard = ({
   project,
   version,
   showAbstractModal,
+  journal,
+  ...rest
 }) => {
   const { submitted, title, type, version: vers } = parseVersion(version)
   const files = getFilesURL(get(version, 'files'))
@@ -18,7 +22,6 @@ const DashboardCard = ({
   const hasFiles = !isEmpty(files)
   const abstract = get(version, 'metadata.abstract')
   const metadata = get(version, 'metadata')
-
   return (
     <Card>
       <ListView>
@@ -65,8 +68,10 @@ const DashboardCard = ({
       </ListView>
       <DetailsView>
         <LeftDetails>
-          <JournalTitle>{metadata.journal}</JournalTitle>
-          <Issue>{metadata.issue}</Issue>
+          <JournalTitle>{journal.metadata.nameText}</JournalTitle>
+          <Issue>
+            {journal.issueTypes.find(t => t.value === metadata.issue).label}
+          </Issue>
           {get(version, 'authors') && (
             <Authors>
               <span>Authors:</span>
@@ -109,7 +114,7 @@ const DashboardCard = ({
   )
 }
 
-export default DashboardCard
+export default compose(getContext({ journal: PropTypes.object }))(DashboardCard)
 
 // #region styled-components
 const PreviewContainer = styled.div`
@@ -160,7 +165,7 @@ const ActionButtons = styled(Button)`
 
 const LeftDetails = styled.div`
   display: flex;
-  flex: 1;
+  flex: 3;
   flex-direction: column;
   justify-content: flex-start;
   padding: 10px 20px;
@@ -168,7 +173,7 @@ const LeftDetails = styled.div`
 
 const RightDetails = styled.div`
   display: flex;
-  flex: 1;
+  flex: 2;
   flex-direction: column;
 
   div {
@@ -340,8 +345,9 @@ const ClickableIconContainer = styled.div`
   align-items: center;
   cursor: pointer;
   display: flex;
+  margin-right: 8px;
 
-  & > span {
+  span:last-child {
     color: #667080;
     font-family: Helvetica;
     font-size: 14px;
