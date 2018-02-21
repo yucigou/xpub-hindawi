@@ -11,7 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.coko.foundation/xpub/xpub"
+    "url": "https://gitlab.coko.foundation/xpub/xpub",
+    "path": "component-invite"
   },
   "dependencies": {
     "body-parser": "^1.17.2",

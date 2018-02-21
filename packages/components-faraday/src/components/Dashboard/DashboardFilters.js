@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Menu } from '@pubsweet/ui'
+import { Menu } from '@pubsweet/ui'
 import { compose, withHandlers } from 'recompose'
 
 import classes from './Dashboard.local.scss'
@@ -13,7 +13,6 @@ const DashboardFilters = ({
   view,
   status,
   createdAt,
-  changeView,
   listView,
   changeFilter,
   changeSort,
@@ -41,12 +40,6 @@ const DashboardFilters = ({
         <span>Sort</span>
         <Menu onChange={changeSort} options={sortOptions} />
       </div>
-    </div>
-    <div className={classes.viewMode} onClick={changeView}>
-      <div className={classes.icon}>
-        {listView ? <Icon>list</Icon> : <Icon>credit-card</Icon>}
-      </div>
-      {listView ? ' List' : ' Card'} View
     </div>
   </div>
 )
