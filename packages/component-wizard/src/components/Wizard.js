@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Steps, AuthorList } from 'pubsweet-components-faraday/src/components'
+import { Steps } from 'pubsweet-components-faraday/src/components'
 // import { Steps } from '@pubsweet/ui'
 
 import WizardFormStep from './WizardFormStep'
@@ -20,7 +20,6 @@ export default ({
         ))}
       </Steps>
     )}
-    <AuthorList />
     <WizardFormStep {...steps[step]} nextStep={nextStep} prevStep={prevStep} />
   </Root>
 )
