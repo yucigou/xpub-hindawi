@@ -94,19 +94,12 @@ module.exports = models => async (req, res) => {
       models.User,
     )
 
-    let emailType = 'invite-editor-in-chief'
-    emailType = !collection
-      ? emailType
-      : await helpers.createNewTeam(
-          collection.id,
-          emailType,
-          newUser,
-          models.Team,
-        )
+    if (collection)
+      await helpers.createNewTeam(collection.id, newUser, models.Team)
 
     await mailService.setupEmail(
       newUser.email,
-      emailType,
+      'invite',
       newUser.passwordResetToken,
     )
 
