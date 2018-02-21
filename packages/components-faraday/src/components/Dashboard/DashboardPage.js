@@ -1,9 +1,11 @@
 import { get } from 'lodash'
-import { compose } from 'recompose'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { actions } from 'pubsweet-client'
+import { withJournal } from 'xpub-journal'
 import { ConnectPage } from 'xpub-connect'
 import { withRouter } from 'react-router-dom'
+import { compose, withContext } from 'recompose'
 import { newestFirst, selectCurrentUser } from 'xpub-selectors'
 import { createDraftSubmission } from 'pubsweet-component-wizard/src/redux/conversion'
 
@@ -48,6 +50,7 @@ export default compose(
     }),
   ),
   withRouter,
+  withJournal,
   withFilters({
     status: {
       options: [
@@ -82,4 +85,10 @@ export default compose(
       },
     },
   }),
+  withContext(
+    {
+      journal: PropTypes.object,
+    },
+    ({ journal }) => ({ journal }),
+  ),
 )(Dashboard)
