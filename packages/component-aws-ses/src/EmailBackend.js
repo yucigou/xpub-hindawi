@@ -1,25 +1,22 @@
 const nodemailer = require('nodemailer')
-const AWS = require('aws-sdk')
 const config = require('config')
-const _ = require('lodash')
 const logger = require('@pubsweet/logger')
+const AWS = require('aws-sdk')
 
-const sesConfig = _.get(config, 'pubsweet-component-aws-ses')
+const mailerConfig = config.get('mailer')
 
 module.exports = {
   sendEmail: (toEmail, subject, textBody, htmlBody) => {
-    AWS.config.update({
-      secretAccessKey: sesConfig.secretAccessKey,
-      accessKeyId: sesConfig.accessKeyId,
-      region: sesConfig.region,
-    })
-
     const transporter = nodemailer.createTransport({
-      SES: new AWS.SES(),
+      SES: new AWS.SES({
+        secretAccessKey: process.env.AWS_SES_SECRET_KEY,
+        accessKeyId: process.env.AWS_SES_ACCESS_KEY,
+        region: process.env.AWS_SES_REGION,
+      }),
     })
     transporter.sendMail(
       {
-        from: sesConfig.sender,
+        from: mailerConfig.from,
         to: toEmail,
         subject,
         text: textBody,
