@@ -14,7 +14,7 @@ module.exports = models => async (req, res) => {
     logger.error('some parameters are missing')
     return
   }
-  // console.log(req.body)
+
   const collectionId = get(req, 'params.collectionId')
   const reqUser = await models.User.find(req.user)
   let collection
