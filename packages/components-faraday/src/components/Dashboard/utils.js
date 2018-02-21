@@ -53,7 +53,14 @@ export const parseType = version => {
 
 export const parseSubmissionDate = version => {
   const submitted = get(version, 'submitted')
-  return submitted ? moment(submitted).format('DD-MM-YYYY') : 'N/A'
+  const submittedDate = moment(submitted)
+  const today = moment()
+  const daysAgo = moment.duration(today - moment(submitted)).days()
+  return submitted
+    ? `${submittedDate.format('DD.MM.YYYY')} ${
+        daysAgo > 0 ? `(${daysAgo} days)` : ''
+      }`
+    : 'N/A'
 }
 
 export const parseVersion = version => ({
