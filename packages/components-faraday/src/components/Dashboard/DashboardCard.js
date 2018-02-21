@@ -22,7 +22,10 @@ const DashboardCard = ({
   const hasFiles = !isEmpty(files)
   const abstract = get(version, 'metadata.abstract')
   const metadata = get(version, 'metadata')
-  return (
+  const journalIssueType = journal.issueTypes.find(
+    t => t.value === get(metadata, 'issue'),
+  )
+  return version ? (
     <Card>
       <ListView>
         <Left>
@@ -69,9 +72,7 @@ const DashboardCard = ({
       <DetailsView>
         <LeftDetails>
           <JournalTitle>{journal.metadata.nameText}</JournalTitle>
-          <Issue>
-            {journal.issueTypes.find(t => t.value === metadata.issue).label}
-          </Issue>
+          {journalIssueType && <Issue>{journalIssueType.label}</Issue>}
           {get(version, 'authors') && (
             <Authors>
               <span>Authors:</span>
@@ -111,7 +112,7 @@ const DashboardCard = ({
         </RightDetails>
       </DetailsView>
     </Card>
-  )
+  ) : null
 }
 
 export default compose(getContext({ journal: PropTypes.object }))(DashboardCard)
