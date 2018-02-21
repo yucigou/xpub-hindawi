@@ -32,13 +32,13 @@ module.exports = models => async (req, res) => {
       res.status(inviteRight.status).json({
         error: inviteRight.message,
       })
-      logger.error(`incorrect role when inviting a user`)
+      logger.error(`incorrect role when inviting a ${role}`)
       return
     }
   } else if (collectionId) {
     if (!configRoles.collection.includes(role)) {
       res
-        .status(400)
+        .status(403)
         .json({ error: `Role ${role} cannot be set on collections` })
       logger.error(`invitation has been attempted with invalid role: ${role}`)
       return
@@ -65,7 +65,7 @@ module.exports = models => async (req, res) => {
       error: `${reqUser.roles ||
         'undefined roles'} cannot invite a ${role} without a collection`,
     })
-    logger.error(`request user does not have any defined roles`)
+    logger.error(`cannot invite manuscript roles without a collection`)
     return
   }
 
@@ -74,7 +74,7 @@ module.exports = models => async (req, res) => {
 
     if (user) {
       res.status(400).json({ error: 'User already exists' })
-      logger.error('admin tried to invite existing user')
+      logger.error('someone tried to invite existing user')
       return
     }
   } catch (e) {
