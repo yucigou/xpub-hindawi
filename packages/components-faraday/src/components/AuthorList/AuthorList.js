@@ -1,7 +1,8 @@
 import React from 'react'
+import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import {
   compose,
@@ -36,7 +37,7 @@ const Authors = ({
   setFormAuthors,
   ...rest
 }) => (
-  <div>
+  <Root>
     <AuthorAdder
       addAuthor={addAuthor}
       authors={authors}
@@ -66,7 +67,7 @@ const Authors = ({
         {...rest}
       />
     )}
-  </div>
+  </Root>
 )
 
 export default compose(
@@ -137,3 +138,10 @@ export default compose(
     },
   }),
 )(Authors)
+
+// #region styled-components
+const Root = styled.div`
+  border: 1px solid #667080;
+  padding: 0 10px;
+`
+// #endregion

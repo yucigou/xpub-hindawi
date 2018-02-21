@@ -11,6 +11,7 @@ export default ({
   editComponent,
   setAuthorEdit,
   parseAuthorType,
+  setAsCorresponding,
   ...rest
 }) => (
   <div>
@@ -28,6 +29,8 @@ export default ({
             setAuthorEdit,
             countryParser,
             parseAuthorType,
+            setAsCorresponding,
+            ...author,
           })
         ) : (
           <Author
@@ -37,6 +40,7 @@ export default ({
             index={index}
             parseAuthorType={parseAuthorType}
             removeAuthor={removeAuthor}
+            setAsCorresponding={setAsCorresponding}
             {...rest}
           />
         ),
