@@ -2,12 +2,30 @@ const logger = require('@pubsweet/logger')
 const helpers = require('../helpers/helpers')
 
 module.exports = models => async (req, res) => {
-  if (!helpers.checkForUndefinedParams(req.body)) {
+  const {
+    email,
+    firstName,
+    lastName,
+    title,
+    affiliation,
+    password,
+    token,
+  } = req.body
+  if (
+    !helpers.checkForUndefinedParams(
+      email,
+      firstName,
+      lastName,
+      title,
+      affiliation,
+      password,
+      token,
+    )
+  ) {
     res.status(400).json({ error: 'missing required params' })
     return
   }
 
-  const { password } = req.body
   if (password.length < 7) {
     res
       .status(400)
@@ -18,18 +36,9 @@ module.exports = models => async (req, res) => {
     return
   }
 
-  const updateFields = {
-    password,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    affiliation: req.body.affiliation,
-    title: req.body.title,
-    isConfirmed: true,
-  }
-
   const validateResponse = await helpers.validateEmailAndToken(
-    req.body.email,
-    req.body.token,
+    email,
+    token,
     models.User,
   )
   if (validateResponse.success === false) {
@@ -42,6 +51,15 @@ module.exports = models => async (req, res) => {
   if (validateResponse.user.isConfirmed) {
     res.status(400).json({ error: 'User is already confirmed' })
     return
+  }
+
+  const updateFields = {
+    password,
+    firstName,
+    lastName,
+    affiliation,
+    title,
+    isConfirmed: true,
   }
 
   let newUser = Object.assign(

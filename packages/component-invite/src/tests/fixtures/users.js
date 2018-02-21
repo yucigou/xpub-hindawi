@@ -1,4 +1,4 @@
-module.exports = {
+const users = {
   admin: {
     type: 'user',
     username: 'admin',
@@ -11,10 +11,17 @@ module.exports = {
     type: 'user',
     username: 'editor',
     email: 'editor@example.com',
-    password: 'test',
+    password: 'test1234',
     admin: false,
     id: 'editor123',
     roles: ['editorInChief'],
+    passwordResetToken: 'token123',
+    firstName: 'vlad',
+    lastName: 'dracul',
+    affiliation: 'MIT',
+    title: 'prof',
+    save: jest.fn(() => users.editorInChief),
+    isConfirmed: false,
   },
   handlingEditor: {
     type: 'user',
@@ -26,3 +33,5 @@ module.exports = {
     roles: ['handlingEditor'],
   },
 }
+
+module.exports = users

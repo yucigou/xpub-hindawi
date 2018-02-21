@@ -170,8 +170,8 @@ describe('Post invite route handler', () => {
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('User already exists')
   })
-  it('should return success when the editor in chief invites a manuscript role with a collection', async () => {
-    body.role = manuscriptRoles[random(0, manuscriptRoles.length - 1)]
+  it('should return success when the editor in chief invites a handling Editor with a collection', async () => {
+    body.role = 'handlingEditor'
     body.admin = false
     const req = httpMocks.createRequest({
       body,
