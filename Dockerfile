@@ -13,12 +13,12 @@ RUN [ "yarn", "install", "--frozen-lockfile" ]
 RUN [ "yarn", "cache", "clean"]
 RUN [ "rm", "-rf", "/npm-packages-offline-cache"]
 
-ENV NODE_ENV "production"
+# ENV NODE_ENV "production"
 
 # We are temporarily going to use the same image with different commands to deploy different apps in the monorepo. This is bad :(.
 
-WORKDIR ${HOME}/packages/xpub-collabra
-RUN [ "npx", "pubsweet", "build"]
+# WORKDIR ${HOME}/packages/xpub-collabra
+# RUN [ "npx", "pubsweet", "build"]
 
 ## No xpub-ui to deploy yet
 # WORKDIR ${HOME}/packages/xpub-ui
@@ -26,7 +26,11 @@ RUN [ "npx", "pubsweet", "build"]
 ## Create file for kubernetes health checks
 # RUN touch ./styleguide/health
 
+ENV NODE_ENV "development"
+WORKDIR ${HOME}/packages/xpub-faraday
+RUN [ "npm", "run", "reset", "--username", "admin", "--email", "admin@mailinator.com", "--password", "admin123"]
+
 EXPOSE 3000
 
-WORKDIR ${HOME}
-CMD []
+# WORKDIR ${HOME}
+CMD ["npm", "run", "start-now"]
