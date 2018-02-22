@@ -2,7 +2,7 @@ const theme = {
   colorPrimary: '#667080', // Indicates a primary call to action
   colorSecondary: '#d8d8d8', // Default color for non-primary actions
   colorFurniture: '#cccccc', // Meant to be applied to elements that indicate content division
-  colorBorder: '#aaaaaa', // For borders around form elements
+  colorBorder: '#667080', // For borders around form elements
   colorBackgroundHue: '#f1f1f1', // Used to create a discrete contrast the default background color
   colorSuccess: '#005500', // Used to indicate a successful validation state
   colorError: '#b50000', // Used to indicate an error in validation

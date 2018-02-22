@@ -17,9 +17,11 @@ const AppBar = ({
   theme,
 }) => (
   <Root>
-    {React.cloneElement(brand, {
-      onClick: goTo('/'),
-    })}
+    <Brand>
+      {React.cloneElement(brand, {
+        onClick: goTo('/'),
+      })}
+    </Brand>
     {user && (
       <User>
         <div onClick={toggleMenu}>
@@ -53,16 +55,26 @@ const Root = styled.div`
   font-family: ${props => props.theme.fontInterface};
   display: flex;
   justify-content: space-between;
-  height: 40px;
+  height: 60px;
+  flex-grow: 1;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  background-color: #ffffff;
+`
+
+const Brand = styled.div`
   padding: 10px 20px;
+  cursor: pointer;
 `
 
 const User = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  height: 40px;
+  height: 60px;
   position: relative;
+  padding: 10px 20px;
 
   > div:first-child {
     align-items: center;
@@ -84,8 +96,8 @@ const Dropdown = styled.div`
     `${theme.borderWidth} ${theme.borderStyle} ${theme.colorFurniture}`};
   position: absolute;
   min-width: 150px;
-  right: 0;
-  top: 50px;
+  right: 20px;
+  top: 70px;
   z-index: 10;
 `
 
