@@ -174,11 +174,11 @@ export default compose(
 
         if (
           allowedFileExtensions &&
-          allowedFileExtensions.includes(fileExtention)
+          !allowedFileExtensions.includes(fileExtention)
         ) {
-          addFile(file)
-        } else {
           setError('Invalid file type.')
+        } else {
+          addFile(file)
         }
       },
     },

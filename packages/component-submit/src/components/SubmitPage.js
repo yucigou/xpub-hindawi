@@ -9,8 +9,6 @@ import { selectCollection, selectFragment } from 'xpub-selectors'
 import Submit from './Submit'
 
 const onSubmit = (values, dispatch, { history, project, version }) =>
-  // console.log('submit', values)
-
   dispatch(
     actions.updateFragment(project, {
       id: version.id,
