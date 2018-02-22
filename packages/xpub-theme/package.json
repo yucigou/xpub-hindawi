@@ -10,6 +10,9 @@
     "typeface-fira-mono": "^0.0.43",
     "typeface-fira-sans": "^0.0.43",
     "typeface-fira-sans-condensed": "^0.0.43",
+    "typeface-noto-sans": "0.0.54",
+    "typeface-noto-serif": "0.0.54",
+    "typeface-ubuntu-mono": "0.0.54",
     "typeface-vollkorn": "^0.0.43"
   },
   "dependencies_disabled": {

@@ -1,19 +1,26 @@
-import React from 'react'
-import { compose } from 'recompose'
+import React, { Fragment } from 'react'
+import { pick } from 'lodash'
 import { Icon } from '@pubsweet/ui'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { reduxForm } from 'redux-form'
+import { compose, withHandlers, withProps } from 'recompose'
+import { reduxForm, Field, change as changeForm } from 'redux-form'
 
 import countries from './countries'
 import { Spinner } from '../UIComponents'
 import { getAuthorFetching } from '../../redux/authors'
 import { ValidatedTextField, MenuItem } from './FormItems'
 
-const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
+const emailRegex = new RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
+)
 
 const emailValidator = value =>
   emailRegex.test(value) ? undefined : 'Invalid email'
+
+const renderCheckbox = ({ input }) => (
+  <input checked={input.value} type="checkbox" {...input} />
+)
 
 const AuthorEdit = ({
   isFetching,
@@ -23,19 +30,23 @@ const AuthorEdit = ({
   index,
   isSubmitting,
   isCorresponding,
-  setAsCorresponding,
   email,
+  changeCorresponding,
 }) => (
   <Root>
     <Header>
       <TitleContainer>
         <span>{parseAuthorType(isSubmitting, isCorresponding, index)}</span>
-        <input
-          checked={isCorresponding}
-          onChange={setAsCorresponding(email)}
-          type="checkbox"
-        />
-        <label>Corresponding</label>
+        {!isSubmitting && (
+          <Fragment>
+            <Field
+              component={renderCheckbox}
+              name="edit.isCorresponding"
+              onChange={changeCorresponding(email)}
+            />
+            <label>Corresponding</label>
+          </Fragment>
+        )}
       </TitleContainer>
 
       <ButtonsContainer>
@@ -76,9 +87,34 @@ const AuthorEdit = ({
 )
 
 export default compose(
-  connect(state => ({
-    isFetching: getAuthorFetching(state),
+  connect(
+    state => ({
+      isFetching: getAuthorFetching(state),
+    }),
+    { changeForm },
+  ),
+  withProps(props => ({
+    initialValues: {
+      edit: pick(props, [
+        'isCorresponding',
+        'firstName',
+        'lastName',
+        'middleName',
+        'email',
+        'affiliation',
+        'country',
+      ]),
+    },
   })),
+  withHandlers({
+    changeCorresponding: ({ changeForm, setAsCorresponding }) => email => (
+      evt,
+      newValue,
+    ) => {
+      setAsCorresponding(email)()
+      changeForm('edit', 'edit.isCorresponding', newValue)
+    },
+  }),
   reduxForm({
     form: 'edit',
     onSubmit: (
@@ -113,7 +149,6 @@ const TitleContainer = styled.div`
     font-family: Helvetica;
     font-size: 14px;
     font-weight: 600;
-    margin-right: 20px;
     text-align: left;
   }
 

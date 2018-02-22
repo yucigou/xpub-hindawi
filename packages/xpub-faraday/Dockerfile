@@ -1,1 +1,0 @@
-FROM bogdandev/xpub-faraday:21.02
