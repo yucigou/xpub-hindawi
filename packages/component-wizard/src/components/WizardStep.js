@@ -24,7 +24,7 @@ export default ({
   wizard: { confirmationModal: ConfirmationModal },
   ...rest
 }) => (
-  <Root width="700px">
+  <Root width="800px">
     <FormContainer onSubmit={handleSubmit}>
       <Title>{title}</Title>
       {subtitle && (
@@ -92,7 +92,7 @@ const Root = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   padding: 0 20px;
-  width: ${({ width }) => width || '700px'};
+  width: ${({ width }) => width || '800px'};
 `
 
 const FormContainer = styled.form`

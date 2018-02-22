@@ -146,7 +146,7 @@ export default compose(
 
 // #region styled-components
 const Root = styled.div`
-  border: 1px solid #667080;
+  border: ${({ theme }) => theme.borderDefault};
   padding: 0 10px;
 `
 // #endregion
