@@ -113,7 +113,6 @@ const TitleContainer = styled.div`
     font-family: Helvetica;
     font-size: 14px;
     font-weight: 600;
-    margin-right: 20px;
     text-align: left;
   }
 
