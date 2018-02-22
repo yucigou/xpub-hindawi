@@ -8,7 +8,6 @@ const resetUrl = config.get('invite-reset-password.url')
 
 module.exports = {
   setupInviteEmail: async (email, emailType, token, comment = '') => {
-    console.log('asereke', emailType)
     let subject
     const htmlFile = readFile(`${__dirname}/templates/${emailType}.html`)
     const textFile = readFile(`${__dirname}/templates/${emailType}.txt`)

@@ -1,5 +1,5 @@
 {
-  "name": "pubsweet-components-aws-ses",
+  "name": "@pubsweet/component-aws-ses",
   "version": "0.2.0",
   "description": "xpub aws ses configured for faraday",
   "license": "MIT",
