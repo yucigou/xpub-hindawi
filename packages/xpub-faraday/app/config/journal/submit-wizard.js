@@ -1,7 +1,8 @@
 import React from 'react'
+import styled from 'styled-components'
+import uploadFileFn from 'xpub-upload'
 import { AbstractEditor, TitleEditor } from 'xpub-edit'
 import { Menu, CheckboxGroup, YesOrNo, TextField } from '@pubsweet/ui'
-import uploadFileFn from 'xpub-upload'
 import { required, minChars, minSize } from 'xpub-validators'
 import { AuthorList, Files } from 'pubsweet-components-faraday/src/components'
 
@@ -18,22 +19,29 @@ import {
 const min3Chars = minChars(3)
 const declarationsMinSize = minSize(declarations.options.length)
 
+// #region styles
+const StyledLabel = styled.label`
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: ${({ margin }) => margin || '5px'};
+  margin-top: ${({ margin }) => margin || '5px'};
+`
+
+const StyledSpacing = styled.div`
+  width: 100%;
+  height: 15px;
+`
+// #endregion
+
 const yesNoWithLabel = ({ label, ...rest }) => (
   <div>
-    <label style={{ display: 'inline-block', marginBottom: 5, marginTop: 5 }}>
-      {label}
-    </label>
+    <StyledLabel>{label}</StyledLabel>
     <YesOrNo {...rest} />
   </div>
 )
-const Spacing = () => <div style={{ width: '100%', height: '15px' }} />
-const Label = ({ label }) => (
-  <label
-    style={{ display: 'inline-block', marginTop: '15px', marginBottom: '5px' }}
-  >
-    <b>{label}</b>
-  </label>
-)
+const Spacing = () => <StyledSpacing />
+const Label = ({ label }) => <StyledLabel margin="15px">{label}</StyledLabel>
+
 const journal = {
   label: 'Hindawi Faraday',
   value: 'hindawi-faraday',
@@ -70,6 +78,10 @@ export default {
           validate: [required],
         },
         {
+          fieldId: 'spacing-journal',
+          renderComponent: Spacing,
+        },
+        {
           fieldId: 'label-Issue',
           renderComponent: Label,
           label: 'Issue',
@@ -100,7 +112,7 @@ export default {
       label: 'Manuscript & Authors Details',
       title: '3. Manuscript & Authors Details',
       subtitle:
-        'Please provide the details of all the authors of this manuscript....',
+        'Please provide the details of all the authors of this manuscript, in the order that they appear on the manuscript. Your details are already pre-filled since, in order tu submit a manuscript you must be one of the authors',
       children: [
         {
           fieldId: 'metadata.title',

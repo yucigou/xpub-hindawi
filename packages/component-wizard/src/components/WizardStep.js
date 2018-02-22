@@ -84,28 +84,32 @@ export default ({
     <AutosaveIndicator />
   </Root>
 )
-
+// #region styles
 const Root = styled.div`
   align-items: stretch;
-  border: 1px solid var(--color-pending);
+  border: ${({ theme }) => theme.borderDefault};
+  border-radius: ${({ theme }) => theme.borderRadius};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0 20px;
   width: ${({ width }) => width || '800px'};
+  background-color: ${({ theme }) => theme.colorTextReverse};
 `
 
 const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
+  padding: 20px 40px;
 `
-const Title = styled.h3`
+const Title = styled.h5`
   align-self: center;
+  font-size: ${({ theme }) => theme.fontSizeHeading5};
+  margin-bottom: 10px;
 `
 
 const Subtitle = styled.div`
   align-self: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 `
 
 const ButtonContainer = styled.div`
@@ -113,7 +117,7 @@ const ButtonContainer = styled.div`
   align-self: center;
   display: flex;
   justify-content: space-around;
-  margin: 15px 0;
+  margin: 40px 0 20px;
   width: ${({ width }) => width || '400px'};
 `
 
@@ -128,3 +132,4 @@ const ModalContainer = styled.div`
   right: 0;
   top: 0;
 `
+// #endregion

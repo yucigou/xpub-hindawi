@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { compose, withProps } from 'recompose'
 // import { Icon, Spinner } from '@pubsweet/ui'
 import { Icon } from '@pubsweet/ui'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import { getFormValues } from 'redux-form'
 
 import Spinner from 'pubsweet-components-faraday/src/components/UIComponents/Spinner'
@@ -23,6 +23,7 @@ const Indicator = ({
   errorText = 'Changes not saved',
   successText,
   autosave: { isFetching, error, lastUpdate },
+  theme,
 }) =>
   isVisibile ? (
     <Root>
@@ -46,11 +47,11 @@ const Indicator = ({
         error && (
           <AutoSaveContainer>
             <IconContainer>
-              <Icon color="var(--color-danger)" size={16}>
+              <Icon color={theme.colorError} size={16}>
                 alert-triangle
               </Icon>
             </IconContainer>
-            <Info error="var(--color-danger)" title={error}>
+            <Info error={theme.colorError} title={error}>
               {errorText}
             </Info>
           </AutoSaveContainer>
@@ -66,8 +67,10 @@ export default compose(
   withProps(({ autosave: { isFetching, error, lastUpdate }, form }) => ({
     isVisibile: form && Boolean(isFetching || lastUpdate || error),
   })),
+  withTheme,
 )(Indicator)
 
+// #region styles
 const Root = styled.div`
   align-items: center;
   display: flex;
@@ -88,3 +91,4 @@ const Info = styled.span`
   margin-left: 5px;
   color: ${({ error }) => error || ''};
 `
+// #endregion
