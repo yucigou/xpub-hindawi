@@ -52,7 +52,7 @@ const LabelContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 5px;
-  width: ${({ width }) => `${width || 225}px`};
+  width: ${({ width }) => `${width || 175}px`};
 
   span:first-child {
     font-size: 14px;
