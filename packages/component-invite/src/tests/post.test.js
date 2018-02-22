@@ -8,7 +8,9 @@ const UserMock = require('./mocks/User')
 const Chance = require('chance')
 const TeamMock = require('./mocks/Team')
 
-jest.mock('pubsweet-component-mail-service', () => ({ setupEmail: jest.fn() }))
+jest.mock('pubsweet-component-mail-service', () => ({
+  setupInviteEmail: jest.fn(),
+}))
 const chance = new Chance()
 const globalRoles = ['editorInChief', 'author', 'admin']
 const manuscriptRoles = ['handlingEditor', 'reviewer']

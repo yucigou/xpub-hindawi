@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "invite component for pubsweet",
   "license": "MIT",
-  "files": [
-    "src"
-  ],
+  "author": "Collaborative Knowledge Foundation",
+  "files": ["src"],
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
@@ -20,24 +20,18 @@
   },
   "peerDependencies": {
     "@pubsweet/logger": "^0.0.1",
-    "pubsweet": "^1.1.1",
-    "pubsweet-client": "^1.1.1",
-    "pubsweet-server": "^1.0.1"
+    "pubsweet-server": "^1.0.1",
+    "pubsweet-component-mail-service": "0.0.1"
   },
   "devDependencies": {
     "jest": "^22.1.1",
     "supertest": "^3.0.0"
   },
   "jest": {
-    "moduleNameMapper": {
-      "\\.s?css$": "identity-obj-proxy"
-    },
-    "transformIgnorePatterns": [
-      "/node_modules/(?!@?pubsweet)"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules",
-      "config/"
-    ]
+    "verbose": true,
+    "testRegex": "/src/.*.test.js$"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

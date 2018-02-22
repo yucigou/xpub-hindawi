@@ -51,6 +51,11 @@ const validateEmailAndToken = async (email, token, userModel) => {
       message: e.details[0].message,
     }
   }
+  return {
+    success: false,
+    status: 500,
+    message: 'something went wrong',
+  }
 }
 
 const hasInviteRight = (configRoles, userRoles, role) => {
@@ -68,6 +73,8 @@ const hasInviteRight = (configRoles, userRoles, role) => {
 
   return {
     success: true,
+    status: null,
+    message: null,
   }
 }
 

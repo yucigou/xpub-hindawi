@@ -97,7 +97,7 @@ module.exports = models => async (req, res) => {
     if (collection)
       await helpers.createNewTeam(collection.id, newUser, models.Team)
 
-    await mailService.setupEmail(
+    await mailService.setupInviteEmail(
       newUser.email,
       'invite',
       newUser.passwordResetToken,

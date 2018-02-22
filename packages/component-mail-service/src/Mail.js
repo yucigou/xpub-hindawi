@@ -1,13 +1,14 @@
 const fs = require('fs')
 const handlebars = require('handlebars')
 const querystring = require('querystring')
-const SES = require('pubsweet-components-aws-ses')
+const SES = require('@pubsweet/component-aws-ses')
 const config = require('config')
 
 const resetUrl = config.get('invite-reset-password.url')
 
 module.exports = {
-  setupEmail: async (email, emailType, token, comment = '') => {
+  setupInviteEmail: async (email, emailType, token, comment = '') => {
+    console.log('asereke', emailType)
     let subject
     const htmlFile = readFile(`${__dirname}/templates/${emailType}.html`)
     const textFile = readFile(`${__dirname}/templates/${emailType}.txt`)
@@ -16,7 +17,7 @@ module.exports = {
     const textTemplate = handlebars.compile(textFile)
 
     switch (emailType) {
-      case 'invite-editor-in-chief':
+      case 'invite':
         subject = 'Hindawi Invitation'
         replacements = {
           url: `${resetUrl}?${querystring.encode({
