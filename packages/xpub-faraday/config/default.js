@@ -5,6 +5,14 @@ const components = require('./components.json')
 const logger = require('winston')
 
 const environment = process.env.NODE_ENV || 'development'
+const getInviteUrl = () => {
+  if (process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL) {
+    return process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL
+  } else if (process.env.NOW_URL) {
+    return `${process.env.NOW_URL}/invite`
+  }
+  return 'http://localhost:3000/invite'
+}
 
 module.exports = {
   authsome: {
@@ -26,7 +34,7 @@ module.exports = {
   'pubsweet-client': {
     API_ENDPOINT: '/api',
     'login-redirect': '/',
-    'redux-log': true,
+    'redux-log': false,
     theme: process.env.PUBSWEET_THEME,
   },
   'mail-transport': {
@@ -62,9 +70,7 @@ module.exports = {
   //   sender: process.env.EMAIL_SENDER,
   // },
   'invite-reset-password': {
-    url:
-      process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL ||
-      'http://localhost:3000/invite',
+    url: getInviteUrl(),
   },
   roles: {
     global: ['admin', 'editorInChief', 'author'],
