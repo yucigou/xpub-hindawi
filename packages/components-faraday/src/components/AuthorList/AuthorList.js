@@ -1,7 +1,8 @@
 import React from 'react'
+import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import {
   compose,
@@ -36,7 +37,7 @@ const Authors = ({
   setFormAuthors,
   ...rest
 }) => (
-  <div>
+  <Root>
     <AuthorAdder
       addAuthor={addAuthor}
       authors={authors}
@@ -66,23 +67,22 @@ const Authors = ({
         {...rest}
       />
     )}
-  </div>
+  </Root>
 )
 
 export default compose(
   withRouter,
   getContext({ version: PropTypes.object, project: PropTypes.object }),
-  connect(null, {
-    addAuthor,
-    changeForm,
-  }),
-  withState('authors', 'setAuthors', []),
-  lifecycle({
-    componentDidMount() {
-      const { version, setAuthors } = this.props
-      setAuthors(version.authors)
+  connect(
+    state => ({
+      currentUser: state.currentUser.user,
+    }),
+    {
+      addAuthor,
+      changeForm,
     },
-  }),
+  ),
+  withState('authors', 'setAuthors', []),
   withState('editMode', 'setEditMode', false),
   withState('editedAuthor', 'setEditedAuthor', -1),
   withHandlers({
@@ -131,4 +131,17 @@ export default compose(
       setFormAuthors(newAuthors)
     },
   }),
+  lifecycle({
+    componentDidMount() {
+      const { version, setAuthors } = this.props
+      setAuthors(version.authors)
+    },
+  }),
 )(Authors)
+
+// #region styled-components
+const Root = styled.div`
+  border: 1px solid #667080;
+  padding: 0 10px;
+`
+// #endregion

@@ -102,7 +102,7 @@ const SortableList = ({
       <DecoratedItem
         dragHandle={dragHandle}
         index={i}
-        key={item[itemKey]}
+        key={getKey(item, 'id')}
         listItem={listItem}
         moveItem={moveItem}
         {...item}
@@ -111,6 +111,14 @@ const SortableList = ({
     ))}
   </div>
 )
+
+const getKey = (item, itemKey) => {
+  if (item[itemKey]) {
+    return item[itemKey]
+  }
+
+  return Object.values(item)[0]
+}
 
 // helper function for sortable lists
 SortableList.moveItem = (items, dragIndex, hoverIndex) => {

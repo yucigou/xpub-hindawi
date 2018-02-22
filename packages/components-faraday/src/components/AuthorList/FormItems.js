@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import styled from 'styled-components'
 import { required } from 'xpub-validators'
 import { TextField, Menu, ValidatedField, Icon } from '@pubsweet/ui'
 
@@ -32,10 +33,10 @@ export const MenuItem = ({ label, name, options }) => (
 )
 
 export const Label = ({ label, value }) => (
-  <div className={classnames(classes['label-container'])}>
-    <span className={classnames(classes.label)}>{label}</span>
-    <span className={classnames(classes.value)}>{value}</span>
-  </div>
+  <LabelContainer>
+    <span>{label}</span>
+    <span>{value}</span>
+  </LabelContainer>
 )
 
 export const DragHandle = () => (
@@ -45,3 +46,29 @@ export const DragHandle = () => (
     <Icon>chevron_down</Icon>
   </div>
 )
+
+// #region styled-components
+const LabelContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  width: ${({ width }) => `${width || 225}px`};
+
+  span:first-child {
+    font-size: 14px;
+    font-weight: 300;
+    overflow: hidden;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  span:last-child {
+    font-size: 16px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`
+// #endregion
