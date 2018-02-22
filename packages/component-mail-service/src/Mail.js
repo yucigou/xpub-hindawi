@@ -1,7 +1,7 @@
 const fs = require('fs')
 const handlebars = require('handlebars')
 const querystring = require('querystring')
-const SES = require('@pubsweet/component-aws-ses')
+const Email = require('@pubsweet/component-send-email')
 const config = require('config')
 
 const resetUrl = config.get('invite-reset-password.url')
@@ -33,7 +33,7 @@ module.exports = {
     const htmlBody = htmlTemplate(replacements)
     const textBody = textTemplate(replacements)
 
-    SES.sendEmail(email, subject, textBody, htmlBody)
+    Email.send(email, subject, textBody, htmlBody)
   },
 }
 
