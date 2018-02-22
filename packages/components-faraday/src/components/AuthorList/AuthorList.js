@@ -124,10 +124,15 @@ export default compose(
       setFormAuthors(newAuthors)
     },
     setAsCorresponding: ({ authors, setFormAuthors }) => authorEmail => () => {
-      const newAuthors = authors.map(a => ({
-        ...a,
-        isCorresponding: a.isSubmitting || a.email === authorEmail,
-      }))
+      const newAuthors = authors.map(
+        a =>
+          a.email === authorEmail
+            ? {
+                ...a,
+                isCorresponding: !a.isCorresponding,
+              }
+            : { ...a, isCorresponding: false },
+      )
       setFormAuthors(newAuthors)
     },
   }),

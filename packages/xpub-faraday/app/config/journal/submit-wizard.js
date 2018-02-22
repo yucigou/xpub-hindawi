@@ -92,7 +92,7 @@ export default {
           fieldId: 'declarations',
           renderComponent: CheckboxGroup,
           options: declarations.options,
-          // validate: [required, declarationsMinSize],
+          validate: [required, declarationsMinSize],
         },
       ],
     },
