@@ -11,7 +11,9 @@ import { Spinner } from '../UIComponents'
 import { getAuthorFetching } from '../../redux/authors'
 import { ValidatedTextField, MenuItem } from './FormItems'
 
-const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
+const emailRegex = new RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
+)
 
 const emailValidator = value =>
   emailRegex.test(value) ? undefined : 'Invalid email'
