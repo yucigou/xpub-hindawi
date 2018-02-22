@@ -26,6 +26,7 @@ const theme = {
 
   gridUnit: '32px', // Base interface space measurement used by elements and typography
 
+  borderDefault: '1px solid #667080',
   borderRadius: '2px', // Radius value applied to borders throughout the user interface
   borderWidth: '1px', // Width value applied to borders
   borderStyle: 'solid', // Style applied to borders (eg. solid, dashed)

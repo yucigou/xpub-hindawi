@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { get, isEmpty } from 'lodash'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Button, Icon } from '@pubsweet/ui'
 import { compose, getContext } from 'recompose'
 
@@ -118,15 +118,19 @@ const DashboardCard = ({
 export default compose(getContext({ journal: PropTypes.object }))(DashboardCard)
 
 // #region styled-components
+const defaultText = css`
+  color: ${({ theme }) => theme.colorText};
+  font-family: ${({ theme }) => theme.fontReading};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+`
+
 const PreviewContainer = styled.div`
   display: flex;
   margin-top: 18px;
 `
 
 const AuthorList = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 14px;
+  ${defaultText};
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
@@ -143,9 +147,7 @@ const Authors = styled.div`
   margin-top: 15px;
 
   span:first-child {
-    color: #667080;
-    font-family: Helvetica;
-    font-size: 12px;
+    ${defaultText};
     margin-right: 8px;
     text-align: left;
     text-transform: uppercase;
@@ -153,15 +155,12 @@ const Authors = styled.div`
 `
 
 const ActionButtons = styled(Button)`
+  ${defaultText};
   align-items: center;
-  background-color: #667080;
+  background-color: #${({ theme }) => theme.colorPrimary};
   display: flex;
-  height: 20px;
   padding: 4px 8px;
-  font-family: Helvetica;
-  font-size: 12px;
   text-align: center;
-  color: #ffffff;
 `
 
 const LeftDetails = styled.div`
@@ -186,26 +185,21 @@ const RightDetails = styled.div`
 `
 
 const Label = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 12px;
+  ${defaultText};
   text-align: left;
   text-transform: uppercase;
   width: 150px;
 `
 
 const JournalTitle = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 14px;
+  ${defaultText};
+  font-size: ${({ theme }) => theme.fontSizeHeading6};
   font-weight: bold;
   text-align: left;
 `
 
 const Issue = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 14px;
+  ${defaultText};
   text-align: left;
 `
 
@@ -227,9 +221,7 @@ const ListView = styled.div`
 `
 
 const ManuscriptId = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 12px;
+  ${defaultText};
   margin-left: 8px;
   text-align: left;
   text-decoration: underline;
@@ -237,18 +229,14 @@ const ManuscriptId = styled.span`
 `
 
 const Version = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 13px;
+  ${defaultText};
   text-align: left;
 `
 const Details = styled.div`
   align-items: center;
-  color: #667080;
   cursor: pointer;
   display: flex;
-  font-family: Helvetica;
-  font-size: 14px;
+  ${defaultText};
   margin-left: 8px;
   text-decoration: underline;
   text-align: center;
@@ -259,13 +247,14 @@ const ClickableIcon = styled.div`
   margin: 0 7px;
 
   svg {
-    stroke: ${({ disabled }) => (disabled ? '#eee' : '#667080')};
+    stroke: ${({ disabled, theme }) =>
+      disabled ? theme.colorBackgroundHue : theme.colorPrimary};
   }
 `
 
 const Card = styled.div`
   align-items: center;
-  border: 1px solid #667080;
+  border: ${({ theme }) => theme.borderDefault};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -282,7 +271,7 @@ const Right = styled.div`
 `
 
 const Left = styled.div`
-  border-right: 1px solid #667080;
+  border-right: ${({ theme }) => theme.borderDefault};
   display: flex;
   flex-direction: column;
   flex: 5;
@@ -304,10 +293,8 @@ const ManuscriptInfo = styled.div`
 `
 
 const ManuscriptType = styled.div`
-  border: 1px solid #667080;
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 12px;
+  border: ${({ theme }) => theme.borderDefault};
+  ${defaultText};
   font-weight: bold;
   padding: 6px 4px;
   margin-left: 10px;
@@ -316,28 +303,23 @@ const ManuscriptType = styled.div`
 `
 
 const Title = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 18px;
+  ${defaultText};
+  font-size: ${({ theme }) => theme.fontSizeHeading5};
   text-align: left;
 `
 
 const Status = styled.div`
-  border: 1px solid #667080;
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 12px;
+  border: ${({ theme }) => theme.borderDefault};
+  ${defaultText};
   font-weight: bold;
-  text-align: left;
   margin: 0.5em 0;
   padding: 0.2em 0.5em;
+  text-align: left;
   text-transform: uppercase;
 `
 
 const DateField = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 13px;
+  ${defaultText};
   margin: 0 8px;
   text-align: left;
 `
@@ -349,9 +331,7 @@ const ClickableIconContainer = styled.div`
   margin-right: 8px;
 
   span:last-child {
-    color: #667080;
-    font-family: Helvetica;
-    font-size: 14px;
+    ${defaultText};
     margin-left: 8px;
     text-align: left;
     text-decoration: underline;
