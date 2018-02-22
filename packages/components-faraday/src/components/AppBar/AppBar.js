@@ -2,7 +2,7 @@ import React from 'react'
 import { get } from 'lodash'
 import { Icon } from '@pubsweet/ui'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { withState, withHandlers, compose } from 'recompose'
 
@@ -14,6 +14,7 @@ const AppBar = ({
   goTo,
   currentUser,
   onLogoutClick,
+  theme,
 }) => (
   <Root>
     {React.cloneElement(brand, {
@@ -22,11 +23,11 @@ const AppBar = ({
     {user && (
       <User>
         <div onClick={toggleMenu}>
-          <Icon color="#667080">user</Icon>
+          <Icon color={theme.colorPrimary}>user</Icon>
           <span>
             {get(user, 'firstName') || get(user, 'username') || 'User'}
           </span>
-          <Icon color="#667080">chevron-down</Icon>
+          <Icon color={theme.colorPrimary}>chevron-down</Icon>
         </div>
         {expanded && (
           <Dropdown>
@@ -48,10 +49,11 @@ const AppBar = ({
 // #region styled-components
 const Root = styled.div`
   align-items: center;
-  box-shadow: 0 1px 0 0 #667080;
+  box-shadow: ${props => props.theme.dropShadow};
+  font-family: ${props => props.theme.fontInterface};
   display: flex;
   justify-content: space-between;
-  height: 60px;
+  height: 40px;
   padding: 10px 20px;
 `
 
@@ -59,7 +61,7 @@ const User = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  height: 80px;
+  height: 40px;
   position: relative;
 
   > div:first-child {
@@ -69,37 +71,38 @@ const User = styled.div`
   }
 
   & span {
-    color: #667080;
-    font-family: Helvetica;
-    font-size: 16px;
+    color: ${props => props.theme.colorPrimary};
+    font-family: ${props => props.theme.fontHeading};
+    font-size: ${props => props.theme.fontSizeBase};
     margin-left: 10px;
   }
 `
 
 const Dropdown = styled.div`
-  background-color: #fff;
-  border: 1px solid #667080;
+  background-color: ${props => props.theme.backgroundColor || '#fff'};
+  border: ${({ theme }) =>
+    `${theme.borderWidth} ${theme.borderStyle} ${theme.colorFurniture}`};
   position: absolute;
   min-width: 150px;
   right: 0;
-  top: 80px;
+  top: 50px;
   z-index: 10;
 `
 
 const DropdownOption = styled.div`
   align-items: center;
-  color: #667080;
+  color: ${props => props.theme.colorPrimary};
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
   height: 34px;
-  font-family: Helvetica;
-  font-size: 14px;
-  line-height: 2.43;
-  padding-left: 15px;
+  font-family: ${props => props.theme.fontInterface};
+  font-size: ${props => props.theme.fontSizeBaseSmall};
+  line-height: ${props => props.theme.fontLineHeight};
+  padding: 0 15px;
 
   &:hover {
-    background-color: #d8d8d8;
+    background-color: ${props => props.theme.colorTextReverse || '#d8d8d8'};
   }
 `
 
@@ -115,6 +118,7 @@ const ToggleOverlay = styled.div`
 
 export default compose(
   withRouter,
+  withTheme,
   connect(state => ({
     currentUser: get(state, 'currentUser.user'),
   })),
