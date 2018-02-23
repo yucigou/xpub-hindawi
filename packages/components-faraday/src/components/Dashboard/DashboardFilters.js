@@ -1,8 +1,7 @@
 import React from 'react'
 import { Menu } from '@pubsweet/ui'
 import { compose, withHandlers } from 'recompose'
-
-import classes from './Dashboard.local.scss'
+import styled from 'styled-components'
 
 const sortOptions = [
   { label: 'Newest first', value: 'newest' },
@@ -19,29 +18,29 @@ const DashboardFilters = ({
   getFilterOptions,
   changeFilterValue,
 }) => (
-  <div className={classes.filtersContainer}>
-    <div className={classes.filters}>
+  <Root>
+    <FiltersContainer>
       Filter view:
-      <div className={classes['filter-group']}>
+      <FilterGroup>
         <span>Owner</span>
         <Menu
           onChange={changeFilterValue('owner')}
           options={getFilterOptions('owner')}
         />
-      </div>
-      <div className={classes['filter-group']}>
+      </FilterGroup>
+      <FilterGroup>
         <span>Status</span>
         <Menu
           onChange={changeFilterValue('status')}
           options={getFilterOptions('status')}
         />
-      </div>
-      <div className={classes['filter-group']}>
+      </FilterGroup>
+      <FilterGroup>
         <span>Sort</span>
         <Menu onChange={changeSort} options={sortOptions} />
-      </div>
-    </div>
-  </div>
+      </FilterGroup>
+    </FiltersContainer>
+  </Root>
 )
 
 export default compose(
@@ -51,3 +50,37 @@ export default compose(
     },
   }),
 )(DashboardFilters)
+
+// #region styles
+
+const Root = styled.div`
+  border-bottom: ${({ theme }) => theme.borderDefault};
+  color: ${({ theme }) => theme.colorPrimary};
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0;
+  padding-bottom: 1em;
+`
+
+const FiltersContainer = styled.div`
+  align-items: flex-end;
+  display: flex;
+
+  > span {
+    border: ${({ theme }) => theme.borderDefault};
+    margin: 0 0.5em;
+    padding: 0 5px;
+  }
+`
+
+const FilterGroup = styled.div`
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+
+  > span {
+    margin-left: 10px;
+  }
+`
+
+// #endregion

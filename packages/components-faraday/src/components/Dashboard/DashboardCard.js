@@ -157,7 +157,8 @@ const Authors = styled.div`
 const ActionButtons = styled(Button)`
   ${defaultText};
   align-items: center;
-  background-color: #${({ theme }) => theme.colorPrimary};
+  background-color: ${({ theme }) => theme.colorPrimary};
+  color: ${({ theme }) => theme.colorTextReverse};
   display: flex;
   padding: 4px 8px;
   text-align: center;
@@ -259,6 +260,7 @@ const Card = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   margin-bottom: 10px;
+  background-color: ${({ theme }) => theme.backgroundColorReverse};
 `
 
 const Right = styled.div`

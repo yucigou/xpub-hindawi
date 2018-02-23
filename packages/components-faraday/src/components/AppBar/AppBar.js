@@ -25,11 +25,11 @@ const AppBar = ({
     {user && (
       <User>
         <div onClick={toggleMenu}>
-          <Icon color={theme.colorPrimary}>user</Icon>
+          <Icon color={theme.colorText}>user</Icon>
           <span>
             {get(user, 'firstName') || get(user, 'username') || 'User'}
           </span>
-          <Icon color={theme.colorPrimary}>chevron-down</Icon>
+          <Icon color={theme.colorText}>chevron-down</Icon>
         </div>
         {expanded && (
           <Dropdown>
@@ -83,7 +83,7 @@ const User = styled.div`
   }
 
   & span {
-    color: ${props => props.theme.colorPrimary};
+    color: ${props => props.theme.colorText};
     font-family: ${props => props.theme.fontHeading};
     font-size: ${props => props.theme.fontSizeBase};
     margin-left: 10px;
@@ -103,7 +103,7 @@ const Dropdown = styled.div`
 
 const DropdownOption = styled.div`
   align-items: center;
-  color: ${props => props.theme.colorPrimary};
+  color: ${props => props.theme.colorText};
   cursor: pointer;
   display: flex;
   justify-content: flex-start;

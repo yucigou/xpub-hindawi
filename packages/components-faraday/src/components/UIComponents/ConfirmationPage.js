@@ -1,13 +1,11 @@
 import React from 'react'
-import classnames from 'classnames'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { Button } from '@pubsweet/ui'
 import { get, isEmpty } from 'lodash'
 import { withJournal } from 'xpub-journal'
+import styled from 'styled-components'
 import { getFragmentAuthors } from 'pubsweet-components-faraday/src/redux/authors'
-
-import classes from './UIComponents.local.scss'
 
 const ConfirmationPage = ({
   journal,
@@ -17,12 +15,17 @@ const ConfirmationPage = ({
 }) => {
   const email = get(authors.find(a => a.isCorresponding), 'email')
   return (
-    <div className={classnames(classes.container)}>
+    <Root>
       {isEmpty(state) ? (
-        <h2>Thank you for you submission</h2>
+        <div>
+          <Title>Thank you for you submission</Title>
+          <Button onClick={() => history.push('/')} primary>
+            Go to Dashboard
+          </Button>
+        </div>
       ) : (
         <div>
-          <h2>Thank You for Submitting Your Manuscript</h2>
+          <Title>Thank You for Submitting Your Manuscript</Title>
           <p>
             Your manuscript has been successfully submitted to{' '}
             <b>{journal.metadata.nameText}</b> and assigned the manuscript ID{' '}
@@ -51,7 +54,7 @@ const ConfirmationPage = ({
           </Button>
         </div>
       )}
-    </div>
+    </Root>
   )
 }
 
@@ -61,3 +64,24 @@ export default compose(
     authors: getFragmentAuthors(state, get(locationState, 'version')),
   })),
 )(ConfirmationPage)
+
+// #region styles
+
+const Root = styled.div`
+  margin: 0 auto;
+  text-align: center;
+  width: 70vw;
+  color: ${({ theme }) => theme.colorText};
+
+  a {
+    color: ${({ theme }) => theme.colorText};
+  }
+`
+
+const Title = styled.div`
+  font-size: ${({ theme }) => theme.fontSizeHeading5};
+  font-family: ${({ theme }) => theme.fontHeading};
+  color: ${({ theme }) => theme.colorPrimary};
+  margin: 10px auto;
+`
+// #endregion

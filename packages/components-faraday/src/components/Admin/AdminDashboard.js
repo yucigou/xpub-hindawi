@@ -1,25 +1,25 @@
 import React from 'react'
 import { Icon } from '@pubsweet/ui'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 
-const AdminDashboard = ({ history }) => (
+const AdminDashboard = ({ history, theme }) => (
   <Root>
     <Title>Admin Dashboard</Title>
     <CardContainer>
       <Card>
-        <Icon color="#667080" size={32}>
+        <Icon color={theme.colorPrimary} size={32}>
           edit
         </Icon>
         <span>Journal configuration</span>
       </Card>
       <Card onClick={() => history.push('/admin/users')}>
-        <Icon color="#667080" size={32}>
+        <Icon color={theme.colorPrimary} size={32}>
           users
         </Icon>
         <span>Users</span>
       </Card>
       <Card>
-        <Icon color="#667080" size={32}>
+        <Icon color={theme.colorPrimary} size={32}>
           settings
         </Icon>
         <span>Roles</span>
@@ -28,7 +28,7 @@ const AdminDashboard = ({ history }) => (
   </Root>
 )
 
-export default AdminDashboard
+export default withTheme(AdminDashboard)
 
 // #region Styled components
 const Root = styled.div`
@@ -38,9 +38,9 @@ const Root = styled.div`
 `
 
 const Title = styled.span`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 24px;
+  color: ${({ theme }) => theme.colorPrimary};
+  font-family: ${({ theme }) => theme.fontInterface};
+  font-size: ${({ theme }) => theme.fontSizeHeading5};
   font-weight: bold;
   text-align: left;
 `
@@ -53,7 +53,8 @@ const CardContainer = styled.div`
 
 const Card = styled.div`
   align-items: center;
-  border: 1px solid #979797;
+  border: ${({ theme }) => theme.borderDefault};
+  background-color: ${({ theme }) => theme.backgroundColorReverse};
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -63,12 +64,12 @@ const Card = styled.div`
   width: 210px;
 
   &:hover {
-    background-color: #ddd;
+    background-color: ${({ theme }) => theme.backgroundColor};
   }
 
   > span {
-    color: #667080;
-    font-family: Helvetica;
+    color: ${({ theme }) => theme.colorPrimary};
+    font-family: ${({ theme }) => theme.fontInterface};
     font-size: 18px;
     margin-top: 10px;
     text-align: center;

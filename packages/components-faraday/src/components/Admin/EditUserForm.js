@@ -10,8 +10,8 @@ const EditUserForm = ({ roles, journal, user }) => {
   )
   return (
     <div>
-      <h3>Edit user</h3>
-      <h5>{user.email}</h5>
+      <Title>Edit user</Title>
+      <Subtitle>{user.email}</Subtitle>
       <Row>
         <RowItem>
           <Label> First name* </Label>
@@ -64,10 +64,13 @@ const EditUserForm = ({ roles, journal, user }) => {
 
 export default EditUserForm
 
+// #region styles
+
 const Row = styled.div`
   display: flex;
   flex-direction: row;
   margin: 20px 0;
+  background-color: ${({ theme }) => theme.backgroundColorReverse};
 `
 
 const RowItem = styled.div`
@@ -75,7 +78,20 @@ const RowItem = styled.div`
   margin-right: 20px;
 `
 
+const Title = styled.h4`
+  font-size: ${({ theme }) => theme.fontSizeHeading4};
+  color: ${({ theme }) => theme.colorPrimary};
+  margin: 10px 0;
+`
+
+const Subtitle = styled.div`
+  font-size: ${({ theme }) => theme.fontSizeBase};
+  color: ${({ theme }) => theme.colorPrimary};
+  margin: 0;
+`
+
 const Label = styled.div`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizeBase};
   text-transform: uppercase;
 `
+// #endregion

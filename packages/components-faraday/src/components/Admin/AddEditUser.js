@@ -93,6 +93,8 @@ export default compose(
   }),
 )(AddEditUser)
 
+// #region styles
+
 const Root = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,10 +103,11 @@ const Root = styled.div`
 `
 
 const FormContainer = styled.form`
-  border: 1px solid var(--color-pending);
+  border: ${({ theme }) => theme.borderDefault};
+  background-color: ${({ theme }) => theme.backgroundColorReverse};
   margin: 0 auto;
   min-width: 300px;
-  padding: 20px;
+  padding: 20px 40px;
 `
 
 const Row = styled.div`
@@ -114,3 +117,4 @@ const Row = styled.div`
   align-items: center;
   justify-content: space-evenly;
 `
+// #endregion
