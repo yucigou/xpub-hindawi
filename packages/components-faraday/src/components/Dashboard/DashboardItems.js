@@ -1,8 +1,8 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import Item from './DashboardCard'
 import withVersion from './withVersion'
-import classes from './Dashboard.local.scss'
 
 const DashboardItem = withVersion(Item)
 
@@ -14,13 +14,11 @@ const DashboardItems = ({
 }) => (
   <div>
     {!list.length && (
-      <div className={classes.empty}>
-        Nothing to do at the moment. Please upload a manuscript.
-      </div>
+      <Empty>Nothing to do at the moment. Please upload a manuscript.</Empty>
     )}
 
     {!!list.length && (
-      <div className={classes.section}>
+      <Section>
         {list.map(p => (
           <DashboardItem
             deleteProject={deleteProject}
@@ -30,9 +28,22 @@ const DashboardItems = ({
             showAbstractModal={showAbstractModal}
           />
         ))}
-      </div>
+      </Section>
     )}
   </div>
 )
 
 export default DashboardItems
+
+// #region styles
+
+const Empty = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const Section = styled.div`
+  margin: 0.5em 0;
+`
+
+// #endregion

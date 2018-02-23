@@ -1,12 +1,12 @@
 import React from 'react'
 import { get } from 'lodash'
 import { Icon } from '@pubsweet/ui'
-import styled from 'styled-components'
+import styled, { css, withTheme } from 'styled-components'
 
-const AbstractModal = ({ metadata, hideModal }) => (
+const AbstractModal = ({ metadata, hideModal, theme }) => (
   <Root>
     <CloseIcon onClick={hideModal}>
-      <Icon color="#667080">x</Icon>
+      <Icon color={theme.colorPrimary}>x</Icon>
     </CloseIcon>
     <Title dangerouslySetInnerHTML={{ __html: get(metadata, 'title') }} />
     <Subtitle>Abstract</Subtitle>
@@ -14,29 +14,33 @@ const AbstractModal = ({ metadata, hideModal }) => (
   </Root>
 )
 
-export default AbstractModal
+export default withTheme(AbstractModal)
 
 // #region styled-components
+const defaultText = css`
+  color: ${({ theme }) => theme.colorText};
+  font-family: ${({ theme }) => theme.fontReading};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+`
+
 const Root = styled.div`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.backgroundColor};
   padding: 50px 32px 32px 32px;
-  border: 1px solid #667080;
+  border: ${({ theme }) => theme.borderDefault};
   position: relative;
   width: 600px;
   max-height: 500px;
+  overflow-y: scroll;
 `
 
 const Title = styled.div`
-  font-family: Helvetica;
-  font-size: 18px;
+  ${defaultText};
+  font-size: ${({ theme }) => theme.fontSizeBase};
   text-align: left;
-  color: #667080;
 `
 
 const Subtitle = styled.div`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 14px;
+  ${defaultText};
   font-weight: bold;
   line-height: 1.57;
   margin-bottom: 8px;
@@ -44,9 +48,7 @@ const Subtitle = styled.div`
 `
 
 const Content = styled.div`
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 14px;
+  ${defaultText};
   line-height: 1.57;
   margin-top: 10px;
   text-align: left;

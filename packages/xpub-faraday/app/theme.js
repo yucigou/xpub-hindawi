@@ -2,7 +2,7 @@ const theme = {
   colorPrimary: '#667080', // Indicates a primary call to action
   colorSecondary: '#d8d8d8', // Default color for non-primary actions
   colorFurniture: '#cccccc', // Meant to be applied to elements that indicate content division
-  colorBorder: '#aaaaaa', // For borders around form elements
+  colorBorder: '#667080', // For borders around form elements
   colorBackgroundHue: '#f1f1f1', // Used to create a discrete contrast the default background color
   colorSuccess: '#005500', // Used to indicate a successful validation state
   colorError: '#b50000', // Used to indicate an error in validation
@@ -26,6 +26,7 @@ const theme = {
 
   gridUnit: '32px', // Base interface space measurement used by elements and typography
 
+  borderDefault: '1px solid #667080',
   borderRadius: '2px', // Radius value applied to borders throughout the user interface
   borderWidth: '1px', // Width value applied to borders
   borderStyle: 'solid', // Style applied to borders (eg. solid, dashed)
@@ -33,10 +34,14 @@ const theme = {
   dropShadow: '0 1px 0 0 #667080', // Default shadow that is applied to elements that float (eg. tooltips, modals)
 
   backgroundColor: '#f6f6f6',
+  backgroundColorReverse: '#ffffff',
 
   transitionDuration: '1.5s', // How long transitions should last
   transitionTimingFunction: 'linear', // Which function should be applied to transitions (eg. easein)
   transitionDelay: '0s', // How long transitions should be delayed before they begin
+
+  // z indexes
+  modalIndex: 10000,
 }
 
 export default theme

@@ -17,17 +17,19 @@ const AppBar = ({
   theme,
 }) => (
   <Root>
-    {React.cloneElement(brand, {
-      onClick: goTo('/'),
-    })}
+    <Brand>
+      {React.cloneElement(brand, {
+        onClick: goTo('/'),
+      })}
+    </Brand>
     {user && (
       <User>
         <div onClick={toggleMenu}>
-          <Icon color={theme.colorPrimary}>user</Icon>
+          <Icon color={theme.colorText}>user</Icon>
           <span>
             {get(user, 'firstName') || get(user, 'username') || 'User'}
           </span>
-          <Icon color={theme.colorPrimary}>chevron-down</Icon>
+          <Icon color={theme.colorText}>chevron-down</Icon>
         </div>
         {expanded && (
           <Dropdown>
@@ -53,16 +55,26 @@ const Root = styled.div`
   font-family: ${props => props.theme.fontInterface};
   display: flex;
   justify-content: space-between;
-  height: 40px;
+  height: 60px;
+  flex-grow: 1;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  background-color: #ffffff;
+`
+
+const Brand = styled.div`
   padding: 10px 20px;
+  cursor: pointer;
 `
 
 const User = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  height: 40px;
+  height: 60px;
   position: relative;
+  padding: 10px 20px;
 
   > div:first-child {
     align-items: center;
@@ -71,7 +83,7 @@ const User = styled.div`
   }
 
   & span {
-    color: ${props => props.theme.colorPrimary};
+    color: ${props => props.theme.colorText};
     font-family: ${props => props.theme.fontHeading};
     font-size: ${props => props.theme.fontSizeBase};
     margin-left: 10px;
@@ -84,14 +96,14 @@ const Dropdown = styled.div`
     `${theme.borderWidth} ${theme.borderStyle} ${theme.colorFurniture}`};
   position: absolute;
   min-width: 150px;
-  right: 0;
-  top: 50px;
+  right: 20px;
+  top: 70px;
   z-index: 10;
 `
 
 const DropdownOption = styled.div`
   align-items: center;
-  color: ${props => props.theme.colorPrimary};
+  color: ${props => props.theme.colorText};
   cursor: pointer;
   display: flex;
   justify-content: flex-start;

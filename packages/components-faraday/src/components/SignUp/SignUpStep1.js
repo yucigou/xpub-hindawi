@@ -46,6 +46,7 @@ const RowItem = styled.div`
 `
 
 const Label = styled.div`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  font-family: ${({ theme }) => theme.fontReading};
   text-transform: uppercase;
 `

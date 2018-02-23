@@ -63,8 +63,8 @@ const Header = styled.div`
 `
 
 const Title = styled.span`
-  font-family: Helvetica;
-  font-size: 14px;
+  font-family: ${({ theme }) => theme.fontHeading};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
   font-weight: 600;
 `
 
@@ -100,11 +100,10 @@ const AuthorContainer = styled.div`
 `
 
 const Root = styled.div`
-  border: 1px solid #444;
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
-  border: ${({ isOver }) =>
-    isOver ? '1px dashed #444 !important' : '1px solid #444'};
+  border: ${({ isOver, theme }) =>
+    isOver ? '1px dashed #444 !important' : theme.borderDefault};
 `
 // #endregion

@@ -1,10 +1,10 @@
 import React from 'react'
 import { get } from 'lodash'
 import { Button } from '@pubsweet/ui'
+import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { withModal } from 'pubsweet-component-modal/src/components'
 
-import classes from './Dashboard.local.scss'
 import AbstractModal from './AbstractModal'
 import DashboardItems from './DashboardItems'
 import DashboardFilters from './DashboardFilters'
@@ -23,15 +23,15 @@ const Dashboard = ({
   showAbstractModal,
   ...rest
 }) => (
-  <div className={classes.root}>
-    <div className={classes.header}>
-      <div className={classes.heading}>Manuscripts</div>
-      <div className={classes.headerButtons}>
+  <Root>
+    <Header>
+      <Heading>Manuscripts</Heading>
+      <HeaderButtons>
         <Button onClick={createDraftSubmission} primary>
           New
         </Button>
-      </div>
-    </div>
+      </HeaderButtons>
+    </Header>
     <DashboardFilters
       changeFilterValue={changeFilterValue}
       getFilterOptions={getFilterOptions}
@@ -41,7 +41,7 @@ const Dashboard = ({
       list={getItems()}
       showAbstractModal={showAbstractModal}
     />
-  </div>
+  </Root>
 )
 
 export default compose(
@@ -73,3 +73,29 @@ export default compose(
     },
   }),
 )(Dashboard)
+
+// #region styles
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 60em;
+`
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const Heading = styled.div`
+  color: ${({ theme }) => theme.colorPrimary};
+  font-size: 1.6em;
+  text-transform: uppercase;
+`
+
+const HeaderButtons = styled.div`
+  display: flex;
+`
+
+// #endregion

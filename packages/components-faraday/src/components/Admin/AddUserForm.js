@@ -10,7 +10,7 @@ const AddUserForm = ({ roles, journal }) => {
   )
   return (
     <div>
-      <h3>Add user</h3>
+      <Title>Add user</Title>
       <Row>
         <RowItem>
           <Label> Email*</Label>
@@ -58,6 +58,8 @@ const AddUserForm = ({ roles, journal }) => {
 
 export default AddUserForm
 
+// #region styles
+
 const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -69,7 +71,14 @@ const RowItem = styled.div`
   margin-right: 20px;
 `
 
+const Title = styled.h4`
+  font-size: ${({ theme }) => theme.fontSizeHeading4};
+  color: ${({ theme }) => theme.colorPrimary};
+  margin: 10px 0;
+`
+
 const Label = styled.div`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizeBase};
   text-transform: uppercase;
 `
+// #endregion

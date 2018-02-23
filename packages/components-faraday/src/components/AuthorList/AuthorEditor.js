@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import { pick } from 'lodash'
-import { Icon } from '@pubsweet/ui'
+import { Icon, Checkbox } from '@pubsweet/ui'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { compose, withHandlers, withProps } from 'recompose'
 import { reduxForm, Field, change as changeForm } from 'redux-form'
 
@@ -19,7 +19,7 @@ const emailValidator = value =>
   emailRegex.test(value) ? undefined : 'Invalid email'
 
 const renderCheckbox = ({ input }) => (
-  <input checked={input.value} type="checkbox" {...input} />
+  <Checkbox checked={input.value} type="checkbox" {...input} />
 )
 
 const AuthorEdit = ({
@@ -134,6 +134,12 @@ export default compose(
 )(AuthorEdit)
 
 // #region styled-components
+const defaultText = css`
+  color: ${({ theme }) => theme.colorText};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  font-family: ${({ theme }) => theme.fontReading};
+`
+
 const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -146,15 +152,15 @@ const TitleContainer = styled.div`
   flex-direction: row;
 
   > span {
-    font-family: Helvetica;
-    font-size: 14px;
+    ${defaultText};
+    font-size: ${({ theme }) => theme.fontSizeHeading6};
+    margin-right: 10px;
     font-weight: 600;
     text-align: left;
   }
 
   label {
-    font-family: Helvetica;
-    font-size: 12px;
+    ${defaultText};
     text-align: left;
   }
 `
@@ -184,7 +190,7 @@ const Header = styled.div`
 `
 
 const Root = styled.div`
-  border: 1px solid #444;
+  border: ${({ theme }) => theme.borderDefault};
   margin: 10px 0;
   padding: 10px;
   display: flex;

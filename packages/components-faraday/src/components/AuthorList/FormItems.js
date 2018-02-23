@@ -1,10 +1,7 @@
 import React from 'react'
-import classnames from 'classnames'
-import styled from 'styled-components'
 import { required } from 'xpub-validators'
+import styled, { withTheme, css } from 'styled-components'
 import { TextField, Menu, ValidatedField, Icon } from '@pubsweet/ui'
-
-import classes from './FormItems.local.scss'
 
 export const ValidatedTextField = ({
   label,
@@ -14,48 +11,81 @@ export const ValidatedTextField = ({
 }) => {
   const v = [isRequired && required, ...validators].filter(Boolean)
   return (
-    <div className={classnames(classes['validated-text'])}>
-      <span className={classnames(classes.label)}>{label}</span>
+    <ValidatedTextFieldRoot>
+      <StyledLabel>{label}</StyledLabel>
       <ValidatedField component={TextField} name={name} validate={v} />
-    </div>
+    </ValidatedTextFieldRoot>
   )
 }
 
 export const MenuItem = ({ label, name, options }) => (
-  <div className={classnames(classes['validated-text'], classes['fix-height'])}>
-    <span className={classnames(classes.label)}>{label}</span>
+  <MenuItemRoot>
+    <StyledLabel>{label}</StyledLabel>
     <ValidatedField
       component={input => <Menu {...input} options={options} />}
       name={name}
       validate={[required]}
     />
-  </div>
+  </MenuItemRoot>
 )
 
 export const Label = ({ label, value }) => (
-  <LabelContainer>
+  <LabelRoot>
     <span>{label}</span>
     <span>{value}</span>
-  </LabelContainer>
+  </LabelRoot>
 )
 
-export const DragHandle = () => (
-  <div className={classnames(classes['drag-handle'])}>
-    <Icon>chevron_up</Icon>
-    <Icon size={16}>menu</Icon>
-    <Icon>chevron_down</Icon>
-  </div>
-)
+export const DragHandle = withTheme(({ theme }) => (
+  <DragHandleRoot>
+    <Icon color={theme.colorFurniture}>chevron_up</Icon>
+    <Icon color={theme.colorFurniture} size={16}>
+      menu
+    </Icon>
+    <Icon color={theme.colorFurniture}>chevron_down</Icon>
+  </DragHandleRoot>
+))
 
 // #region styled-components
-const LabelContainer = styled.div`
+const defaultText = css`
+  color: ${({ theme }) => theme.colorText};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  font-family: ${({ theme }) => theme.fontReading};
+`
+
+const ValidatedTextFieldRoot = styled.div`
+  flex: 1;
+  margin-right: 5px;
+`
+
+const MenuItemRoot = styled.div`
+  flex: 1;
+`
+
+const StyledLabel = styled.span`
+  ${defaultText};
+  font-weight: 300;
+  text-transform: uppercase;
+`
+
+const DragHandleRoot = styled.div`
+  align-items: center;
+  border-right: ${({ theme }) => theme.borderDefault};
+  cursor: move;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+`
+
+const LabelRoot = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   margin: 5px;
-  width: ${({ width }) => `${width || 175}px`};
+  width: ${({ width }) => `${width || 150}px`};
 
   span:first-child {
-    font-size: 14px;
+    ${defaultText};
     font-weight: 300;
     overflow: hidden;
     text-transform: uppercase;
@@ -64,7 +94,7 @@ const LabelContainer = styled.div`
   }
 
   span:last-child {
-    font-size: 16px;
+    ${defaultText};
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;

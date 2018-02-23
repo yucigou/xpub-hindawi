@@ -1,5 +1,4 @@
 import React from 'react'
-import 'xpub-bootstrap'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -18,15 +17,6 @@ const App = ({ children, currentUser, journal, logoutUser }) => (
   </Root>
 )
 
-const Root = styled.div`
-  font-family: 'Fira Sans', sans-serif;
-`
-
-const MainContainer = styled.div`
-  padding: 8px;
-  margin-top: 20px;
-`
-
 export default compose(
   connect(
     state => ({
@@ -36,3 +26,13 @@ export default compose(
   ),
   withJournal,
 )(App)
+
+const Root = styled.div`
+  font-family: ${props => props.theme.fontInterface};
+`
+
+const MainContainer = styled.div`
+  padding: 90px 10px 40px;
+  min-height: calc(100vh - 130px);
+  background-color: ${props => props.theme.backgroundColor || '#fff'};
+`
