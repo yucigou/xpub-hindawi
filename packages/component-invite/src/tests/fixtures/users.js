@@ -32,6 +32,22 @@ const users = {
     id: 'handling123',
     roles: ['handlingEditor'],
   },
+  author: {
+    type: 'user',
+    username: 'author',
+    email: 'author@example.com',
+    password: 'test',
+    admin: false,
+    id: 'author123',
+    roles: ['author'],
+    passwordResetToken: 'token123',
+    firstName: 'leopold',
+    lastName: 'smith',
+    affiliation: 'MIT',
+    title: 'mr',
+    save: jest.fn(() => users.authorUser),
+    isConfirmed: false,
+  },
 }
 
 module.exports = users
