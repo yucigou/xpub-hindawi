@@ -30,14 +30,15 @@ class Modal extends React.Component {
 export default Modal
 
 const ModalRoot = styled.div`
-  position: fixed;
+  align-items: center;
+  display: flex;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  display: flex;
+  position: fixed;
   justify-content: center;
-  align-items: center;
   background-color: ${({ overlayColor }) =>
     overlayColor || 'rgba(0, 0, 0, 0.8)'};
+  z-index: ${({ theme }) => theme.modalIndex};
 `

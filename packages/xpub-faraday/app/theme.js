@@ -39,6 +39,9 @@ const theme = {
   transitionDuration: '1.5s', // How long transitions should last
   transitionTimingFunction: 'linear', // Which function should be applied to transitions (eg. easein)
   transitionDelay: '0s', // How long transitions should be delayed before they begin
+
+  // z indexes
+  modalIndex: 10000,
 }
 
 export default theme
