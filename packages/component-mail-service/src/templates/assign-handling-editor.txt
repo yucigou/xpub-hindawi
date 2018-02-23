@@ -1,0 +1,6 @@
+You have been assigned as a Handling Editor to a manuscript.
+Please click on the link below to access your dashboard
+{{ url }} VIEW DASHBOARD
+Hindawi Publishing Corporation
+315 Madison Ave, Third Floor, Suite 307
+New York, NY 10017

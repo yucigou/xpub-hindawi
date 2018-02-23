@@ -7,14 +7,9 @@ const config = require('config')
 const resetUrl = config.get('invite-reset-password.url')
 
 module.exports = {
-  setupInviteEmail: async (email, emailType, token, comment = '') => {
+  setupInviteEmail: async (email, emailType, token) => {
     let subject
-    const htmlFile = readFile(`${__dirname}/templates/${emailType}.html`)
-    const textFile = readFile(`${__dirname}/templates/${emailType}.txt`)
     let replacements = {}
-    const htmlTemplate = handlebars.compile(htmlFile)
-    const textTemplate = handlebars.compile(textFile)
-
     switch (emailType) {
       case 'invite':
         subject = 'Hindawi Invitation'
@@ -30,11 +25,39 @@ module.exports = {
         break
     }
 
-    const htmlBody = htmlTemplate(replacements)
-    const textBody = textTemplate(replacements)
+    const { htmlBody, textBody } = getEmailBody(emailType, replacements)
 
     Email.send(email, subject, textBody, htmlBody)
   },
+  setupAssignEmail: async (email, emailType, dashBoardUrl) => {
+    let subject
+    let replacements = {}
+    switch (emailType) {
+      case 'assign-handling-editor':
+        subject = 'Hindawi Handling Editor Invitation'
+        replacements = {
+          url: dashBoardUrl,
+        }
+        break
+      default:
+        subject = 'Welcome to Hindawi!'
+        break
+    }
+
+    const { htmlBody, textBody } = getEmailBody(emailType, replacements)
+
+    Email.send(email, subject, textBody, htmlBody)
+  },
+}
+
+const getEmailBody = (emailType, replacements) => {
+  const htmlFile = readFile(`${__dirname}/templates/${emailType}.html`)
+  const textFile = readFile(`${__dirname}/templates/${emailType}.txt`)
+  const htmlTemplate = handlebars.compile(htmlFile)
+  const textTemplate = handlebars.compile(textFile)
+  const htmlBody = htmlTemplate(replacements)
+  const textBody = textTemplate(replacements)
+  return { htmlBody, textBody }
 }
 
 const readFile = path =>
