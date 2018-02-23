@@ -1,8 +1,8 @@
 import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { change as changeForm } from 'redux-form'
 import {
@@ -16,8 +16,6 @@ import {
 import { SortableList } from 'pubsweet-components-faraday/src/components'
 
 import FileSection from './FileSection'
-import classes from './Files.local.scss'
-
 import {
   uploadFile,
   deleteFile,
@@ -38,16 +36,7 @@ const Files = ({
   ...rest
 }) => (
   <div>
-    {error && (
-      <div
-        className={classnames({
-          [classes['error-container']]: true,
-          [classes.hidden]: !error,
-        })}
-      >
-        Error uploading file, please try again.
-      </div>
-    )}
+    <Error show={error}>Error uploading file, please try again.</Error>
     <FileSection
       addFile={addFile('manuscripts')}
       allowedFileExtensions={['pdf', 'doc', 'docx']}
@@ -213,3 +202,13 @@ export default compose(
     }),
   ),
 )(Files)
+
+// #region styles
+const Error = styled.div`
+  color: firebrick;
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px 0;
+  opacity: ${({ show }) => (show ? 1 : 0)};
+`
+// #endregion

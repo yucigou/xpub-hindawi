@@ -1,8 +1,6 @@
 import React from 'react'
-import classnames from 'classnames'
 import { Icon } from '@pubsweet/ui'
-
-import classes from './FileItem.local.scss'
+import styled from 'styled-components'
 
 const parseFileSize = size => {
   const kbSize = size / 1000
@@ -28,21 +26,61 @@ const FileItem = ({
   previewFile,
   ...rest
 }) => (
-  <div className={classnames(classes['file-item'])}>
+  <Root>
     {dragHandle}
-    <div className={classnames(classes.info)}>
+    <Info>
       <span>{name}</span>
       <span>{parseFileSize(size)}</span>
-    </div>
-    <div className={classnames(classes.buttons)}>
+    </Info>
+    <Buttons>
       <button onClick={previewFile(id)}>
         <Icon color="#666">eye</Icon>
       </button>
       <button onClick={removeFile(id)} title="Delete">
         <Icon color="#666">trash-2</Icon>
       </button>
-    </div>
-  </div>
+    </Buttons>
+  </Root>
 )
 
 export default FileItem
+
+// #region styles
+const Root = styled.div`
+  align-items: center;
+  border: ${({ theme }) => theme.borderDefault};
+  display: flex;
+  margin: 5px;
+`
+
+const Info = styled.div`
+  border-right: ${({ theme }) => theme.borderDefault};
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  padding: 2px 10px 2px 0;
+`
+
+const Buttons = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 10px;
+
+  a {
+    align-items: center;
+    display: flex;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+`
+// #endregion
