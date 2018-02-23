@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon } from '@pubsweet/ui'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 
 const Pagination = ({
   page,
@@ -9,6 +9,7 @@ const Pagination = ({
   decrementPage,
   hasMore,
   maxLength,
+  theme,
 }) => (
   <Root>
     <Showing>
@@ -17,7 +18,7 @@ const Pagination = ({
     </Showing>
     <Chevrons>
       <IconButton hide={page === 0} onClick={decrementPage}>
-        <Icon color="#667080" size={18}>
+        <Icon color={theme.colorPrimary} size={18}>
           chevron-left
         </Icon>
       </IconButton>
@@ -27,7 +28,7 @@ const Pagination = ({
         }`}
       </span>
       <IconButton hide={!hasMore} onClick={incrementPage}>
-        <Icon color="#667080" size={18}>
+        <Icon color={theme.colorPrimary} size={18}>
           chevron-right
         </Icon>
       </IconButton>
@@ -35,7 +36,7 @@ const Pagination = ({
   </Root>
 )
 
-export default Pagination
+export default withTheme(Pagination)
 
 const Root = styled.div`
   display: flex;
@@ -52,15 +53,19 @@ const IconButton = styled.button`
   border: none;
   cursor: ${({ hide }) => (hide ? 'auto' : 'pointer')};
   display: flex;
-  font-family: Helvetica;
-  font-size: 12px;
+  font-family: ${({ theme }) => theme.fontInterface};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
   text-align: left;
-  color: #667080;
+  color: ${({ theme }) => theme.colorPrimary};
+  background-color: ${({ theme }) => theme.backgroundColor};
   opacity: ${({ hide }) => (hide ? 0 : 1)};
 
   &:active,
   &:focus {
     outline: none;
+  }
+  &:hover {
+    opacity: 0.7;
   }
 `
 
@@ -69,14 +74,14 @@ const Showing = styled.div`
   align-items: center;
 
   span:first-child {
-    font-family: Helvetica;
-    font-size: 14px;
+    font-family: ${({ theme }) => theme.fontInterface};
+    font-size: ${({ theme }) => theme.fontSizeBaseSmall};
     text-align: left;
-    color: #667080;
+    color: ${({ theme }) => theme.colorPrimary};
     margin-right: 10px;
   }
   span:last-child {
-    border: solid 1px #667080;
+    border: ${({ theme }) => theme.borderDefault};
     padding: 2px 10px;
   }
 `

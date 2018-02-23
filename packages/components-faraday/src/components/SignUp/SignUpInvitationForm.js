@@ -41,36 +41,43 @@ const SignUpInvitation = ({
 
 export default SignUpInvitation
 
+// #region styles
 const Root = styled.div`
   max-width: 500px;
   min-width: 300px;
   margin: 0 auto;
   display: flex;
-  border: 1px solid var(--color-pending);
+  border: ${({ theme }) => theme.borderDefault};
+  background-color: ${({ theme }) => theme.backgroundColorReverse};
   padding: 20px;
   flex-direction: column;
 `
 
 const Title = styled.div`
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.fontSizeHeading5};
+  font-family: ${({ theme }) => theme.fontHeading};
+  color: ${({ theme }) => theme.colorPrimary};
   font-weight: bold;
   text-align: center;
   margin: 10px auto;
 `
 const Subtitle = styled.div`
-  font-size: 13px;
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  font-family: ${({ theme }) => theme.fontReading};
   font-weight: normal;
   text-align: center;
   margin: 10px auto;
 `
 
 const Email = styled.div`
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizeBase};
+  font-family: ${({ theme }) => theme.fontReading};
   font-weight: normal;
   text-align: center;
   margin: 10px auto;
 `
 const Err = styled.div`
-  color: red;
+  color: ${({ theme }) => theme.colorError};
   text-align: center;
 `
+// #endregion

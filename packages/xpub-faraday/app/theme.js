@@ -34,6 +34,7 @@ const theme = {
   dropShadow: '0 1px 0 0 #667080', // Default shadow that is applied to elements that float (eg. tooltips, modals)
 
   backgroundColor: '#f6f6f6',
+  backgroundColorReverse: '#ffffff',
 
   transitionDuration: '1.5s', // How long transitions should last
   transitionTimingFunction: 'linear', // Which function should be applied to transitions (eg. easein)

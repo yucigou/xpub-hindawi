@@ -1,7 +1,7 @@
 import React from 'react'
 import { get } from 'lodash'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import { Icon, Menu } from '@pubsweet/ui'
 import { actions } from 'pubsweet-client'
 import { ConnectPage } from 'xpub-connect'
@@ -59,6 +59,7 @@ const Users = ({
   itemsPerPage,
   history,
   journal,
+  theme,
 }) => {
   const slicedUsers = users.slice(
     page * itemsPerPage,
@@ -72,7 +73,7 @@ const Users = ({
           <span>Users</span>
         </BreadCrumbs>
         <AddButton onClick={() => history.push('/admin/users/add')}>
-          <Icon color="#667080">plus-circle</Icon>
+          <Icon color={theme.colorPrimary}>plus-circle</Icon>
           &nbsp; Add User
         </AddButton>
       </Header>
@@ -97,7 +98,7 @@ const Users = ({
             value="sort"
           />
 
-          <Icon color="#667080" size={24}>
+          <Icon color={theme.colorPrimary} size={24}>
             search
           </Icon>
         </div>
@@ -148,6 +149,7 @@ export default compose(
   ConnectPage(() => [actions.getUsers()]),
   withRouter,
   withJournal,
+  withTheme,
   connect(state => ({ currentUsers: get(state, 'users.users') })),
   withState('users', 'setUsers', props =>
     props.currentUsers.map(u => ({ ...u, selected: false })),
@@ -180,14 +182,18 @@ const AddButton = styled.button`
   border: none;
   cursor: pointer;
   display: flex;
-  font-family: Helvetica;
-  font-size: 12px;
+  font-family: ${({ theme }) => theme.fontInterface};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
   text-align: left;
-  color: #667080;
+  color: ${({ theme }) => theme.colorPrimary};
+  background-color: ${({ theme }) => theme.backgroundColor};
 
   &:active,
   &:focus {
     outline: none;
+  }
+  &:hover {
+    opacity: 0.7;
   }
 `
 
@@ -201,7 +207,7 @@ const BreadCrumbs = styled.div`
   & span {
     font-size: 17px;
     text-align: left;
-    color: #667080;
+    color: ${({ theme }) => theme.colorPrimary};
 
     &:after {
       content: '>';
@@ -218,7 +224,7 @@ const BreadCrumbs = styled.div`
 
 const SubHeader = styled.div`
   align-items: center;
-  border-bottom: 1px solid #667080;
+  border-bottom: ${({ theme }) => theme.borderDefault};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -231,10 +237,10 @@ const SubHeader = styled.div`
   }
 
   span {
-    font-family: Helvetica;
-    font-size: 14px;
+    font-family: ${({ theme }) => theme.fontReading};
+    font-size: ${({ theme }) => theme.fontSizeBaseSmall};
     text-align: left;
-    color: #667080;
+    color: ${({ theme }) => theme.colorPrimary};
   }
 `
 
@@ -246,24 +252,24 @@ const Table = styled.table`
 
   & thead tr {
     height: 40px;
-    border-bottom: 1px solid #667080;
-    font-family: Helvetica;
-    font-size: 14px;
+    border-bottom: ${({ theme }) => theme.borderDefault};
+    font-family: ${({ theme }) => theme.fontReading};
+    font-size: ${({ theme }) => theme.fontSizeBaseSmall};
     font-weight: bold;
     text-align: left;
-    color: #667080;
+    color: ${({ theme }) => theme.colorPrimary};
   }
 `
 
 const Row = styled.tr`
-  border-bottom: 1px solid #667080;
-  color: #667080;
-  font-family: Helvetica;
-  font-size: 14px;
+  border-bottom: ${({ theme }) => theme.borderDefault};
+  color: ${({ theme }) => theme.colorPrimary};
+  font-family: ${({ theme }) => theme.fontReading};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
   height: 40px;
   text-align: left;
   &:hover {
-    background-color: #e6e7e9;
+    background-color: ${({ theme }) => theme.backgroundColorReverse};
     a {
       display: block;
     }
@@ -273,25 +279,25 @@ const Row = styled.tr`
 const Tag = styled.span`
   border: solid 1px #667080;
   text-transform: uppercase;
-  font-family: Helvetica;
+  font-family: ${({ theme }) => theme.fontReading};
   font-size: 12px;
   font-weight: bold;
   text-align: left;
-  color: #667080;
+  color: ${({ theme }) => theme.colorPrimary};
   padding: 2px 10px;
   margin-right: 5px;
 `
 
 const Role = styled.span`
   height: 17px;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
   text-align: left;
-  color: #667080;
+  color: ${({ theme }) => theme.colorPrimary};
   text-transform: uppercase;
 `
 
 const Action = styled.a`
-  color: #667080;
+  color: ${({ theme }) => theme.colorPrimary};
   display: none;
 `
 
