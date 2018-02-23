@@ -51,7 +51,10 @@ const FileSection = ({
   previewFile,
 }) => (
   <DropSection
-    innerRef={instance => connectFileDrop(connectDropTarget(instance))}
+    innerRef={instance => {
+      connectFileDrop(instance)
+      connectDropTarget(instance)
+    }}
     isFirst={isFirst}
     isLast={isLast}
     over={isFileOver || (isOver && canDrop)}

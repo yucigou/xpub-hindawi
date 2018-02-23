@@ -6,7 +6,7 @@ import { Icon, Menu } from '@pubsweet/ui'
 import { actions } from 'pubsweet-client'
 import { ConnectPage } from 'xpub-connect'
 import { withJournal } from 'xpub-journal'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { compose, withState, withHandlers } from 'recompose'
 
 import { Pagination } from './'
@@ -44,7 +44,7 @@ const TableRow = ({
       <Tag>{isConfirmed ? 'Confirmed' : 'Invited'}</Tag>
     </td>
     <td>
-      <Action href={`/admin/users/edit/${id}`}>Edit</Action>
+      <Action to={`/admin/users/edit/${id}`}>Edit</Action>
     </td>
   </Row>
 )
@@ -296,7 +296,7 @@ const Role = styled.span`
   text-transform: uppercase;
 `
 
-const Action = styled.a`
+const Action = styled(Link)`
   color: ${({ theme }) => theme.colorPrimary};
   display: none;
 `
