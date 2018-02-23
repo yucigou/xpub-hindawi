@@ -1,3 +1,6 @@
 module.exports = {
-  backend: () => app => require('./src/Invite')(app),
+  backend: () => app => {
+    require('./src/Invite')(app)
+    require('./src/Assignation')(app)
+  },
 }

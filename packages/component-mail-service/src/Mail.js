@@ -4,17 +4,17 @@ const querystring = require('querystring')
 const Email = require('@pubsweet/component-send-email')
 const config = require('config')
 
-const resetUrl = config.get('invite-reset-password.url')
+const resetPath = config.get('invite-reset-password.url')
 
 module.exports = {
-  setupInviteEmail: async (email, emailType, token) => {
+  setupInviteEmail: async (email, emailType, token, inviteUrl) => {
     let subject
     let replacements = {}
     switch (emailType) {
       case 'invite':
         subject = 'Hindawi Invitation'
         replacements = {
-          url: `${resetUrl}?${querystring.encode({
+          url: `${inviteUrl}${resetPath}?${querystring.encode({
             email,
             token,
           })}`,

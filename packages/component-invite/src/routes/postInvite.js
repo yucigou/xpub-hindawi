@@ -26,15 +26,16 @@ module.exports = models => async (req, res) => {
     return
   }
 
+  const url = `${req.protocol}://${req.get('host')}`
   if (collectionId) {
-    return require('../controllers/inviteCollectionRole')(
+    return require('../controllers/assignCollectionRole')(
       email,
       role,
       reqUser,
       res,
       collectionId,
       models,
-      `${req.protocol}://${req.get('host')}`,
+      url,
     )
   }
 
@@ -43,6 +44,7 @@ module.exports = models => async (req, res) => {
       req.body,
       models.User,
       res,
+      url,
     )
 
   res.status(403).json({

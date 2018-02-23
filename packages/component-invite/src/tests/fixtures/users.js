@@ -31,6 +31,12 @@ const users = {
     admin: false,
     id: 'handling123',
     roles: ['handlingEditor'],
+    assignation: {
+      type: 'handlingEditor',
+      hasAnswer: false,
+      isAccepted: false,
+    },
+    save: jest.fn(() => users.handlingEditor),
   },
   author: {
     type: 'user',
@@ -45,7 +51,7 @@ const users = {
     lastName: 'smith',
     affiliation: 'MIT',
     title: 'mr',
-    save: jest.fn(() => users.authorUser),
+    save: jest.fn(() => users.author),
     isConfirmed: false,
   },
 }

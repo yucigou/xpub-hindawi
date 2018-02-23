@@ -63,6 +63,7 @@ notFoundError.status = 404
 
 const { admin, editorInChief, handlingEditor, author } = fixtures.users
 const { standardCollection } = fixtures.collections
+const postInvitePath = '../routes/postInvite'
 describe('Post invite route handler', () => {
   it('should return success when the admin invites a global role', async () => {
     const req = httpMocks.createRequest({
@@ -71,7 +72,7 @@ describe('Post invite route handler', () => {
     req.user = admin
     const res = httpMocks.createResponse()
     const models = buildModels(notFoundError, admin, notFoundError)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
@@ -88,7 +89,7 @@ describe('Post invite route handler', () => {
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
     const models = buildModels(notFoundError, admin)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
@@ -104,7 +105,7 @@ describe('Post invite route handler', () => {
     req.user = admin
     const res = httpMocks.createResponse()
     const models = buildModels(notFoundError, admin)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(`admin cannot invite a ${body.role}`)
@@ -117,7 +118,7 @@ describe('Post invite route handler', () => {
     req.user = admin
     const res = httpMocks.createResponse()
     const models = buildModels(notFoundError, admin)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('Email and role are required')
@@ -133,7 +134,7 @@ describe('Post invite route handler', () => {
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
     const models = buildModels(notFoundError, editorInChief)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
@@ -150,7 +151,7 @@ describe('Post invite route handler', () => {
     const res = httpMocks.createResponse()
 
     const models = buildModels(notFoundError, editorInChief)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
@@ -167,7 +168,7 @@ describe('Post invite route handler', () => {
     const res = httpMocks.createResponse()
 
     const models = buildModels(notFoundError, handlingEditor)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
@@ -183,7 +184,7 @@ describe('Post invite route handler', () => {
     req.user = admin
     const res = httpMocks.createResponse()
     const models = buildModels(notFoundError, admin, editorInChief)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
@@ -201,12 +202,13 @@ describe('Post invite route handler', () => {
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
     const models = buildModels(standardCollection, editorInChief, author)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
     expect(data.roles).toContain(body.role)
     expect(data.email).toEqual(body.email)
+    expect(data.assignation.collectionId).toEqual(req.params.collectionId)
   })
   it('should return success when the handlingEditor invites a reviewer with a collection', async () => {
     const body = {
@@ -220,11 +222,12 @@ describe('Post invite route handler', () => {
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
     const models = buildModels(standardCollection, handlingEditor, author)
-    await require('../routes/post')(models)(req, res)
+    await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
     expect(data.roles).toContain(body.role)
     expect(data.email).toEqual(body.email)
+    expect(data.assignation.collectionId).toEqual(req.params.collectionId)
   })
 })

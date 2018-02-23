@@ -93,6 +93,7 @@ module.exports = {
     lastName: Joi.string().allow(''),
     affiliation: Joi.string().allow(''),
     title: Joi.string().allow(''),
+    assignation: Joi.object(),
   },
   team: {
     group: Joi.string(),
