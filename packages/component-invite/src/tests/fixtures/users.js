@@ -31,11 +31,13 @@ const users = {
     admin: false,
     id: 'handling123',
     roles: ['handlingEditor'],
-    assignation: {
-      type: 'handlingEditor',
-      hasAnswer: false,
-      isAccepted: false,
-    },
+    assignations: [
+      {
+        type: 'handlingEditor',
+        hasAnswer: false,
+        isAccepted: false,
+      },
+    ],
     save: jest.fn(() => users.handlingEditor),
   },
   author: {

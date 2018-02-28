@@ -47,7 +47,8 @@ module.exports = async (
       isAccepted: false,
       collectionId,
     }
-    user.assignation = assignation
+    user.assignations = []
+    user.assignations.push(assignation)
     user = await user.save()
     await mailService.setupAssignEmail(
       user.email,

@@ -11,31 +11,35 @@ module.exports = models => async (req, res) => {
   }
 
   const user = await models.User.find(req.user)
-  if (!user.assignation) {
+  if (!user.assignations) {
     res.status(400).json({ error: 'The user has no assignation' })
     logger.error('The request user does not have any assignation')
     return
   }
   const { collectionId } = req.params
-  if (collectionId !== user.assignation.collectionId) {
+  const assignations = user.assignations.filter(
+    assignation => assignation.collectionId === collectionId,
+  )
+
+  if (assignations.length === 0) {
     res.status(400).json({
-      error: 'User collection and provided collection do not match',
+      error: `Collection ${collectionId} does not match any user assignation`,
     })
     logger.error(
-      `Param ${collectionId} does not match user collection: ${
-        user.assignation.collectionId
-      }`,
+      `Collection ${collectionId} does not match any user assignation`,
     )
     return
   }
 
-  if (type !== user.assignation.type) {
+  const matchingAssignation = assignations[0]
+
+  if (type !== matchingAssignation.type) {
     res.status(400).json({
       error: 'User assignation type and provided type do not match',
     })
     logger.error(
       `Param ${type} does not match user assignation type: ${
-        user.assignation.type
+        matchingAssignation.type
       }`,
     )
     return
@@ -44,9 +48,9 @@ module.exports = models => async (req, res) => {
   try {
     await models.Collection.find(collectionId)
     // TODO: create a team and add the team id to the user's teams array
-    user.assignation.hasAnswer = true
+    matchingAssignation.hasAnswer = true
     if (accept === true) {
-      user.assignation.isAccepted = true
+      matchingAssignation.isAccepted = true
     }
     await user.save()
     res.status(204).json()

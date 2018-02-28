@@ -53,8 +53,8 @@ describe('Post assignation route handler', () => {
     await require(postAssignationPath)(models)(req, res)
 
     expect(res.statusCode).toBe(204)
-    expect(acceptingHE.assignation.hasAnswer).toBeTruthy()
-    expect(acceptingHE.assignation.isAccepted).toBeTruthy()
+    expect(acceptingHE.assignations[0].hasAnswer).toBeTruthy()
+    expect(acceptingHE.assignations[0].isAccepted).toBeTruthy()
   })
   it('should return success when the handling editor refuses work on a collection', async () => {
     const refusingHE = cloneDeep(handlingEditor)
@@ -71,8 +71,8 @@ describe('Post assignation route handler', () => {
     await require(postAssignationPath)(models)(req, res)
 
     expect(res.statusCode).toBe(204)
-    expect(refusingHE.assignation.hasAnswer).toBeTruthy()
-    expect(refusingHE.assignation.isAccepted).toBeFalsy()
+    expect(refusingHE.assignations[0].hasAnswer).toBeTruthy()
+    expect(refusingHE.assignations[0].isAccepted).toBeFalsy()
   })
   it('should return an error params are missing', async () => {
     const body = {
@@ -116,7 +116,7 @@ describe('Post assignation route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    delete noAssignationEditor.assignation
+    delete noAssignationEditor.assignations
     req.user = noAssignationEditor
     const res = httpMocks.createResponse()
     const models = buildModels(standardCollection, noAssignationEditor)
