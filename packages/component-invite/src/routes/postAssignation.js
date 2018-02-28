@@ -45,7 +45,7 @@ module.exports = models => async (req, res) => {
     await models.Collection.find(collectionId)
     // TODO: create a team and add the team id to the user's teams array
     user.assignation.hasAnswer = true
-    if (accept) {
+    if (accept === true) {
       user.assignation.isAccepted = true
     }
     await user.save()
