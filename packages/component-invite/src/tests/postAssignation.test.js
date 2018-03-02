@@ -48,6 +48,7 @@ describe('Post assignation route handler', () => {
       body,
     })
     req.user = acceptingHE
+    req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
     const models = buildModels(standardCollection, acceptingHE)
     await require(postAssignationPath)(models)(req, res)
@@ -66,6 +67,7 @@ describe('Post assignation route handler', () => {
       body,
     })
     req.user = refusingHE
+    req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
     const models = buildModels(standardCollection, refusingHE)
     await require(postAssignationPath)(models)(req, res)
@@ -82,6 +84,7 @@ describe('Post assignation route handler', () => {
       body,
     })
     req.user = handlingEditor
+    req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
     const models = buildModels(standardCollection, handlingEditor)
     await require(postAssignationPath)(models)(req, res)
@@ -99,6 +102,7 @@ describe('Post assignation route handler', () => {
       body,
     })
     req.user = handlingEditor
+    req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
     const models = buildModels(notFoundError, handlingEditor)
     await require(postAssignationPath)(models)(req, res)
@@ -118,6 +122,7 @@ describe('Post assignation route handler', () => {
     })
     delete noAssignationEditor.assignations
     req.user = noAssignationEditor
+    req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
     const models = buildModels(standardCollection, noAssignationEditor)
     await require(postAssignationPath)(models)(req, res)
@@ -125,5 +130,45 @@ describe('Post assignation route handler', () => {
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('The user has no assignation')
+  })
+  it('should return an error when the request type the user assignation type do not match', async () => {
+    const body = {
+      type: 'aWrongType',
+      accept: false,
+    }
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = handlingEditor
+    req.params.collectionId = standardCollection.id
+    const res = httpMocks.createResponse()
+    const models = buildModels(standardCollection, handlingEditor)
+    await require(postAssignationPath)(models)(req, res)
+
+    expect(res.statusCode).toBe(400)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual(
+      'Request data does not match any user assignation',
+    )
+  })
+  it('should return an error when the request collection and the user assignation collection do not match', async () => {
+    const body = {
+      type: 'handlingEditor',
+      accept: false,
+    }
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = handlingEditor
+    req.params.collectionId = '123'
+    const res = httpMocks.createResponse()
+    const models = buildModels(standardCollection, handlingEditor)
+    await require(postAssignationPath)(models)(req, res)
+
+    expect(res.statusCode).toBe(400)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual(
+      'Request data does not match any user assignation',
+    )
   })
 })

@@ -1,3 +1,6 @@
+const collections = require('./collections')
+const { standardCollection } = collections
+
 const users = {
   admin: {
     type: 'user',
@@ -36,6 +39,7 @@ const users = {
         type: 'handlingEditor',
         hasAnswer: false,
         isAccepted: false,
+        collectionId: standardCollection.id,
       },
     ],
     save: jest.fn(() => users.handlingEditor),

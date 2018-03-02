@@ -17,34 +17,22 @@ module.exports = models => async (req, res) => {
     return
   }
   const { collectionId } = req.params
-  const assignations = user.assignations.filter(
-    assignation => assignation.collectionId === collectionId,
+  const filteredAssignations = user.assignations.filter(
+    assignation =>
+      assignation.collectionId === collectionId && assignation.type === type,
   )
 
-  if (assignations.length === 0) {
+  if (filteredAssignations.length === 0) {
     res.status(400).json({
-      error: `Collection ${collectionId} does not match any user assignation`,
+      error: `Request data does not match any user assignation`,
     })
     logger.error(
-      `Collection ${collectionId} does not match any user assignation`,
+      `Collection ${collectionId} and type '${type}' do not match any user assignation`,
     )
     return
   }
 
-  const matchingAssignation = assignations[0]
-
-  if (type !== matchingAssignation.type) {
-    res.status(400).json({
-      error: 'User assignation type and provided type do not match',
-    })
-    logger.error(
-      `Param ${type} does not match user assignation type: ${
-        matchingAssignation.type
-      }`,
-    )
-    return
-  }
-
+  const matchingAssignation = filteredAssignations[0]
   try {
     await models.Collection.find(collectionId)
     // TODO: create a team and add the team id to the user's teams array
