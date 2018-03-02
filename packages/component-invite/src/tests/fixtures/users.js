@@ -1,6 +1,6 @@
 const collections = require('./collections')
-const { standardCollection } = collections
 
+const { standardCollection } = collections
 const users = {
   admin: {
     type: 'user',
