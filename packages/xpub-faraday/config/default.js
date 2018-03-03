@@ -3,6 +3,7 @@ require('dotenv').config()
 const path = require('path')
 const components = require('./components.json')
 const logger = require('winston')
+const AWS = require('aws-sdk')
 
 const environment = process.env.NODE_ENV || 'development'
 const getInviteUrl = () => {
@@ -83,6 +84,7 @@ module.exports = {
   },
   mailer: {
     from: process.env.EMAIL_SENDER || 'test_sender@domain.com',
+    path: `${__dirname}/mailer`,
   },
   publicKeys: [
     'pubsweet-client',

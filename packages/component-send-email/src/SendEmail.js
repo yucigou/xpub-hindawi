@@ -1,10 +1,10 @@
 const nodemailer = require('nodemailer')
 const logger = require('@pubsweet/logger')
-const config = require('./config')
+const config = require('config')
 
+const mailerConfig = require(config.mailer.path)
 module.exports = {
   send: (toEmail, subject, textBody, htmlBody) => {
-    const mailerConfig = config.mailer
     const transporter = nodemailer.createTransport(mailerConfig.transport)
     transporter.sendMail(
       {
