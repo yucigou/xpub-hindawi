@@ -3,6 +3,7 @@ const handlebars = require('handlebars')
 const querystring = require('querystring')
 const Email = require('@pubsweet/component-send-email')
 const config = require('config')
+const logger = require('@pubsweet/logger')
 
 const resetPath = config.get('invite-reset-password.url')
 
@@ -27,7 +28,7 @@ module.exports = {
 
     const { htmlBody, textBody } = getEmailBody(emailType, replacements)
 
-    Email.send(email, subject, textBody, htmlBody)
+    await Email.send(email, subject, textBody, htmlBody)
   },
   setupAssignEmail: async (email, emailType, dashBoardUrl) => {
     let subject

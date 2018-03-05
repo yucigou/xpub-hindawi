@@ -3,7 +3,6 @@ require('dotenv').config()
 const path = require('path')
 const components = require('./components.json')
 const logger = require('winston')
-const AWS = require('aws-sdk')
 
 const environment = process.env.NODE_ENV || 'development'
 const getInviteUrl = () => {
@@ -64,12 +63,6 @@ module.exports = {
     bucket: process.env.AWS_S3_BUCKET,
     validations: path.resolve(__dirname, 'upload-validations.js'),
   },
-  // 'pubsweet-component-aws-ses': {
-  //   secretAccessKey: process.env.AWS_SES_SECRET_KEY,
-  //   accessKeyId: process.env.AWS_SES_ACCESS_KEY,
-  //   region: process.env.AWS_SES_REGION,
-  //   sender: process.env.EMAIL_SENDER,
-  // },
   'invite-reset-password': {
     url: getInviteUrl(),
   },
