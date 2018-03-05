@@ -8,6 +8,7 @@
     "url": "https://gitlab.coko.foundation/xpub/xpub"
   },
   "dependencies": {
+    "component-aws-download": "0.0.1",
     "@pubsweet/component-aws-s3": "^0.1.1",
     "@pubsweet/ui": "^2.0.0",
     "aws-sdk": "^2.197.0",
@@ -74,7 +75,8 @@
     "setupdb": "pubsweet setupdb ./",
     "reset": "pubsweet setupdb --clobber ./",
     "start": "pubsweet start",
-    "start-now": "echo $secret > config/local-development.json && npm run start",
+    "start-now":
+      "echo $secret > config/local-development.json && npm run start",
     "build": "NODE_ENV=production pubsweet build"
   }
 }
