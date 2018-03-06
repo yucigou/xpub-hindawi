@@ -8,13 +8,16 @@ const Invite = app => {
   app.post(
     '/api/users/invite/:collectionId?',
     authBearer,
-    require('./routes/post')(app.locals.models),
+    require('./routes/postInvite')(app.locals.models),
   )
-  app.get('/api/users/invite', require('./routes/get')(app.locals.models))
+  app.get(
+    '/api/users/invite',
+    require('./routes/getInviteDetails')(app.locals.models),
+  )
   app.post(
     '/api/users/invite/password/reset',
     bodyParser.json(),
-    require('./routes/reset')(app.locals.models),
+    require('./routes/resetPassword')(app.locals.models),
   )
 }
 

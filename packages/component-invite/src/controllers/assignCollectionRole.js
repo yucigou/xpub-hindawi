@@ -12,7 +12,7 @@ module.exports = async (
   res,
   collectionId,
   models,
-  dashboardUrl,
+  url,
 ) => {
   if (reqUser.admin) {
     logger.error(`admin tried to invite a ${role} to a collection`)
@@ -39,17 +39,25 @@ module.exports = async (
   }
 
   try {
-    const user = await models.User.findByEmail(email)
+    let user = await models.User.findByEmail(email)
     user.roles.push(role)
+    const assignation = {
+      type: role,
+      hasAnswer: false,
+      isAccepted: false,
+      collectionId,
+    }
+    user.assignations = []
+    user.assignations.push(assignation)
+    user = await user.save()
     await mailService.setupAssignEmail(
       user.email,
       'assign-handling-editor',
-      dashboardUrl,
+      url,
     )
 
-    // await helpers.createNewTeam(collection.id, user, models.Team)
+    // TODO: create a team and add the team id to the user's teams array
 
-    // add team to collection.teams
     return res.status(200).json(user)
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'user')

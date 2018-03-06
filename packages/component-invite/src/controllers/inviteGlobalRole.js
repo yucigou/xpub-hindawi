@@ -2,7 +2,7 @@ const logger = require('@pubsweet/logger')
 const helpers = require('../helpers/helpers')
 const mailService = require('pubsweet-component-mail-service')
 
-module.exports = async (body, UserModel, res) => {
+module.exports = async (body, UserModel, res, url) => {
   const { email, role, firstName, lastName, affiliation, title } = body
 
   try {
@@ -32,6 +32,7 @@ module.exports = async (body, UserModel, res) => {
       newUser.email,
       'invite',
       newUser.passwordResetToken,
+      url,
     )
 
     return res.status(200).json(newUser)

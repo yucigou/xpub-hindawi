@@ -33,13 +33,13 @@ const body = {
 const notFoundError = new Error()
 notFoundError.name = 'NotFoundError'
 notFoundError.status = 404
-
+const resetPasswordPath = '../routes/resetPassword'
 describe('Password reset after invite route handler', () => {
   it('should return success when the body is correct', async () => {
     const req = httpMocks.createRequest({ body })
     const res = httpMocks.createResponse()
     const models = buildModels(editorInChiefUser)
-    await require('../routes/reset')(models)(req, res)
+    await require(resetPasswordPath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
@@ -53,7 +53,7 @@ describe('Password reset after invite route handler', () => {
 
     const res = httpMocks.createResponse()
     const models = buildModels(editorInChiefUser)
-    await require('../routes/reset')(models)(req, res)
+    await require(resetPasswordPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('missing required params')
@@ -65,7 +65,7 @@ describe('Password reset after invite route handler', () => {
 
     const res = httpMocks.createResponse()
     const models = buildModels(editorInChiefUser)
-    await require('../routes/reset')(models)(req, res)
+    await require(resetPasswordPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
@@ -80,7 +80,7 @@ describe('Password reset after invite route handler', () => {
     error.status = 404
     const res = httpMocks.createResponse()
     const models = buildModels(error)
-    await require('../routes/reset')(models)(req, res)
+    await require(resetPasswordPath)(models)(req, res)
     expect(res.statusCode).toBe(404)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('user not found')
@@ -94,7 +94,7 @@ describe('Password reset after invite route handler', () => {
     error.details.push({ message: 'validation error' })
     const res = httpMocks.createResponse()
     const models = buildModels(error)
-    await require('../routes/reset')(models)(req, res)
+    await require(resetPasswordPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('validation error')
@@ -106,7 +106,7 @@ describe('Password reset after invite route handler', () => {
     error.details.push({ message: 'internal server error' })
     const res = httpMocks.createResponse()
     const models = buildModels(error)
-    await require('../routes/reset')(models)(req, res)
+    await require(resetPasswordPath)(models)(req, res)
     expect(res.statusCode).toBe(500)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('internal server error')
@@ -116,7 +116,7 @@ describe('Password reset after invite route handler', () => {
     const req = httpMocks.createRequest({ body })
     const res = httpMocks.createResponse()
     const models = buildModels(editorInChiefUser)
-    await require('../routes/reset')(models)(req, res)
+    await require(resetPasswordPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('User is already confirmed')

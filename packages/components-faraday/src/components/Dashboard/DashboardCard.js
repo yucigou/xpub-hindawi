@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { get, isEmpty } from 'lodash'
 import styled, { css } from 'styled-components'
 import { Button, Icon } from '@pubsweet/ui'
-import { compose, getContext } from 'recompose'
+import { compose, getContext, withHandlers } from 'recompose'
+import * as api from 'pubsweet-client/src/helpers/api'
 
-import { parseVersion, getFilesURL, downloadAll } from './utils'
+import { parseVersion, getFilesURL } from './utils'
 
 const DashboardCard = ({
   deleteProject,
@@ -14,6 +15,7 @@ const DashboardCard = ({
   version,
   showAbstractModal,
   journal,
+  getItems,
   ...rest
 }) => {
   const { submitted, title, type, version: vers } = parseVersion(version)
@@ -45,9 +47,14 @@ const DashboardCard = ({
           </ManuscriptInfo>
         </Left>
         <Right>
+          {/* <form onSubmit={getItems}>
+            <Icon>download</Icon>
+            <button type="submit">DOWNLOAD</button>
+          </form> */}
           <ClickableIcon
             disabled={!hasFiles}
-            onClick={() => (hasFiles ? downloadAll(files) : null)}
+            // onClick={() => (hasFiles ? downloadAll(files) : null)}
+            onClick={getItems}
           >
             <Icon>download</Icon>
           </ClickableIcon>
@@ -115,7 +122,25 @@ const DashboardCard = ({
   ) : null
 }
 
-export default compose(getContext({ journal: PropTypes.object }))(DashboardCard)
+export default compose(
+  getContext({ journal: PropTypes.object }),
+  withHandlers({
+    getItems: ({ version }) => () => {
+      api.get(`/fileZip/a466f9d0-ecf2-41b4-88ff-92159d848cff`).then(r => {
+        const blob = new File([r], 'myzip.zip', { type: 'application/zip' })
+        const url = URL.createObjectURL(blob)
+        window.open(url)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'myfile.zip'
+        document.body.appendChild(a)
+        a.click()
+        // const zip = new File(r, 'myzip.zip')
+        // console.log('the zip', zip)
+      })
+    },
+  }),
+)(DashboardCard)
 
 // #region styled-components
 const defaultText = css`

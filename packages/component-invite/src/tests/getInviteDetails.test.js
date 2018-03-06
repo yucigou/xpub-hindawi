@@ -21,13 +21,14 @@ const query = {
   email: user.email,
   token: user.passwordResetToken,
 }
+const getInviteDetailsPath = '../routes/getInviteDetails'
 describe('Get inivte data route handler', () => {
   it('should return success email and token are correct', async () => {
     const req = httpMocks.createRequest()
     req.query = query
     const res = httpMocks.createResponse()
     const models = buildModels(user)
-    await require('../routes/get')(models)(req, res)
+    await require(getInviteDetailsPath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
@@ -40,7 +41,7 @@ describe('Get inivte data route handler', () => {
 
     const res = httpMocks.createResponse()
     const models = buildModels(user)
-    await require('../routes/get')(models)(req, res)
+    await require(getInviteDetailsPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('missing required params')
@@ -53,7 +54,7 @@ describe('Get inivte data route handler', () => {
 
     const res = httpMocks.createResponse()
     const models = buildModels(user)
-    await require('../routes/get')(models)(req, res)
+    await require(getInviteDetailsPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('invalid request')
@@ -67,7 +68,7 @@ describe('Get inivte data route handler', () => {
     error.status = 404
     const res = httpMocks.createResponse()
     const models = buildModels(error)
-    await require('../routes/get')(models)(req, res)
+    await require(getInviteDetailsPath)(models)(req, res)
     expect(res.statusCode).toBe(404)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('user not found')
@@ -82,7 +83,7 @@ describe('Get inivte data route handler', () => {
     error.details.push({ message: 'validation error' })
     const res = httpMocks.createResponse()
     const models = buildModels(error)
-    await require('../routes/get')(models)(req, res)
+    await require(getInviteDetailsPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('validation error')
@@ -95,7 +96,7 @@ describe('Get inivte data route handler', () => {
     error.details.push({ message: 'internal server error' })
     const res = httpMocks.createResponse()
     const models = buildModels(error)
-    await require('../routes/get')(models)(req, res)
+    await require(getInviteDetailsPath)(models)(req, res)
     expect(res.statusCode).toBe(500)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('internal server error')
