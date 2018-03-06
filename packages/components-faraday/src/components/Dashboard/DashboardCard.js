@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { get, isEmpty } from 'lodash'
-import styled, { css } from 'styled-components'
 import { Button, Icon } from '@pubsweet/ui'
+import styled, { css } from 'styled-components'
 import { compose, getContext, withHandlers } from 'recompose'
 import * as api from 'pubsweet-client/src/helpers/api'
 
@@ -124,20 +125,31 @@ const DashboardCard = ({
 
 export default compose(
   getContext({ journal: PropTypes.object }),
+  connect(state => ({
+    token: state.currentUser.user.token,
+  })),
   withHandlers({
-    getItems: ({ version }) => () => {
-      api.get(`/fileZip/a466f9d0-ecf2-41b4-88ff-92159d848cff`).then(r => {
-        const blob = new File([r], 'myzip.zip', { type: 'application/zip' })
-        const url = URL.createObjectURL(blob)
-        window.open(url)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = 'myfile.zip'
-        document.body.appendChild(a)
-        a.click()
-        // const zip = new File(r, 'myzip.zip')
-        // console.log('the zip', zip)
-      })
+    getItems: ({ version, token }) => () => {
+      api
+        .get(`/fileZip/a466f9d0-ecf2-41b4-88ff-92159d848cff`, {
+          headers: {
+            Accept: 'application/zip',
+            plm: 'da',
+          },
+        })
+        .then(file => {
+          const f = new File([file], 'files.zip', {
+            type: 'application/zip',
+          })
+          const url = URL.createObjectURL(f)
+
+          const a = document.createElement('a')
+          a.href = url
+          a.download = 'files.zip'
+          document.body.appendChild(a)
+          a.click()
+        })
+      // .then(r => console.log('Files on FE: ', r))
     },
   }),
 )(DashboardCard)

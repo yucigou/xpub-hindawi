@@ -1,6 +1,5 @@
 const AWS = require('aws-sdk')
 // const logger = require('@pubsweet/logger')
-const fs = require('fs')
 const _ = require('lodash')
 const util = require('util')
 const config = require('config')
@@ -20,17 +19,21 @@ const FileBackend = app => {
   const s3 = new AWS.S3()
 
   app.get('/api/fileZip/:fragmentId', authBearer, async (req, res) => {
-    const output = fs.createWriteStream(`${__dirname}/files-output.zip`)
+    const archive = archiver('zip')
+    const { fragmentId } = req.params
+
+    res.attachment('files.zip')
+
+    // pipe archive to res
+    archive.pipe(res)
+
     const params = {
       Bucket: s3Config.bucket,
-      Prefix: `${req.params.fragmentId}`,
+      Prefix: `${fragmentId}`,
     }
 
     const listObjects = util.promisify(s3.listObjects.bind(s3))
     const getObject = util.promisify(s3.getObject.bind(s3))
-
-    const archive = archiver('zip')
-    archive.pipe(output)
 
     return listObjects(params).then(data => {
       Promise.all(
@@ -40,20 +43,12 @@ const FileBackend = app => {
             Key: content.Key,
           }),
         ),
-      ).then(values => {
-        values.forEach((v, index) => {
-          archive.append(v.Body, { name: v.ETag })
+      ).then(files => {
+        files.forEach((file, index) => {
+          archive.append(file.Body, { name: file.ETag })
         })
 
-        archive.finalize().then(() => {
-          res.writeHead(200, {
-            'Content-Type': 'application/octet-stream',
-            'Content-Disposition': `attachment; filename=files-output.zip`,
-          })
-          const readStream = fs.createReadStream(output.path)
-          readStream.pipe(res)
-          // res.download(output.path)
-        })
+        archive.finalize()
       })
     })
   })
