@@ -51,7 +51,7 @@ const AuthorAdder = ({
             label="Affiliation*"
             name="affiliation"
           />
-          <MenuItem label="Country" name="country" options={countries} />
+          <MenuItem label="Country*" name="country" options={countries} />
         </Row>
         <ButtonsContainer>
           <Button onClick={setEditMode(false)}>Cancel</Button>

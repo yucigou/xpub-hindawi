@@ -85,7 +85,7 @@ const AuthorEdit = ({
         label="Affiliation*"
         name="edit.affiliation"
       />
-      <MenuItem label="Country" name="edit.country" options={countries} />
+      <MenuItem label="Country*" name="edit.country" options={countries} />
     </Row>
   </Root>
 )
@@ -101,6 +101,7 @@ export default compose(
     initialValues: {
       edit: pick(props, [
         'isCorresponding',
+        'isSubmitting',
         'firstName',
         'lastName',
         'middleName',
