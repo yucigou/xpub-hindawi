@@ -87,6 +87,7 @@ module.exports = {
   ],
   user: {
     name: Joi.string(),
+    username: Joi.string(),
     roles: Joi.array(),
     isConfirmed: Joi.boolean(),
     firstName: Joi.string().allow(''),

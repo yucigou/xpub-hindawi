@@ -51,10 +51,12 @@ export default (state = initialState, action) => {
         ...initialState,
         isFetching: true,
       }
+    case 'UPDATE_FRAGMENT_FAILURE':
     case FAILURE:
       return {
         ...initialState,
         error: action.error,
+        isFetching: false,
       }
     case 'UPDATE_FRAGMENT_SUCCESS':
     case SUCCESS:

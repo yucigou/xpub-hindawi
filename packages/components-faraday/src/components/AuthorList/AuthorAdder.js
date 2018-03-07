@@ -34,24 +34,24 @@ const AuthorAdder = ({
       <FormBody>
         <Title>{authors.length === 0 ? 'Submitting author' : 'Author'}</Title>
         <Row>
-          <ValidatedTextField isRequired label="First name" name="firstName" />
+          <ValidatedTextField isRequired label="First name*" name="firstName" />
           <ValidatedTextField label="Middle name" name="middleName" />
-          <ValidatedTextField isRequired label="Last name" name="lastName" />
+          <ValidatedTextField isRequired label="Last name*" name="lastName" />
         </Row>
 
         <Row>
           <ValidatedTextField
             isRequired
-            label="Email"
+            label="Email*"
             name="email"
             validators={[emailValidator]}
           />
           <ValidatedTextField
             isRequired
-            label="Affiliation"
+            label="Affiliation*"
             name="affiliation"
           />
-          <MenuItem label="Country" name="country" options={countries} />
+          <MenuItem label="Country*" name="country" options={countries} />
         </Row>
         <ButtonsContainer>
           <Button onClick={setEditMode(false)}>Cancel</Button>

@@ -5,4 +5,4 @@ export { default as AuthorList } from './AuthorList/AuthorList'
 export { default as SortableList } from './SortableList/SortableList'
 
 export { DragHandle } from './AuthorList/FormItems'
-export { Dropdown, Logo, Spinner } from './UIComponents'
+export { Dropdown, Logo, Spinner, CheckboxGroup } from './UIComponents'

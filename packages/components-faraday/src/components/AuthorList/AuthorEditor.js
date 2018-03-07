@@ -64,24 +64,28 @@ const AuthorEdit = ({
     </Header>
 
     <Row>
-      <ValidatedTextField isRequired label="First name" name="edit.firstName" />
+      <ValidatedTextField
+        isRequired
+        label="First name*"
+        name="edit.firstName"
+      />
       <ValidatedTextField label="Middle name" name="edit.middleName" />
-      <ValidatedTextField isRequired label="Last name" name="edit.lastName" />
+      <ValidatedTextField isRequired label="Last name*" name="edit.lastName" />
     </Row>
 
     <Row>
       <ValidatedTextField
         isRequired
-        label="Email"
+        label="Email*"
         name="edit.email"
         validators={[emailValidator]}
       />
       <ValidatedTextField
         isRequired
-        label="Affiliation"
+        label="Affiliation*"
         name="edit.affiliation"
       />
-      <MenuItem label="Country" name="edit.country" options={countries} />
+      <MenuItem label="Country*" name="edit.country" options={countries} />
     </Row>
   </Root>
 )
@@ -97,6 +101,7 @@ export default compose(
     initialValues: {
       edit: pick(props, [
         'isCorresponding',
+        'isSubmitting',
         'firstName',
         'lastName',
         'middleName',
