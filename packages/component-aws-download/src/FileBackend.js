@@ -1,9 +1,9 @@
 const AWS = require('aws-sdk')
-// const logger = require('@pubsweet/logger')
 const _ = require('lodash')
 const util = require('util')
 const config = require('config')
 const archiver = require('archiver')
+// const logger = require('@pubsweet/logger')
 
 const s3Config = _.get(config, 'pubsweet-component-aws-s3')
 
@@ -43,9 +43,12 @@ const FileBackend = app => {
         ),
       ).then(files => {
         files.forEach((file, index) => {
-          archive.append(file.Body, { name: file.ETag })
+          archive.append(file.Body, {
+            name: `${_.get(file, 'Metadata.filetype') ||
+              'supplementary'}/${_.get(file, 'Metadata.filename') ||
+              file.ETag}`,
+          })
         })
-
         archive.finalize()
       })
     })
