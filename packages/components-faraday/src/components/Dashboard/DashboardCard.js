@@ -5,7 +5,6 @@ import { get, isEmpty } from 'lodash'
 import { Button, Icon } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
 import { compose, getContext, withHandlers } from 'recompose'
-import * as api from 'pubsweet-client/src/helpers/api'
 
 import { parseVersion, getFilesURL } from './utils'
 
@@ -130,26 +129,25 @@ export default compose(
   })),
   withHandlers({
     getItems: ({ version, token }) => () => {
-      api
-        .get(`/fileZip/a466f9d0-ecf2-41b4-88ff-92159d848cff`, {
-          headers: {
-            Accept: 'application/zip',
-            plm: 'da',
-          },
-        })
-        .then(file => {
-          const f = new File([file], 'files.zip', {
+      const xhr = new XMLHttpRequest()
+      xhr.onreadystatechange = function onXhrStateChange() {
+        if (this.readyState === 4 && this.status === 200) {
+          const fileName = `${version.id}-archive.zip`
+          const f = new File([this.response], fileName, {
             type: 'application/zip',
           })
           const url = URL.createObjectURL(f)
-
           const a = document.createElement('a')
           a.href = url
-          a.download = 'files.zip'
+          a.download = fileName
           document.body.appendChild(a)
           a.click()
-        })
-      // .then(r => console.log('Files on FE: ', r))
+        }
+      }
+      xhr.open('GET', `${window.location.origin}/api/fileZip/${version.id}`)
+      xhr.responseType = 'blob'
+      xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+      xhr.send()
     },
   }),
 )(DashboardCard)

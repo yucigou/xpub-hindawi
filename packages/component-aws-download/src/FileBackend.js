@@ -22,10 +22,8 @@ const FileBackend = app => {
     const archive = archiver('zip')
     const { fragmentId } = req.params
 
-    res.attachment('files.zip')
-
-    // pipe archive to res
     archive.pipe(res)
+    res.attachment(`${fragmentId}-archive.zip`)
 
     const params = {
       Bucket: s3Config.bucket,
