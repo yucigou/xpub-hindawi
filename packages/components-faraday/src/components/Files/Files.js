@@ -189,7 +189,7 @@ export default compose(
         ...files,
         [type]: files[type].filter(f => f.id !== id),
       }
-      setFiles(newFiles, type)
+      setFiles(newFiles)
       changeForm('wizard', 'files', files)
     },
   }),
