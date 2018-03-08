@@ -21,37 +21,41 @@ const FileBackend = app => {
   app.get('/api/fileZip/:fragmentId', authBearer, async (req, res) => {
     const archive = archiver('zip')
     const { fragmentId } = req.params
-
-    archive.pipe(res)
-    res.attachment(`${fragmentId}-archive.zip`)
-
-    const params = {
-      Bucket: s3Config.bucket,
-      Prefix: `${fragmentId}`,
-    }
-
-    const listObjects = util.promisify(s3.listObjects.bind(s3))
     const getObject = util.promisify(s3.getObject.bind(s3))
+    const listObjects = util.promisify(s3.listObjects.bind(s3))
 
-    return listObjects(params).then(data => {
-      Promise.all(
-        data.Contents.map(content =>
+    try {
+      archive.pipe(res)
+      res.attachment(`${fragmentId}-archive.zip`)
+
+      const params = {
+        Bucket: s3Config.bucket,
+        Prefix: `${fragmentId}`,
+      }
+
+      const s3Items = await listObjects(params)
+      const s3Files = await Promise.all(
+        s3Items.Contents.map(content =>
           getObject({
             Bucket: s3Config.bucket,
             Key: content.Key,
           }),
         ),
-      ).then(files => {
-        files.forEach((file, index) => {
-          archive.append(file.Body, {
-            name: `${_.get(file, 'Metadata.filetype') ||
-              'supplementary'}/${_.get(file, 'Metadata.filename') ||
-              file.ETag}`,
-          })
+      )
+
+      s3Files.forEach(f => {
+        archive.append(f.Body, {
+          name: `${_.get(f, 'Metadata.filetype') || 'supplementary'}/${_.get(
+            f,
+            'Metadata.filename',
+          ) || f.ETag}`,
         })
-        archive.finalize()
       })
-    })
+
+      archive.finalize()
+    } catch (err) {
+      res.status(err.statusCode).json({ error: err.message })
+    }
   })
 }
 

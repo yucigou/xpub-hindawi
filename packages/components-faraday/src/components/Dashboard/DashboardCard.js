@@ -1,12 +1,13 @@
 import React from 'react'
+import { get } from 'lodash'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { get, isEmpty } from 'lodash'
 import { Button, Icon } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
-import { compose, getContext, withHandlers } from 'recompose'
+import { compose, getContext } from 'recompose'
 
-import { parseVersion, getFilesURL } from './utils'
+import { parseVersion } from './utils'
+
+import ZipFiles from './ZipFiles'
 
 const DashboardCard = ({
   deleteProject,
@@ -15,15 +16,14 @@ const DashboardCard = ({
   version,
   showAbstractModal,
   journal,
-  getItems,
   ...rest
 }) => {
   const { submitted, title, type, version: vers } = parseVersion(version)
-  const files = getFilesURL(get(version, 'files'))
   const status = get(project, 'status') || 'Draft'
-  const hasFiles = !isEmpty(files)
   const abstract = get(version, 'metadata.abstract')
   const metadata = get(version, 'metadata')
+  const files = get(version, 'files')
+  const hasFiles = files ? Object.values(files).some(f => f.length > 0) : false
   const journalIssueType = journal.issueTypes.find(
     t => t.value === get(metadata, 'issue'),
   )
@@ -47,17 +47,11 @@ const DashboardCard = ({
           </ManuscriptInfo>
         </Left>
         <Right>
-          {/* <form onSubmit={getItems}>
-            <Icon>download</Icon>
-            <button type="submit">DOWNLOAD</button>
-          </form> */}
-          <ClickableIcon
-            disabled={!hasFiles}
-            // onClick={() => (hasFiles ? downloadAll(files) : null)}
-            onClick={getItems}
-          >
-            <Icon>download</Icon>
-          </ClickableIcon>
+          <ZipFiles disabled={!hasFiles} fragmentId={version.id}>
+            <ClickableIcon disabled={!hasFiles}>
+              <Icon>download</Icon>
+            </ClickableIcon>
+          </ZipFiles>
           <ClickableIcon onClick={() => deleteProject(project)}>
             <Icon>trash-2</Icon>
           </ClickableIcon>
@@ -122,35 +116,7 @@ const DashboardCard = ({
   ) : null
 }
 
-export default compose(
-  getContext({ journal: PropTypes.object }),
-  connect(state => ({
-    token: state.currentUser.user.token,
-  })),
-  withHandlers({
-    getItems: ({ version, token }) => () => {
-      const xhr = new XMLHttpRequest()
-      xhr.onreadystatechange = function onXhrStateChange() {
-        if (this.readyState === 4 && this.status === 200) {
-          const fileName = `${version.id}-archive.zip`
-          const f = new File([this.response], fileName, {
-            type: 'application/zip',
-          })
-          const url = URL.createObjectURL(f)
-          const a = document.createElement('a')
-          a.href = url
-          a.download = fileName
-          document.body.appendChild(a)
-          a.click()
-        }
-      }
-      xhr.open('GET', `${window.location.origin}/api/fileZip/${version.id}`)
-      xhr.responseType = 'blob'
-      xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-      xhr.send()
-    },
-  }),
-)(DashboardCard)
+export default compose(getContext({ journal: PropTypes.object }))(DashboardCard)
 
 // #region styled-components
 const defaultText = css`
