@@ -27,7 +27,11 @@ const Dashboard = ({
     <Header>
       <Heading>Manuscripts</Heading>
       <HeaderButtons>
-        <Button onClick={createDraftSubmission} primary>
+        <Button
+          data-test="new-manuscript"
+          onClick={createDraftSubmission}
+          primary
+        >
           New
         </Button>
       </HeaderButtons>
