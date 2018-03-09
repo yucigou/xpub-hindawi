@@ -4,10 +4,8 @@ process.env.SUPPRESS_NO_CONFIG_WARNING = true
 const httpMocks = require('node-mocks-http')
 const random = require('lodash/random')
 const fixtures = require('./fixtures/fixtures')
-
-const UserMock = require('./mocks/User')
 const Chance = require('chance')
-const TeamMock = require('./mocks/Team')
+const Model = require('./helpers/Model')
 
 jest.mock('pubsweet-component-mail-service', () => ({
   setupInviteEmail: jest.fn(),
@@ -16,49 +14,6 @@ jest.mock('pubsweet-component-mail-service', () => ({
 const chance = new Chance()
 const globalRoles = ['editorInChief', 'author', 'admin']
 const manuscriptRoles = ['handlingEditor', 'reviewer']
-
-const buildModels = (collection, findUser, emailUser, team) => {
-  const models = {
-    User: {},
-    Collection: {
-      find: jest.fn(
-        () =>
-          collection instanceof Error
-            ? Promise.reject(collection)
-            : Promise.resolve(collection),
-      ),
-    },
-    Team: {},
-  }
-  UserMock.find = jest.fn(user => {
-    const foundUser = Object.values(fixtures.users).find(
-      fixUser => fixUser.id === user.id,
-    )
-
-    if (foundUser === undefined) {
-      return Promise.reject(findUser)
-    }
-
-    return Promise.resolve(foundUser)
-  })
-
-  UserMock.findByEmail = jest.fn(
-    () =>
-      emailUser instanceof Error
-        ? Promise.reject(emailUser)
-        : Promise.resolve(emailUser),
-  )
-
-  TeamMock.find = jest.fn(
-    () =>
-      team instanceof Error ? Promise.reject(team) : Promise.resolve(team),
-  )
-  TeamMock.all = jest.fn(() => Object.values(fixtures.teams))
-
-  models.User = UserMock
-  models.Team = TeamMock
-  return models
-}
 
 const body = {
   email: chance.email(),
@@ -85,7 +40,7 @@ describe('Post invite route handler', () => {
     })
     req.user = admin
     const res = httpMocks.createResponse()
-    const models = buildModels(notFoundError, admin, notFoundError)
+    const models = Model.build(notFoundError, admin, notFoundError)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
@@ -101,7 +56,7 @@ describe('Post invite route handler', () => {
     req.user = admin
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
-    const models = buildModels(notFoundError, admin)
+    const models = Model.build(notFoundError, admin)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
@@ -117,7 +72,7 @@ describe('Post invite route handler', () => {
     })
     req.user = admin
     const res = httpMocks.createResponse()
-    const models = buildModels(notFoundError, admin)
+    const models = Model.build(notFoundError, admin)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
@@ -132,7 +87,7 @@ describe('Post invite route handler', () => {
     })
     req.user = admin
     const res = httpMocks.createResponse()
-    const models = buildModels(notFoundError, admin)
+    const models = Model.build(notFoundError, admin)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
@@ -148,7 +103,7 @@ describe('Post invite route handler', () => {
     req.user = editorInChief
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
-    const models = buildModels(notFoundError, editorInChief)
+    const models = Model.build(notFoundError, editorInChief)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
@@ -163,7 +118,7 @@ describe('Post invite route handler', () => {
     req.user = editorInChief
     const res = httpMocks.createResponse()
 
-    const models = buildModels(notFoundError, editorInChief)
+    const models = Model.build(notFoundError, editorInChief)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
@@ -180,7 +135,7 @@ describe('Post invite route handler', () => {
     req.user = handlingEditor
     const res = httpMocks.createResponse()
 
-    const models = buildModels(notFoundError, handlingEditor)
+    const models = Model.build(notFoundError, handlingEditor)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
@@ -196,7 +151,7 @@ describe('Post invite route handler', () => {
     })
     req.user = admin
     const res = httpMocks.createResponse()
-    const models = buildModels(notFoundError, admin, editorInChief)
+    const models = Model.build(notFoundError, admin, editorInChief)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(400)
@@ -214,7 +169,7 @@ describe('Post invite route handler', () => {
     req.user = editorInChief
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
-    const models = buildModels(standardCollection, author, author)
+    const models = Model.build(standardCollection, editorInChief, author)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
@@ -234,7 +189,7 @@ describe('Post invite route handler', () => {
     req.user = handlingEditor
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
-    const models = buildModels(standardCollection, handlingEditor, author)
+    const models = Model.build(standardCollection, handlingEditor, author)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
