@@ -1,11 +1,13 @@
 import React from 'react'
+import { get } from 'lodash'
 import PropTypes from 'prop-types'
-import { get, isEmpty } from 'lodash'
-import styled, { css } from 'styled-components'
 import { Button, Icon } from '@pubsweet/ui'
+import styled, { css } from 'styled-components'
 import { compose, getContext } from 'recompose'
 
-import { parseVersion, getFilesURL, downloadAll } from './utils'
+import { parseVersion } from './utils'
+
+import ZipFiles from './ZipFiles'
 
 const DashboardCard = ({
   deleteProject,
@@ -17,11 +19,11 @@ const DashboardCard = ({
   ...rest
 }) => {
   const { submitted, title, type, version: vers } = parseVersion(version)
-  const files = getFilesURL(get(version, 'files'))
   const status = get(project, 'status') || 'Draft'
-  const hasFiles = !isEmpty(files)
   const abstract = get(version, 'metadata.abstract')
   const metadata = get(version, 'metadata')
+  const files = get(version, 'files')
+  const hasFiles = files ? Object.values(files).some(f => f.length > 0) : false
   const journalIssueType = journal.issueTypes.find(
     t => t.value === get(metadata, 'issue'),
   )
@@ -45,12 +47,11 @@ const DashboardCard = ({
           </ManuscriptInfo>
         </Left>
         <Right>
-          <ClickableIcon
-            disabled={!hasFiles}
-            onClick={() => (hasFiles ? downloadAll(files) : null)}
-          >
-            <Icon>download</Icon>
-          </ClickableIcon>
+          <ZipFiles disabled={!hasFiles} fragmentId={version.id}>
+            <ClickableIcon disabled={!hasFiles}>
+              <Icon>download</Icon>
+            </ClickableIcon>
+          </ZipFiles>
           <ClickableIcon onClick={() => deleteProject(project)}>
             <Icon>trash-2</Icon>
           </ClickableIcon>

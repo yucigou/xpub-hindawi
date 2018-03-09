@@ -2,9 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import uploadFileFn from 'xpub-upload'
 import { AbstractEditor, TitleEditor } from 'xpub-edit'
-import { Menu, CheckboxGroup, YesOrNo, TextField } from '@pubsweet/ui'
+import { Menu, YesOrNo, TextField } from '@pubsweet/ui'
 import { required, minChars, minSize } from 'xpub-validators'
-import { AuthorList, Files } from 'pubsweet-components-faraday/src/components'
+import {
+  AuthorList,
+  Files,
+  CheckboxGroup,
+} from 'pubsweet-components-faraday/src/components'
 
 import { declarations } from './'
 import issueTypes from './issues-types'

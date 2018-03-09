@@ -11,34 +11,35 @@ module.exports = models => async (req, res) => {
   }
 
   const user = await models.User.find(req.user)
-  if (!user.assignations) {
-    res.status(400).json({ error: 'The user has no assignation' })
-    logger.error('The request user does not have any assignation')
+  if (!user.invitations) {
+    res.status(400).json({ error: 'The user has no invitation' })
+    logger.error('The request user does not have any invitation')
     return
   }
   const { collectionId } = req.params
-  const filteredAssignations = user.assignations.filter(
-    assignation =>
-      assignation.collectionId === collectionId && assignation.type === type,
+  const filteredInvitations = user.invitations.filter(
+    invitation =>
+      invitation.collectionId === collectionId && invitation.type === type,
   )
 
-  if (filteredAssignations.length === 0) {
+  if (filteredInvitations.length === 0) {
     res.status(400).json({
-      error: `Request data does not match any user assignation`,
+      error: `Request data does not match any user invitation`,
     })
     logger.error(
-      `Collection ${collectionId} and type '${type}' do not match any user assignation`,
+      `Collection ${collectionId} and type '${type}' do not match any user invitation`,
     )
     return
   }
 
-  const matchingAssignation = filteredAssignations[0]
+  const matchingInvitation = filteredInvitations[0]
   try {
     await models.Collection.find(collectionId)
-    // TODO: create a team and add the team id to the user's teams array
-    matchingAssignation.hasAnswer = true
+    matchingInvitation.hasAnswer = true
     if (accept === true) {
-      matchingAssignation.isAccepted = true
+      matchingInvitation.isAccepted = true
+    } else {
+      // TODO: remove the user from the team if invitation is refused
     }
     await user.save()
     res.status(204).json()

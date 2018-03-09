@@ -62,14 +62,15 @@ module.exports = async (
 
   try {
     let user = await models.User.findByEmail(email)
-    const assignation = {
+    const invitation = {
       type: role,
       hasAnswer: false,
       isAccepted: false,
       collectionId,
+      timestamp: Date.now(),
     }
-    user.assignations = []
-    user.assignations.push(assignation)
+    user.invitations = user.invitations || []
+    user.invitations.push(invitation)
     user = await user.save()
     await mailService.setupAssignEmail(
       user.email,

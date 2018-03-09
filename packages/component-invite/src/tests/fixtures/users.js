@@ -34,12 +34,13 @@ const users = {
     password: 'test',
     admin: false,
     id: 'handling123',
-    assignations: [
+    invitations: [
       {
         type: 'handlingEditor',
         hasAnswer: false,
         isAccepted: false,
         collectionId: standardCollection.id,
+        timestamp: Date.now(),
       },
     ],
     save: jest.fn(() => users.handlingEditor),

@@ -220,7 +220,7 @@ describe('Post invite route handler', () => {
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
     expect(data.email).toEqual(body.email)
-    expect(data.assignations[0].collectionId).toEqual(req.params.collectionId)
+    expect(data.invitations[0].collectionId).toEqual(req.params.collectionId)
   })
   it('should return success when the handlingEditor invites a reviewer with a collection', async () => {
     const body = {
@@ -240,6 +240,6 @@ describe('Post invite route handler', () => {
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
     expect(data.email).toEqual(body.email)
-    expect(data.assignations[0].collectionId).toEqual(req.params.collectionId)
+    expect(data.invitations[0].collectionId).toEqual(req.params.collectionId)
   })
 })

@@ -52,7 +52,9 @@ export default ({
             return (
               <ValidatedField
                 component={input => (
-                  <Comp {...rest} {...input} {...dispatchFns} />
+                  <div data-test={fieldId}>
+                    <Comp {...rest} {...input} {...dispatchFns} />{' '}
+                  </div>
                 )}
                 format={format}
                 key={fieldId}
@@ -64,12 +66,15 @@ export default ({
           },
         )}
       <ButtonContainer>
-        <Button onClick={isFirst ? () => history.push('/') : prevStep}>
+        <Button
+          data-test="button-prev"
+          onClick={isFirst ? () => history.push('/') : prevStep}
+        >
           {isFirst
             ? `${wizard.cancelText || 'Cancel'}`
             : `${wizard.backText || 'Back'}`}
         </Button>
-        <Button primary type="submit">
+        <Button data-test="button-next" primary type="submit">
           {isFinal
             ? `${wizard.submitText || 'Submit Manuscript'}`
             : `${wizard.nextText || 'Next'}`}

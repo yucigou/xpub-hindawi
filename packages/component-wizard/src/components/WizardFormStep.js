@@ -8,6 +8,7 @@ import { reduxForm, formValueSelector, SubmissionError } from 'redux-form'
 import WizardStep from './WizardStep'
 import { autosaveRequest } from '../redux/autosave'
 
+let cachedVersion = ''
 const wizardSelector = formValueSelector('wizard')
 
 const onChange = (
@@ -19,7 +20,8 @@ const onChange = (
   const prev = pick(prevValues, formSectionKeys)
   const newValues = pick(values, formSectionKeys)
   // TODO: fix this if it sucks down the road
-  if (!isEqual(prev, newValues)) {
+  if (!isEqual(prev, newValues) && cachedVersion !== version.rev) {
+    cachedVersion = version.rev
     dispatch(autosaveRequest())
     dispatch(
       actions.updateFragment(project, {

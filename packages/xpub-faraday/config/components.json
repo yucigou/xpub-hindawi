@@ -7,5 +7,6 @@
   "pubsweet-component-modal",
   "pubsweet-components-faraday",
   "@pubsweet/component-aws-s3",
-  "pubsweet-component-invite"
+  "pubsweet-component-invite",
+  "component-aws-download"
 ]
