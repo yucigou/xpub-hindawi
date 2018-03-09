@@ -1,5 +1,6 @@
 const logger = require('@pubsweet/logger')
 const helpers = require('../helpers/helpers')
+const teamHelper = require('../helpers/Team')
 
 module.exports = models => async (req, res) => {
   const { type, accept } = req.body
@@ -17,6 +18,7 @@ module.exports = models => async (req, res) => {
     return
   }
   const { collectionId } = req.params
+  // console.log('UI', user.invitations)
   const filteredInvitations = user.invitations.filter(
     invitation =>
       invitation.collectionId === collectionId && invitation.type === type,
@@ -38,10 +40,15 @@ module.exports = models => async (req, res) => {
     matchingInvitation.hasAnswer = true
     if (accept === true) {
       matchingInvitation.isAccepted = true
+      await user.save()
     } else {
-      // TODO: remove the user from the team if invitation is refused
+      await teamHelper.removeTeamMember(
+        matchingInvitation.teamId,
+        user.id,
+        models.Team,
+      )
     }
-    await user.save()
+
     res.status(204).json()
     return
   } catch (e) {

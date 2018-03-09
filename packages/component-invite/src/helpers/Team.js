@@ -33,12 +33,9 @@ const createNewTeam = async (collectionId, role, userId, TeamModel) => {
     },
     members: [userId],
   }
-  const team = new TeamModel(teamBody)
-  try {
-    await team.save()
-  } catch (e) {
-    logger.error(e)
-  }
+  let team = new TeamModel(teamBody)
+  team = await team.save()
+  return team
 }
 
 const setupEiCTeams = async (models, user) => {
@@ -91,11 +88,13 @@ const setupManuscriptTeam = async (models, user, collectionId, role) => {
     try {
       team = await team.updateProperties(team)
       team = await team.save()
+      return team
     } catch (e) {
       logger.error(e)
     }
   } else {
-    await createNewTeam(collectionId, role, user.id, models.Team)
+    const team = await createNewTeam(collectionId, role, user.id, models.Team)
+    return team
   }
 }
 
@@ -113,9 +112,33 @@ const getMatchingTeams = (teams, TeamModel, collectionId, role) =>
     })
     .filter(Boolean)
 
+const setupInvitation = async (user, role, collectionId, teamId) => {
+  const invitation = {
+    type: role,
+    hasAnswer: false,
+    isAccepted: false,
+    collectionId,
+    timestamp: Date.now(),
+    teamId,
+  }
+  user.invitations = user.invitations || []
+  user.invitations.push(invitation)
+  user = await user.save()
+  return user
+}
+
+const removeTeamMember = async (teamId, userId, TeamModel) => {
+  const team = await TeamModel.find(teamId)
+  const members = team.members.filter(member => member !== userId)
+  team.members = members
+  await TeamModel.updateProperties(team)
+  await team.save()
+}
 module.exports = {
   createNewTeam,
   setupEiCTeams,
   setupManuscriptTeam,
   getMatchingTeams,
+  setupInvitation,
+  removeTeamMember,
 }

@@ -1,6 +1,5 @@
-const collections = require('./collections')
-
-const { standardCollection } = collections
+// const { heInvitation } = require('./invitations')
+const { standardCollection } = require('./collections')
 
 const users = {
   admin: {
@@ -41,6 +40,7 @@ const users = {
         isAccepted: false,
         collectionId: standardCollection.id,
         timestamp: Date.now(),
+        teamId: 'he123',
       },
     ],
     save: jest.fn(() => users.handlingEditor),
