@@ -30,7 +30,7 @@ const withModal = ({
             overlayColor={overlayColor}
           />
         )}
-        <WrappedComponent {...rest} />
+        <WrappedComponent hideModal={hideModal} {...rest} />
       </div>
     ),
   )
