@@ -41,6 +41,7 @@ const DashboardCard = ({
           <LeftDetails flex="5">
             <ManuscriptId>{`ID ${customId}`}</ManuscriptId>
             <Title
+              title={title}
               dangerouslySetInnerHTML={{ __html: title }} // eslint-disable-line
             />
           </LeftDetails>
@@ -69,7 +70,9 @@ const DashboardCard = ({
             <DateField>{submitted || ''}</DateField>
           </LeftDetails>
           <RightDetails flex="5">
-            <ManuscriptType>{manuscriptMeta}</ManuscriptType>
+            <ManuscriptType title={manuscriptMeta}>
+              {manuscriptMeta}
+            </ManuscriptType>
             {project.status ? (
               <Details
                 onClick={() =>
@@ -197,6 +200,7 @@ const LeftDetails = styled.div`
   justify-content: flex-start;
   align-items: center;
   flex: ${({ flex }) => flex || 1};
+  max-width: 75%;
 `
 
 const RightDetails = styled.div`
@@ -205,6 +209,7 @@ const RightDetails = styled.div`
   justify-content: flex-end;
   align-items: center;
   flex: ${({ flex }) => flex || 1};
+  max-width: 75%;
 `
 
 const DetailsView = styled.div`
@@ -229,6 +234,7 @@ const ManuscriptId = styled.div`
   margin-right: 8px;
   text-align: left;
   text-transform: uppercase;
+  white-space: nowrap;
 `
 
 const Details = styled.div`
@@ -240,6 +246,7 @@ const Details = styled.div`
   text-decoration: underline;
   text-align: center;
   text-transform: uppercase;
+  white-space: nowrap;
 `
 
 const ClickableIcon = styled.div`
