@@ -1,6 +1,7 @@
 const collections = require('./collections')
 
 const { standardCollection } = collections
+
 const users = {
   admin: {
     type: 'user',
@@ -17,14 +18,14 @@ const users = {
     password: 'test1234',
     admin: false,
     id: 'editor123',
-    roles: ['editorInChief'],
     passwordResetToken: 'token123',
-    firstName: 'vlad',
-    lastName: 'dracul',
+    firstName: 'john',
+    lastName: 'smith',
     affiliation: 'MIT',
-    title: 'prof',
+    title: 'Mr',
     save: jest.fn(() => users.editorInChief),
     isConfirmed: false,
+    editorInChief: true,
   },
   handlingEditor: {
     type: 'user',
@@ -33,16 +34,17 @@ const users = {
     password: 'test',
     admin: false,
     id: 'handling123',
-    roles: ['handlingEditor'],
-    assignations: [
+    invitations: [
       {
         type: 'handlingEditor',
         hasAnswer: false,
         isAccepted: false,
         collectionId: standardCollection.id,
+        timestamp: Date.now(),
       },
     ],
     save: jest.fn(() => users.handlingEditor),
+    editorInChief: false,
   },
   author: {
     type: 'user',
@@ -51,14 +53,29 @@ const users = {
     password: 'test',
     admin: false,
     id: 'author123',
-    roles: ['author'],
     passwordResetToken: 'token123',
     firstName: 'leopold',
     lastName: 'smith',
     affiliation: 'MIT',
-    title: 'mr',
+    title: 'Mr',
     save: jest.fn(() => users.author),
     isConfirmed: false,
+  },
+  reviewer: {
+    type: 'user',
+    username: 'reviewer',
+    email: 'reviewer@example.com',
+    password: 'test',
+    admin: false,
+    id: 'reviewer123',
+    passwordResetToken: 'token123',
+    firstName: 'angela',
+    lastName: 'smith',
+    affiliation: 'MIT',
+    title: 'Ms',
+    save: jest.fn(() => users.reviewer),
+    isConfirmed: false,
+    teams: [],
   },
 }
 

@@ -58,26 +58,6 @@ const validateEmailAndToken = async (email, token, userModel) => {
   }
 }
 
-const hasInviteRight = (configRoles, userRoles, role) => {
-  const includesRole = existingRole =>
-    configRoles.inviteRights[existingRole].includes(role)
-  if (!userRoles.some(includesRole)) {
-    logger.error(`incorrect role when inviting a user`)
-
-    return {
-      success: false,
-      status: 403,
-      message: `${userRoles} cannot invite a ${role}`,
-    }
-  }
-
-  return {
-    success: true,
-    status: null,
-    message: null,
-  }
-}
-
 const handleNotFoundError = async (error, item) => {
   const response = {
     success: false,
@@ -95,72 +75,40 @@ const handleNotFoundError = async (error, item) => {
   return response
 }
 
-const createNewTeam = async (collectionId, user, TeamModel) => {
-  let permissions, group, name
-  switch (user.roles[0]) {
-    case 'handlingEditor':
-      permissions = 'editor'
-      group = 'editor'
-      name = 'Handling Editor'
-      break
-    case 'reviewer':
-      permissions = 'reviewer'
-      group = 'reviewer'
-      name = 'Reviewer'
-      break
-    default:
-      break
-  }
-
-  const teamBody = {
-    teamType: {
-      name: user.roles[0],
-      permissions,
-    },
-    group,
-    name,
-    object: {
-      type: 'collection',
-      id: collectionId,
-    },
-    members: [user.id],
-  }
-  const team = new TeamModel(teamBody)
-  await team.save()
-}
-
 const createNewUser = async (
   email,
-  role,
   firstName,
   lastName,
   affiliation,
   title,
   UserModel,
+  role,
 ) => {
   const userBody = {
     username: uuid.v4().slice(0, 8),
     email,
     password: uuid.v4(),
-    roles: [role],
     passwordResetToken: crypto.randomBytes(32).toString('hex'),
     isConfirmed: false,
     firstName,
     lastName,
     affiliation,
     title,
+    editorInChief: role === 'editorInChief',
     admin: role === 'admin',
   }
   let newUser = new UserModel(userBody)
-  newUser = await newUser.save()
-  return newUser
+  try {
+    newUser = await newUser.save()
+    return newUser
+  } catch (e) {
+    logger.error(e)
+  }
 }
 
 module.exports = {
   checkForUndefinedParams,
   validateEmailAndToken,
-  hasInviteRight,
   handleNotFoundError,
-  createNewTeam,
   createNewUser,
 }

@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser')
 
-const Assignation = app => {
+const HandleInvitation = app => {
   app.use(bodyParser.json())
   const authBearer = app.locals.passport.authenticate('bearer', {
     session: false,
@@ -8,8 +8,8 @@ const Assignation = app => {
   app.post(
     '/api/collections/:collectionId/users',
     authBearer,
-    require('./routes/postAssignation')(app.locals.models),
+    require('./routes/postHandleInvitation')(app.locals.models),
   )
 }
 
-module.exports = Assignation
+module.exports = HandleInvitation

@@ -89,13 +89,14 @@ module.exports = {
   user: {
     name: Joi.string(),
     username: Joi.string(),
-    roles: Joi.array(),
     isConfirmed: Joi.boolean(),
     firstName: Joi.string().allow(''),
     lastName: Joi.string().allow(''),
     affiliation: Joi.string().allow(''),
     title: Joi.string().allow(''),
-    assignations: Joi.array(),
+    invitations: Joi.array(),
+    teams: Joi.array(),
+    editorInChief: Joi.boolean(),
   },
   team: {
     group: Joi.string(),
