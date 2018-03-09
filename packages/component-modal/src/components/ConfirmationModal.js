@@ -13,15 +13,17 @@ const ConfirmationModal = ({
   theme,
 }) => (
   <Root>
-    <CloseIcon onClick={hideModal}>
+    <CloseIcon data-test="icon-modal-hide" onClick={hideModal}>
       <Icon color={theme.colorPrimary}>x</Icon>
     </CloseIcon>
     {title && <Title dangerouslySetInnerHTML={{ __html: title }} />}
     {subtitle && <Subtitle dangerouslySetInnerHTML={{ __html: subtitle }} />}
     {content && <Content dangerouslySetInnerHTML={{ __html: content }} />}
     <ButtonsContainer>
-      <Button onClick={hideModal}>{cancelText}</Button>
-      <Button onClick={onConfirm} primary>
+      <Button data-test="button-modal-hide" onClick={hideModal}>
+        {cancelText}
+      </Button>
+      <Button data-test="button-modal-confirm" onClick={onConfirm} primary>
         {confirmText}
       </Button>
     </ButtonsContainer>

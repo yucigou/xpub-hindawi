@@ -53,6 +53,7 @@ const DashboardCard = ({
             </ZipFiles>
             {!project.status && (
               <ActionButtons
+                data-test="button-resume-submission"
                 onClick={() =>
                   history.push(
                     `/projects/${project.id}/versions/${version.id}/submit`,
@@ -75,6 +76,7 @@ const DashboardCard = ({
             </ManuscriptType>
             {project.status ? (
               <Details
+                data-test="button-details"
                 onClick={() =>
                   history.push(
                     `/projects/${project.id}/versions/${version.id}/manuscript`,
@@ -85,7 +87,12 @@ const DashboardCard = ({
                 <Icon color="#667080">chevron-right</Icon>
               </Details>
             ) : (
-              <Details onClick={cancelSubmission}>Cancel submission</Details>
+              <Details
+                data-test="button-cancel-submission"
+                onClick={cancelSubmission}
+              >
+                Cancel submission
+              </Details>
             )}
           </RightDetails>
         </Bottom>
