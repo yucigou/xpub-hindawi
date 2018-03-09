@@ -71,3 +71,6 @@ export const parseVersion = version => ({
   abstract: get(version, 'metadata.abstract'),
   version: get(version, 'version'),
 })
+
+export const parseJournalIssue = (journal, metadata) =>
+  journal.issueTypes.find(t => t.value === get(metadata, 'issue'))

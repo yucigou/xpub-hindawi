@@ -5,7 +5,7 @@ import { Button, Icon } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
 import { compose, getContext } from 'recompose'
 
-import { parseVersion } from './utils'
+import { parseVersion, parseJournalIssue } from './utils'
 
 import ZipFiles from './ZipFiles'
 
@@ -18,100 +18,104 @@ const DashboardCard = ({
   journal,
   ...rest
 }) => {
-  const { submitted, title, type, version: vers } = parseVersion(version)
+  const { submitted, title, type } = parseVersion(version)
   const status = get(project, 'status') || 'Draft'
-  const abstract = get(version, 'metadata.abstract')
   const metadata = get(version, 'metadata')
   const files = get(version, 'files')
+  const customId = project.customId || project.id.split('-')[0]
   const hasFiles = files ? Object.values(files).some(f => f.length > 0) : false
-  const journalIssueType = journal.issueTypes.find(
-    t => t.value === get(metadata, 'issue'),
-  )
+  const journalIssueType = parseJournalIssue(journal, metadata)
+  const manuscriptMeta = `${type} - ${
+    journalIssueType ? journalIssueType.label : 'N/A'
+  }`
+
   return version ? (
     <Card>
       <ListView>
-        <Left>
-          <Title
-            dangerouslySetInnerHTML={{ __html: title }} // eslint-disable-line
-          />
-          <ManuscriptInfo>
-            <div>
-              <Status>{status}</Status>
-              <DateField>{submitted || ''}</DateField>
-            </div>
-            <div>
-              <Version>{`v${vers} - `}</Version>
-              <ManuscriptId>{`ID ${version.id.split('-')[0]}`}</ManuscriptId>
-              <ManuscriptType>{type}</ManuscriptType>
-            </div>
-          </ManuscriptInfo>
-        </Left>
-        <Right>
-          <ZipFiles disabled={!hasFiles} fragmentId={version.id}>
-            <ClickableIcon disabled={!hasFiles}>
-              <Icon>download</Icon>
-            </ClickableIcon>
-          </ZipFiles>
-          <ClickableIcon onClick={() => deleteProject(project)}>
-            <Icon>trash-2</Icon>
-          </ClickableIcon>
-          <ClickableIcon>
-            <Icon>more-horizontal</Icon>
-          </ClickableIcon>
-          <Details
-            onClick={() =>
-              history.push(
-                `/projects/${project.id}/versions/${version.id}/submit`,
-              )
-            }
-          >
-            Details
-            <Icon color="#667080">chevron-right</Icon>
-          </Details>
-        </Right>
-      </ListView>
-      <DetailsView>
-        <LeftDetails>
-          <JournalTitle>{journal.metadata.nameText}</JournalTitle>
-          {journalIssueType && <Issue>{journalIssueType.label}</Issue>}
-          {get(version, 'authors') && (
-            <Authors>
-              <span>Authors:</span>
-              <AuthorList>
-                {version.authors
-                  .map(({ firstName, lastName }) => `${firstName} ${lastName}`)
-                  .join(', ')}
-              </AuthorList>
-            </Authors>
-          )}
-          <PreviewContainer>
-            {abstract && (
-              <ClickableIconContainer onClick={showAbstractModal(metadata)}>
-                <Icon color="#667080" size={18}>
-                  eye
-                </Icon>
-                <span>Abstract</span>
-              </ClickableIconContainer>
+        <Top>
+          <LeftDetails flex="5">
+            <ManuscriptId>{`ID ${customId}`}</ManuscriptId>
+            <Title
+              dangerouslySetInnerHTML={{ __html: title }} // eslint-disable-line
+            />
+          </LeftDetails>
+          <RightDetails flex="2">
+            <ZipFiles disabled={!hasFiles} fragmentId={version.id}>
+              <ClickableIcon disabled={!hasFiles}>
+                <Icon>download</Icon>
+              </ClickableIcon>
+            </ZipFiles>
+            {!project.status && (
+              <ActionButtons
+                onClick={() =>
+                  history.push(
+                    `/projects/${project.id}/versions/${version.id}/submit`,
+                  )
+                }
+              >
+                RESUME SUBMISSION
+              </ActionButtons>
             )}
-            <ClickableIconContainer>
-              <Icon color="#667080" size={18}>
-                eye
-              </Icon>
-              <span>Cover letter</span>
-            </ClickableIconContainer>
-          </PreviewContainer>
-        </LeftDetails>
-        <RightDetails>
-          <div>
-            <Label>Handling editor</Label>
-            <ActionButtons>ASSIGN</ActionButtons>
-          </div>
-          <div>
-            <Label>Reviewers</Label>
-            <ActionButtons>INVITE</ActionButtons>
-          </div>
-        </RightDetails>
-      </DetailsView>
+          </RightDetails>
+        </Top>
+        <Bottom>
+          <LeftDetails flex="2">
+            <Status>{status}</Status>
+            <DateField>{submitted || ''}</DateField>
+          </LeftDetails>
+          <RightDetails flex="5">
+            <ManuscriptType>{manuscriptMeta}</ManuscriptType>
+            {project.status ? (
+              <Details
+                onClick={() =>
+                  history.push(
+                    `/projects/${project.id}/versions/${version.id}/manuscript`,
+                  )
+                }
+              >
+                Details
+                <Icon color="#667080">chevron-right</Icon>
+              </Details>
+            ) : (
+              <Details onClick={() => deleteProject(project)}>
+                Cancel submission
+              </Details>
+            )}
+          </RightDetails>
+        </Bottom>
+      </ListView>
+      {project.status && (
+        <DetailsView>
+          <Top>
+            <AuthorList>
+              {version.authors.map(
+                (
+                  {
+                    firstName,
+                    lastName,
+                    middleName,
+                    email,
+                    isSubmitting,
+                    isCorresponding,
+                  },
+                  index,
+                  arr,
+                ) => (
+                  <Author key={email}>
+                    {isSubmitting && <AuthorStatus>SA</AuthorStatus>}
+                    {isCorresponding &&
+                      !isSubmitting && <AuthorStatus>CA</AuthorStatus>}
+                    <AuthorName>
+                      {firstName} {middleName} {lastName}
+                    </AuthorName>
+                    {arr.length - 1 === index ? '' : ','}
+                  </Author>
+                ),
+              )}
+            </AuthorList>
+          </Top>
+        </DetailsView>
+      )}
     </Card>
   ) : null
 }
@@ -125,34 +129,29 @@ const defaultText = css`
   font-size: ${({ theme }) => theme.fontSizeBaseSmall};
 `
 
-const PreviewContainer = styled.div`
-  display: flex;
-  margin-top: 18px;
-`
-
 const AuthorList = styled.span`
   ${defaultText};
-  overflow: hidden;
-  text-overflow: ellipsis;
   text-align: left;
-  white-space: nowrap;
-  max-width: 400px;
-  width: 400px;
-`
-
-const Authors = styled.div`
-  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-top: 15px;
+`
 
-  span:first-child {
-    ${defaultText};
-    margin-right: 8px;
-    text-align: left;
-    text-transform: uppercase;
-  }
+const AuthorName = styled.span`
+  text-decoration: underline;
+  padding-left: 2px;
+`
+const Author = styled.div`
+  padding-right: 8px;
+`
+
+const AuthorStatus = styled.span`
+  border: ${({ theme }) => theme.borderDefault};
+  ${defaultText};
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 0 2px;
 `
 
 const ActionButtons = styled(Button)`
@@ -167,47 +166,23 @@ const ActionButtons = styled(Button)`
 
 const LeftDetails = styled.div`
   display: flex;
-  flex: 3;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
-  padding: 10px 20px;
+  align-items: center;
+  flex: ${({ flex }) => flex || 1};
 `
 
 const RightDetails = styled.div`
   display: flex;
-  flex: 2;
-  flex-direction: column;
-
-  div {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    margin: 6px 0;
-  }
-`
-
-const Label = styled.span`
-  ${defaultText};
-  text-align: left;
-  text-transform: uppercase;
-  width: 150px;
-`
-
-const JournalTitle = styled.span`
-  ${defaultText};
-  font-size: ${({ theme }) => theme.fontSizeHeading6};
-  font-weight: bold;
-  text-align: left;
-`
-
-const Issue = styled.span`
-  ${defaultText};
-  text-align: left;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex: ${({ flex }) => flex || 1};
 `
 
 const DetailsView = styled.div`
   align-items: center;
-  border-top: 1px solid #667080;
+  border-top: ${({ theme }) => theme.borderDefault};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -217,31 +192,27 @@ const DetailsView = styled.div`
 const ListView = styled.div`
   align-items: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
 `
 
-const ManuscriptId = styled.span`
+const ManuscriptId = styled.div`
   ${defaultText};
-  margin-left: 8px;
+  margin-right: 8px;
   text-align: left;
-  text-decoration: underline;
   text-transform: uppercase;
 `
 
-const Version = styled.span`
-  ${defaultText};
-  text-align: left;
-`
 const Details = styled.div`
   align-items: center;
   cursor: pointer;
   display: flex;
   ${defaultText};
-  margin-left: 8px;
+  margin-left: 16px;
   text-decoration: underline;
   text-align: center;
+  text-transform: uppercase;
 `
 
 const ClickableIcon = styled.div`
@@ -264,58 +235,49 @@ const Card = styled.div`
   background-color: ${({ theme }) => theme.backgroundColorReverse};
 `
 
-const Right = styled.div`
-  align-items: center;
-  flex: 1;
+const Top = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin: 0 15px;
-`
-
-const Left = styled.div`
-  border-right: ${({ theme }) => theme.borderDefault};
-  display: flex;
-  flex-direction: column;
-  flex: 5;
-  margin: 10px 0;
-  padding: 0 10px;
-`
-
-const ManuscriptInfo = styled.div`
   align-items: center;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+`
+const Bottom = styled.div`
   display: flex;
+  flex-direction: row;
+  padding: 0 10px 10px 10px;
+  width: 100%;
+  box-sizing: border-box;
   justify-content: space-between;
-
-  div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
 `
 
 const ManuscriptType = styled.div`
-  border: ${({ theme }) => theme.borderDefault};
   ${defaultText};
-  font-weight: bold;
   padding: 6px 4px;
   margin-left: 10px;
-  text-align: left;
-  text-transform: uppercase;
+  text-align: right;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `
 
-const Title = styled.span`
+const Title = styled.div`
   ${defaultText};
-  font-size: ${({ theme }) => theme.fontSizeHeading5};
+  font-family: ${({ theme }) => theme.fontHeading};
+  color: ${({ theme }) => theme.colorPrimary};
+  font-weight: bold;
   text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `
 
 const Status = styled.div`
   border: ${({ theme }) => theme.borderDefault};
   ${defaultText};
   font-weight: bold;
-  margin: 0.5em 0;
   padding: 0.2em 0.5em;
   text-align: left;
   text-transform: uppercase;
@@ -325,19 +287,5 @@ const DateField = styled.span`
   ${defaultText};
   margin: 0 8px;
   text-align: left;
-`
-
-const ClickableIconContainer = styled.div`
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  margin-right: 8px;
-
-  span:last-child {
-    ${defaultText};
-    margin-left: 8px;
-    text-align: left;
-    text-decoration: underline;
-  }
 `
 // #endregion

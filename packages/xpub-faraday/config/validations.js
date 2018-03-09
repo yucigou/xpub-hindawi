@@ -8,6 +8,7 @@ module.exports = {
     title: Joi.string(),
     status: Joi.string(),
     reviewers: Joi.array(),
+    customId: Joi.string(),
   },
   fragment: [
     {
