@@ -72,16 +72,23 @@ module.exports = async (
     user.invitations = user.invitations || []
     user.invitations.push(invitation)
     user = await user.save()
-    await mailService.setupAssignEmail(
-      user.email,
-      'assign-handling-editor',
-      url,
-    )
 
     await teamHelper.setupManuscriptTeam(models, user, collectionId, role)
 
     user = await models.User.find(user)
-    return res.status(200).json(user)
+
+    try {
+      await mailService.setupAssignEmail(
+        user.email,
+        'assign-handling-editor',
+        url,
+      )
+
+      return res.status(200).json(user)
+    } catch (e) {
+      logger.error(e)
+      return res.status(500).json({ error: 'Mailing could not be sent.' })
+    }
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'user')
     return res.status(notFoundError.status).json({
