@@ -1,15 +1,51 @@
 const users = require('./users')
 
-module.exports = {
-  teamType: {
-    name: 'editorInChief',
-    permissions: 'editor',
+const { editorInChief, handlingEditor, reviewer } = users
+const teams = {
+  eicTeam: {
+    teamType: {
+      name: 'editorInChief',
+      permissions: 'editorInChief',
+    },
+    group: 'editorInChief',
+    name: 'Editor in Chief',
+    object: {
+      type: 'collection',
+      id: '123',
+    },
+    members: [editorInChief.id],
+    save: jest.fn(() => teams.eicTeam),
+    updateProperties: jest.fn(() => teams.eicTeam),
   },
-  group: 'editor',
-  name: 'Editor in Chief',
-  object: {
-    type: 'collection',
-    id: '123',
+  heTeam: {
+    teamType: {
+      name: 'handlingEditor',
+      permissions: 'handlingEditor',
+    },
+    group: 'handlingEditor',
+    name: 'HandlingEditor',
+    object: {
+      type: 'collection',
+      id: '123',
+    },
+    members: [handlingEditor.id],
+    save: jest.fn(() => teams.heTeam),
+    updateProperties: jest.fn(() => teams.heTeam),
   },
-  members: [users.editorInChief.id],
+  reviewerTeam: {
+    teamType: {
+      name: 'reviewer',
+      permissions: 'reviewer',
+    },
+    group: 'reviewer',
+    name: 'Reviewer',
+    object: {
+      type: 'collection',
+      id: '123',
+    },
+    members: [reviewer.id],
+    save: jest.fn(() => teams.reviewerTeam),
+    updateProperties: jest.fn(() => teams.reviewerTeam),
+  },
 }
+module.exports = teams

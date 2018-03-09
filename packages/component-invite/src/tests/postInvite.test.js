@@ -4,6 +4,7 @@ process.env.SUPPRESS_NO_CONFIG_WARNING = true
 const httpMocks = require('node-mocks-http')
 const random = require('lodash/random')
 const fixtures = require('./fixtures/fixtures')
+
 const UserMock = require('./mocks/User')
 const Chance = require('chance')
 const TeamMock = require('./mocks/Team')
@@ -16,7 +17,7 @@ const chance = new Chance()
 const globalRoles = ['editorInChief', 'author', 'admin']
 const manuscriptRoles = ['handlingEditor', 'reviewer']
 
-const buildModels = (collection, findUser, emailUser) => {
+const buildModels = (collection, findUser, emailUser, team) => {
   const models = {
     User: {},
     Collection: {
@@ -29,18 +30,30 @@ const buildModels = (collection, findUser, emailUser) => {
     },
     Team: {},
   }
-  UserMock.find = jest.fn(
-    () =>
-      findUser instanceof Error
-        ? Promise.reject(findUser)
-        : Promise.resolve(findUser),
-  )
+  UserMock.find = jest.fn(user => {
+    const foundUser = Object.values(fixtures.users).find(
+      fixUser => fixUser.id === user.id,
+    )
+
+    if (foundUser === undefined) {
+      return Promise.reject(findUser)
+    }
+
+    return Promise.resolve(foundUser)
+  })
+
   UserMock.findByEmail = jest.fn(
     () =>
       emailUser instanceof Error
         ? Promise.reject(emailUser)
         : Promise.resolve(emailUser),
   )
+
+  TeamMock.find = jest.fn(
+    () =>
+      team instanceof Error ? Promise.reject(team) : Promise.resolve(team),
+  )
+  TeamMock.all = jest.fn(() => Object.values(fixtures.teams))
 
   models.User = UserMock
   models.Team = TeamMock
@@ -63,6 +76,7 @@ notFoundError.status = 404
 
 const { admin, editorInChief, handlingEditor, author } = fixtures.users
 const { standardCollection } = fixtures.collections
+const { heTeam } = fixtures.teams
 const postInvitePath = '../routes/postInvite'
 describe('Post invite route handler', () => {
   it('should return success when the admin invites a global role', async () => {
@@ -76,7 +90,6 @@ describe('Post invite route handler', () => {
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
-    expect(data.roles[0]).toEqual(body.role)
     expect(data.firstName).toEqual(body.firstName)
     expect(data.email).toEqual(body.email)
     expect(data.admin).toEqual(body.admin)
@@ -108,7 +121,9 @@ describe('Post invite route handler', () => {
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
-    expect(data.error).toEqual(`admin cannot invite a ${body.role}`)
+    expect(data.error).toEqual(
+      `admin tried to invite an invalid role: ${body.role}`,
+    )
   })
   it('should return an error params are missing', async () => {
     delete body.email
@@ -137,9 +152,7 @@ describe('Post invite route handler', () => {
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
-    expect(data.error).toEqual(
-      `${req.user.roles[0]} cannot invite a ${body.role}`,
-    )
+    expect(data.error).toEqual(`Role ${body.role} cannot be set on collections`)
   })
   it('should return an error when an editorInChief invites a handlingEditor without a collection', async () => {
     body.role = 'handlingEditor'
@@ -155,7 +168,7 @@ describe('Post invite route handler', () => {
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
-      `${req.user.roles} cannot invite a ${body.role} without a collection`,
+      `${req.user.username} cannot invite a ${body.role} without a collection`,
     )
   })
   it('should return an error when an handlingEditor invites a reviewer without a collection', async () => {
@@ -172,7 +185,7 @@ describe('Post invite route handler', () => {
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
-      `${req.user.roles} cannot invite a ${body.role} without a collection`,
+      `${req.user.username} cannot invite a ${body.role} without a collection`,
     )
   })
   it('should return an error when inviting an existing user', async () => {
@@ -201,12 +214,11 @@ describe('Post invite route handler', () => {
     req.user = editorInChief
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
-    const models = buildModels(standardCollection, editorInChief, author)
+    const models = buildModels(standardCollection, author, author)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
-    expect(data.roles).toContain(body.role)
     expect(data.email).toEqual(body.email)
     expect(data.assignations[0].collectionId).toEqual(req.params.collectionId)
   })
@@ -218,6 +230,7 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
+    handlingEditor.teams = [heTeam.id]
     req.user = handlingEditor
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
@@ -226,7 +239,6 @@ describe('Post invite route handler', () => {
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
-    expect(data.roles).toContain(body.role)
     expect(data.email).toEqual(body.email)
     expect(data.assignations[0].collectionId).toEqual(req.params.collectionId)
   })

@@ -1,15 +1,25 @@
 const logger = require('@pubsweet/logger')
 const helpers = require('../helpers/helpers')
 const mailService = require('pubsweet-component-mail-service')
+const config = require('config')
 
-module.exports = async (body, UserModel, res, url) => {
+const configRoles = config.get('roles')
+
+module.exports = async (body, models, res, url) => {
   const { email, role, firstName, lastName, affiliation, title } = body
 
+  if (!configRoles.inviteRights.admin.includes(role)) {
+    logger.error(`admin ${email} tried to invite a ${role}`)
+    return res
+      .status(403)
+      .json({ error: `admin tried to invite an invalid role: ${role}` })
+  }
+
   try {
-    const user = await UserModel.findByEmail(email)
+    const user = await models.User.findByEmail(email)
 
     if (user) {
-      logger.error('someone tried to invite existing user')
+      logger.error(`admin tried to invite existing user: ${email}`)
       return res.status(400).json({ error: 'User already exists' })
     }
   } catch (e) {
@@ -20,12 +30,12 @@ module.exports = async (body, UserModel, res, url) => {
 
     const newUser = await helpers.createNewUser(
       email,
-      role,
       firstName,
       lastName,
       affiliation,
       title,
-      UserModel,
+      models.User,
+      role,
     )
 
     await mailService.setupInviteEmail(

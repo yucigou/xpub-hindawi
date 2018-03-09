@@ -1,6 +1,7 @@
 const logger = require('@pubsweet/logger')
 const config = require('config')
 const helpers = require('../helpers/helpers')
+const teamHelper = require('../helpers/Team')
 const mailService = require('pubsweet-component-mail-service')
 
 const configRoles = config.get('roles')
@@ -29,6 +30,27 @@ module.exports = async (
       .json({ error: `Role ${role} cannot be set on collections` })
   }
 
+  if (!reqUser.editorInChief && reqUser.teams === undefined) {
+    return res
+      .status(403)
+      .json({ error: `User ${reqUser.username} is not part of any teams` })
+  } else if (reqUser.editorInChief === false) {
+    const matchingTeams = await teamHelper.getMatchingTeams(
+      reqUser.teams,
+      models.Team,
+      collectionId,
+      role,
+    )
+
+    if (matchingTeams.length === 0) {
+      return res.status(403).json({
+        error: `User ${
+          reqUser.email
+        } cannot invite a ${role} to ${collectionId}`,
+      })
+    }
+  }
+
   try {
     await models.Collection.find(collectionId)
   } catch (e) {
@@ -40,7 +62,6 @@ module.exports = async (
 
   try {
     let user = await models.User.findByEmail(email)
-    user.roles.push(role)
     const assignation = {
       type: role,
       hasAnswer: false,
@@ -56,8 +77,9 @@ module.exports = async (
       url,
     )
 
-    // TODO: create a team and add the team id to the user's teams array
+    await teamHelper.setupManuscriptTeam(models, user, collectionId, role)
 
+    user = await models.User.find(user)
     return res.status(200).json(user)
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'user')
