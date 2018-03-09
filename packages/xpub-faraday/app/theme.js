@@ -1,3 +1,8 @@
+/* eslint-disable import/extensions */
+import 'typeface-noto-sans'
+import 'typeface-noto-serif'
+import 'typeface-ubuntu-mono'
+
 const theme = {
   colorPrimary: '#667080', // Indicates a primary call to action
   colorSecondary: '#d8d8d8', // Default color for non-primary actions
@@ -24,7 +29,9 @@ const theme = {
   fontSizeHeading6: '20px', // Size for Heading 6
   fontLineHeight: '32px', // Default line height
 
+  /* Spacing */
   gridUnit: '32px', // Base interface space measurement used by elements and typography
+  subGridUnit: '8px',
 
   borderDefault: '1px solid #667080',
   borderRadius: '2px', // Radius value applied to borders throughout the user interface

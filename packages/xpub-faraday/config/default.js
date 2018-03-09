@@ -46,16 +46,6 @@ module.exports = {
       'http://localhost:3000/password-reset',
     sender: process.env.PUBSWEET_PASSWORD_RESET_SENDER || 'dev@example.com',
   },
-  'pubsweet-component-ink-backend': {
-    inkEndpoint:
-      process.env.INK_ENDPOINT || 'http://inkdemo-api.coko.foundation',
-    email: process.env.INK_USERNAME,
-    password: process.env.INK_PASSWORD,
-    maxRetries: 500,
-    recipes: {
-      'editoria-typescript': '2',
-    },
-  },
   'pubsweet-component-aws-s3': {
     secretAccessKey: process.env.AWS_S3_SECRET_KEY,
     accessKeyId: process.env.AWS_S3_ACCESS_KEY,

@@ -18,10 +18,10 @@
     "redux": "^3.6.0",
     "redux-form": "^7.0.3",
     "recompose": "^0.26.0",
-    "xpub-validators": "^0.0.2",
-    "xpub-connect": "^0.0.2",
-    "xpub-journal": "^0.0.2",
-    "xpub-selectors": "^0.0.2",
+    "xpub-validators": "^0.0.3",
+    "xpub-connect": "^0.0.3",
+    "xpub-journal": "^0.0.3",
+    "xpub-selectors": "^0.0.3",
     "styled-components": "^3.1.6"
   },
   "peerDependencies": {
