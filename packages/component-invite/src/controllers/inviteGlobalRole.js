@@ -27,14 +27,18 @@ module.exports = async (body, UserModel, res, url) => {
       title,
       UserModel,
     )
+    try {
+      await mailService.setupInviteEmail(
+        newUser.email,
+        'invite',
+        newUser.passwordResetToken,
+        url,
+      )
 
-    await mailService.setupInviteEmail(
-      newUser.email,
-      'invite',
-      newUser.passwordResetToken,
-      url,
-    )
-
-    return res.status(200).json(newUser)
+      return res.status(200).json(newUser)
+    } catch (e) {
+      logger.error(e)
+      return res.status(500).json({ error: 'Mailing could not be sent.' })
+    }
   }
 }

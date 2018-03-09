@@ -29,6 +29,9 @@ export default compose(
 
 const Root = styled.div`
   font-family: ${props => props.theme.fontInterface};
+  div[open] {
+    width: auto;
+  }
 `
 
 const MainContainer = styled.div`

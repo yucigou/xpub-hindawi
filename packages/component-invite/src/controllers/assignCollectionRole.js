@@ -50,15 +50,21 @@ module.exports = async (
     user.assignations = []
     user.assignations.push(assignation)
     user = await user.save()
-    await mailService.setupAssignEmail(
-      user.email,
-      'assign-handling-editor',
-      url,
-    )
+
+    try {
+      await mailService.setupAssignEmail(
+        user.email,
+        'assign-handling-editor',
+        url,
+      )
+
+      return res.status(200).json(user)
+    } catch (e) {
+      logger.error(e)
+      return res.status(500).json({ error: 'Mailing could not be sent.' })
+    }
 
     // TODO: create a team and add the team id to the user's teams array
-
-    return res.status(200).json(user)
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'user')
     return res.status(notFoundError.status).json({
