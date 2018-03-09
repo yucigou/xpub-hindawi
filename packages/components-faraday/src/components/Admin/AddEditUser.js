@@ -19,10 +19,7 @@ const onSubmit = (values, dispatch, { isEdit, history }) => {
   if (!isEdit) {
     const newValues = setAdmin(values)
     return create('/users/invite', newValues)
-      .then(r => {
-        console.log(r)
-        history.push('/admin/users')
-      })
+      .then(r => history.push('/admin/users'))
       .catch(error => {
         const err = get(error, 'response')
         if (err) {

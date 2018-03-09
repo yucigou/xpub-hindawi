@@ -27,7 +27,7 @@ module.exports = {
 
     const { htmlBody, textBody } = getEmailBody(emailType, replacements)
 
-    return await Email.send(email, subject, textBody, htmlBody)
+    return Email.send(email, subject, textBody, htmlBody)
   },
   setupAssignEmail: async (email, emailType, dashBoardUrl) => {
     let subject
@@ -46,7 +46,7 @@ module.exports = {
 
     const { htmlBody, textBody } = getEmailBody(emailType, replacements)
 
-    return await Email.send(email, subject, textBody, htmlBody)
+    return Email.send(email, subject, textBody, htmlBody)
   },
 }
 
