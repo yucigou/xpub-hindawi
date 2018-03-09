@@ -3,7 +3,11 @@ import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import { Button, Icon } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
-import { compose, getContext } from 'recompose'
+import { compose, getContext, withHandlers } from 'recompose'
+import {
+  withModal,
+  ConfirmationModal,
+} from 'pubsweet-component-modal/src/components'
 
 import { parseVersion, parseJournalIssue } from './utils'
 
@@ -16,6 +20,7 @@ const DashboardCard = ({
   version,
   showAbstractModal,
   journal,
+  cancelSubmission,
   ...rest
 }) => {
   const { submitted, title, type } = parseVersion(version)
@@ -77,9 +82,7 @@ const DashboardCard = ({
                 <Icon color="#667080">chevron-right</Icon>
               </Details>
             ) : (
-              <Details onClick={() => deleteProject(project)}>
-                Cancel submission
-              </Details>
+              <Details onClick={cancelSubmission}>Cancel submission</Details>
             )}
           </RightDetails>
         </Bottom>
@@ -120,7 +123,31 @@ const DashboardCard = ({
   ) : null
 }
 
-export default compose(getContext({ journal: PropTypes.object }))(DashboardCard)
+export default compose(
+  getContext({ journal: PropTypes.object }),
+  withModal({
+    modalComponent: ConfirmationModal,
+  }),
+  withHandlers({
+    cancelSubmission: ({
+      showModal,
+      deleteProject,
+      project,
+      hideModal,
+    }) => () => {
+      const modalConfig = {
+        onConfirm: () => {
+          deleteProject(project)
+          hideModal()
+        },
+        dismissable: false,
+        title: 'Are you sure you want to delete the manuscript?',
+        subtitle: 'This operation cannot be undone!',
+      }
+      showModal(modalConfig)
+    },
+  }),
+)(DashboardCard)
 
 // #region styled-components
 const defaultText = css`
