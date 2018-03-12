@@ -122,7 +122,7 @@ const ButtonContainer = styled.div`
   align-self: center;
   display: flex;
   justify-content: space-around;
-  margin: calc(th('gridUnit')) 0;
+  margin: calc(${th('gridUnit')}) 0;
   width: ${({ width }) => width || '400px'};
 `
 
