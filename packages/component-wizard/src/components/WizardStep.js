@@ -1,7 +1,7 @@
 import React from 'react'
 import { get } from 'lodash'
 import styled from 'styled-components'
-import { ValidatedField, Button } from '@pubsweet/ui'
+import { ValidatedField, Button, th } from '@pubsweet/ui'
 
 import AutosaveIndicator from './AutosaveIndicator'
 
@@ -24,7 +24,7 @@ export default ({
   wizard: { confirmationModal: ConfirmationModal },
   ...rest
 }) => (
-  <Root width="800px">
+  <Root width="82%">
     <FormContainer onSubmit={handleSubmit}>
       <Title>{title}</Title>
       {subtitle && (
@@ -92,29 +92,29 @@ export default ({
 // #region styles
 const Root = styled.div`
   align-items: stretch;
-  border: ${({ theme }) => theme.borderDefault};
-  border-radius: ${({ theme }) => theme.borderRadius};
+  background-color: ${th('colorTextReverse')};
+  border: ${th('borderDefault')};
+  border-radius: ${th('borderRadius')};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   width: ${({ width }) => width || '800px'};
-  background-color: ${({ theme }) => theme.colorTextReverse};
 `
 
 const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
-  padding: 20px 40px;
+  padding: calc(${th('subGridUnit')} * 3);
 `
 const Title = styled.h5`
   align-self: center;
-  font-size: ${({ theme }) => theme.fontSizeHeading5};
+  font-size: ${th('fontSizeHeading5')};
   margin-bottom: 10px;
 `
 
 const Subtitle = styled.div`
   align-self: center;
-  margin-bottom: 30px;
+  margin-bottom: ${th('gridUnit')};
 `
 
 const ButtonContainer = styled.div`
@@ -122,13 +122,13 @@ const ButtonContainer = styled.div`
   align-self: center;
   display: flex;
   justify-content: space-around;
-  margin: 40px 0 20px;
+  margin: calc(th('gridUnit')) 0;
   width: ${({ width }) => width || '400px'};
 `
 
 const ModalContainer = styled.div`
   align-items: center;
-  background: rgba(255, 255, 255, 0.95);
+  background: ${th('colorBackground')};
   bottom: 0;
   display: flex;
   justify-content: center;

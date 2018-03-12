@@ -1,5 +1,6 @@
 import React from 'react'
 import { get } from 'lodash'
+import { th } from '@pubsweet/ui'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -146,7 +147,7 @@ export default compose(
 
 // #region styled-components
 const Root = styled.div`
-  border: ${({ theme }) => theme.borderDefault};
-  padding: 0 10px;
+  border: ${th('borderDefault')};
+  padding: ${th('subGridUnit')};
 `
 // #endregion

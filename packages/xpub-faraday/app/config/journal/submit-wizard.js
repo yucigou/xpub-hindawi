@@ -82,10 +82,6 @@ export default {
           validate: [required],
         },
         {
-          fieldId: 'spacing-journal',
-          renderComponent: Spacing,
-        },
-        {
           fieldId: 'label-Issue',
           renderComponent: Label,
           label: 'Issue',
