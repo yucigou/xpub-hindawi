@@ -1,4 +1,5 @@
 import React from 'react'
+import { withProps } from 'recompose'
 import { Route, Switch } from 'react-router-dom'
 import { AuthenticatedComponent } from 'pubsweet-client'
 import Login from 'pubsweet-component-login/LoginContainer'
@@ -19,6 +20,8 @@ import SignUpInvitationPage from 'pubsweet-components-faraday/src/components/Sig
 
 import FaradayApp from './FaradayApp'
 
+const LoginPage = withProps({ passwordReset: false })(Login)
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -33,7 +36,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const Routes = () => (
   <FaradayApp>
     <Switch>
-      <Route component={Login} exact path="/login" />
+      <Route component={LoginPage} exact path="/login" />
       <Route component={Signup} exact path="/signup" />
       <PrivateRoute component={DashboardPage} exact path="/" />
       <PrivateRoute

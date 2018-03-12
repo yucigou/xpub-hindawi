@@ -29,7 +29,7 @@ const Indicator = ({
     <Root>
       {isFetching && (
         <AutoSaveContainer>
-          <Spinner icon="loader" size={16} />
+          <Spinner icon="loader" size={3} />
           <Info>{progressText}</Info>
         </AutoSaveContainer>
       )}
@@ -38,7 +38,7 @@ const Indicator = ({
         lastUpdate && (
           <AutoSaveContainer>
             <IconContainer>
-              <Icon size={16}>check-circle</Icon>
+              <Icon size={3}>check-circle</Icon>
             </IconContainer>
             <Info>{successText || durationParser(lastUpdate)}</Info>
           </AutoSaveContainer>
@@ -47,7 +47,7 @@ const Indicator = ({
         error && (
           <AutoSaveContainer>
             <IconContainer>
-              <Icon color={theme.colorError} size={16}>
+              <Icon color={theme.colorError} size={3}>
                 alert-triangle
               </Icon>
             </IconContainer>

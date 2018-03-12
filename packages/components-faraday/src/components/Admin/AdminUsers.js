@@ -2,7 +2,7 @@ import React from 'react'
 import { get } from 'lodash'
 import { connect } from 'react-redux'
 import styled, { withTheme } from 'styled-components'
-import { Icon, Menu } from '@pubsweet/ui'
+import { Icon, Menu, th } from '@pubsweet/ui'
 import { actions } from 'pubsweet-client'
 import { ConnectPage } from 'xpub-connect'
 import { withJournal } from 'xpub-journal'
@@ -73,7 +73,9 @@ const Users = ({
           <span>Users</span>
         </BreadCrumbs>
         <AddButton onClick={() => history.push('/admin/users/add')}>
-          <Icon color={theme.colorPrimary}>plus-circle</Icon>
+          <Icon color={theme.colorPrimary} size={3}>
+            plus-circle
+          </Icon>
           &nbsp; Add User
         </AddButton>
       </Header>
@@ -81,6 +83,7 @@ const Users = ({
         <div>
           <span>Bulk actions: </span>
           <Menu
+            inline
             onChange={value => value}
             options={[
               { value: 'deactivate', label: 'Deactivate' },
@@ -90,6 +93,7 @@ const Users = ({
           />
 
           <Menu
+            inline
             onChange={value => value}
             options={[
               { value: 'sort', label: 'SORT' },
@@ -98,7 +102,7 @@ const Users = ({
             value="sort"
           />
 
-          <Icon color={theme.colorPrimary} size={24}>
+          <Icon color={theme.colorPrimary} size={4}>
             search
           </Icon>
         </div>
@@ -182,11 +186,11 @@ const AddButton = styled.button`
   border: none;
   cursor: pointer;
   display: flex;
-  font-family: ${({ theme }) => theme.fontInterface};
-  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  font-family: ${th('fontInterface')};
+  font-size: ${th('fontSizeBaseSmall')};
   text-align: left;
-  color: ${({ theme }) => theme.colorPrimary};
-  background-color: ${({ theme }) => theme.backgroundColor};
+  color: ${th('colorPrimary')};
+  background-color: ${th('backgroundColor')};
 
   &:active,
   &:focus {
@@ -205,16 +209,18 @@ const Header = styled.div`
 
 const BreadCrumbs = styled.div`
   & span {
-    font-size: 17px;
+    font-size: ${th('fontSizeBase')};
     text-align: left;
-    color: ${({ theme }) => theme.colorPrimary};
+    color: ${th('colorPrimary')};
+    cursor: pointer;
+    margin-left: calc(${th('subGridUnit')}*2);
 
     &:after {
       content: '>';
-      padding: 0 10px;
+      padding: 0 calc(${th('subGridUnit')}*2);
     }
     &:last-child {
-      font-size: 24px;
+      font-size: ${th('fontSizeBase')};
       font-weight: bold;
       &:after {
         content: '';
@@ -224,52 +230,56 @@ const BreadCrumbs = styled.div`
 
 const SubHeader = styled.div`
   align-items: center;
-  border-bottom: ${({ theme }) => theme.borderDefault};
+  border-bottom: ${th('borderDefault')};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 20px;
-  padding-bottom: 10px;
+  margin-top: ${th('gridUnit')};
+  padding-bottom: calc(${th('subGridUnit')}*2);
 
   > div:first-child {
     display: flex;
     align-items: center;
+    > div {
+      margin-right: calc(${th('subGridUnit')});
+    }
   }
 
   span {
-    font-family: ${({ theme }) => theme.fontReading};
-    font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+    font-family: ${th('fontReading')};
+    font-size: ${th('fontSizeBaseSmall')};
     text-align: left;
-    color: ${({ theme }) => theme.colorPrimary};
+    color: ${th('colorPrimary')};
+    margin-right: calc(${th('subGridUnit')});
   }
 `
 
 const Table = styled.table`
   border-spacing: 0;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: calc(${th('subGridUnit')}*2);
   width: 100%;
 
   & thead tr {
     height: 40px;
-    border-bottom: ${({ theme }) => theme.borderDefault};
-    font-family: ${({ theme }) => theme.fontReading};
-    font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+    border-bottom: ${th('borderDefault')};
+    font-family: ${th('fontReading')};
+    font-size: ${th('fontSizeBaseSmall')};
     font-weight: bold;
     text-align: left;
-    color: ${({ theme }) => theme.colorPrimary};
+    color: ${th('colorPrimary')};
   }
 `
 
 const Row = styled.tr`
-  border-bottom: ${({ theme }) => theme.borderDefault};
-  color: ${({ theme }) => theme.colorPrimary};
-  font-family: ${({ theme }) => theme.fontReading};
-  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  border-bottom: ${th('borderDefault')};
+  color: ${th('colorPrimary')};
+  font-family: ${th('fontReading')};
+  font-size: ${th('fontSizeBaseSmall')};
   height: 40px;
   text-align: left;
   &:hover {
-    background-color: ${({ theme }) => theme.backgroundColorReverse};
+    background-color: ${th('backgroundColorReverse')};
     a {
       display: block;
     }
@@ -279,25 +289,25 @@ const Row = styled.tr`
 const Tag = styled.span`
   border: solid 1px #667080;
   text-transform: uppercase;
-  font-family: ${({ theme }) => theme.fontReading};
-  font-size: 12px;
+  font-family: ${th('fontReading')};
+  font-size: ${th('fontSizeBaseSmall')};
   font-weight: bold;
   text-align: left;
-  color: ${({ theme }) => theme.colorPrimary};
-  padding: 2px 10px;
-  margin-right: 5px;
+  color: ${th('colorPrimary')};
+  padding: 2px calc(${th('subGridUnit')}*2);
+  margin-right: calc(${th('subGridUnit')});
 `
 
 const Role = styled.span`
   height: 17px;
-  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  font-size: ${th('fontSizeBaseSmall')};
   text-align: left;
-  color: ${({ theme }) => theme.colorPrimary};
+  color: ${th('colorPrimary')};
   text-transform: uppercase;
 `
 
 const Action = styled(Link)`
-  color: ${({ theme }) => theme.colorPrimary};
+  color: ${th('colorPrimary')};
   display: none;
 `
 

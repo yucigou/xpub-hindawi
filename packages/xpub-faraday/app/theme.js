@@ -14,11 +14,13 @@ const theme = {
   colorText: '#333333', // Default font color
   colorTextReverse: '#ffffff', // Reverse font color
   colorTextPlaceholder: '#595959', // Used for text field placeholders
+  colorBackground: '#ffffff',
+  colorQuiet: '#aaa',
 
-  fontInterface: 'Noto Sans', // Used for user interface elements by default
-  fontHeading: 'Noto Sans', // Used for headings
-  fontReading: 'Noto Serif', // Main reading text
-  fontWriting: 'Ubuntu Mono', // Font used for writing
+  fontInterface: "'Noto Sans'",
+  fontHeading: "'Noto Sans'",
+  fontReading: "'Noto Serif'",
+  fontWriting: "'Ubuntu mono'",
   fontSizeBase: '18px', // Default font size
   fontSizeBaseSmall: '14px', // Smaller variation of fontSizeBase
   fontSizeHeading1: '36px', // Size for Heading 1
@@ -30,14 +32,16 @@ const theme = {
   fontLineHeight: '32px', // Default line height
 
   /* Spacing */
-  gridUnit: '32px', // Base interface space measurement used by elements and typography
-  subGridUnit: '8px',
+  gridUnit: '24px', // Base interface space measurement used by elements and typography
+  subGridUnit: '6px',
 
   borderDefault: '1px solid #667080',
   borderRadius: '2px', // Radius value applied to borders throughout the user interface
   borderWidth: '1px', // Width value applied to borders
   borderStyle: 'solid', // Style applied to borders (eg. solid, dashed)
 
+  /* Shadow (for tooltip) */
+  boxShadow: '0 2px 4px 0 rgba(51, 51, 51, 0.3)',
   dropShadow: '0 1px 0 0 #667080', // Default shadow that is applied to elements that float (eg. tooltips, modals)
 
   backgroundColor: '#f6f6f6',
@@ -46,6 +50,9 @@ const theme = {
   transitionDuration: '1.5s', // How long transitions should last
   transitionTimingFunction: 'linear', // Which function should be applied to transitions (eg. easein)
   transitionDelay: '0s', // How long transitions should be delayed before they begin
+  transitionDurationM: '0.5s',
+  transitionDurationS: '0.2s',
+  transitionDurationXs: '0.1s',
 
   // z indexes
   modalIndex: 10000,

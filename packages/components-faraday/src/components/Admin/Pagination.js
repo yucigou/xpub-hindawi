@@ -18,7 +18,7 @@ const Pagination = ({
     </Showing>
     <Chevrons>
       <IconButton hide={page === 0} onClick={decrementPage}>
-        <Icon color={theme.colorPrimary} size={18}>
+        <Icon color={theme.colorPrimary} size={3}>
           chevron-left
         </Icon>
       </IconButton>
@@ -28,7 +28,7 @@ const Pagination = ({
         }`}
       </span>
       <IconButton hide={!hasMore} onClick={incrementPage}>
-        <Icon color={theme.colorPrimary} size={18}>
+        <Icon color={theme.colorPrimary} size={3}>
           chevron-right
         </Icon>
       </IconButton>
@@ -59,6 +59,7 @@ const IconButton = styled.button`
   color: ${({ theme }) => theme.colorPrimary};
   background-color: ${({ theme }) => theme.backgroundColor};
   opacity: ${({ hide }) => (hide ? 0 : 1)};
+  cursor: pointer;
 
   &:active,
   &:focus {

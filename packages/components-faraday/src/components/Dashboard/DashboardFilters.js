@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu } from '@pubsweet/ui'
+import { Menu, th } from '@pubsweet/ui'
 import { compose, withHandlers } from 'recompose'
 import styled from 'styled-components'
 
@@ -24,6 +24,7 @@ const DashboardFilters = ({
       <FilterGroup>
         <span>Owner</span>
         <Menu
+          inline
           onChange={changeFilterValue('owner')}
           options={getFilterOptions('owner')}
         />
@@ -31,13 +32,14 @@ const DashboardFilters = ({
       <FilterGroup>
         <span>Status</span>
         <Menu
+          inline
           onChange={changeFilterValue('status')}
           options={getFilterOptions('status')}
         />
       </FilterGroup>
       <FilterGroup>
         <span>Sort</span>
-        <Menu onChange={changeSort} options={sortOptions} />
+        <Menu inline onChange={changeSort} options={sortOptions} />
       </FilterGroup>
     </FiltersContainer>
   </Root>
@@ -54,22 +56,22 @@ export default compose(
 // #region styles
 
 const Root = styled.div`
-  border-bottom: ${({ theme }) => theme.borderDefault};
-  color: ${({ theme }) => theme.colorPrimary};
+  border-bottom: ${th('borderDefault')};
+  color: ${th('colorPrimary')};
   display: flex;
   justify-content: space-between;
-  margin: 1em 0;
-  padding-bottom: 1em;
+  margin: calc(${th('subGridUnit')}*2) 0;
+  padding-bottom: calc(${th('subGridUnit')}*2);
 `
 
 const FiltersContainer = styled.div`
-  align-items: flex-end;
+  align-items: center;
   display: flex;
 
   > span {
-    border: ${({ theme }) => theme.borderDefault};
+    border: ${th('borderDefault')};
     margin: 0 0.5em;
-    padding: 0 5px;
+    padding: 0 calc(${th('subGridUnit')});
   }
 `
 
@@ -77,10 +79,7 @@ const FilterGroup = styled.div`
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-
-  > span {
-    margin-left: 10px;
-  }
+  margin-left: calc(${th('subGridUnit')}*2);
 `
 
 // #endregion

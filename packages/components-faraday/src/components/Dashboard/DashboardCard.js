@@ -1,7 +1,7 @@
 import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
-import { Button, Icon } from '@pubsweet/ui'
+import { Button, Icon, th } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
 import { compose, getContext, withHandlers } from 'recompose'
 import {
@@ -35,7 +35,7 @@ const DashboardCard = ({
   }`
 
   return version ? (
-    <Card>
+    <Card data-test={customId}>
       <ListView>
         <Top>
           <LeftDetails flex="5">
@@ -161,9 +161,9 @@ export default compose(
 
 // #region styled-components
 const defaultText = css`
-  color: ${({ theme }) => theme.colorText};
-  font-family: ${({ theme }) => theme.fontReading};
-  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  color: ${th('colorText')};
+  font-family: ${th('fontReading')};
+  font-size: ${th('fontSizeBaseSmall')};
 `
 
 const AuthorList = styled.span`
@@ -179,26 +179,26 @@ const AuthorName = styled.span`
   padding-left: 2px;
 `
 const Author = styled.div`
-  padding-right: 8px;
+  padding-right: ${th('subGridUnit')};
 `
 
 const AuthorStatus = styled.span`
-  border: ${({ theme }) => theme.borderDefault};
+  border: ${th('borderDefault')};
   ${defaultText};
   text-align: center;
   text-transform: uppercase;
-  font-size: 12px;
   padding: 0 2px;
 `
 
 const ActionButtons = styled(Button)`
   ${defaultText};
   align-items: center;
-  background-color: ${({ theme }) => theme.colorPrimary};
-  color: ${({ theme }) => theme.colorTextReverse};
+  background-color: ${th('colorPrimary')};
+  color: ${th('colorTextReverse')};
   display: flex;
   padding: 4px 8px;
   text-align: center;
+  height: calc(${th('subGridUnit')}*5);
 `
 
 const LeftDetails = styled.div`
@@ -221,7 +221,7 @@ const RightDetails = styled.div`
 
 const DetailsView = styled.div`
   align-items: center;
-  border-top: ${({ theme }) => theme.borderDefault};
+  border-top: ${th('borderDefault')};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -268,12 +268,12 @@ const ClickableIcon = styled.div`
 
 const Card = styled.div`
   align-items: center;
-  border: ${({ theme }) => theme.borderDefault};
+  border: ${th('borderDefault')};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => theme.backgroundColorReverse};
+  background-color: ${th('backgroundColorReverse')};
 `
 
 const Top = styled.div`
@@ -306,8 +306,8 @@ const ManuscriptType = styled.div`
 
 const Title = styled.div`
   ${defaultText};
-  font-family: ${({ theme }) => theme.fontHeading};
-  color: ${({ theme }) => theme.colorPrimary};
+  font-family: ${th('fontHeading')};
+  color: ${th('colorPrimary')};
   font-weight: bold;
   text-align: left;
   text-overflow: ellipsis;
@@ -316,7 +316,7 @@ const Title = styled.div`
 `
 
 const Status = styled.div`
-  border: ${({ theme }) => theme.borderDefault};
+  border: ${th('borderDefault')};
   ${defaultText};
   font-weight: bold;
   padding: 0.2em 0.5em;
@@ -326,7 +326,7 @@ const Status = styled.div`
 
 const DateField = styled.span`
   ${defaultText};
-  margin: 0 8px;
+  margin: 0 ${th('subGridUnit')};
   text-align: left;
 `
 // #endregion

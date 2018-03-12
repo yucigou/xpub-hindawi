@@ -8,11 +8,11 @@
     "url": "https://gitlab.coko.foundation/xpub/xpub-faraday"
   },
   "dependencies": {
-    "component-aws-download": "0.0.1",
     "@pubsweet/component-aws-s3": "^0.1.1",
-    "@pubsweet/ui": "^2.0.0",
+    "@pubsweet/ui": "^3.0.0",
     "aws-sdk": "^2.197.0",
     "babel-core": "^6.26.0",
+    "component-aws-download": "0.0.1",
     "config": "^1.26.2",
     "dotenv": "^5.0.0",
     "flavors": "^3.3.1",
@@ -40,19 +40,18 @@
     "redux": "^3.6.0",
     "redux-form": "^7.0.3",
     "redux-logger": "^3.0.1",
-    "winston": "^2.4.0",
-    "xpub-faraday-server": "^0.0.1",
-    "xpub-journal": "^0.0.3",
-    "xpub-connect": "^0.0.3",
-    "xpub-selectors": "^0.0.3",
-    "xpub-edit": "^0.0.3",
-    "xpub-upload": "^0.0.3",
-    "xpub-validators": "^0.0.3",
-    "xpub-styleguide": "^0.0.3",
-    "xpub-theme": "^0.0.3",
     "typeface-noto-sans": "^0.0.54",
     "typeface-noto-serif": "^0.0.54",
-    "typeface-ubuntu-mono": "^0.0.54"
+    "typeface-ubuntu-mono": "^0.0.54",
+    "winston": "^2.4.0",
+    "xpub-connect": "^0.0.3",
+    "xpub-edit": "^0.0.3",
+    "xpub-faraday-server": "^0.0.1",
+    "xpub-journal": "^0.0.3",
+    "xpub-selectors": "^0.0.3",
+    "xpub-styleguide": "^0.0.3",
+    "xpub-upload": "^0.0.3",
+    "xpub-validators": "^0.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -79,8 +78,7 @@
     "setupdb": "pubsweet setupdb ./",
     "reset": "pubsweet setupdb --clobber ./",
     "start": "pubsweet start",
-    "start-now":
-      "echo $secret > config/local-development.json && npm run start",
+    "start-now": "echo $secret > config/local-development.json && npm run start",
     "build": "NODE_ENV=production pubsweet build"
   }
 }

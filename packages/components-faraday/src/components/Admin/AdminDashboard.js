@@ -7,19 +7,19 @@ const AdminDashboard = ({ history, theme }) => (
     <Title>Admin Dashboard</Title>
     <CardContainer>
       <Card>
-        <Icon color={theme.colorPrimary} size={32}>
+        <Icon color={theme.colorPrimary} size={6}>
           edit
         </Icon>
         <span>Journal configuration</span>
       </Card>
       <Card onClick={() => history.push('/admin/users')}>
-        <Icon color={theme.colorPrimary} size={32}>
+        <Icon color={theme.colorPrimary} size={6}>
           users
         </Icon>
         <span>Users</span>
       </Card>
       <Card>
-        <Icon color={theme.colorPrimary} size={32}>
+        <Icon color={theme.colorPrimary} size={6}>
           settings
         </Icon>
         <span>Roles</span>
