@@ -51,14 +51,14 @@ const AuthorEdit = ({
 
       <ButtonsContainer>
         <ClickableIcon onClick={setAuthorEdit(-1)}>
-          <Icon size={18}>x-circle</Icon>
+          <Icon size={3}>x-circle</Icon>
         </ClickableIcon>
         {!isFetching ? (
           <ClickableIcon onClick={handleSubmit}>
-            <Icon size={18}>check-circle</Icon>
+            <Icon size={3}>check-circle</Icon>
           </ClickableIcon>
         ) : (
-          <Spinner />
+          <Spinner size={3} />
         )}
       </ButtonsContainer>
     </Header>

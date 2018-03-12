@@ -1,27 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Icon } from '@pubsweet/ui'
+import { Icon, Spinner, th } from '@pubsweet/ui'
 import styled, { withTheme } from 'styled-components'
 import { DropTarget } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import { compose, getContext, withHandlers, withState } from 'recompose'
-import {
-  SortableList,
-  Spinner,
-} from 'pubsweet-components-faraday/src/components'
+import { SortableList } from 'pubsweet-components-faraday/src/components'
 
 import FileItem from './FileItem'
 import FilePicker from './FilePicker'
 
 const DragHandle = withTheme(({ theme }) => (
   <Handle>
-    <Icon color={theme.colorBorder} size={14}>
+    <Icon color={theme.colorPrimary} size={3}>
       chevron_up
     </Icon>
-    <Icon color={theme.colorBorder} size={10}>
+    <Icon color={theme.colorPrimary} size={3}>
       menu
     </Icon>
-    <Icon color={theme.colorBorder} size={14}>
+    <Icon color={theme.colorPrimary} size={3}>
       chevron_down
     </Icon>
   </Handle>
@@ -198,15 +195,15 @@ export default compose(
 
 // #region styles
 const Error = styled.span`
-  color: ${({ theme }) => theme.colorError};
-  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
-  margin-right: 5px;
+  color: ${th('colorError')};
+  font-size: ${th('fontSizeBaseSmall')};
+  margin-right: ${th('subGridUnit')};
 `
 
 const UploadButton = styled.div`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   display: flex;
-  margin-left: 5px;
+  margin-left: ${th('subGridUnit')};
 `
 
 const PickerContainer = styled.div`
@@ -216,7 +213,7 @@ const PickerContainer = styled.div`
 `
 
 const Title = styled.span`
-  margin: 5px;
+  margin: ${th('subGridUnit')};
   text-transform: uppercase;
 `
 
@@ -227,7 +224,7 @@ const Header = styled.div`
 `
 
 const DropSection = styled.div`
-  border: ${({ theme }) => theme.borderDefault};
+  border: ${th('borderDefault')};
   border-top: ${({ isFirst, theme }) =>
     isFirst ? theme.borderDefault : 'none'};
   border-bottom: ${({ isLast, theme }) =>
@@ -236,18 +233,21 @@ const DropSection = styled.div`
     over ? theme.colorSecondary : theme.backgroundColorReverse};
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: ${th('subGridUnit')};
 `
 
 const Handle = styled.div`
   align-items: center;
-  border-right: ${({ theme }) => theme.borderDefault};
+  border-right: ${th('borderDefault')};
   cursor: move;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: 10px;
-  padding: 3px;
+  margin-right: calc(${th('subGridUnit')}*2);
+  padding: calc(${th('subGridUnit')}/2);
+  span {
+    padding: 0;
+  }
 `
 
 const InfoContainer = styled.div`
@@ -255,11 +255,11 @@ const InfoContainer = styled.div`
   display: flex;
   height: 60px;
   justify-content: center;
-  margin: 10px 0;
+  margin: calc(${th('subGridUnit')}*2) 0;
 
   span {
-    color: ${({ theme }) => theme.colorTextPlaceholder};
-    font-size: ${({ theme }) => theme.themefontSizeBaseSmall};
+    color: ${th('colorTextPlaceholder')};
+    font-size: ${th('fontSizeBaseSmall')};
   }
 `
 // #endregion

@@ -8102,12 +8102,11 @@ pubsweet-client@^2.2.2:
     styled-components "^2.4.0"
     styled-normalize "^3.0.1"
 
-pubsweet-component-login@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/pubsweet-component-login/-/pubsweet-component-login-1.0.1.tgz#49ca1dd02cd56e4169af875465a655ee88736989"
+pubsweet-component-login@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/pubsweet-component-login/-/pubsweet-component-login-1.1.0.tgz#037b666863ae44c5fcde0d4b02e23b8a53f0d104"
   dependencies:
     prop-types "^15.5.10"
-    react-bootstrap "^0.32.0"
     react-redux "^5.0.6"
     react-router-dom "^4.2.2"
     react-router-redux "^5.0.0-alpha.9"
