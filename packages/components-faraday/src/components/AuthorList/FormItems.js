@@ -38,11 +38,11 @@ export const Label = ({ label, value }) => (
 
 export const DragHandle = withTheme(({ theme }) => (
   <DragHandleRoot>
-    <Icon color={theme.colorFurniture}>chevron_up</Icon>
-    <Icon color={theme.colorFurniture} size={16}>
+    <Icon color={theme.colorPrimary}>chevron_up</Icon>
+    <Icon color={theme.colorPrimary} size={3}>
       menu
     </Icon>
-    <Icon color={theme.colorFurniture}>chevron_down</Icon>
+    <Icon color={theme.colorPrimary}>chevron_down</Icon>
   </DragHandleRoot>
 ))
 

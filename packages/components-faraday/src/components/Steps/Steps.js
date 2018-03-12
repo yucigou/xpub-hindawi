@@ -1,30 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { th } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
 import { compose, withHandlers, setDisplayName } from 'recompose'
 
 const Separator = styled.div`
-  background-color: #000;
+  background-color: ${th('colorPrimary')};
   flex: 1;
   height: 2px;
 `
 
 const StyledStep = styled.div`
   align-items: center;
-  border: 2px solid #000;
+  border: ${th('borderDefault')};
   border-radius: 50%;
   display: flex;
-  height: 16px;
   justify-content: center;
   position: relative;
-  width: 16px;
+  height: calc(${th('subGridUnit')} * 3);
+  width: calc(${th('subGridUnit')} * 3);
 `
 
 const bulletStyle = css`
-  background-color: #000;
+  background-color: ${th('colorPrimary')};
   border-radius: 50%;
-  height: 10px;
-  width: 10px;
+  height: calc(${th('subGridUnit')} * 2);
+  width: calc(${th('subGridUnit')} * 2);
 `
 
 const Bullet = styled.div`
@@ -34,16 +35,17 @@ const Bullet = styled.div`
 const Success = styled.div`
   ${bulletStyle};
   align-items: center;
-  color: #fff;
+  color: ${th('colorBackground')};
   display: flex;
-  font-size: 12px;
-  height: 18px;
+  font-size: ${th('fontSizeBaseSmall')};
+  height: ${th('fontSizeBase')};
   justify-content: center;
-  width: 18px;
+  width: ${th('fontSizeBase')};
 `
 
 const StepTitle = styled.span`
-  font-size: 0.9em;
+  font-size: ${th('fontSizeBaseSmall')};
+  line-height: ${th('fontSizeBaseSmall')};
   left: -45px;
   position: absolute;
   text-align: center;

@@ -30,12 +30,12 @@ export default ({
         <ButtonContainer>
           {!isSubmitting && (
             <ClickableIcon onClick={removeAuthor(email)} title="Delete author">
-              <Icon size={18}>trash</Icon>
+              <Icon size={3}>trash</Icon>
             </ClickableIcon>
           )}
           {editedAuthor < 0 && (
             <ClickableIcon onClick={setAuthorEdit(index)} title="Edit author">
-              <Icon size={18}>edit-2</Icon>
+              <Icon size={3}>edit-2</Icon>
             </ClickableIcon>
           )}
         </ButtonContainer>

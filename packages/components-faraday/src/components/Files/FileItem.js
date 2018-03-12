@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon } from '@pubsweet/ui'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 
 const parseFileSize = size => {
   const kbSize = size / 1000
@@ -24,9 +24,10 @@ const FileItem = ({
   id,
   removeFile,
   previewFile,
+  theme,
   ...rest
 }) => (
-  <Root>
+  <Root data-test={`file-${id}`}>
     {dragHandle}
     <Info>
       <span>{name}</span>
@@ -34,16 +35,20 @@ const FileItem = ({
     </Info>
     <Buttons>
       <button onClick={previewFile(id)}>
-        <Icon color="#666">eye</Icon>
+        <Icon color={theme.colorPrimary} size={3}>
+          eye
+        </Icon>
       </button>
       <button onClick={removeFile(id)} title="Delete">
-        <Icon color="#666">trash-2</Icon>
+        <Icon color={theme.colorPrimary} size={3}>
+          trash-2
+        </Icon>
       </button>
     </Buttons>
   </Root>
 )
 
-export default FileItem
+export default withTheme(FileItem)
 
 // #region styles
 const Root = styled.div`

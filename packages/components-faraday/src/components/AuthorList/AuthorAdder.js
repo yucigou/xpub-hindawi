@@ -60,7 +60,7 @@ const AuthorAdder = ({
               Save
             </Button>
           ) : (
-            <Spinner />
+            <Spinner size={3} />
           )}
         </ButtonsContainer>
       </FormBody>
