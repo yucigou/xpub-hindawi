@@ -25,7 +25,7 @@
     "nodemailer-ses-transport": "^1.5.1",
     "prop-types": "^15.5.10",
     "pubsweet": "^1.1.1",
-    "pubsweet-client": "^2.1.0",
+    "pubsweet-client": "^2.2.2",
     "pubsweet-component-invite": "^0.0.1",
     "pubsweet-component-login": "^1.0.1",
     "pubsweet-component-signup": "^1.0.0",

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import uploadFileFn from 'xpub-upload'
-import { AbstractEditor, TitleEditor } from 'xpub-edit'
+import { TitleEditor } from 'xpub-edit'
 import { Menu, YesOrNo, TextField } from '@pubsweet/ui'
 import { required, minChars, minSize } from 'xpub-validators'
 import {
@@ -146,7 +146,7 @@ export default {
         },
         {
           fieldId: 'metadata.abstract',
-          renderComponent: AbstractEditor,
+          renderComponent: TitleEditor,
           title: 'Abstract',
           placeholder: 'Write an abstract',
           validate: [requiredBasedOnType],

@@ -36,6 +36,6 @@ const Root = styled.div`
 
 const MainContainer = styled.div`
   padding: 90px 10px 40px;
-  min-height: calc(100vh - 130px);
+  min-height: 100vh;
   background-color: ${props => props.theme.backgroundColor || '#fff'};
 `

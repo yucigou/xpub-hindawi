@@ -257,7 +257,6 @@ const SubHeader = styled.div`
 const Table = styled.table`
   border-spacing: 0;
   border-collapse: collapse;
-  margin-top: calc(${th('subGridUnit')}*2);
   width: 100%;
 
   & thead tr {
