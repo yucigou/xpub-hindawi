@@ -1,5 +1,6 @@
 const logger = require('@pubsweet/logger')
 const config = require('config')
+const get = require('lodash/get')
 
 const configRoles = config.get('roles')
 
@@ -134,6 +135,37 @@ const removeTeamMember = async (teamId, userId, TeamModel) => {
   await TeamModel.updateProperties(team)
   await team.save()
 }
+
+const getTeamMembersByCollection = async (collectionId, role, TeamModel) => {
+  const teams = await TeamModel.all()
+  const members = get(
+    teams.find(
+      team =>
+        team.group === role &&
+        team.object.type === 'collection' &&
+        team.object.id === collectionId,
+    ),
+    'members',
+  )
+
+  return members
+}
+
+const getInviteData = (invitations, collectionId, role) => {
+  const matchingInvitation = invitations.find(
+    invite => invite.type === role && invite.collectionId === collectionId,
+  )
+  let status = 'pending'
+  if (matchingInvitation.isAccepted) {
+    status = 'accepted'
+  } else if (matchingInvitation.hasAnswer) {
+    status = 'refused'
+  }
+
+  const { timestamp } = matchingInvitation
+  return { timestamp, status }
+}
+
 module.exports = {
   createNewTeam,
   setupEiCTeams,
@@ -141,4 +173,6 @@ module.exports = {
   getMatchingTeams,
   setupInvitation,
   removeTeamMember,
+  getTeamMembersByCollection,
+  getInviteData,
 }
