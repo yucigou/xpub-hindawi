@@ -20,7 +20,7 @@ const DashboardFilters = ({
 }) => (
   <Root>
     <FiltersContainer>
-      Filter view:
+      <span>Filter view:</span>
       <FilterGroup>
         <span>Owner</span>
         <Menu
@@ -69,8 +69,8 @@ const FiltersContainer = styled.div`
   display: flex;
 
   > span {
-    border: ${th('borderDefault')};
-    margin: 0 0.5em;
+    align-self: flex-end;
+    margin-bottom: calc(${th('subGridUnit')} * 2);
     padding: 0 calc(${th('subGridUnit')});
   }
 `
