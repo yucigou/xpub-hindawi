@@ -50,7 +50,7 @@ push:latest:
   only:
   - master
 
-demo:
+demo:xpub-faraday:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: demo
   when: manual
@@ -61,3 +61,5 @@ demo:
   environment:
     name: $PACKAGE_NAME/demo
     url: $NOW_URL
+  script:
+    - echo $NOW_URL
