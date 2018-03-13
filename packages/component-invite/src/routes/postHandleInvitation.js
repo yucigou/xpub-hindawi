@@ -18,25 +18,25 @@ module.exports = models => async (req, res) => {
     return
   }
   const { collectionId } = req.params
-  // console.log('UI', user.invitations)
-  const filteredInvitations = user.invitations.filter(
-    invitation =>
-      invitation.collectionId === collectionId && invitation.type === type,
-  )
 
-  if (filteredInvitations.length === 0) {
-    res.status(400).json({
-      error: `Request data does not match any user invitation`,
-    })
-    logger.error(
-      `Collection ${collectionId} and type '${type}' do not match any user invitation`,
-    )
-    return
-  }
-
-  const matchingInvitation = filteredInvitations[0]
   try {
     await models.Collection.find(collectionId)
+    const filteredInvitations = user.invitations.filter(
+      invitation =>
+        invitation.collectionId === collectionId && invitation.type === type,
+    )
+
+    if (filteredInvitations.length === 0) {
+      res.status(400).json({
+        error: `Request data does not match any user invitation`,
+      })
+      logger.error(
+        `Collection ${collectionId} and type '${type}' do not match any user invitation`,
+      )
+      return
+    }
+
+    const matchingInvitation = filteredInvitations[0]
     matchingInvitation.hasAnswer = true
     if (accept === true) {
       matchingInvitation.isAccepted = true

@@ -19,7 +19,7 @@ module.exports = models => async (req, res) => {
     return require('../controllers/assignCollectionRole')(
       email,
       role,
-      req.user,
+      reqUser,
       res,
       collectionId,
       models,

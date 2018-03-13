@@ -1,8 +1,9 @@
 const users = require('./users')
 const collections = require('./collections')
+const { heTeam, reviewerTeam } = require('./teamIDs')
 
 const { standardCollection } = collections
-const { editorInChief, handlingEditor, reviewer } = users
+const { editorInChief, handlingEditor, reviewer, invitedHandlingEditor } = users
 const teams = {
   eicTeam: {
     teamType: {
@@ -30,10 +31,10 @@ const teams = {
       type: 'collection',
       id: standardCollection.id,
     },
-    members: [handlingEditor.id],
+    members: [handlingEditor.id, invitedHandlingEditor.id],
     save: jest.fn(() => teams.heTeam),
     updateProperties: jest.fn(() => teams.heTeam),
-    id: 'he123',
+    id: heTeam,
   },
   reviewerTeam: {
     teamType: {
@@ -49,6 +50,7 @@ const teams = {
     members: [reviewer.id],
     save: jest.fn(() => teams.reviewerTeam),
     updateProperties: jest.fn(() => teams.reviewerTeam),
+    id: reviewerTeam,
   },
 }
 module.exports = teams

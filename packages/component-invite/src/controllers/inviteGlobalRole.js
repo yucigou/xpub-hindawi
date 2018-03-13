@@ -17,7 +17,6 @@ module.exports = async (body, models, res, url) => {
 
   try {
     const user = await models.User.findByEmail(email)
-
     if (user) {
       logger.error(`admin tried to invite existing user: ${email}`)
       return res.status(400).json({ error: 'User already exists' })

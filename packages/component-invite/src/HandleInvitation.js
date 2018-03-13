@@ -10,6 +10,11 @@ const HandleInvitation = app => {
     authBearer,
     require('./routes/postHandleInvitation')(app.locals.models),
   )
+  app.get(
+    '/api/collections/:collectionId/users',
+    authBearer,
+    require('./routes/getCollectionUsers')(app.locals.models),
+  )
 }
 
 module.exports = HandleInvitation
