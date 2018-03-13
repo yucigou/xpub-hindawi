@@ -70,6 +70,8 @@ module.exports = async (
       role,
     )
 
+    // getting the updated user from the DB - creating a team also updates the user
+    user = await models.User.findByEmail(email)
     user = await teamHelper.setupInvitation(user, role, collectionId, team.id)
 
     try {
