@@ -65,4 +65,4 @@ demo:now:
   script:
     - npm i -g --unsafe-perm now
     - cd ${HOME}
-    - npm run deploy-now
+    - npm run deploy_now
