@@ -3,11 +3,8 @@ process.env.SUPPRESS_NO_CONFIG_WARNING = true
 
 const httpMocks = require('node-mocks-http')
 const fixtures = require('./fixtures/fixtures')
-const cloneDeep = require('lodash/cloneDeep')
 const Model = require('./helpers/Model')
-const Chance = require('chance')
 
-const chance = new Chance()
 const models = Model.build()
 jest.mock('pubsweet-component-mail-service', () => ({
   setupAssignEmail: jest.fn(),
