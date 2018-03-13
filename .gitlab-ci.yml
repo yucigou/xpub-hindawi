@@ -1,12 +1,13 @@
 variables:
   IMAGE_ORG: bogdandev
   IMAGE_NAME: xpub-faraday
+  REPO_URL: https://gitlab.coko.foundation/xpub/xpub-faraday
 
 stages:
   - build
   - test
   - review
-  - staging
+  - docker
   - demo
 
 build:
@@ -40,7 +41,7 @@ test:
 
 push:latest:
   image: docker:latest
-  stage: staging
+  stage: docker
   script:
     - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
@@ -50,8 +51,8 @@ push:latest:
   only:
   - master
 
-demo:xpub-faraday:
-  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+demo:now:
+  image: $IMAGE_ORG/$IMAGE_NAME:latest
   stage: demo
   when: manual
   variables:
@@ -62,4 +63,6 @@ demo:xpub-faraday:
     name: $PACKAGE_NAME/demo
     url: $NOW_URL
   script:
-    - echo $NOW_URL
+    - npm i -g --unsafe-perm now
+    - now --public --docker --token $NOW_TOKEN $ -e AWS_S3_ACCESS_KEY=$AWS_S3_ACCESS_KEY -e AWS_S3_SECRET_KEY=$AWS_S3_SECRET_KEY -e AWS_S3_REGION=$AWS_S3_REGION -e AWS_S3_BUCKET=$AWS_S3_BUCKET -e AWS_SES_SECRET_KEY=$AWS_SES_SECRET_KEY -e AWS_SES_ACCESS_KEY=$AWS_SES_ACCESS_KEY -e AWS_SES_REGION=$AWS_SES_REGION -e EMAIL_SENDER=$EMAIL_SENDER -e secret=$SECRET
+    - echo "$NOW_URL"
