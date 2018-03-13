@@ -7,6 +7,7 @@ const fixtures = require('./fixtures/fixtures')
 const Chance = require('chance')
 const Model = require('./helpers/Model')
 
+const models = Model.build()
 jest.mock('pubsweet-component-mail-service', () => ({
   setupInviteEmail: jest.fn(),
   setupAssignEmail: jest.fn(),
@@ -31,16 +32,14 @@ notFoundError.status = 404
 
 const { admin, editorInChief, handlingEditor, author } = fixtures.users
 const { standardCollection } = fixtures.collections
-const { heTeam } = fixtures.teams
 const postInvitePath = '../routes/postInvite'
 describe('Post invite route handler', () => {
   it('should return success when the admin invites a global role', async () => {
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = admin
+    req.user = admin.id
     const res = httpMocks.createResponse()
-    const models = Model.build(notFoundError, admin, notFoundError)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
@@ -53,10 +52,9 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = admin
+    req.user = admin.id
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
-    const models = Model.build(notFoundError, admin)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
@@ -70,9 +68,8 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = admin
+    req.user = admin.id
     const res = httpMocks.createResponse()
-    const models = Model.build(notFoundError, admin)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
@@ -85,9 +82,8 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = admin
+    req.user = admin.id
     const res = httpMocks.createResponse()
-    const models = Model.build(notFoundError, admin)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
@@ -100,10 +96,9 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = editorInChief
+    req.user = editorInChief.id
     req.params.collectionId = '123'
     const res = httpMocks.createResponse()
-    const models = Model.build(notFoundError, editorInChief)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
@@ -115,15 +110,16 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = editorInChief
+    req.user = editorInChief.id
     const res = httpMocks.createResponse()
 
-    const models = Model.build(notFoundError, editorInChief)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
-      `${req.user.username} cannot invite a ${body.role} without a collection`,
+      `${editorInChief.username} cannot invite a ${
+        body.role
+      } without a collection`,
     )
   })
   it('should return an error when an handlingEditor invites a reviewer without a collection', async () => {
@@ -132,26 +128,26 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = handlingEditor
+    req.user = handlingEditor.id
     const res = httpMocks.createResponse()
-
-    const models = Model.build(notFoundError, handlingEditor)
     await require(postInvitePath)(models)(req, res)
     expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(
-      `${req.user.username} cannot invite a ${body.role} without a collection`,
+      `${handlingEditor.username} cannot invite a ${
+        body.role
+      } without a collection`,
     )
   })
-  it('should return an error when inviting an existing user', async () => {
+  it('should return an error when inviting an existing user with a global role', async () => {
     body.role = globalRoles[random(0, globalRoles.length - 1)]
     body.admin = body.role === 'admin'
+    body.email = author.email
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = admin
+    req.user = admin.id
     const res = httpMocks.createResponse()
-    const models = Model.build(notFoundError, admin, editorInChief)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(400)
@@ -166,10 +162,9 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    req.user = editorInChief
-    req.params.collectionId = '123'
+    req.user = editorInChief.id
+    req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
-    const models = Model.build(standardCollection, editorInChief, author)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
@@ -185,16 +180,40 @@ describe('Post invite route handler', () => {
     const req = httpMocks.createRequest({
       body,
     })
-    handlingEditor.teams = [heTeam.id]
-    req.user = handlingEditor
-    req.params.collectionId = '123'
+    req.user = handlingEditor.id
+    req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
-    const models = Model.build(standardCollection, handlingEditor, author)
     await require(postInvitePath)(models)(req, res)
 
     expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
     expect(data.email).toEqual(body.email)
     expect(data.invitations[0].collectionId).toEqual(req.params.collectionId)
+  })
+  it('should return an error when inviting his self', async () => {
+    body.role = globalRoles[random(0, globalRoles.length - 1)]
+    body.admin = body.role === 'admin'
+    body.email = admin.email
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = admin.id
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+
+    expect(res.statusCode).toBe(400)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual('Cannot invite yourself')
+  })
+  it('should return an error when the role is invalid', async () => {
+    body.role = 'someRandomRole'
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = editorInChief.id
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual(`Role ${body.role} is invalid`)
   })
 })

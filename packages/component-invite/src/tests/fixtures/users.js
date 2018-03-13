@@ -1,5 +1,5 @@
-// const { heInvitation } = require('./invitations')
 const { standardCollection } = require('./collections')
+const { heTeam, reviewerTeam } = require('./teamIDs')
 
 const users = {
   admin: {
@@ -33,6 +33,8 @@ const users = {
     password: 'test',
     admin: false,
     id: 'handling123',
+    firstName: 'Handling',
+    lastName: 'Editor',
     invitations: [
       {
         type: 'handlingEditor',
@@ -40,9 +42,10 @@ const users = {
         isAccepted: false,
         collectionId: standardCollection.id,
         timestamp: Date.now(),
-        teamId: 'he123',
+        teamId: heTeam,
       },
     ],
+    teams: [heTeam],
     save: jest.fn(() => users.handlingEditor),
     editorInChief: false,
   },
@@ -75,7 +78,40 @@ const users = {
     title: 'Ms',
     save: jest.fn(() => users.reviewer),
     isConfirmed: false,
-    teams: [],
+    teams: [reviewerTeam],
+    invitations: [
+      {
+        type: 'reviewer',
+        hasAnswer: false,
+        isAccepted: false,
+        collectionId: '123',
+        timestamp: Date.now(),
+        teamId: reviewerTeam,
+      },
+    ],
+  },
+  invitedHandlingEditor: {
+    type: 'user',
+    username: 'handling',
+    email: 'handling@example.com',
+    password: 'test',
+    admin: false,
+    id: 'invitedHandling123',
+    firstName: 'Invited',
+    lastName: 'HE',
+    invitations: [
+      {
+        type: 'handlingEditor',
+        hasAnswer: true,
+        isAccepted: false,
+        collectionId: standardCollection.id,
+        timestamp: Date.now(),
+        teamId: heTeam,
+      },
+    ],
+    teams: [heTeam],
+    save: jest.fn(() => users.handlingEditor),
+    editorInChief: false,
   },
 }
 
