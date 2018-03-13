@@ -139,10 +139,10 @@ describe('Post invite route handler', () => {
       } without a collection`,
     )
   })
-  it('should return an error when inviting an existing user', async () => {
+  it('should return an error when inviting an existing user with a global role', async () => {
     body.role = globalRoles[random(0, globalRoles.length - 1)]
     body.admin = body.role === 'admin'
-    body.email = admin.email
+    body.email = author.email
     const req = httpMocks.createRequest({
       body,
     })
@@ -189,5 +189,31 @@ describe('Post invite route handler', () => {
     const data = JSON.parse(res._getData())
     expect(data.email).toEqual(body.email)
     expect(data.invitations[0].collectionId).toEqual(req.params.collectionId)
+  })
+  it('should return an error when inviting his self', async () => {
+    body.role = globalRoles[random(0, globalRoles.length - 1)]
+    body.admin = body.role === 'admin'
+    body.email = admin.email
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = admin.id
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+
+    expect(res.statusCode).toBe(400)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual('Cannot invite yourself')
+  })
+  it('should return an error when the role is invalid', async () => {
+    body.role = 'someRandomRole'
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = editorInChief.id
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual(`Role ${body.role} is invalid`)
   })
 })
