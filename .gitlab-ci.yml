@@ -67,4 +67,4 @@ demo:now:
     - cd ${HOME}/now
     - echo "FROM ${IMAGE_ORG}/${IMAGE_NAME}:${CI_COMMIT_SHA}" >> Dockerfile
     - now --public --docker --token $NOW_TOKEN -e AWS_S3_ACCESS_KEY=$AWS_S3_ACCESS_KEY -e AWS_S3_SECRET_KEY=$AWS_S3_SECRET_KEY -e AWS_S3_REGION=$AWS_S3_REGION -e AWS_S3_BUCKET=$AWS_S3_BUCKET -e AWS_SES_SECRET_KEY=$AWS_SES_SECRET_KEY -e AWS_SES_ACCESS_KEY=$AWS_SES_ACCESS_KEY -e AWS_SES_REGION=$AWS_SES_REGION -e EMAIL_SENDER=$EMAIL_SENDER -e secret=$SECRET
-    - now alias $NOW_URL xpub-faraday
+    - now alias $NOW_URL xpub-faraday --token $NOW_TOKEN
