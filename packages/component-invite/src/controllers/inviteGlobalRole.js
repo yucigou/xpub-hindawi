@@ -36,6 +36,7 @@ module.exports = async (body, models, res, url) => {
       models.User,
       role,
     )
+
     try {
       await mailService.setupInviteEmail(
         newUser.email,
@@ -46,8 +47,7 @@ module.exports = async (body, models, res, url) => {
 
       return res.status(200).json(newUser)
     } catch (e) {
-      logger.error(e)
-      return res.status(500).json({ error: 'Mailing could not be sent.' })
+      return res.status(500).json({ error: e.message })
     }
   }
 }

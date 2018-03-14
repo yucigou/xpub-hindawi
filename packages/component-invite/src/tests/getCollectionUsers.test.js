@@ -5,7 +5,7 @@ const httpMocks = require('node-mocks-http')
 const fixtures = require('./fixtures/fixtures')
 const Model = require('./helpers/Model')
 
-const { standardCollection } = fixtures.collections
+const { standardCollection, noTeamCollection } = fixtures.collections
 const { editorInChief, admin } = fixtures.users
 const query = {
   role: 'handlingEditor',
@@ -75,5 +75,19 @@ describe('Get collection users route handler', () => {
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('The request user must be Editor in Chief')
+  })
+  it('should return an error when the collection does not have a the requested role team', async () => {
+    const req = httpMocks.createRequest()
+    req.query = query
+    req.params.collectionId = noTeamCollection.id
+    req.user = editorInChief.id
+    const res = httpMocks.createResponse()
+    const models = Model.build()
+    await require(getCollectionUsersPath)(models)(req, res)
+    expect(res.statusCode).toBe(400)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual(
+      `The requested collection does not have a ${query.role} Team`,
+    )
   })
 })

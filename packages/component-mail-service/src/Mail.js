@@ -26,8 +26,15 @@ module.exports = {
     }
 
     const { htmlBody, textBody } = getEmailBody(emailType, replacements)
+    const mailData = {
+      from: config.get('mailer.from'),
+      to: email,
+      subject,
+      text: textBody,
+      html: htmlBody,
+    }
 
-    return Email.send(email, subject, textBody, htmlBody)
+    return Email.send(mailData)
   },
   setupAssignEmail: async (email, emailType, dashBoardUrl) => {
     let subject
@@ -45,8 +52,14 @@ module.exports = {
     }
 
     const { htmlBody, textBody } = getEmailBody(emailType, replacements)
-
-    return Email.send(email, subject, textBody, htmlBody)
+    const mailData = {
+      from: config.get('mailer.from'),
+      to: email,
+      subject,
+      text: textBody,
+      html: htmlBody,
+    }
+    return Email.send(mailData)
   },
 }
 
