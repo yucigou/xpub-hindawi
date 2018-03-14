@@ -68,7 +68,7 @@ export const getFileError = state => state.files.error
 // thunked actions
 export const uploadFile = (file, type, fragmentId) => dispatch => {
   dispatch(uploadRequest(type))
-  return request('/file', createFileData(file, type, fragmentId)).then(
+  return request('/files', createFileData(file, type, fragmentId)).then(
     r => {
       dispatch(uploadSuccess())
       return r
@@ -82,7 +82,7 @@ export const uploadFile = (file, type, fragmentId) => dispatch => {
 
 export const deleteFile = fileId => dispatch => {
   dispatch(removeRequest())
-  return remove(`/file/${fileId}`)
+  return remove(`/files/${fileId}`)
     .then(r => {
       dispatch(removeSuccess())
       return r
