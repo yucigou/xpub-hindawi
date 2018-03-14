@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon } from '@pubsweet/ui'
 import styled, { keyframes } from 'styled-components'
 
-const Spinner = ({ icon = 'loader', size = 16, color = '#444' }) => (
+const Spinner = ({ icon = 'loader', size = 3, color = '#444' }) => (
   <Root>
     <Icon color={color} size={size}>
       {icon}
