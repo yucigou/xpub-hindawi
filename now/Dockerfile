@@ -1,1 +1,1 @@
-FROM bogdandev/xpub-faraday:master
+FROM bogdandev/xpub-faraday:latest
