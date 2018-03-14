@@ -1,9 +1,9 @@
 import React from 'react'
 import { get } from 'lodash'
-import { Icon } from '@pubsweet/ui'
 import { connect } from 'react-redux'
-import styled, { withTheme } from 'styled-components'
+import { Icon, th } from '@pubsweet/ui'
 import { withRouter } from 'react-router-dom'
+import styled, { withTheme } from 'styled-components'
 import { withState, withHandlers, compose } from 'recompose'
 
 const AppBar = ({
@@ -51,8 +51,8 @@ const AppBar = ({
 // #region styled-components
 const Root = styled.div`
   align-items: center;
-  box-shadow: ${props => props.theme.dropShadow};
-  font-family: ${props => props.theme.fontInterface};
+  box-shadow: ${th('dropShadow')};
+  font-family: ${th('fontInterface')};
   display: flex;
   justify-content: space-between;
   height: 60px;
@@ -83,38 +83,37 @@ const User = styled.div`
   }
 
   & span {
-    color: ${props => props.theme.colorText};
-    font-family: ${props => props.theme.fontHeading};
-    font-size: ${props => props.theme.fontSizeBase};
+    color: ${th('colorText')};
+    font-family: ${th('fontHeading')};
+    font-size: ${th('fontSizeBase')};
     margin-left: 10px;
   }
 `
 
 const Dropdown = styled.div`
-  background-color: ${props => props.theme.backgroundColor || '#fff'};
-  border: ${({ theme }) =>
-    `${theme.borderWidth} ${theme.borderStyle} ${theme.colorFurniture}`};
+  background-color: ${th('colorBackground')};
+  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   position: absolute;
-  min-width: 150px;
   right: 20px;
-  top: 70px;
+  top: 60px;
+  width: calc(${th('gridUnit')} * 8);
   z-index: 10;
 `
 
 const DropdownOption = styled.div`
   align-items: center;
-  color: ${props => props.theme.colorText};
+  color: ${th('colorText')};
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
-  height: 34px;
-  font-family: ${props => props.theme.fontInterface};
-  font-size: ${props => props.theme.fontSizeBaseSmall};
-  line-height: ${props => props.theme.fontLineHeight};
+  height: calc(${th('gridUnit')} * 2);
+  font-family: ${th('fontInterface')};
+  font-size: ${th('fontSizeBase')};
+  line-height: ${th('fontLineHeight')};
   padding: 0 15px;
 
   &:hover {
-    background-color: ${props => props.theme.colorTextReverse || '#d8d8d8'};
+    background-color: ${th('backgroundColor')};
   }
 `
 

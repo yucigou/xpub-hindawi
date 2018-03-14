@@ -4,14 +4,6 @@ const components = require('./components.json')
 const logger = require('winston')
 
 const environment = process.env.NODE_ENV || 'development'
-const getInviteUrl = () => {
-  if (process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL) {
-    return process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL
-  } else if (process.env.NOW_URL) {
-    return `${process.env.NOW_URL}/invite`
-  }
-  return 'http://localhost:3000/invite'
-}
 
 module.exports = {
   authsome: {
@@ -53,7 +45,7 @@ module.exports = {
     validations: path.resolve(__dirname, 'upload-validations.js'),
   },
   'invite-reset-password': {
-    url: getInviteUrl(),
+    url: process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL || '/invite',
   },
   roles: {
     global: ['admin', 'editorInChief', 'author'],

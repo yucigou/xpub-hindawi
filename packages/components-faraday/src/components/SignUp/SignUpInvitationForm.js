@@ -43,7 +43,7 @@ export default SignUpInvitation
 
 // #region styles
 const Root = styled.div`
-  max-width: 500px;
+  max-width: 550px;
   min-width: 300px;
   margin: 0 auto;
   display: flex;

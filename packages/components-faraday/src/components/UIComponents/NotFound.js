@@ -1,23 +1,33 @@
 import React from 'react'
-import { Icon } from '@pubsweet/ui'
-import classnames from 'classnames'
-
-import classes from './UIComponents.local.scss'
+import { Icon, Button, th } from '@pubsweet/ui'
+import styled from 'styled-components'
 
 const NotFound = ({ history }) => (
-  <div className={classnames(classes.container)}>
+  <Root>
     <div>
-      <Icon size={32}>cloud-off</Icon>
+      <Icon size={6}>cloud-off</Icon>
     </div>
-    <h2>The page cannot be found</h2>
-    <h3>
+    <H2>The page cannot be found</H2>
+    <H3>
       The page you are looking for might have been removed, had its name
       changed, or is temporarily unavailable.
-    </h3>
-    <a href="#" onClick={history.goBack}>
+    </H3>
+    <Button onClick={history.goBack} primary>
       Back
-    </a>
-  </div>
+    </Button>
+  </Root>
 )
 
 export default NotFound
+
+const Root = styled.div`
+  margin: 0 auto;
+  text-align: center;
+  width: 90vw;
+`
+const H2 = styled.h2`
+  font-size: ${th('fontSizeHeading2')};
+`
+const H3 = styled.h3`
+  font-size: ${th('fontSizeHeading3')};
+`
