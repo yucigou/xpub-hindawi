@@ -19,7 +19,7 @@ export const ValidatedTextField = ({
 }
 
 export const MenuItem = ({ label, name, options }) => (
-  <MenuItemRoot>
+  <MenuItemRoot data-test="country-selector-author">
     <StyledLabel>{label}</StyledLabel>
     <ValidatedField
       component={input => <Menu {...input} options={options} />}

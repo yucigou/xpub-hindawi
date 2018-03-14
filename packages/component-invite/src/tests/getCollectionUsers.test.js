@@ -5,7 +5,8 @@ const httpMocks = require('node-mocks-http')
 const fixtures = require('./fixtures/fixtures')
 const Model = require('./helpers/Model')
 
-const user = fixtures.users.editorInChief
+const { standardCollection } = fixtures.collections
+const { editorInChief, admin } = fixtures.users
 const query = {
   role: 'handlingEditor',
 }
@@ -14,7 +15,8 @@ describe('Get collection users route handler', () => {
   it('should return success when the role is correct, the collection exists and the request user is editorInChief ', async () => {
     const req = httpMocks.createRequest()
     req.query = query
-    req.params.collectionId = '2c4fb766-a798-4c32-b857-c5d21a2ab331'
+    req.params.collectionId = standardCollection.id
+    req.user = editorInChief.id
     const res = httpMocks.createResponse()
     const models = Model.build()
     await require(getCollectionUsersPath)(models)(req, res)
@@ -27,13 +29,51 @@ describe('Get collection users route handler', () => {
     delete query.role
     const req = httpMocks.createRequest()
     req.query = query
-
+    req.user = editorInChief.id
     const res = httpMocks.createResponse()
-    const models = Model.build(user)
+    const models = Model.build()
     await require(getCollectionUsersPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual('Role is required')
-    query.email = 'handlingEditor'
+    query.role = 'handlingEditor'
+  })
+  it('should return an error when the collection does not exist', async () => {
+    const req = httpMocks.createRequest()
+    req.query = query
+    req.params.collectionId = 'invalid-id'
+    req.user = editorInChief.id
+    const res = httpMocks.createResponse()
+    const models = Model.build()
+    await require(getCollectionUsersPath)(models)(req, res)
+    expect(res.statusCode).toBe(404)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual('collection not found')
+  })
+  it('should return an error when the role is invalid', async () => {
+    query.role = 'invalidRole'
+    const req = httpMocks.createRequest()
+    req.query = query
+    req.params.collectionId = standardCollection.id
+    req.user = editorInChief.id
+    const res = httpMocks.createResponse()
+    const models = Model.build()
+    await require(getCollectionUsersPath)(models)(req, res)
+    expect(res.statusCode).toBe(400)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual(`Role ${query.role} is invalid`)
+    query.role = 'handlingEditor'
+  })
+  it('should return an error when the request user is not editorInChief', async () => {
+    const req = httpMocks.createRequest()
+    req.query = query
+    req.params.collectionId = standardCollection.id
+    req.user = admin.id
+    const res = httpMocks.createResponse()
+    const models = Model.build()
+    await require(getCollectionUsersPath)(models)(req, res)
+    expect(res.statusCode).toBe(400)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual('The request user must be Editor in Chief')
   })
 })

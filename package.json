@@ -36,8 +36,7 @@
     "lint:style": "stylelint packages/**/*.scss packages/**/*.css",
     "precommit": "lint-staged",
     "styleguide": "lerna run styleguide",
-    "test": "lerna run test",
-    "deploy_now": "cd now && now --public --docker --token $NOW_TOKEN -e AWS_S3_ACCESS_KEY=$AWS_S3_ACCESS_KEY -e AWS_S3_SECRET_KEY=$AWS_S3_SECRET_KEY -e AWS_S3_REGION=$AWS_S3_REGION -e AWS_S3_BUCKET=$AWS_S3_BUCKET -e AWS_SES_SECRET_KEY=$AWS_SES_SECRET_KEY -e AWS_SES_ACCESS_KEY=$AWS_SES_ACCESS_KEY -e AWS_SES_REGION=$AWS_SES_REGION -e EMAIL_SENDER=$EMAIL_SENDER -e secret=$SECRET"
+    "test": "lerna run test"
   },
   "lint-staged": {
     "*.js": [
