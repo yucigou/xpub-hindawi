@@ -92,11 +92,11 @@ const User = styled.div`
 
 const Dropdown = styled.div`
   background-color: ${th('colorBackground')};
-  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorFurniture')};
+  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   position: absolute;
-  min-width: 150px;
   right: 20px;
-  top: 70px;
+  top: 60px;
+  width: calc(${th('gridUnit')} * 8);
   z-index: 10;
 `
 
@@ -106,9 +106,9 @@ const DropdownOption = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
-  height: 34px;
+  height: calc(${th('gridUnit')} * 2);
   font-family: ${th('fontInterface')};
-  font-size: ${th('fontSizeBaseSmall')};
+  font-size: ${th('fontSizeBase')};
   line-height: ${th('fontLineHeight')};
   padding: 0 15px;
 
