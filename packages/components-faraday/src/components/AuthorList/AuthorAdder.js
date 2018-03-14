@@ -27,7 +27,7 @@ const AuthorAdder = ({
   isFetching,
 }) => (
   <Root>
-    <Button onClick={setEditMode(true)} primary>
+    <Button data-test="button-add-author" onClick={setEditMode(true)} primary>
       {authors.length === 0 ? '+ Add submitting author' : '+ Add author'}
     </Button>
     {editMode && (
@@ -54,9 +54,15 @@ const AuthorAdder = ({
           <MenuItem label="Country*" name="country" options={countries} />
         </Row>
         <ButtonsContainer>
-          <Button onClick={setEditMode(false)}>Cancel</Button>
+          <Button data-test="button-cancel-author" onClick={setEditMode(false)}>
+            Cancel
+          </Button>
           {!isFetching ? (
-            <Button onClick={handleSubmit} primary>
+            <Button
+              data-test="button-save-author"
+              onClick={handleSubmit}
+              primary
+            >
               Save
             </Button>
           ) : (
