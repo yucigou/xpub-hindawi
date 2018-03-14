@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>research</name>
+   <tag></tag>
+   <elementGuidId>073d58c9-eab0-4bda-b090-aa974ebc3bd3</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>div[data-test=&quot;metadata.type&quot;] div[role=&quot;option&quot;]:nth-child(3)</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value></value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>CSS</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>role</name>
+      <type>Main</type>
+      <value>option</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tabindex</name>
+      <type>Main</type>
+      <value>0</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>aria-selected</name>
+      <type>Main</type>
+      <value>false</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>sc-jDwBTQ iuBHpq</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Research</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-fyjhYU bulmcW&quot;]/div[@class=&quot;sc-ugnQR hguLEQ&quot;]/div[@class=&quot;sc-LKuAh exAItN&quot;]/div[@class=&quot;sc-bmyXtO iUwCnl&quot;]/form[@class=&quot;sc-dEoRIm bSWzXx&quot;]/div[5]/div[1]/div[@class=&quot;sc-kkGfuU fycXtP&quot;]/div[@class=&quot;sc-brqgnP jxxQpd&quot;]/div[@class=&quot;sc-cMljjf kvAdmU&quot;]/div[@class=&quot;sc-jAaTju diFiAa&quot;]/div[@class=&quot;sc-jDwBTQ iuBHpq&quot;]</value>
+   </webElementProperties>
+</WebElementEntity>

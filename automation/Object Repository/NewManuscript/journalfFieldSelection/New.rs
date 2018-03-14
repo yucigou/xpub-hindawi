@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>New</name>
+   <tag></tag>
+   <elementGuidId>783af37f-9b46-4523-8d93-b8e4eaf37f38</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>button[data-test=&quot;new-manuscript&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>CSS</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>button</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>sc-kgoBCf jJDfiI</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>data-test</name>
+      <type>Main</type>
+      <value>new-manuscript</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>New</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-fyjhYU bulmcW&quot;]/div[@class=&quot;sc-ugnQR hguLEQ&quot;]/div[1]/div[@class=&quot;sc-hmXxxW fgfSHS&quot;]/div[@class=&quot;sc-cqCuEk iAENsl&quot;]/div[@class=&quot;sc-kLIISr gZqdvU&quot;]/button[@class=&quot;sc-kgoBCf jJDfiI&quot;]</value>
+   </webElementProperties>
+</WebElementEntity>

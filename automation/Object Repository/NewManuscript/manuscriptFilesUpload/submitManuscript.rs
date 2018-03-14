@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>submitManuscript</name>
+   <tag></tag>
+   <elementGuidId>2a10b3be-7f1a-4ee7-9f9e-3381ca9a33cc</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>button[type=&quot;submit&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>CSS</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>submit</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>sc-kgoBCf jJDfiI</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>data-test</name>
+      <type>Main</type>
+      <value>button-next</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Submit Manuscript</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-eIHaNI ieZnUp&quot;]/div[@class=&quot;sc-eTpRJs eCRGdm&quot;]/div[@class=&quot;sc-hzNEM VXOBx&quot;]/div[@class=&quot;sc-jtggT hzAQMA&quot;]/form[@class=&quot;sc-ebFjAB iFGpGZ&quot;]/div[@class=&quot;sc-LKuAh ijXubq&quot;]/button[@class=&quot;sc-kgoBCf jJDfiI&quot;]</value>
+   </webElementProperties>
+</WebElementEntity>

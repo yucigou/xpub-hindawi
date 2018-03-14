@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Add a new manuscript</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>75320485-255a-4adc-be3e-c3a9e8cf5399</testCaseGuid>
+   <variable>
+      <defaultValue>'0'</defaultValue>
+      <description></description>
+      <id>30a84231-84ba-44cb-9eec-26ad7d97acd5</id>
+      <masked>false</masked>
+      <name>G_manuscriptID</name>
+   </variable>
+</TestCaseEntity>

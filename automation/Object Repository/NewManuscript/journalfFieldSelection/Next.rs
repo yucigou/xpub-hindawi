@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>Next</name>
+   <tag></tag>
+   <elementGuidId>b7939cf7-3d04-44a9-a4b2-ca0724bbc465</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>button[type=&quot;submit&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>CSS</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>submit</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>sc-kgoBCf jJDfiI</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Next</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-fyjhYU bulmcW&quot;]/div[@class=&quot;sc-ugnQR hguLEQ&quot;]/div[@class=&quot;sc-LKuAh exAItN&quot;]/div[@class=&quot;sc-bmyXtO iUwCnl&quot;]/form[@class=&quot;sc-dEoRIm bSWzXx&quot;]/div[@class=&quot;sc-jKVCRD hxsQZp&quot;]/button[@class=&quot;sc-kgoBCf jJDfiI&quot;]</value>
+   </webElementProperties>
+</WebElementEntity>

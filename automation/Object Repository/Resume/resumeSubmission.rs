@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>resumeSubmission</name>
+   <tag></tag>
+   <elementGuidId>cfa9f688-715a-4703-9c0a-46288ab27113</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>button[data-test=&quot;button-resume-submission&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>CSS</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>button</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>sc-CtfFt hUmVm sc-chPdSV eCXitr</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>data-test</name>
+      <type>Main</type>
+      <value>button-resume-submission</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>RESUME SUBMISSION</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-eIHaNI ieZnUp&quot;]/div[@class=&quot;sc-eTpRJs eCRGdm&quot;]/div[1]/div[@class=&quot;sc-dliRfk ihIxZE&quot;]/div[3]/div[@class=&quot;sc-VJcYb hJJSUl&quot;]/div[1]/div[@class=&quot;sc-itybZL gYcDxH&quot;]/div[@class=&quot;sc-TFwJa drleuT&quot;]/div[@class=&quot;sc-eMigcr zjJZm&quot;]/div[@class=&quot;sc-hGoxap cbdRVR&quot;]/button[@class=&quot;sc-CtfFt hUmVm sc-chPdSV eCXitr&quot;]</value>
+   </webElementProperties>
+</WebElementEntity>
