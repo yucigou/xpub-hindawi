@@ -11,8 +11,9 @@ export default ({
   nextStep,
   prevStep,
   step,
+  project,
 }) => (
-  <Root>
+  <Root data-test={`submission-${project.customId}`}>
     {showProgress && (
       <Steps currentStep={step} margin="0 20px 60px 0">
         {getSteps().map((step, index) => (

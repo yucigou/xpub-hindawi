@@ -21,7 +21,6 @@ import internal.GlobalVariable as GlobalVariable
 import org.junit.After as After
 import org.openqa.selenium.Keys as Keys
 
-
 WebUI.openBrowser(null)
 
 WebUI.navigateToUrl('http://localhost:3000')
@@ -30,13 +29,13 @@ username = findTestObject('SignIn/usernameField')
 
 WebUI.click(username)
 
-WebUI.setText(username, 'vlad')
+WebUI.setText(username, 'admin')
 
 password = findTestObject('SignIn/passwordField')
 
 WebUI.click(password)
 
-WebUI.setText(password, '123123123')
+WebUI.setText(password, 'admin123')
 
 loginButton = findTestObject('SignIn/LoginButton')
 
@@ -57,6 +56,7 @@ hindawiFaraday = findTestObject('NewManuscript/journalfFieldSelection/HindawiFar
 WebUI.waitForElementVisible(newButton, 2)
 
 WebUI.click(hindawiFaraday)
+
 WebUI.click(hindawiFaraday)
 
 issue = findTestObject('NewManuscript/journalfFieldSelection/Issue')
@@ -160,6 +160,7 @@ NextButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/Next')
 WebUI.click(NextButton)
 
 attachFile = findTestObject('NewManuscript/manuscriptFilesUpload/attachFile')
+
 WebUI.uploadFile(attachFile, '/Users/vladstegaru/Documents/Hindawi/attachements/document.pdf')
 
 submitManuscript = findTestObject('NewManuscript/manuscriptFilesUpload/submitManuscript')
