@@ -29,7 +29,6 @@
     "pubsweet-component-invite": "^0.0.1",
     "pubsweet-component-login": "^1.1.0",
     "pubsweet-component-signup": "^1.0.0",
-    "pubsweet-component-xpub-manuscript": "^0.0.3",
     "pubsweet-server": "^1.0.1",
     "react": "^16.2.0",
     "react-dnd": "^2.5.4",

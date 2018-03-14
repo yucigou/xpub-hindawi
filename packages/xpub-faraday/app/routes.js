@@ -7,7 +7,6 @@ import Signup from 'pubsweet-component-signup/SignupContainer'
 
 import DashboardPage from 'pubsweet-components-faraday/src/components/Dashboard'
 import { Wizard } from 'pubsweet-component-wizard/src/components'
-import ManuscriptPage from 'pubsweet-component-xpub-manuscript/src/components/ManuscriptPage'
 import ConfirmationPage from 'pubsweet-components-faraday/src/components/UIComponents/ConfirmationPage'
 import NotFound from 'pubsweet-components-faraday/src/components/UIComponents/NotFound'
 import {
@@ -56,11 +55,6 @@ const Routes = () => (
         component={Wizard}
         exact
         path="/projects/:project/versions/:version/submit"
-      />
-      <PrivateRoute
-        component={ManuscriptPage}
-        exact
-        path="/projects/:project/versions/:version/manuscript"
       />
       <Route component={SignUpInvitationPage} exact path="/invite" />
       <Route component={NotFound} />
