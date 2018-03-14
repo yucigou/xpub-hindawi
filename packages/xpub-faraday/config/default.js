@@ -1,5 +1,4 @@
 require('dotenv').config()
-
 const path = require('path')
 const components = require('./components.json')
 const logger = require('winston')
@@ -66,7 +65,7 @@ module.exports = {
     },
   },
   mailer: {
-    from: process.env.EMAIL_SENDER || 'test_sender@domain.com',
+    from: 'sebastian.mihalache@thinslices.com',
     path: `${__dirname}/mailer`,
   },
   publicKeys: [

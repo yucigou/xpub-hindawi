@@ -1,12 +1,12 @@
 const AWS = require('aws-sdk')
+const config = require('config')
 
 module.exports = {
-  from: process.env.EMAIL_SENDER,
   transport: {
     SES: new AWS.SES({
-      accessKeyId: process.env.AWS_SES_ACCESS_KEY,
-      secretAccessKey: process.env.AWS_SES_SECRET_KEY,
-      region: process.env.AWS_SES_REGION,
+      accessKeyId: config.SES.accessKey,
+      secretAccessKey: config.SES.secretKey,
+      region: config.SES.region,
     }),
   },
 }

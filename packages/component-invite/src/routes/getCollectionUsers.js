@@ -30,6 +30,13 @@ module.exports = models => async (req, res) => {
       models.Team,
     )
 
+    if (members === undefined) {
+      res.status(400).json({
+        error: `The requested collection does not have a ${role} Team`,
+      })
+      return
+    }
+
     const membersData = members.map(async member => {
       const user = await models.User.find(member)
       const { timestamp, status } = teamHelper.getInviteData(

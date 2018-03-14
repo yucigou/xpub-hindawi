@@ -1,7 +1,18 @@
+const Chance = require('chance')
+
+const chance = new Chance()
 module.exports = {
   standardCollection: {
-    id: '2c4fb766-a798-4c32-b857-c5d21a2ab331',
+    id: chance.guid(),
     title: 'Standard Collection',
+    type: 'collection',
+    fragments: [],
+    owners: [],
+    save: jest.fn(),
+  },
+  noTeamCollection: {
+    id: chance.guid(),
+    title: 'No Team Collection',
     type: 'collection',
     fragments: [],
     owners: [],
