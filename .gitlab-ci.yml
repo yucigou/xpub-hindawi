@@ -11,7 +11,7 @@ stages:
   - demo
 
 build:
-  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  image: docker:latest
   stage: build
   script:
     - docker version
