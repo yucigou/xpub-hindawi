@@ -77,7 +77,7 @@
     "setupdb": "pubsweet setupdb ./",
     "reset": "pubsweet setupdb --clobber ./",
     "start": "pubsweet start",
-    "start-now": "echo $secret > config/local-development.json && npm run start",
+    "start-now": "echo $secret > config/local-development.json && npm run reset --username admin --email admin@mailinator.com --password admin123 && npm run start",
     "build": "NODE_ENV=production pubsweet build"
   }
 }
