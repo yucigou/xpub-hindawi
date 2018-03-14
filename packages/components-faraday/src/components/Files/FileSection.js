@@ -65,7 +65,10 @@ const FileSection = ({
             disabled={disabledFilepicker()}
             onUpload={addFile}
           >
-            <UploadButton disabled={disabledFilepicker()}>
+            <UploadButton
+              data-test={`button-upload-${listId}`}
+              disabled={disabledFilepicker()}
+            >
               <Icon
                 color={
                   disabledFilepicker()

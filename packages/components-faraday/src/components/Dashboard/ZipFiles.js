@@ -45,7 +45,14 @@ const Zip = compose(
   })),
   withState('fetching', 'setFetching', false),
   withHandlers({
-    downloadFiles: ({ fragmentId, token, setFetching, archiveName }) => () => {
+    downloadFiles: ({
+      fragmentId,
+      collectionId,
+      token,
+      setFetching,
+      archiveName,
+    }) => () => {
+      const getUrl = `${window.location.origin}/api/files/${fragmentId}`
       if (cache[fragmentId]) {
         const fileName = archiveName || `${fragmentId}-archive.zip`
 
@@ -71,7 +78,7 @@ const Zip = compose(
             }
           }
         }
-        xhr.open('GET', `${window.location.origin}/api/fileZip/${fragmentId}`)
+        xhr.open('GET', getUrl)
         xhr.responseType = 'blob'
         xhr.setRequestHeader('Authorization', `Bearer ${token}`)
         xhr.send()

@@ -33,7 +33,6 @@ const DashboardCard = ({
   const manuscriptMeta = `${type} - ${
     journalIssueType ? journalIssueType.label : 'N/A'
   }`
-
   return version ? (
     <Card data-test={customId}>
       <ListView>
@@ -46,7 +45,11 @@ const DashboardCard = ({
             />
           </LeftDetails>
           <RightDetails flex="2">
-            <ZipFiles disabled={!hasFiles} fragmentId={version.id}>
+            <ZipFiles
+              archiveName={`ID-${project.customId}`}
+              disabled={!hasFiles}
+              fragmentId={version.id}
+            >
               <ClickableIcon disabled={!hasFiles}>
                 <Icon>download</Icon>
               </ClickableIcon>
