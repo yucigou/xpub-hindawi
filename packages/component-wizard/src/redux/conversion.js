@@ -69,7 +69,7 @@ export const createDraftSubmission = history => (dispatch, getState) => {
       // redirect after a short delay
       window.setTimeout(() => {
         history.push(route)
-      }, 1000)
+      }, 10)
     })
   })
 }
