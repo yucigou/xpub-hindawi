@@ -162,7 +162,9 @@ export default compose(
             [type]: [...files[type], file],
           }
           setFiles(newFiles)
-          changeForm('wizard', 'files', newFiles)
+          setTimeout(() => {
+            changeForm('wizard', 'files', newFiles)
+          }, 1000)
         })
         .catch(e => console.error(`Couldn't upload file.`, e))
     },
