@@ -27,7 +27,7 @@ const AddUserForm = ({ roles, journal, error }) => {
             validate={[emailValidator]}
           />
         </RowItem>
-        <RowItem>
+        <RowItem data-test="role-selector">
           <Label> Role*</Label>
           <ValidatedField
             component={input => <Menu {...input} options={roleOptions} />}
@@ -51,7 +51,7 @@ const AddUserForm = ({ roles, journal, error }) => {
           <Label> Affiliation </Label>
           <ValidatedField component={TextField} name="affiliation" />
         </RowItem>
-        <RowItem>
+        <RowItem data-test="title-selector">
           <Label> Title </Label>
           <ValidatedField
             component={input => <Menu {...input} options={journal.title} />}
