@@ -1,10 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ValidatedField, TextField, Menu } from '@pubsweet/ui'
+import { ValidatedField, TextField, Menu, th } from '@pubsweet/ui'
 
 import { required } from 'xpub-validators'
 
-const AddUserForm = ({ roles, journal }) => {
+const emailRegex = new RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
+)
+
+const emailValidator = value =>
+  emailRegex.test(value) ? undefined : 'Invalid email'
+
+const AddUserForm = ({ roles, journal, error }) => {
   const roleOptions = roles.filter(r =>
     ['editorInChief', 'author', 'admin'].includes(r.value),
   )
@@ -17,7 +24,7 @@ const AddUserForm = ({ roles, journal }) => {
           <ValidatedField
             component={TextField}
             name="email"
-            validate={[required]}
+            validate={[emailValidator]}
           />
         </RowItem>
         <RowItem>
@@ -52,6 +59,9 @@ const AddUserForm = ({ roles, journal }) => {
           />
         </RowItem>
       </Row>
+      <Row>
+        <RowItem>{error && <ErrorMessage>{error}</ErrorMessage>}</RowItem>
+      </Row>
     </div>
   )
 }
@@ -63,22 +73,27 @@ export default AddUserForm
 const Row = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 20px 0;
+  margin: calc(${th('subGridUnit')}*3) 0;
 `
 
 const RowItem = styled.div`
   flex: 1;
-  margin-right: 20px;
+  margin-right: calc(${th('subGridUnit')}*3);
 `
 
 const Title = styled.h4`
-  font-size: ${({ theme }) => theme.fontSizeHeading4};
-  color: ${({ theme }) => theme.colorPrimary};
-  margin: 10px 0;
+  font-size: ${th('fontSizeHeading4')};
+  color: ${th('colorPrimary')};
+  margin: calc(${th('subGridUnit')}*2) 0;
 `
 
 const Label = styled.div`
-  font-size: ${({ theme }) => theme.fontSizeBase};
+  font-size: ${th('fontSizeBase')};
   text-transform: uppercase;
 `
+
+const ErrorMessage = styled.div`
+  color: ${th('colorError')};
+`
+
 // #endregion

@@ -47,7 +47,8 @@ module.exports = async (body, models, res, url) => {
 
       return res.status(200).json(newUser)
     } catch (e) {
-      return res.status(500).json({ error: e.message })
+      logger.error(e.message)
+      return res.status(500).json({ error: 'Email could not be sent.' })
     }
   }
 }
