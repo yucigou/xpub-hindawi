@@ -23,8 +23,8 @@ export const parseUpdateUser = values => {
     'title',
     'roles',
     'rev',
+    'editorInChief',
   ]
 
-  const newValues = setAdmin(values)
-  return pick(newValues, valuesToSave)
+  return pick(values, valuesToSave)
 }

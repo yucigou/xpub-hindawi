@@ -1,75 +1,92 @@
 import React from 'react'
 import styled from 'styled-components'
-import {
-  ValidatedField,
-  TextField,
-  Menu,
-  CheckboxGroup,
-  th,
-} from '@pubsweet/ui'
+import { ValidatedField, TextField, Menu, Checkbox, th } from '@pubsweet/ui'
 
 import { required } from 'xpub-validators'
 
-const EditUserForm = ({ roles, journal, user, error }) => {
-  const roleOptions = roles.filter(r =>
-    ['editorInChief', 'author', 'admin'].includes(r.value),
-  )
-  return (
-    <div>
-      <Title>Edit user</Title>
-      <Subtitle>{user.email}</Subtitle>
-      <Row>
-        <RowItem>
-          <Label> First name* </Label>
-          <ValidatedField
-            component={TextField}
-            name="firstName"
-            validate={[required]}
-          />
-        </RowItem>
-        <RowItem>
-          <Label> Last name* </Label>
-          <ValidatedField
-            component={TextField}
-            name="lastName"
-            validate={[required]}
-          />
-        </RowItem>
-      </Row>
-      <Row>
-        <RowItem>
-          <Label> Affiliation* </Label>
-          <ValidatedField
-            component={TextField}
-            name="affiliation"
-            validate={[required]}
-          />
-        </RowItem>
-        <RowItem>
-          <Label> Title* </Label>
-          <ValidatedField
-            component={input => <Menu {...input} options={journal.title} />}
-            name="title"
-          />
-        </RowItem>
-      </Row>
-      <Row>
-        <RowItem>
-          <Label> Roles*</Label>
-          <ValidatedField
-            component={input => (
-              <CheckboxGroup {...input} options={roleOptions} />
-            )}
-            name="roles"
-          />
-        </RowItem>
-      </Row>
-      <Row>
-        <RowItem>{error && <ErrorMessage>{error}</ErrorMessage>}</RowItem>
-      </Row>
-    </div>
-  )
-}
+const EditUserForm = ({ roles, journal, user, error }) => (
+  <div>
+    <Title>Edit user</Title>
+    <Subtitle>{user.email}</Subtitle>
+    <Row>
+      <RowItem>
+        <Label> First name* </Label>
+        <ValidatedField
+          component={TextField}
+          name="firstName"
+          validate={[required]}
+        />
+      </RowItem>
+      <RowItem>
+        <Label> Last name* </Label>
+        <ValidatedField
+          component={TextField}
+          name="lastName"
+          validate={[required]}
+        />
+      </RowItem>
+    </Row>
+    <Row>
+      <RowItem>
+        <Label> Affiliation* </Label>
+        <ValidatedField
+          component={TextField}
+          name="affiliation"
+          validate={[required]}
+        />
+      </RowItem>
+      <RowItem>
+        <Label> Title* </Label>
+        <ValidatedField
+          component={input => <Menu {...input} options={journal.title} />}
+          name="title"
+        />
+      </RowItem>
+    </Row>
+    <Row>
+      <RowItem>
+        <Label> Roles*</Label>
+        <ValidatedField
+          component={input => (
+            <Checkbox
+              checked
+              readonly
+              type="checkbox"
+              {...input}
+              label="Author"
+            />
+          )}
+          name="author"
+        />
+        <ValidatedField
+          component={input => (
+            <Checkbox
+              checked={input.value}
+              type="checkbox"
+              {...input}
+              label="Editor in Chief"
+            />
+          )}
+          name="editorInChief"
+        />
+        <ValidatedField
+          component={input => (
+            <Checkbox
+              checked={input.value}
+              type="checkbox"
+              {...input}
+              label="Admin"
+            />
+          )}
+          name="admin"
+        />
+      </RowItem>
+    </Row>
+    <Row>
+      <RowItem>{error && <ErrorMessage>{error}</ErrorMessage>}</RowItem>
+    </Row>
+  </div>
+)
 
 export default EditUserForm
 
