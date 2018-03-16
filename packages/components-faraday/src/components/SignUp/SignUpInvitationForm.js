@@ -32,6 +32,7 @@ const SignUpInvitation = ({
     )}
     {step === 1 && (
       <Step1
+        error={error}
         initialValues={initialValues}
         journal={journal}
         onSubmit={submitConfirmation}
