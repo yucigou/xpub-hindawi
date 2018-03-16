@@ -1,5 +1,4 @@
 import { get } from 'lodash'
-import * as api from 'pubsweet-client/src/helpers/api'
 
 // constants
 const REQUEST = 'authors/REQUEST'
@@ -20,19 +19,8 @@ export const authorSuccess = () => ({
   type: SUCCESS,
 })
 
-export const addAuthor = (author, collectionId, fragmentId) => dispatch => {
-  dispatch(authorRequest())
-  return api
-    .create(
-      `/collections/${collectionId}/fragments/${fragmentId}/authors`,
-      author,
-    )
-    .then(author => {
-      dispatch(authorSuccess())
-      return author
-    })
-    .catch(err => dispatch(authorFaiure(err)))
-}
+export const addAuthor = (author, collectionId, fragmentId) => dispatch =>
+  Promise.resolve(author)
 
 // selectors
 export const getFragmentAuthors = (state, fragmentId) =>
