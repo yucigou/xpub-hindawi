@@ -24,19 +24,19 @@ import org.openqa.selenium.Keys as Keys
 
 WebUI.openBrowser(null)
 
-WebUI.navigateToUrl('http://localhost:3000')
+WebUI.navigateToUrl('https://xpub-faraday.now.sh')
 
 username = findTestObject('SignIn/usernameField')
 
 WebUI.click(username)
 
-WebUI.setText(username, 'vlad')
+WebUI.setText(username, 'admin')
 
 password = findTestObject('SignIn/passwordField')
 
 WebUI.click(password)
 
-WebUI.setText(password, '123123123')
+WebUI.setText(password, 'admin123')
 
 loginButton = findTestObject('SignIn/LoginButton')
 
@@ -56,7 +56,6 @@ hindawiFaraday = findTestObject('NewManuscript/journalfFieldSelection/HindawiFar
 
 WebUI.waitForElementVisible(newButton, 2)
 
-WebUI.click(hindawiFaraday)
 WebUI.click(hindawiFaraday)
 
 issue = findTestObject('NewManuscript/journalfFieldSelection/Issue')
