@@ -13,13 +13,13 @@ DriverCleanerCollector.getInstance().addDriverCleaner(new com.kms.katalon.core.w
 DriverCleanerCollector.getInstance().addDriverCleaner(new com.kms.katalon.core.mobile.contribution.MobileDriverCleaner())
 
 
-RunConfiguration.setExecutionSettingFile('/var/folders/3h/5jvs258x4lng1yz2s32ryr4r0000gn/T/Katalon/Test Cases/Add a new user/Edit new user/20180315_233424/execution.properties')
+RunConfiguration.setExecutionSettingFile('/var/folders/3h/5jvs258x4lng1yz2s32ryr4r0000gn/T/Katalon/Test Cases/Add a new user/Add a new user/20180316_090042/execution.properties')
 
 TestCaseMain.beforeStart()
 try {
     
-	    TestCaseMain.runTestCase('Test Cases/Add a new user/Edit new user', new TestCaseBinding('Test Cases/Add a new user/Edit new user', [:]), FailureHandling.STOP_ON_FAILURE )
+	    TestCaseMain.runTestCase('Test Cases/Add a new user/Add a new user', new TestCaseBinding('Test Cases/Add a new user/Add a new user', [:]), FailureHandling.STOP_ON_FAILURE )
     
 } catch (Exception e) {
-    TestCaseMain.logError(e, 'Test Cases/Add a new user/Edit new user')
+    TestCaseMain.logError(e, 'Test Cases/Add a new user/Add a new user')
 }

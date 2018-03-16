@@ -19,13 +19,13 @@ const onSubmit = (values, dispatch, { isEdit, history }) => {
   if (!isEdit) {
     const newValues = setAdmin(values)
     return create('/users/invite', newValues)
-      .then(r => history.push('/admin/users'))
+      .then(() => history.push('/admin/users'))
       .catch(error => {
         const err = get(error, 'response')
         if (err) {
           const errorMessage = get(JSON.parse(err), 'error')
           throw new SubmissionError({
-            email: errorMessage || 'Something went wrong',
+            _error: errorMessage || 'Something went wrong',
           })
         }
       })
@@ -40,23 +40,35 @@ const onSubmit = (values, dispatch, { isEdit, history }) => {
       if (err) {
         const errorMessage = get(JSON.parse(err), 'error')
         throw new SubmissionError({
-          roles: errorMessage || 'Something went wrong',
+          _error: errorMessage || 'Something went wrong',
         })
       }
     })
 }
 
-const AddEditUser = ({ handleSubmit, journal, isEdit, user, history }) => (
+const AddEditUser = ({
+  handleSubmit,
+  journal,
+  isEdit,
+  user,
+  history,
+  error,
+}) => (
   <Root>
     <FormContainer onSubmit={handleSubmit}>
       {isEdit ? (
         <EditUserForm
+          error={error}
           journal={journal}
           roles={getRoleOptions(journal)}
           user={user}
         />
       ) : (
-        <AddUserForm journal={journal} roles={getRoleOptions(journal)} />
+        <AddUserForm
+          error={error}
+          journal={journal}
+          roles={getRoleOptions(journal)}
+        />
       )}
       <Row>
         <Button onClick={history.goBack}>Back</Button>

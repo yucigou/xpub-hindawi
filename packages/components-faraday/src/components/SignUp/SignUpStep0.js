@@ -5,7 +5,7 @@ import { isUndefined } from 'lodash'
 import { required } from 'xpub-validators'
 import { Button, ValidatedField, TextField, Menu } from '@pubsweet/ui'
 
-const Step0 = ({ journal, handleSubmit, initialValues }) =>
+const Step0 = ({ journal, handleSubmit, initialValues, error }) =>
   !isUndefined(initialValues) ? (
     <FormContainer onSubmit={handleSubmit}>
       <Row>
@@ -18,16 +18,6 @@ const Step0 = ({ journal, handleSubmit, initialValues }) =>
           />
         </RowItem>
         <RowItem>
-          <Label> Affiliation* </Label>
-          <ValidatedField
-            component={TextField}
-            name="affiliation"
-            validate={[required]}
-          />
-        </RowItem>
-      </Row>
-      <Row>
-        <RowItem>
           <Label> Last name* </Label>
           <ValidatedField
             component={TextField}
@@ -35,6 +25,17 @@ const Step0 = ({ journal, handleSubmit, initialValues }) =>
             validate={[required]}
           />
         </RowItem>
+      </Row>
+      <Row>
+        <RowItem>
+          <Label> Affiliation* </Label>
+          <ValidatedField
+            component={TextField}
+            name="affiliation"
+            validate={[required]}
+          />
+        </RowItem>
+
         <RowItem>
           <Label> Title* </Label>
           <ValidatedField
@@ -51,7 +52,7 @@ const Step0 = ({ journal, handleSubmit, initialValues }) =>
       </Row>
     </FormContainer>
   ) : (
-    <div>Loading...</div>
+    <div>{!isUndefined(error) && 'Loading...'}</div>
   )
 
 export default reduxForm({

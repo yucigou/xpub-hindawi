@@ -17,7 +17,7 @@ RUN [ "rm", "-rf", "/npm-packages-offline-cache"]
 
 ENV NODE_ENV "development"
 WORKDIR ${HOME}/packages/xpub-faraday
-RUN [ "npm", "run", "reset", "--username", "admin", "--email", "admin@mailinator.com", "--password", "admin123"]
+RUN [ "npm", "run", "setupdb-now"]
 
 EXPOSE 3000
 

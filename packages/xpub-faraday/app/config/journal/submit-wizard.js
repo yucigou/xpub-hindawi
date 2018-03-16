@@ -4,13 +4,9 @@ import uploadFileFn from 'xpub-upload'
 // TODO: Add back abstract when xpub-edit is published
 // import { AbstractEditor, TitleEditor } from 'xpub-edit'
 import { TitleEditor } from 'xpub-edit'
-import { Menu, YesOrNo, TextField } from '@pubsweet/ui'
+import { Menu, YesOrNo, TextField, CheckboxGroup } from '@pubsweet/ui'
 import { required, minChars, minSize } from 'xpub-validators'
-import {
-  AuthorList,
-  Files,
-  CheckboxGroup,
-} from 'pubsweet-components-faraday/src/components'
+import { AuthorList, Files } from 'pubsweet-components-faraday/src/components'
 
 import { declarations } from './'
 import issueTypes from './issues-types'

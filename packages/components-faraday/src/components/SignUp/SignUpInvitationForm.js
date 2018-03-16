@@ -24,6 +24,7 @@ const SignUpInvitation = ({
     {error && <Err>Token expired or Something went wrong.</Err>}
     {step === 0 && (
       <Step0
+        error={error}
         initialValues={initialValues}
         journal={journal}
         onSubmit={nextStep}

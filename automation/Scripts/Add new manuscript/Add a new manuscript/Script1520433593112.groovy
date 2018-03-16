@@ -21,7 +21,6 @@ import internal.GlobalVariable as GlobalVariable
 import org.junit.After as After
 import org.openqa.selenium.Keys as Keys
 
-
 WebUI.openBrowser(null)
 
 WebUI.navigateToUrl('https://xpub-faraday.now.sh')
@@ -57,6 +56,11 @@ hindawiFaraday = findTestObject('NewManuscript/journalfFieldSelection/HindawiFar
 WebUI.waitForElementVisible(newButton, 2)
 
 WebUI.click(hindawiFaraday)
+<<<<<<< HEAD
+=======
+
+WebUI.click(hindawiFaraday)
+>>>>>>> 475d50779205932ca31f13cfd3a6f6e7faefb161
 
 issue = findTestObject('NewManuscript/journalfFieldSelection/Issue')
 
@@ -159,6 +163,7 @@ NextButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/Next')
 WebUI.click(NextButton)
 
 attachFile = findTestObject('NewManuscript/manuscriptFilesUpload/attachFile')
+
 WebUI.uploadFile(attachFile, '/Users/vladstegaru/Documents/Hindawi/attachements/document.pdf')
 
 submitManuscript = findTestObject('NewManuscript/manuscriptFilesUpload/submitManuscript')
