@@ -7,10 +7,14 @@
    <selectorCollection>
       <entry>
          <key>XPATH</key>
-         <value>//label[@class=&quot;sc-kAzzGY dnReMb&quot;]/input[@name=&quot;admin&quot;]</value>
+         <value>//div[contains(text(),'Editor in Chief')]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>div[data-test=&quot;role-selector&quot;] div[role=&quot;option&quot;]:last-child</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

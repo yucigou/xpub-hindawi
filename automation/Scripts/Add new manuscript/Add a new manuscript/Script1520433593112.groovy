@@ -56,11 +56,6 @@ hindawiFaraday = findTestObject('NewManuscript/journalfFieldSelection/HindawiFar
 WebUI.waitForElementVisible(newButton, 2)
 
 WebUI.click(hindawiFaraday)
-<<<<<<< HEAD
-=======
-
-WebUI.click(hindawiFaraday)
->>>>>>> 475d50779205932ca31f13cfd3a6f6e7faefb161
 
 issue = findTestObject('NewManuscript/journalfFieldSelection/Issue')
 

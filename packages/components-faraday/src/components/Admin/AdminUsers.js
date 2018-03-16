@@ -71,7 +71,10 @@ const Users = ({
           <span>Admin Dashboard</span>
           <span>Users</span>
         </BreadCrumbs>
-        <AddButton onClick={() => history.push('/admin/users/add')}>
+        <AddButton
+          data-test="button-add-user"
+          onClick={() => history.push('/admin/users/add')}
+        >
           <Icon color={theme.colorPrimary} size={3}>
             plus-circle
           </Icon>

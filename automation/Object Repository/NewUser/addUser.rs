@@ -7,14 +7,14 @@
    <selectorCollection>
       <entry>
          <key>XPATH</key>
-         <value></value>
+         <value>//button/*[1]</value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value>button[class=&quot;sc-hgHYgh ljXRif&quot;]</value>
+         <value>button:first-child</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>CSS</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
