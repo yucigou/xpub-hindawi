@@ -61,7 +61,7 @@ email = findTestObject('NewUser/email')
 
 WebUI.click(email)
 
-WebUI.setText(email, 'bogdan.cochior+1@thinslices.com')
+WebUI.setText(email, 'bogdan.cochior+author@thinslices.com')
 
 roleDropDown = findTestObject('NewUser/roleDropDown')
 
@@ -81,7 +81,7 @@ lastName = findTestObject('NewUser/lastName')
 
 WebUI.click(lastName)
 
-WebUI.setText(lastName, 'Stegaru')
+WebUI.setText(lastName, 'Test')
 
 affiliation = findTestObject('NewUser/affiliation')
 
