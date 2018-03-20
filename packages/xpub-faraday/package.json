@@ -72,12 +72,12 @@
   },
   "scripts": {
     "setupdb": "pubsweet setupdb ./",
-    "reset": "pubsweet setupdb --clobber ./",
-    "start": "docker-compose up",
+    "start": "pubsweet start",
     "start:services": "docker-compose up postgres",
     "server": "pubsweet server",
     "setupdb-now": "pubsweet setupdb --username admin --email admin@mailinator.com --password admin123 --clobber ./",
     "start-now": "echo $secret > config/local-development.json && npm run setupdb-now && npm run start",
-    "build": "NODE_ENV=production pubsweet build"
+    "build": "NODE_ENV=production pubsweet build",
+    "clean": "rm -rf node_modules"
   }
 }
