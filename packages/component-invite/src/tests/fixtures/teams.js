@@ -1,6 +1,7 @@
 const users = require('./users')
 const collections = require('./collections')
 const { heTeamID, reviewerTeamID } = require('./teamIDs')
+
 const { standardCollection } = collections
 const { editorInChief, handlingEditor, reviewer, invitedHandlingEditor } = users
 const teams = {
