@@ -6,11 +6,15 @@
    <elementGuidId>f69ecd31-e8b0-4ed6-acb8-ba41b11779c4</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>CSS</key>
+         <value>button[data-test=&quot;button-save-author&quot;]</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
-         <value>//div[@class=&quot;sc-gqPbQI bgZvJB&quot;]/button[contains(text(),&quot;Save&quot;)]</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

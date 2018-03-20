@@ -6,11 +6,15 @@
    <elementGuidId>3715309a-f7c9-4dbb-956a-18cad88dcbf3</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>CSS</key>
+         <value>div[data-test=&quot;authors&quot;] div[role=&quot;listbox&quot;]</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
-         <value>//div[@class=&quot;sc-gwVKww irmNUz&quot;]/div/div/div/div/button/span[@class=&quot;sc-jWBwVP hUUjIs&quot;]</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

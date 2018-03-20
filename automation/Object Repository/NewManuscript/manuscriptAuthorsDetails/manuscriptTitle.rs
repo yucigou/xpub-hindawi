@@ -11,11 +11,10 @@
       </entry>
       <entry>
          <key>XPATH</key>
-         <value></value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value>div[data-test=&quot;metadata.title&quot;] .ProseMirror </value>
+         <value>div[data-test=&quot;metadata.title&quot;] .ProseMirror</value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>

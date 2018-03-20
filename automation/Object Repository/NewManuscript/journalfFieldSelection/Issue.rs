@@ -7,11 +7,10 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>div[data-test=&quot;metadata.journal&quot;] button</value>
+         <value>div[data-test=&quot;metadata.issue&quot;] div[role=&quot;listbox&quot;]</value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>

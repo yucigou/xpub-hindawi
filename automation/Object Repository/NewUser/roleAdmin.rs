@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>XPATH</key>
-         <value>//label[@class=&quot;sc-kAzzGY dnReMb&quot;]/input[@name=&quot;admin&quot;]</value>
+         <value>div[data-test=&quot;role-selector&quot;] button</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

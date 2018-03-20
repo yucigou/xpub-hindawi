@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Canada</name>
+   <name>countryOption</name>
    <tag></tag>
    <elementGuidId>761277ff-bf18-4eca-a3e8-058f52b38056</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//*[@id=&quot;root&quot;]/div/div[2]/div/div[2]/form/div[9]/div/div/div[1]/div/div[2]/div[3]/div/div/div/div[2]/div/div[39]</value>
+         <key>CSS</key>
+         <value>div[data-test=&quot;authors&quot;] div[role=&quot;listbox&quot;] div div:nth-child(46)</value>
       </entry>
       <entry>
-         <key>CSS</key>
+         <key>XPATH</key>
          <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

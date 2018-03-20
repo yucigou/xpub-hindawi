@@ -6,12 +6,11 @@
    <elementGuidId>34eca5ab-ac60-4162-b582-26cf8ae1d055</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//label[@class=&quot;sc-kAzzGY dnReMb&quot;]/input[@name=&quot;editorInChief&quot;]</value>
+         <key>CSS</key>
       </entry>
       <entry>
-         <key>CSS</key>
-         <value></value>
+         <key>XPATH</key>
+         <value>//div[contains(text(), 'Editor')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

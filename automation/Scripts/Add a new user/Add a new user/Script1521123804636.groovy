@@ -33,7 +33,7 @@ WebUI.setText(password, 'admin123')
 login = findTestObject("NewUser/login")
 WebUI.click(login)
 
-admin = findTestObject("NewUser/admin")
+admin = findTestObject("NewUser/adminButton")
 WebUI.click(admin)
 
 adminDashboard = findTestObject("NewUser/adminDashboard")
@@ -48,7 +48,7 @@ WebUI.click(addUser)
 
 email = findTestObject("NewUser/email")
 WebUI.click(email)
-WebUI.setText(email, 'vlad.stegaru+newuser@thinslices.com')
+WebUI.setText(email, 'vlad.stegaru+newestUser@thinslices.com')
 
 roleDropDown = findTestObject("NewUser/roleDropDown")
 WebUI.click(roleDropDown)

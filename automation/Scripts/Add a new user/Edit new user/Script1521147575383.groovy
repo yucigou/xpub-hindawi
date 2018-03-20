@@ -33,7 +33,7 @@ WebUI.setText(password, 'admin123')
 login = findTestObject("NewUser/login")
 WebUI.click(login)
 
-admin = findTestObject("NewUser/admin")
+admin = findTestObject("NewUser/adminButton")
 WebUI.click(admin)
 
 adminDashboard = findTestObject("NewUser/adminDashboard")

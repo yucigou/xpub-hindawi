@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>input[value=&quot;no&quot;]</value>
+         <value>div[data-test=&quot;conflicts.hasConflicts&quot;] div div label:nth-child(2)</value>
       </entry>
       <entry>
          <key>XPATH</key>

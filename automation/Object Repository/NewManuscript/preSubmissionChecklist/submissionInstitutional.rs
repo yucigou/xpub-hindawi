@@ -7,11 +7,10 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//div[@data-test=&quot;declarations&quot;]/div/label/span[contains(text(),&quot;my submission&quot;)]</value>
+         <value>//div[@data-test=&quot;declarations&quot;]/div/label/span[contains(text(),'I am aware that if my submission')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

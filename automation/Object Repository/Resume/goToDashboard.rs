@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>button[class=&quot;sc-kgoBCf jJDfiI&quot;]</value>
+         <value>button[type=&quot;button&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>

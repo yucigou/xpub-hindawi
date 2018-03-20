@@ -7,11 +7,10 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>input[value=&quot;has-manuscript&quot;]</value>
+         <value>div[data-test=&quot;declarations&quot;] div label:nth-child(2)</value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>

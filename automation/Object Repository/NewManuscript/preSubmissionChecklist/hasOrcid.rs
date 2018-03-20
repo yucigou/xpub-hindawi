@@ -7,14 +7,14 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value></value>
+         <value>div[data-test=&quot;declarations&quot;] div label:nth-child(5)</value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//div[@data-test=&quot;declarations&quot;]/div/label/span[contains(text(),&quot;ORCID&quot;)]</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

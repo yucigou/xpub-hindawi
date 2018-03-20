@@ -6,11 +6,15 @@
    <elementGuidId>39f1f282-9de8-43d3-a4a0-22d5e4aa7d3f</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>CSS</key>
+         <value>button[data-test=&quot;button-cancel-author&quot;]</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
-         <value>//div[@class=&quot;sc-gqPbQI bgZvJB&quot;]/button[contains(text(),&quot;Cancel&quot;)]</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>#root > div > div > div.sc-drKuOJ.fmUpkt > div > div > div:nth-child(2)</value>
+         <value>div[data-test=&quot;card-users&quot;]</value>
       </entry>
       <entry>
          <key>XPATH</key>

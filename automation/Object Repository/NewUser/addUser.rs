@@ -6,12 +6,11 @@
    <elementGuidId>603be35e-a2f1-4b42-9155-c50663f2f154</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value></value>
+         <key>CSS</key>
+         <value>button[data-test=&quot;button-add-user&quot;]</value>
       </entry>
       <entry>
-         <key>CSS</key>
-         <value>button[class=&quot;sc-hgHYgh ljXRif&quot;]</value>
+         <key>XPATH</key>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>

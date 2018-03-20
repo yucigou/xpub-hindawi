@@ -7,14 +7,14 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value></value>
+         <value>div[data-test=&quot;metadata.issue&quot;] div[role=&quot;option&quot;]:first-child</value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//div[contains(text(),&quot;Regular Issues&quot;)]</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

@@ -11,14 +11,14 @@
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//div[contains(text(),&quot;Hindawi Faraday&quot;)]</value>
+         <value></value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value></value>
+         <value>div[data-test=&quot;metadata.journal&quot;] div[role=&quot;option&quot;]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

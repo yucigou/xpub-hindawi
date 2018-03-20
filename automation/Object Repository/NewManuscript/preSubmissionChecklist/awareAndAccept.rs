@@ -7,10 +7,11 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>input[value=&quot;ok-institutional&quot;]</value>
+         <value>//div[@data-test=&quot;declarations&quot;]/div/label/span[contains(text(),'I am aware that accepted ')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
