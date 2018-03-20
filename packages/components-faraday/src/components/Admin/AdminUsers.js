@@ -1,5 +1,5 @@
 import React from 'react'
-import { get } from 'lodash'
+import { get, isEqual } from 'lodash'
 import { connect } from 'react-redux'
 import styled, { withTheme } from 'styled-components'
 import { Icon, Menu, th } from '@pubsweet/ui'
@@ -23,6 +23,8 @@ const TableRow = ({
   lastName = '',
   affiliation,
   isConfirmed,
+  editorInChief,
+  admin,
   roleOptions,
 }) => (
   <Row>
@@ -33,12 +35,9 @@ const TableRow = ({
     <td>{`${firstName} ${lastName}`}</td>
     <td>{affiliation}</td>
     <td>
-      {roles &&
-        roles.map((r, i, arr) => (
-          <Role key={r}>{`${roleOptions[r]}${
-            i !== arr.length - 1 ? ', ' : ''
-          }`}</Role>
-        ))}
+      <Role>{`Author${isEqual(editorInChief, true) ? ', Editor in Chief' : ''}${
+        isEqual(admin, true) ? ', Admin' : ''
+      }`}</Role>
     </td>
     <td>
       <Tag>{isConfirmed ? 'Confirmed' : 'Invited'}</Tag>
@@ -72,7 +71,10 @@ const Users = ({
           <span>Admin Dashboard</span>
           <span>Users</span>
         </BreadCrumbs>
-        <AddButton onClick={() => history.push('/admin/users/add')}>
+        <AddButton
+          data-test="button-add-user"
+          onClick={() => history.push('/admin/users/add')}
+        >
           <Icon color={theme.colorPrimary} size={3}>
             plus-circle
           </Icon>
@@ -129,7 +131,7 @@ const Users = ({
             <td>Email</td>
             <td>Full name</td>
             <td>Affiliation</td>
-            <td width="200">Roles</td>
+            <td width="220">Roles</td>
             <td>Status</td>
             <td width="50" />
           </tr>
@@ -297,12 +299,12 @@ const Tag = styled.span`
   margin-right: calc(${th('subGridUnit')});
 `
 
-const Role = styled.span`
-  height: 17px;
+const Role = styled.div`
   font-size: ${th('fontSizeBaseSmall')};
   text-align: left;
   color: ${th('colorPrimary')};
   text-transform: uppercase;
+  line-height: 1.5;
 `
 
 const Action = styled(Link)`

@@ -12,7 +12,7 @@ const AdminDashboard = ({ history, theme }) => (
         </Icon>
         <span>Journal configuration</span>
       </Card>
-      <Card onClick={() => history.push('/admin/users')}>
+      <Card data-test="card-users" onClick={() => history.push('/admin/users')}>
         <Icon color={theme.colorPrimary} size={6}>
           users
         </Icon>

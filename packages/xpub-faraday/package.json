@@ -8,8 +8,8 @@
     "url": "https://gitlab.coko.foundation/xpub/xpub-faraday"
   },
   "dependencies": {
-    "@pubsweet/component-aws-s3": "^0.1.1",
-    "@pubsweet/ui": "^3.0.0",
+    "@pubsweet/ui": "^3.2.0",
+    "@pubsweet/component-aws-s3": "^1.0.0",
     "aws-sdk": "^2.197.0",
     "babel-core": "^6.26.0",
     "config": "^1.26.2",
@@ -42,7 +42,8 @@
     "typeface-ubuntu-mono": "^0.0.54",
     "winston": "^2.4.0",
     "xpub-connect": "^0.0.3",
-    "xpub-edit": "^0.0.3",
+    "xpub-edit": "^0.0.4",
+    "xpub-faraday-server": "^0.0.1",
     "xpub-journal": "^0.0.3",
     "xpub-selectors": "^0.0.3",
     "xpub-styleguide": "^0.0.3",

@@ -61,7 +61,7 @@ demo:now:
     - master
   environment:
     name: $PACKAGE_NAME/demo
-    url: $NOW_URL
+    url: https://xpub-faraday.now.sh/
   script:
     - npm i -g --unsafe-perm now
     - cd ${HOME}/now

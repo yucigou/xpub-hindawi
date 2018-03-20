@@ -42,7 +42,7 @@ const confirmUser = (email, token, history) => (values, dispatch) => {
         if (err) {
           const errorMessage = get(JSON.parse(err), 'error')
           throw new SubmissionError({
-            password: errorMessage || 'Something went wrong',
+            _error: errorMessage || 'Something went wrong',
           })
         }
       })

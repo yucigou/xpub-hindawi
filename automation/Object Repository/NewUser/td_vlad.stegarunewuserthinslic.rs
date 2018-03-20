@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>td_vlad.stegarunewuserthinslic</name>
+   <tag></tag>
+   <elementGuidId>1ee7b131-9b37-44ca-a75a-e710f5aa3d91</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>#root > div > div > div.sc-drKuOJ.fmUpkt > div > table > tbody > tr:nth-child(1)</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value></value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>CSS</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>td</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>vlad.stegaru+newuser@thinslices.com</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-cmTdod hZxvxw&quot;]/div[@class=&quot;sc-dyGzUR bQYZEl&quot;]/div[@class=&quot;sc-drKuOJ fmUpkt&quot;]/div[1]/table[@class=&quot;sc-hzDEsm cniXiH&quot;]/tbody[1]/tr[@class=&quot;sc-jeCdPy kCgSUu&quot;]/td[2]</value>
+   </webElementProperties>
+</WebElementEntity>

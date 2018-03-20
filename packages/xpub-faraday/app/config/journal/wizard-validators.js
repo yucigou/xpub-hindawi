@@ -30,9 +30,9 @@ export const editModeEnabled = value => {
   return undefined
 }
 
-export const requiredFiles = (valus, formValues) => {
+export const requiredFiles = (values, formValues) => {
   const manuscripts = get(formValues, 'files.manuscripts')
-  if (manuscripts && manuscripts.length === 0) {
+  if (!manuscripts || manuscripts.length === 0) {
     return 'At least one main manuscript file is needed.'
   }
   return undefined

@@ -2,8 +2,6 @@ import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import java.util.concurrent.CancellationException as CancellationException
-import org.junit.After as After
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 import com.kms.katalon.core.checkpoint.CheckpointFactory as CheckpointFactory
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as MobileBuiltInKeywords
@@ -23,24 +21,83 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.openBrowser(null)
 
-WebUI.navigateToUrl('http://localhost:3000')
+WebUI.navigateToUrl('https://xpub-faraday.now.sh')
 
-username = findTestObject('SignIn/usernameField')
+username = findTestObject('NewUser/username')
+
 WebUI.click(username)
-WebUI.setText(username, 'vlad')
 
-password = findTestObject('SignIn/passwordField')
+WebUI.setText(username, 'admin')
+
+password = findTestObject('NewUser/password')
+
 WebUI.click(password)
-WebUI.setText(password, '123123123')
 
-loginButton = findTestObject('SignIn/LoginButton')
-WebUI.click(loginButton)
+WebUI.setText(password, 'admin123')
 
-New = findTestObject("NewManuscript/journalFieldSelection/New")
-WebUI.click(New)
+login = findTestObject('NewUser/login')
 
-resumeSubmission = findTestObject('Resume/resumeSubmission')
-WebUI.click(resumeSubmission)
+WebUI.click(login)
 
-cancel = findTestObject("NewManuscript/journalFieldSelection/Cancel")
-WebUI.click(cancel)
+admin = findTestObject('NewUser/admin')
+
+WebUI.click(admin)
+
+adminDashboard = findTestObject('NewUser/adminDashboard')
+
+WebUI.click(adminDashboard)
+
+users = findTestObject('NewUser/users')
+
+WebUI.waitForElementVisible(users, 2)
+
+WebUI.click(users)
+
+addUser = findTestObject('NewUser/addUser')
+
+WebUI.click(addUser)
+
+email = findTestObject('NewUser/email')
+
+WebUI.click(email)
+
+WebUI.setText(email, 'bogdan.cochior+author@thinslices.com')
+
+roleDropDown = findTestObject('NewUser/roleDropDown')
+
+WebUI.click(roleDropDown)
+
+author = findTestObject('NewUser/author')
+
+WebUI.click(author)
+
+firstName = findTestObject('NewUser/firstName')
+
+WebUI.click(firstName)
+
+WebUI.setText(firstName, 'Bogdan Author')
+
+lastName = findTestObject('NewUser/lastName')
+
+WebUI.click(lastName)
+
+WebUI.setText(lastName, 'Test')
+
+affiliation = findTestObject('NewUser/affiliation')
+
+WebUI.click(affiliation)
+
+WebUI.setText(affiliation, 'College')
+
+title = findTestObject('NewUser/titleDropDown')
+
+WebUI.click(title)
+
+dr = findTestObject('NewUser/Dr')
+
+WebUI.click(dr)
+
+save = findTestObject('NewUser/save')
+
+WebUI.click(save)
+

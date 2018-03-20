@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import uploadFileFn from 'xpub-upload'
-// TODO: Add back abstract when xpub-edit is published
-// import { AbstractEditor, TitleEditor } from 'xpub-edit'
-import { TitleEditor } from 'xpub-edit'
+import { AbstractEditor, TitleEditor } from 'xpub-edit'
 import { Menu, YesOrNo, TextField, CheckboxGroup } from '@pubsweet/ui'
 import { required, minChars, minSize } from 'xpub-validators'
 import { AuthorList, Files } from 'pubsweet-components-faraday/src/components'
@@ -140,7 +138,7 @@ export default {
         },
         {
           fieldId: 'metadata.abstract',
-          renderComponent: TitleEditor,
+          renderComponent: AbstractEditor,
           title: 'Abstract',
           placeholder: 'Write an abstract',
           validate: [requiredBasedOnType],

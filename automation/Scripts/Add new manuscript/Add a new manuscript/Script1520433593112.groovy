@@ -23,7 +23,7 @@ import org.openqa.selenium.Keys as Keys
 
 WebUI.openBrowser(null)
 
-WebUI.navigateToUrl('http://localhost:3000')
+WebUI.navigateToUrl('https://xpub-faraday.now.sh')
 
 username = findTestObject('SignIn/usernameField')
 
@@ -54,8 +54,6 @@ WebUI.click(journal)
 hindawiFaraday = findTestObject('NewManuscript/journalfFieldSelection/HindawiFaraday')
 
 WebUI.waitForElementVisible(newButton, 2)
-
-WebUI.click(hindawiFaraday)
 
 WebUI.click(hindawiFaraday)
 

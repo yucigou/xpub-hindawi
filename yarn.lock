@@ -78,10 +78,11 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@pubsweet/component-aws-s3@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@pubsweet/component-aws-s3/-/component-aws-s3-0.1.1.tgz#2faa379c1b8c12dbc6573a5627b09f536a484cc3"
+"@pubsweet/component-aws-s3@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/component-aws-s3/-/component-aws-s3-1.0.0.tgz#5cb1715709ba5ad7b8ad79d1ef42d6818d17ca3e"
   dependencies:
+    archiver "^2.1.1"
     aws-sdk "^2.185.0"
     body-parser "^1.17.2"
     multer "^1.3.0"
@@ -171,7 +172,7 @@
     redux-form "^7.0.3"
     styled-components "^2.4.0"
 
-"@pubsweet/ui@^3.0.0", "@pubsweet/ui@^3.1.0":
+"@pubsweet/ui@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-3.1.0.tgz#24c25c29fc36e34b9f654fe4378502232f8204fa"
   dependencies:
@@ -188,6 +189,28 @@
     react-redux "^5.0.2"
     react-router-dom "^4.2.2"
     react-tag-autocomplete "^5.4.1"
+    recompose "^0.26.0"
+    redux "^3.6.0"
+    redux-form "^7.0.3"
+    styled-components "^2.4.0"
+
+"@pubsweet/ui@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-3.2.0.tgz#b787f1bb53fa818aade863c221bf47e2929e669e"
+  dependencies:
+    babel-jest "^21.2.0"
+    classnames "^2.2.5"
+    enzyme "^3.2.0"
+    enzyme-adapter-react-16 "^1.1.1"
+    humps "^2.0.1"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
+    react "^16.2.0"
+    react-dom "^16.2.0"
+    react-feather "^1.0.8"
+    react-redux "^5.0.2"
+    react-router-dom "^4.2.2"
+    react-tag-autocomplete "^5.5.0"
     recompose "^0.26.0"
     redux "^3.6.0"
     redux-form "^7.0.3"
@@ -3034,7 +3057,19 @@ enzyme-adapter-react-15@^1.0.5:
     object.values "^1.0.4"
     prop-types "^15.5.10"
 
-enzyme-adapter-utils@^1.1.0:
+enzyme-adapter-react-16@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.1.1.tgz#a8f4278b47e082fbca14f5bfb1ee50ee650717b4"
+  dependencies:
+    enzyme-adapter-utils "^1.3.0"
+    lodash "^4.17.4"
+    object.assign "^4.0.4"
+    object.values "^1.0.4"
+    prop-types "^15.6.0"
+    react-reconciler "^0.7.0"
+    react-test-renderer "^16.0.0-0"
+
+enzyme-adapter-utils@^1.1.0, enzyme-adapter-utils@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.3.0.tgz#d6c85756826c257a8544d362cc7a67e97ea698c7"
   dependencies:
@@ -7686,6 +7721,15 @@ react-proxy@^3.0.0-alpha.0:
   dependencies:
     lodash "^4.6.1"
 
+react-reconciler@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.7.0.tgz#9614894103e5f138deeeb5eabaf3ee80eb1d026d"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
 react-redux@^5.0.2, react-redux@^5.0.6, react-redux@^5.0.7:
   version "5.0.7"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
@@ -7728,9 +7772,17 @@ react-router@^4.2.0:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
-react-tag-autocomplete@^5.4.1:
+react-tag-autocomplete@^5.4.1, react-tag-autocomplete@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/react-tag-autocomplete/-/react-tag-autocomplete-5.5.0.tgz#49841388b88323f6bccb0c10039bd0252875b49f"
+
+react-test-renderer@^16.0.0-0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.2.0.tgz#bddf259a6b8fcd8555f012afc8eacc238872a211"
+  dependencies:
+    fbjs "^0.8.16"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 react-transition-group@^2.0.0, react-transition-group@^2.2.0:
   version "2.2.1"
@@ -9835,11 +9887,11 @@ xpub-connect@^0.0.3:
     redux "^3.6.0"
     styled-components "^2.4.0"
 
-xpub-edit@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-0.0.3.tgz#76947a18140d1b61c460fcd96127569d322e0da7"
+xpub-edit@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-0.0.4.tgz#2d20d4ab0ba83ac0b4b3d3f273a74da1518b55d1"
   dependencies:
-    "@pubsweet/ui" "3.0.0"
+    "@pubsweet/ui" "^3.2.0"
     prosemirror-commands "^1.0.1"
     prosemirror-dropcursor "^1.0.0"
     prosemirror-gapcursor "^1.0.0"
@@ -9849,8 +9901,6 @@ xpub-edit@^0.0.3:
     prosemirror-model "^1.0.0"
     prosemirror-state "^1.0.1"
     prosemirror-view "^1.0.0"
-    react "^16.2.0"
-    react-dom "^16.2.0"
 
 xpub-journal@^0.0.3:
   version "0.0.3"
