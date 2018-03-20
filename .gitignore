@@ -11,3 +11,5 @@ config.json
 packages/**/_build
 packages/**/api/**/
 .vscode
+.config/
+.npm/
