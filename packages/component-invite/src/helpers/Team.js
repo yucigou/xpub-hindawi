@@ -166,6 +166,16 @@ const getInviteData = (invitations, collectionId, role) => {
   return { timestamp, status }
 }
 
+const getTeamByGroupAndCollection = async (collectionId, role, TeamModel) => {
+  const teams = await TeamModel.all()
+  return teams.find(
+    team =>
+      team.group === role &&
+      team.object.type === 'collection' &&
+      team.object.id === collectionId,
+  )
+}
+
 module.exports = {
   createNewTeam,
   setupEiCTeams,
@@ -175,4 +185,5 @@ module.exports = {
   removeTeamMember,
   getTeamMembersByCollection,
   getInviteData,
+  getTeamByGroupAndCollection,
 }
