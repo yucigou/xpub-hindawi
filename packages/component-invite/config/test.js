@@ -8,10 +8,10 @@ module.exports = {
       'http://localhost:3000/invite',
   },
   roles: {
-    global: ['admin', 'editorInChief', 'author'],
+    global: ['admin', 'editorInChief', 'author', 'handlingEditor'],
     collection: ['handlingEditor', 'reviewer'],
     inviteRights: {
-      admin: ['admin', 'editorInChief', 'author'],
+      admin: ['admin', 'editorInChief', 'author', 'handlingEditor'],
       editorInChief: ['handlingEditor'],
       handlingEditor: ['reviewer'],
     },
