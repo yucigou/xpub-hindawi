@@ -1,6 +1,7 @@
 const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
 const config = require('config')
+const inviteHelper = require('../helpers/Invitation')
 
 const configRoles = config.get('roles')
 module.exports = models => async (req, res) => {
@@ -39,7 +40,7 @@ module.exports = models => async (req, res) => {
 
     const membersData = members.map(async member => {
       const user = await models.User.find(member)
-      const { timestamp, status } = teamHelper.getInviteData(
+      const { timestamp, status } = inviteHelper.getInviteData(
         user.invitations,
         collectionId,
         role,

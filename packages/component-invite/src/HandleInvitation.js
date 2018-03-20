@@ -15,6 +15,11 @@ const HandleInvitation = app => {
     authBearer,
     require('./routes/getCollectionUsers')(app.locals.models),
   )
+  app.delete(
+    '/api/collections/:collectionId/users/:userId',
+    authBearer,
+    require('./routes/deleteInvitation')(app.locals.models),
+  )
 }
 
 module.exports = HandleInvitation
