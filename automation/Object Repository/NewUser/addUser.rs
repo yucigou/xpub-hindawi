@@ -6,14 +6,23 @@
    <elementGuidId>603be35e-a2f1-4b42-9155-c50663f2f154</elementGuidId>
    <selectorCollection>
       <entry>
+<<<<<<< HEAD
          <key>CSS</key>
          <value>button[data-test=&quot;button-add-user&quot;]</value>
       </entry>
       <entry>
          <key>XPATH</key>
+=======
+         <key>XPATH</key>
+         <value>//button/*[1]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>button:first-child</value>
+>>>>>>> e85cabdf8bb80ea1284bf832b47b990be81d0c03
       </entry>
    </selectorCollection>
-   <selectorMethod>CSS</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

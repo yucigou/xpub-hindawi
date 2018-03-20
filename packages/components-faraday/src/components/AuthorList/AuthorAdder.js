@@ -110,9 +110,11 @@ export default compose(
         fragmentId,
       ).then(author => {
         const newAuthors = [...authors, author]
-        setFormAuthors(newAuthors)
-        reset()
         setEditMode(false)()
+        setTimeout(() => {
+          setFormAuthors(newAuthors)
+        }, 1000)
+        reset()
       })
     },
   }),

@@ -6,11 +6,19 @@
    <elementGuidId>9be9ae36-fc08-41ea-9e5e-66e6b3424324</elementGuidId>
    <selectorCollection>
       <entry>
+<<<<<<< HEAD:automation/Object Repository/NewUser/adminButton.rs
          <key>CSS</key>
       </entry>
       <entry>
          <key>XPATH</key>
          <value>//*[@id=&quot;root&quot;]/div/div/div[1]/div[2]/div/span[2]</value>
+=======
+         <key>XPATH</key>
+         <value>//span[contains(text(),'admin')]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+>>>>>>> e85cabdf8bb80ea1284bf832b47b990be81d0c03:automation/Object Repository/NewUser/admin.rs
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

@@ -138,7 +138,7 @@ export default {
         },
         {
           fieldId: 'metadata.abstract',
-          renderComponent: TitleEditor,
+          renderComponent: AbstractEditor,
           title: 'Abstract',
           placeholder: 'Write an abstract',
           validate: [requiredBasedOnType],
