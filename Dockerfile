@@ -16,7 +16,7 @@ RUN [ "rm", "-rf", "/npm-packages-offline-cache"]
 
 
 ENV NODE_ENV "development"
-WORKDIR ${HOME}/packages/xpub-faraday
-RUN [ "npm", "run", "start"]
+# WORKDIR ${HOME}/packages/xpub-faraday
+# RUN [ "npm", "run", "server "]
 
 EXPOSE 3000

@@ -3,7 +3,7 @@ const path = require('path')
 const components = require('./components.json')
 const logger = require('winston')
 
-const environment = process.env.NODE_ENV || 'development'
+// const environment = process.env.NODE_ENV || 'development'
 
 module.exports = {
   authsome: {
@@ -17,10 +17,10 @@ module.exports = {
     components,
   },
   'pubsweet-server': {
-    dbPath:
-      process.env.PUBSWEET_DB ||
-      path.join(__dirname, '..', 'api', 'db', environment),
+    db: {},
+    port: 3000,
     logger,
+    uploads: 'uploads',
   },
   'pubsweet-client': {
     API_ENDPOINT: '/api',
