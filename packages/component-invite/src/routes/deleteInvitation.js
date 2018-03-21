@@ -2,6 +2,8 @@ const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
 const config = require('config')
 const inviteHelper = require('../helpers/Invitation')
+const mailService = require('pubsweet-component-mail-service')
+const logger = require('@pubsweet/logger')
 
 const configRoles = config.get('roles')
 module.exports = models => async (req, res) => {
@@ -39,9 +41,19 @@ module.exports = models => async (req, res) => {
       return
     }
     await inviteHelper.revokeInvitation(user, collectionId, role)
-    user = models.User.find(userId)
+    user = await models.User.find(userId)
     await teamHelper.removeTeamMember(team.id, userId, models.Team)
-    res.status(204).json()
+    try {
+      await mailService.setupRevokeInvitationEmail(
+        user.email,
+        'revoke-handling-editor',
+      )
+
+      return res.status(204).json()
+    } catch (e) {
+      logger.error(e.message)
+      return res.status(500).json({ error: 'Email could not be sent.' })
+    }
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'item')
     return res.status(notFoundError.status).json({

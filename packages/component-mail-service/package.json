@@ -4,7 +4,9 @@
   "description": "mail service component for pubsweet",
   "license": "MIT",
   "author": "Collaborative Knowledge Foundation",
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -12,13 +14,13 @@
     "path": "component-mail-service"
   },
   "dependencies": {
+    "@pubsweet/component-send-email": "0.2.1",
     "body-parser": "^1.17.2",
     "handlebars": "^4.0.11"
   },
   "peerDependencies": {
     "@pubsweet/logger": "^0.0.1",
-    "pubsweet-server": "^1.0.1",
-    "@pubsweet/component-send-email": "^0.1.0"
+    "pubsweet-server": "^1.0.1"
   },
   "publishConfig": {
     "access": "public"

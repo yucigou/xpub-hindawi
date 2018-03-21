@@ -114,10 +114,11 @@ const getMatchingTeams = (teams, TeamModel, collectionId, role) =>
     .filter(Boolean)
 
 const removeTeamMember = async (teamId, userId, TeamModel) => {
-  const team = await TeamModel.find(teamId)
+  let team = await TeamModel.find(teamId)
   const members = team.members.filter(member => member !== userId)
   team.members = members
-  await TeamModel.updateProperties(team)
+
+  team = await team.updateProperties(team)
 
   await team.save()
 }

@@ -5,6 +5,9 @@ const httpMocks = require('node-mocks-http')
 const fixtures = require('./fixtures/fixtures')
 const Model = require('./helpers/Model')
 
+jest.mock('pubsweet-component-mail-service', () => ({
+  setupRevokeInvitationEmail: jest.fn(),
+}))
 const { standardCollection, noTeamCollection } = fixtures.collections
 const { editorInChief, admin, handlingEditor } = fixtures.users
 const { heTeam } = fixtures.teams
@@ -12,6 +15,8 @@ const query = {
   role: 'handlingEditor',
 }
 const deleteInvitationPath = '../routes/deleteInvitation'
+const models = Model.build()
+
 describe('Delete Invitation route handler', () => {
   it('should return success when the role is correct, the collection exists and the request user is editorInChief ', async () => {
     const req = httpMocks.createRequest()
@@ -20,10 +25,8 @@ describe('Delete Invitation route handler', () => {
     req.params.userId = handlingEditor.id
     req.user = editorInChief.id
     const res = httpMocks.createResponse()
-    const models = Model.build()
     const initialSize = handlingEditor.invitations.length
     await require(deleteInvitationPath)(models)(req, res)
-
     expect(res.statusCode).toBe(204)
     expect(heTeam.members).not.toContain(handlingEditor.id)
     expect(handlingEditor.invitations).toHaveLength(initialSize - 1)
@@ -34,7 +37,6 @@ describe('Delete Invitation route handler', () => {
     req.query = query
     req.user = editorInChief.id
     const res = httpMocks.createResponse()
-    const models = Model.build()
     await require(deleteInvitationPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
@@ -47,7 +49,6 @@ describe('Delete Invitation route handler', () => {
     req.params.collectionId = 'invalid-id'
     req.user = editorInChief.id
     const res = httpMocks.createResponse()
-    const models = Model.build()
     await require(deleteInvitationPath)(models)(req, res)
     expect(res.statusCode).toBe(404)
     const data = JSON.parse(res._getData())
@@ -60,7 +61,6 @@ describe('Delete Invitation route handler', () => {
     req.params.userId = 'invalid-id'
     req.user = editorInChief.id
     const res = httpMocks.createResponse()
-    const models = Model.build()
     await require(deleteInvitationPath)(models)(req, res)
     expect(res.statusCode).toBe(404)
     const data = JSON.parse(res._getData())
@@ -73,7 +73,6 @@ describe('Delete Invitation route handler', () => {
     req.params.collectionId = standardCollection.id
     req.user = editorInChief.id
     const res = httpMocks.createResponse()
-    const models = Model.build()
     await require(deleteInvitationPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
@@ -86,7 +85,6 @@ describe('Delete Invitation route handler', () => {
     req.params.collectionId = standardCollection.id
     req.user = admin.id
     const res = httpMocks.createResponse()
-    const models = Model.build()
     await require(deleteInvitationPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
@@ -99,7 +97,6 @@ describe('Delete Invitation route handler', () => {
     req.params.userId = handlingEditor.id
     req.user = editorInChief.id
     const res = httpMocks.createResponse()
-    const models = Model.build()
     await require(deleteInvitationPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
