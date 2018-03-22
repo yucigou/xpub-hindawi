@@ -3,6 +3,7 @@ const config = require('config')
 const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
 const mailService = require('pubsweet-component-mail-service')
+const inviteHelper = require('../helpers/Invitation')
 
 const configRoles = config.get('roles')
 
@@ -79,7 +80,7 @@ module.exports = async (
 
     // getting the updated user from the DB - creating a team also updates the user
     user = await models.User.findByEmail(email)
-    user = await teamHelper.setupInvitation(user, role, collectionId, team.id)
+    user = await inviteHelper.setupInvitation(user, role, collectionId, team.id)
 
     try {
       await mailService.setupAssignEmail(

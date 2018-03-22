@@ -90,6 +90,13 @@
     node-mocks-http "^1.6.6"
     nodemailer "^4.4.2"
 
+"@pubsweet/component-send-email@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@pubsweet/component-send-email/-/component-send-email-0.2.1.tgz#9e70412cf20ce618ff42d14e4b09005e96d31ba2"
+  dependencies:
+    aws-sdk "^2.185.0"
+    nodemailer "^4.4.2"
+
 "@pubsweet/db-manager@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.0.3.tgz#e8784c87eee958ed17daa12f54625774bd2fd277"

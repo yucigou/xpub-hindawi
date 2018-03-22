@@ -84,10 +84,12 @@ const createNewUser = async (
   UserModel,
   role,
 ) => {
+  const username = uuid.v4().slice(0, 8)
+  const password = uuid.v4()
   const userBody = {
-    username: uuid.v4().slice(0, 8),
+    username,
     email,
-    password: uuid.v4(),
+    password,
     passwordResetToken: crypto.randomBytes(32).toString('hex'),
     isConfirmed: false,
     firstName,
@@ -98,7 +100,9 @@ const createNewUser = async (
     admin: role === 'admin',
     handlingEditor: role === 'handlingEditor',
   }
+
   let newUser = new UserModel(userBody)
+
   try {
     newUser = await newUser.save()
     return newUser

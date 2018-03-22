@@ -1,6 +1,6 @@
 const users = require('./users')
 const collections = require('./collections')
-const { heTeam, reviewerTeam } = require('./teamIDs')
+const { heTeamID, reviewerTeamID } = require('./teamIDs')
 
 const { standardCollection } = collections
 const { editorInChief, handlingEditor, reviewer, invitedHandlingEditor } = users
@@ -34,7 +34,7 @@ const teams = {
     members: [handlingEditor.id, invitedHandlingEditor.id],
     save: jest.fn(() => teams.heTeam),
     updateProperties: jest.fn(() => teams.heTeam),
-    id: heTeam,
+    id: heTeamID,
   },
   reviewerTeam: {
     teamType: {
@@ -50,7 +50,7 @@ const teams = {
     members: [reviewer.id],
     save: jest.fn(() => teams.reviewerTeam),
     updateProperties: jest.fn(() => teams.reviewerTeam),
-    id: reviewerTeam,
+    id: reviewerTeamID,
   },
 }
 module.exports = teams
