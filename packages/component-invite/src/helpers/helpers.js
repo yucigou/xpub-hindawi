@@ -98,6 +98,7 @@ const createNewUser = async (
     title,
     editorInChief: role === 'editorInChief',
     admin: role === 'admin',
+    handlingEditor: role === 'handlingEditor',
   }
 
   let newUser = new UserModel(userBody)
