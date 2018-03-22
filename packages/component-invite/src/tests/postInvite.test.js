@@ -17,8 +17,6 @@ jest.mock('pubsweet-component-mail-service', () => ({
 }))
 const chance = new Chance()
 const globalRoles = configRoles.global
-const manuscriptRoles = configRoles.collection
-
 const body = {
   email: chance.email(),
   role: globalRoles[random(0, globalRoles.length - 1)],
