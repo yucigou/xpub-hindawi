@@ -28,7 +28,6 @@ module.exports = models => async (req, res) => {
     return
   }
   const collectionId = get(req, 'params.collectionId')
-
   const url = `${req.protocol}://${req.get('host')}`
   if (collectionId)
     return require('../controllers/assignCollectionRole')(

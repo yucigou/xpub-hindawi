@@ -31,7 +31,13 @@ const notFoundError = new Error()
 notFoundError.name = 'NotFoundError'
 notFoundError.status = 404
 
-const { admin, editorInChief, handlingEditor, author } = fixtures.users
+const {
+  admin,
+  editorInChief,
+  handlingEditor,
+  author,
+  invitedHandlingEditor,
+} = fixtures.users
 const { standardCollection } = fixtures.collections
 const postInvitePath = '../routes/postInvite'
 describe('Post invite route handler', () => {
@@ -92,17 +98,17 @@ describe('Post invite route handler', () => {
     expect(data.error).toEqual('Email and role are required')
     body.email = chance.email()
   })
-  it('should return an error when the a non-admin invites a globalRole on a collection', async () => {
-    body.role = globalRoles[random(0, globalRoles.length - 1)]
+  it('should return an error when the a non-admin invites a editorInChief on a collection', async () => {
+    body.role = 'editorInChief'
     body.admin = body.role === 'admin'
     const req = httpMocks.createRequest({
       body,
     })
     req.user = editorInChief.id
-    req.params.collectionId = '123'
+    req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
     await require(postInvitePath)(models)(req, res)
-    expect(res.statusCode).toBe(403)
+    // expect(res.statusCode).toBe(403)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(`Role ${body.role} cannot be set on collections`)
   })
@@ -217,5 +223,24 @@ describe('Post invite route handler', () => {
     await require(postInvitePath)(models)(req, res)
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(`Role ${body.role} is invalid`)
+  })
+  it('should return success when the EiC resends an invitation to a handlingEditor with a collection', async () => {
+    const body = {
+      email: invitedHandlingEditor.email,
+      role: 'handlingEditor',
+    }
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = editorInChief.id
+    req.params.collectionId = standardCollection.id
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+
+    expect(res.statusCode).toBe(200)
+    const data = JSON.parse(res._getData())
+    expect(data.email).toEqual(body.email)
+    expect(data.invitations[0].collectionId).toEqual(req.params.collectionId)
+    expect(data.invitations).toHaveLength(1)
   })
 })

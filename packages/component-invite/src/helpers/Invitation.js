@@ -38,4 +38,14 @@ const setupInvitation = async (user, role, collectionId, teamId) => {
   return user
 }
 
-module.exports = { getInviteData, revokeInvitation, setupInvitation }
+const getMatchingInvitation = (invitations, collectionId, role) =>
+  invitations.find(
+    invite => invite.type === role && invite.collectionId === collectionId,
+  )
+
+module.exports = {
+  getInviteData,
+  revokeInvitation,
+  setupInvitation,
+  getMatchingInvitation,
+}
