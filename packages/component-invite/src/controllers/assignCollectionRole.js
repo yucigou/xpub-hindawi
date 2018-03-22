@@ -3,6 +3,7 @@ const config = require('config')
 const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
 const mailService = require('pubsweet-component-mail-service')
+const inviteHelper = require('../helpers/Invitation')
 
 const configRoles = config.get('roles')
 
@@ -63,8 +64,13 @@ module.exports = async (
 
   try {
     let user = await models.User.findByEmail(email)
-    let team
-    if (resend === undefined) {
+
+    let team = teamHelper.getTeamByGroupAndCollection(
+      collectionId,
+      role,
+      models.Team,
+    )
+    if (team === undefined) {
       team = await teamHelper.setupManuscriptTeam(
         models,
         user,
@@ -77,15 +83,20 @@ module.exports = async (
     user = await models.User.findByEmail(email)
 
     if (user.invitations === undefined) {
-      user = await teamHelper.setupInvitation(user, role, collectionId, team.id)
+      user = await inviteHelper.setupInvitation(
+        user,
+        role,
+        collectionId,
+        team.id,
+      )
     } else {
-      const matchingInvitation = teamHelper.getMatchingInvitation(
+      const matchingInvitation = inviteHelper.getMatchingInvitation(
         user.invitations,
         collectionId,
         role,
       )
       if (matchingInvitation === undefined) {
-        user = await teamHelper.setupInvitation(
+        user = await inviteHelper.setupInvitation(
           user,
           role,
           collectionId,
@@ -104,7 +115,7 @@ module.exports = async (
       return res.status(200).json(user)
     } catch (e) {
       logger.error(e)
-      return res.status(500).json({ error: 'Mailing could not be sent.' })
+      return res.status(500).json({ error: 'Mail could not be sent.' })
     }
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'user')

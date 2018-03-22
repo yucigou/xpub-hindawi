@@ -2,6 +2,8 @@ const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
 const config = require('config')
 const inviteHelper = require('../helpers/Invitation')
+const mailService = require('pubsweet-component-mail-service')
+const logger = require('@pubsweet/logger')
 
 const configRoles = config.get('roles')
 module.exports = models => async (req, res) => {
@@ -22,41 +24,38 @@ module.exports = models => async (req, res) => {
     return
   }
 
-  const { collectionId } = req.params
+  const { collectionId, userId } = req.params
   try {
     await models.Collection.find(collectionId)
-    const members = await teamHelper.getTeamMembersByCollection(
+    let user = await models.User.find(userId)
+    const team = await teamHelper.getTeamByGroupAndCollection(
       collectionId,
       role,
       models.Team,
     )
 
-    if (members === undefined) {
+    if (team === undefined) {
       res.status(400).json({
         error: `The requested collection does not have a ${role} Team`,
       })
       return
     }
-
-    const membersData = members.map(async member => {
-      const user = await models.User.find(member)
-      const { timestamp, status } = inviteHelper.getInviteData(
-        user.invitations,
-        collectionId,
-        role,
+    await inviteHelper.revokeInvitation(user, collectionId, role)
+    user = await models.User.find(userId)
+    await teamHelper.removeTeamMember(team.id, userId, models.Team)
+    try {
+      await mailService.setupRevokeInvitationEmail(
+        user.email,
+        'revoke-handling-editor',
       )
-      return {
-        name: `${user.firstName} ${user.lastName}`,
-        timestamp,
-        email: user.email,
-        status,
-      }
-    })
 
-    const resBody = await Promise.all(membersData)
-    res.status(200).json(resBody)
+      return res.status(204).json()
+    } catch (e) {
+      logger.error(e.message)
+      return res.status(500).json({ error: 'Email could not be sent.' })
+    }
   } catch (e) {
-    const notFoundError = await helpers.handleNotFoundError(e, 'collection')
+    const notFoundError = await helpers.handleNotFoundError(e, 'item')
     return res.status(notFoundError.status).json({
       error: notFoundError.message,
     })

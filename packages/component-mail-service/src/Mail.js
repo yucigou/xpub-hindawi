@@ -61,6 +61,28 @@ module.exports = {
     }
     return Email.send(mailData)
   },
+  setupRevokeInvitationEmail: async (email, emailType) => {
+    let subject
+    const replacements = {}
+    switch (emailType) {
+      case 'revoke-handling-editor':
+        subject = 'Invitation has been Cancelled'
+        break
+      default:
+        subject = 'Welcome to Hindawi!'
+        break
+    }
+
+    const { htmlBody, textBody } = getEmailBody(emailType, replacements)
+    const mailData = {
+      from: config.get('mailer.from'),
+      to: email,
+      subject,
+      text: textBody,
+      html: htmlBody,
+    }
+    return Email.send(mailData)
+  },
 }
 
 const getEmailBody = (emailType, replacements) => {

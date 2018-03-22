@@ -113,26 +113,13 @@ const getMatchingTeams = (teams, TeamModel, collectionId, role) =>
     })
     .filter(Boolean)
 
-const setupInvitation = async (user, role, collectionId, teamId) => {
-  const invitation = {
-    type: role,
-    hasAnswer: false,
-    isAccepted: false,
-    collectionId,
-    timestamp: Date.now(),
-    teamId,
-  }
-  user.invitations = user.invitations || []
-  user.invitations.push(invitation)
-  user = await user.save()
-  return user
-}
-
 const removeTeamMember = async (teamId, userId, TeamModel) => {
-  const team = await TeamModel.find(teamId)
+  let team = await TeamModel.find(teamId)
   const members = team.members.filter(member => member !== userId)
   team.members = members
-  await TeamModel.updateProperties(team)
+
+  team = await team.updateProperties(team)
+
   await team.save()
 }
 
@@ -151,34 +138,22 @@ const getTeamMembersByCollection = async (collectionId, role, TeamModel) => {
   return members
 }
 
-const getInviteData = (invitations, collectionId, role) => {
-  const matchingInvitation = invitations.find(
-    invite => invite.type === role && invite.collectionId === collectionId,
+const getTeamByGroupAndCollection = async (collectionId, role, TeamModel) => {
+  const teams = await TeamModel.all()
+  return teams.find(
+    team =>
+      team.group === role &&
+      team.object.type === 'collection' &&
+      team.object.id === collectionId,
   )
-  let status = 'pending'
-  if (matchingInvitation.isAccepted) {
-    status = 'accepted'
-  } else if (matchingInvitation.hasAnswer) {
-    status = 'refused'
-  }
-
-  const { timestamp } = matchingInvitation
-  return { timestamp, status }
 }
-
-const getMatchingInvitation = (invitations, collectionId, role) =>
-  invitations.find(
-    invite => invite.type === role && invite.collectionId === collectionId,
-  )
 
 module.exports = {
   createNewTeam,
   setupEiCTeams,
   setupManuscriptTeam,
   getMatchingTeams,
-  setupInvitation,
   removeTeamMember,
   getTeamMembersByCollection,
-  getInviteData,
-  getMatchingInvitation,
+  getTeamByGroupAndCollection,
 }

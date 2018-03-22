@@ -1,5 +1,5 @@
 const { standardCollection } = require('./collections')
-const { heTeam, reviewerTeam } = require('./teamIDs')
+const { heTeamID, reviewerTeamID } = require('./teamIDs')
 
 const users = {
   admin: {
@@ -42,10 +42,10 @@ const users = {
         isAccepted: false,
         collectionId: standardCollection.id,
         timestamp: Date.now(),
-        teamId: heTeam,
+        teamId: heTeamID,
       },
     ],
-    teams: [heTeam],
+    teams: [heTeamID],
     save: jest.fn(() => users.handlingEditor),
     editorInChief: false,
   },
@@ -78,7 +78,7 @@ const users = {
     title: 'Ms',
     save: jest.fn(() => users.reviewer),
     isConfirmed: false,
-    teams: [reviewerTeam],
+    teams: [reviewerTeamID],
     invitations: [
       {
         type: 'reviewer',
@@ -86,7 +86,7 @@ const users = {
         isAccepted: false,
         collectionId: '123',
         timestamp: Date.now(),
-        teamId: reviewerTeam,
+        teamId: reviewerTeamID,
       },
     ],
   },
@@ -106,10 +106,10 @@ const users = {
         isAccepted: false,
         collectionId: standardCollection.id,
         timestamp: Date.now(),
-        teamId: heTeam,
+        teamId: heTeamID,
       },
     ],
-    teams: [heTeam],
+    teams: [heTeamID],
     save: jest.fn(() => users.handlingEditor),
     editorInChief: false,
   },
