@@ -30,7 +30,7 @@ module.exports = models => async (req, res) => {
   const collectionId = get(req, 'params.collectionId')
 
   const url = `${req.protocol}://${req.get('host')}`
-  if (collectionId) {
+  if (collectionId)
     return require('../controllers/assignCollectionRole')(
       email,
       role,
@@ -40,7 +40,6 @@ module.exports = models => async (req, res) => {
       models,
       url,
     )
-  }
 
   if (reqUser.admin)
     return require('../controllers/inviteGlobalRole')(

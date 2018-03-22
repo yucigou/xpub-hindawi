@@ -63,12 +63,19 @@ module.exports = async (
   try {
     let user = await models.User.findByEmail(email)
 
-    const team = await teamHelper.setupManuscriptTeam(
-      models,
-      user,
+    let team = teamHelper.getTeamByGroupAndCollection(
       collectionId,
       role,
+      models.Team,
     )
+    if (team === undefined) {
+      team = await teamHelper.setupManuscriptTeam(
+        models,
+        user,
+        collectionId,
+        role,
+      )
+    }
 
     // getting the updated user from the DB - creating a team also updates the user
     user = await models.User.findByEmail(email)
@@ -84,7 +91,7 @@ module.exports = async (
       return res.status(200).json(user)
     } catch (e) {
       logger.error(e)
-      return res.status(500).json({ error: 'Mailing could not be sent.' })
+      return res.status(500).json({ error: 'Mail could not be sent.' })
     }
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'user')

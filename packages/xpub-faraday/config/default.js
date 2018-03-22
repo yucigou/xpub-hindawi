@@ -48,10 +48,10 @@ module.exports = {
     url: process.env.PUBSWEET_INVITE_PASSWORD_RESET_URL || '/invite',
   },
   roles: {
-    global: ['admin', 'editorInChief', 'author'],
+    global: ['admin', 'editorInChief', 'author', 'handlingEditor'],
     collection: ['handlingEditor', 'reviewer'],
     inviteRights: {
-      admin: ['admin', 'editorInChief', 'author'],
+      admin: ['admin', 'editorInChief', 'author', 'handlingEditor'],
       editorInChief: ['handlingEditor'],
       handlingEditor: ['reviewer'],
     },

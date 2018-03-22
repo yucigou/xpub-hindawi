@@ -97,6 +97,7 @@ module.exports = {
     invitations: Joi.array(),
     teams: Joi.array(),
     editorInChief: Joi.boolean(),
+    handlingEditor: Joi.boolean(),
   },
   team: {
     group: Joi.string(),
