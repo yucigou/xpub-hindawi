@@ -153,7 +153,7 @@ NextButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/Next')
 
 WebUI.click(NextButton)
 
-//attachFile = findTestObject('NewManuscript/manuscriptFilesUpload/attachFile')
+//attachFile = findTestObject('NewManuscript/manuscriptFilesUpload/attachManuscript')
 
 //WebUI.uploadFile(attachFile, '/Users/vladstegaru/Documents/Hindawi/attachements/document.pdf')
 

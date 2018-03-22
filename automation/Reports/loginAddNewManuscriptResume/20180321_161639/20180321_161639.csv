@@ -1,0 +1,96 @@
+Suite/Test/Step Name,Browser,Description,Start time,End time,Duration,Status
+loginAddNewManuscriptResume,Chrome 65.0.3325.162,,2018-03-21 16:16:42,2018-03-21 16:17:28,46.142s,FAILED
+,,,,,,
+Test Cases/Sign In/Sign In flow,Chrome 65.0.3325.162,,2018-03-21 16:16:42,2018-03-21 16:16:53,10.602s,PASSED
+openBrowser,Chrome 65.0.3325.162,,2018-03-21 16:16:43,2018-03-21 16:16:46,3.057s,PASSED
+navigateToUrl,Chrome 65.0.3325.162,,2018-03-21 16:16:46,2018-03-21 16:16:52,5.756s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:16:52,2018-03-21 16:16:52,0.329s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:16:52,2018-03-21 16:16:52,0.318s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:16:52,2018-03-21 16:16:52,0.191s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:16:52,2018-03-21 16:16:53,0.266s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:16:53,2018-03-21 16:16:53,0.143s,PASSED
+,,,,,,
+Test Cases/Add new manuscript/Add a new manuscript,Chrome 65.0.3325.162,,2018-03-21 16:16:53,2018-03-21 16:17:15,22.066s,FAILED
+openBrowser,Chrome 65.0.3325.162,,2018-03-21 16:16:53,2018-03-21 16:16:54,1.086s,PASSED
+navigateToUrl,Chrome 65.0.3325.162,,2018-03-21 16:16:54,2018-03-21 16:17:00,6.018s,PASSED
+Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/usernameField),Chrome 65.0.3325.162,,2018-03-21 16:17:00,2018-03-21 16:17:00,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:00,2018-03-21 16:17:01,0.180s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:17:01,2018-03-21 16:17:01,0.261s,PASSED
+Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/passwordField),Chrome 65.0.3325.162,,2018-03-21 16:17:01,2018-03-21 16:17:01,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:01,2018-03-21 16:17:01,0.132s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:17:01,2018-03-21 16:17:01,0.297s,PASSED
+Statement - loginButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/LoginButton),Chrome 65.0.3325.162,,2018-03-21 16:17:01,2018-03-21 16:17:01,0.006s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:01,2018-03-21 16:17:01,0.132s,PASSED
+Statement - newButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/New),Chrome 65.0.3325.162,,2018-03-21 16:17:01,2018-03-21 16:17:01,0.008s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:01,2018-03-21 16:17:05,3.229s,PASSED
+"Statement - G_manuscriptID = ""1231234""",Chrome 65.0.3325.162,,2018-03-21 16:17:05,2018-03-21 16:17:05,0.004s,PASSED
+Statement - journal = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/Journal),Chrome 65.0.3325.162,,2018-03-21 16:17:05,2018-03-21 16:17:05,0.006s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:05,2018-03-21 16:17:07,2.820s,PASSED
+Statement - hindawiFaraday = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/HindawiFaraday),Chrome 65.0.3325.162,,2018-03-21 16:17:07,2018-03-21 16:17:07,0.007s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:07,2018-03-21 16:17:08,0.139s,PASSED
+Statement - issue = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/Issue),Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.007s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.147s,PASSED
+Statement - regularIssues = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/RegularIssues),Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.006s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.174s,PASSED
+Statement - nextButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/Next),Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.008s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.179s,PASSED
+Statement - hasEmail = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/hasEmail),Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.156s,PASSED
+Statement - hasManuscript = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/hasManuscript),Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.121s,PASSED
+Statement - hasEfiles = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/hasEfiles),Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:08,0.006s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:08,2018-03-21 16:17:09,0.122s,PASSED
+Statement - awareAndAccept = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/awareAndAccept),Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.182s,PASSED
+Statement - hasOrcid = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/hasOrcid),Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.003s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.140s,PASSED
+Statement - submissionInstitutional = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/submissionInstitutional),Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.007s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.170s,PASSED
+Statement - Next = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/Next),Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.007s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.347s,PASSED
+Statement - manuscriptTitle = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/manuscriptTitle),Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:09,0.098s,PASSED
+sendKeys,Chrome 65.0.3325.162,,2018-03-21 16:17:09,2018-03-21 16:17:10,0.367s,PASSED
+Statement - manuscriptType = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/manuscriptType),Chrome 65.0.3325.162,,2018-03-21 16:17:10,2018-03-21 16:17:10,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:10,2018-03-21 16:17:10,0.130s,PASSED
+Statement - research = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/research),Chrome 65.0.3325.162,,2018-03-21 16:17:10,2018-03-21 16:17:10,0.013s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:10,2018-03-21 16:17:10,0.161s,PASSED
+Statement - abstractField = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/abstractField),Chrome 65.0.3325.162,,2018-03-21 16:17:10,2018-03-21 16:17:10,0.010s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:10,2018-03-21 16:17:10,0.108s,PASSED
+sendKeys,Chrome 65.0.3325.162,,2018-03-21 16:17:10,2018-03-21 16:17:11,0.617s,PASSED
+Statement - addAuthor = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/addAuthor),Chrome 65.0.3325.162,,2018-03-21 16:17:11,2018-03-21 16:17:11,0.003s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:11,2018-03-21 16:17:11,0.243s,PASSED
+Statement - firstName = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/firstName),Chrome 65.0.3325.162,,2018-03-21 16:17:11,2018-03-21 16:17:11,0.008s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:17:11,2018-03-21 16:17:11,0.240s,PASSED
+Statement - lastName = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/lastName),Chrome 65.0.3325.162,,2018-03-21 16:17:11,2018-03-21 16:17:11,0.005s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:17:11,2018-03-21 16:17:12,0.383s,PASSED
+Statement - email = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/email),Chrome 65.0.3325.162,,2018-03-21 16:17:12,2018-03-21 16:17:12,0.003s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:17:12,2018-03-21 16:17:13,1.245s,PASSED
+Statement - affiliation = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/affiliation),Chrome 65.0.3325.162,,2018-03-21 16:17:13,2018-03-21 16:17:13,0.003s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:17:13,2018-03-21 16:17:13,0.435s,PASSED
+Statement - country = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/country),Chrome 65.0.3325.162,,2018-03-21 16:17:13,2018-03-21 16:17:13,0.007s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:13,2018-03-21 16:17:14,0.278s,PASSED
+Statement - Canada = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/countryOption),Chrome 65.0.3325.162,,2018-03-21 16:17:14,2018-03-21 16:17:14,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:14,2018-03-21 16:17:14,0.203s,PASSED
+Statement - SaveButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/Save),Chrome 65.0.3325.162,,2018-03-21 16:17:14,2018-03-21 16:17:14,0.003s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:14,2018-03-21 16:17:14,0.185s,PASSED
+Statement - no = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/no),Chrome 65.0.3325.162,,2018-03-21 16:17:14,2018-03-21 16:17:14,0.003s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:14,2018-03-21 16:17:15,0.712s,FAILED
+,,,,,,
+Test Cases/Resume submission Redirect,Chrome 65.0.3325.162,,2018-03-21 16:17:15,2018-03-21 16:17:28,12.697s,PASSED
+openBrowser,Chrome 65.0.3325.162,,2018-03-21 16:17:15,2018-03-21 16:17:16,1.108s,PASSED
+navigateToUrl,Chrome 65.0.3325.162,,2018-03-21 16:17:16,2018-03-21 16:17:21,4.996s,PASSED
+Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/usernameField),Chrome 65.0.3325.162,,2018-03-21 16:17:21,2018-03-21 16:17:21,0.005s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:21,2018-03-21 16:17:21,0.151s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:17:21,2018-03-21 16:17:22,0.227s,PASSED
+Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/passwordField),Chrome 65.0.3325.162,,2018-03-21 16:17:22,2018-03-21 16:17:22,0.004s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:22,2018-03-21 16:17:22,0.115s,PASSED
+setText,Chrome 65.0.3325.162,,2018-03-21 16:17:22,2018-03-21 16:17:22,0.225s,PASSED
+Statement - loginButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/LoginButton),Chrome 65.0.3325.162,,2018-03-21 16:17:22,2018-03-21 16:17:22,0.004s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:22,2018-03-21 16:17:22,0.110s,PASSED
+Statement - resumeSubmission = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(Resume/resumeSubmission),Chrome 65.0.3325.162,,2018-03-21 16:17:22,2018-03-21 16:17:22,0.003s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:22,2018-03-21 16:17:26,4.260s,PASSED
+waitForPageLoad,Chrome 65.0.3325.162,,2018-03-21 16:17:26,2018-03-21 16:17:26,0.060s,PASSED
+Statement - cancel = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/Cancel),Chrome 65.0.3325.162,,2018-03-21 16:17:26,2018-03-21 16:17:26,0.006s,PASSED
+waitForElementVisible,Chrome 65.0.3325.162,,2018-03-21 16:17:26,2018-03-21 16:17:27,1.078s,PASSED
+click,Chrome 65.0.3325.162,,2018-03-21 16:17:27,2018-03-21 16:17:28,0.121s,PASSED

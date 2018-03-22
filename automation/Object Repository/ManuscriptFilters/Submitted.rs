@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>Submitted</name>
+   <tag></tag>
+   <elementGuidId>6b1b5676-1a94-4887-b53f-eac28f25aded</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//div[contains(text(),&quot;Submitted&quot;)]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>role</name>
+      <type>Main</type>
+      <value>option</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tabindex</name>
+      <type>Main</type>
+      <value>0</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>aria-selected</name>
+      <type>Main</type>
+      <value>false</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>sc-jAaTju jhMNXW</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Submitted</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-jwKygS eXvhap&quot;]/div[@class=&quot;sc-gRnDUn bJTbsv&quot;]/div[@class=&quot;sc-cmjSyW dlKXSW&quot;]/div[1]/div[@class=&quot;sc-kaNhvL kWSDv&quot;]/div[@class=&quot;sc-jtggT cyvQev&quot;]/div[@class=&quot;sc-ebFjAB jxmaG&quot;]/div[@class=&quot;sc-jKVCRD bnbeWW&quot;]/div[@class=&quot;sc-eNQAEJ AwxHh&quot;]/div[@class=&quot;sc-jWBwVP gkntHJ&quot;]/div[@class=&quot;sc-brqgnP jBmsPo&quot;]/div[@class=&quot;sc-cMljjf evKCwh&quot;]/div[@class=&quot;sc-jAaTju jhMNXW&quot;]</value>
+   </webElementProperties>
+</WebElementEntity>
