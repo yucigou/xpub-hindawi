@@ -14,6 +14,7 @@ module.exports = async (
   collectionId,
   models,
   url,
+  resend,
 ) => {
   if (reqUser.admin) {
     logger.error(`admin tried to invite a ${role} to a collection`)
@@ -62,17 +63,36 @@ module.exports = async (
 
   try {
     let user = await models.User.findByEmail(email)
-
-    const team = await teamHelper.setupManuscriptTeam(
-      models,
-      user,
-      collectionId,
-      role,
-    )
+    let team
+    if (resend === undefined) {
+      team = await teamHelper.setupManuscriptTeam(
+        models,
+        user,
+        collectionId,
+        role,
+      )
+    }
 
     // getting the updated user from the DB - creating a team also updates the user
     user = await models.User.findByEmail(email)
-    user = await teamHelper.setupInvitation(user, role, collectionId, team.id)
+
+    if (user.invitations === undefined) {
+      user = await teamHelper.setupInvitation(user, role, collectionId, team.id)
+    } else {
+      const matchingInvitation = teamHelper.getMatchingInvitation(
+        user.invitations,
+        collectionId,
+        role,
+      )
+      if (matchingInvitation === undefined) {
+        user = await teamHelper.setupInvitation(
+          user,
+          role,
+          collectionId,
+          team.id,
+        )
+      }
+    }
 
     try {
       await mailService.setupAssignEmail(

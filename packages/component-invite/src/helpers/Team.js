@@ -166,6 +166,11 @@ const getInviteData = (invitations, collectionId, role) => {
   return { timestamp, status }
 }
 
+const getMatchingInvitation = (invitations, collectionId, role) =>
+  invitations.find(
+    invite => invite.type === role && invite.collectionId === collectionId,
+  )
+
 module.exports = {
   createNewTeam,
   setupEiCTeams,
@@ -175,4 +180,5 @@ module.exports = {
   removeTeamMember,
   getTeamMembersByCollection,
   getInviteData,
+  getMatchingInvitation,
 }
