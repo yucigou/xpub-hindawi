@@ -17,6 +17,6 @@ module.exports = {
       isAccepted: matchingInvitation.isAccepted,
     }
     collection.assignedPeople.push(assignedPerson)
-    const col = await collection.save()
+    await collection.save()
   },
 }
