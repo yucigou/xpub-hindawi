@@ -1,5 +1,4 @@
 import React from 'react'
-import { get } from 'lodash'
 import { Button } from '@pubsweet/ui'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
@@ -60,16 +59,11 @@ export default compose(
       currentUser,
       dashboard,
       filterItems,
-    }) => () => {
-      const userItems = get(currentUser, 'admin')
-        ? dashboard.all
-        : dashboard.owner
-
-      return filterItems(userItems).sort((a, b) => {
+    }) => () =>
+      filterItems(dashboard.all).sort((a, b) => {
         if (sortOrder === 'newest') return a.created - b.created < 0
         return a.created - b.created > 0
-      })
-    },
+      }),
   }),
 )(Dashboard)
 
