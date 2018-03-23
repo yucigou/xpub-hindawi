@@ -1,13 +1,12 @@
 import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
+import { compose, getContext } from 'recompose'
 import { Button, Icon, th } from '@pubsweet/ui'
 import styled, { css, withTheme } from 'styled-components'
-import { compose, getContext } from 'recompose'
-
-import { parseVersion, parseJournalIssue } from './utils'
 
 import ZipFiles from './ZipFiles'
+import { parseVersion, parseJournalIssue } from './utils'
 import HandlingEditorActions from './HandlingEditorActions'
 
 const DashboardCard = ({

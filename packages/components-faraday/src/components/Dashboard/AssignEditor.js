@@ -8,6 +8,7 @@ const AssignEditor = ({ assign }) => <button onClick={assign}>ASSIGN</button>
 
 export default compose(
   withModal({
+    modalKey: 'assignHEmodal',
     modalComponent: HEModal,
   }),
   withHandlers({

@@ -37,6 +37,7 @@ class AssignHEModal extends React.Component {
     const filteredEditors = this.filterEditors(editors)
     return (
       <RootModal>
+        <button onClick={this.props.hideModal}>CLOSE</button>
         <ModalTitle>Assign Handling Editor</ModalTitle>
         <ModalHeader>
           <span>HANDLING EDITORS</span>
