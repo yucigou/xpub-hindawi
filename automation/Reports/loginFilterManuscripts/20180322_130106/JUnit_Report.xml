@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="loginFilterManuscripts" time="26" tests="2" failures="0" errors="0">
+   <testsuite name="loginFilterManuscripts" tests="2" failures="0" errors="0" time="26" timestamp="2018-03-22 13:01:09" hostname="vladstegaru - vlads-mbp.thinslices.com" id="Test Suites/loginFilterManuscripts">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/vladstegaru/Documents/Hindawi/xpub-faraday/automation/Reports/loginFilterManuscripts/20180322_130106"/>
+         <property name="logFiles" value="/Users/vladstegaru/Documents/Hindawi/xpub-faraday/automation/Reports/loginFilterManuscripts/20180322_130106/execution0.log"/>
+         <property name="attachments" value=""/>
+         <property name="hostName" value="vladstegaru - vlads-mbp.thinslices.com"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.3.1.1"/>
+         <property name="browser" value="Chrome 65.0.3325.162"/>
+         <property name="hostAddress" value="192.168.1.115"/>
+         <property name="sessionId" value="2530a20f88f311f777a41c39daafc235"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/Sign In/Sign In flow" classname="Test Cases/Sign In/Sign In flow" status="PASSED">
+         <system-out><![CDATA[2018-03-22 13:01:09 - [TEST_CASE][PASSED] - Test Cases/Sign In/Sign In flow: Test Cases/Sign In/Sign In flow
+
+2018-03-22 13:01:09 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: 'null'
+
+2018-03-22 13:01:12 - [MESSAGE][PASSED] - Browser is opened with url: 'null'
+
+2018-03-22 13:01:12 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https:xpub-faraday.now.sh' successfully
+
+2018-03-22 13:01:17 - [MESSAGE][PASSED] - Navigate to 'https:xpub-faraday.now.sh' successfully
+
+2018-03-22 13:01:17 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-22 13:01:17 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-22 13:01:17 - [TEST_STEP][PASSED] - setText: Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-22 13:01:17 - [MESSAGE][PASSED] - Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-22 13:01:17 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-22 13:01:17 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-22 13:01:17 - [TEST_STEP][PASSED] - setText: Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-22 13:01:18 - [MESSAGE][PASSED] - Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-22 13:01:18 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/LoginButton' is clicked on
+
+2018-03-22 13:01:18 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/LoginButton' is clicked on]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/Filter Manuscripts/Filter the manuscripts" classname="Test Cases/Filter Manuscripts/Filter the manuscripts" status="PASSED">
+         <system-out><![CDATA[2018-03-22 13:01:18 - [TEST_CASE][PASSED] - Test Cases/Filter Manuscripts/Filter the manuscripts: Test Cases/Filter Manuscripts/Filter the manuscripts
+
+2018-03-22 13:01:18 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: 'null'
+
+2018-03-22 13:01:18 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-03-22 13:01:19 - [MESSAGE][PASSED] - Browser is opened with url: 'null'
+
+2018-03-22 13:01:19 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'http://xpub-faraday.now.sh' successfully
+
+2018-03-22 13:01:25 - [MESSAGE][PASSED] - Navigate to 'http://xpub-faraday.now.sh' successfully
+
+2018-03-22 13:01:25 - [TEST_STEP][PASSED] - Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/usernameField): Finding Test Object with id 'Object Repository/SignIn/usernameField'
+
+2018-03-22 13:01:25 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-22 13:01:25 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-22 13:01:25 - [TEST_STEP][PASSED] - setText: Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-22 13:01:25 - [MESSAGE][PASSED] - Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-22 13:01:25 - [TEST_STEP][PASSED] - Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/passwordField): Finding Test Object with id 'Object Repository/SignIn/passwordField'
+
+2018-03-22 13:01:25 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-22 13:01:25 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-22 13:01:25 - [TEST_STEP][PASSED] - setText: Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-22 13:01:26 - [MESSAGE][PASSED] - Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-22 13:01:26 - [TEST_STEP][PASSED] - Statement - loginButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/LoginButton): Finding Test Object with id 'Object Repository/SignIn/LoginButton'
+
+2018-03-22 13:01:26 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/LoginButton' is clicked on
+
+2018-03-22 13:01:26 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/LoginButton' is clicked on
+
+2018-03-22 13:01:26 - [TEST_STEP][PASSED] - Statement - status = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(ManuscriptFilters/Status): Finding Test Object with id 'Object Repository/ManuscriptFilters/Status'
+
+2018-03-22 13:01:26 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/ManuscriptFilters/Status' is clicked on
+
+2018-03-22 13:01:28 - [MESSAGE][PASSED] - Object: 'Object Repository/ManuscriptFilters/Status' is clicked on
+
+2018-03-22 13:01:28 - [TEST_STEP][PASSED] - Statement - submitted = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(ManuscriptFilters/Submitted): Finding Test Object with id 'Object Repository/ManuscriptFilters/Submitted'
+
+2018-03-22 13:01:28 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/ManuscriptFilters/Submitted' is clicked on
+
+2018-03-22 13:01:28 - [MESSAGE][PASSED] - Object: 'Object Repository/ManuscriptFilters/Submitted' is clicked on
+
+2018-03-22 13:01:28 - [TEST_STEP][PASSED] - waitForElementVisible: Web element with id: 'Object Repository/ManuscriptFilters/Submitted' located by 'By.xpath: //div[contains(text(),"Submitted")]' not found
+
+2018-03-22 13:01:31 - [MESSAGE][WARNING] - Web element with id: 'Object Repository/ManuscriptFilters/Submitted' located by 'By.xpath: //div[contains(text(),"Submitted")]' not found
+
+2018-03-22 13:01:31 - [TEST_STEP][PASSED] - Statement - status = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(ManuscriptFilters/Status): Finding Test Object with id 'Object Repository/ManuscriptFilters/Status'
+
+2018-03-22 13:01:31 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/ManuscriptFilters/Status' is clicked on
+
+2018-03-22 13:01:31 - [MESSAGE][PASSED] - Object: 'Object Repository/ManuscriptFilters/Status' is clicked on
+
+2018-03-22 13:01:31 - [TEST_STEP][PASSED] - Statement - draft = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(ManuscriptFilters/Draft): Finding Test Object with id 'Object Repository/ManuscriptFilters/Draft'
+
+2018-03-22 13:01:31 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/ManuscriptFilters/Draft' is clicked on
+
+2018-03-22 13:01:31 - [MESSAGE][PASSED] - Object: 'Object Repository/ManuscriptFilters/Draft' is clicked on
+
+2018-03-22 13:01:31 - [TEST_STEP][PASSED] - waitForElementVisible: Web element with id: 'Object Repository/ManuscriptFilters/Draft' located by 'By.xpath: //div[@role="option" and contains(text(),"Draft")]' not found
+
+2018-03-22 13:01:33 - [MESSAGE][WARNING] - Web element with id: 'Object Repository/ManuscriptFilters/Draft' located by 'By.xpath: //div[@role="option" and contains(text(),"Draft")]' not found
+
+2018-03-22 13:01:33 - [TEST_STEP][PASSED] - Statement - status = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(ManuscriptFilters/Status): Finding Test Object with id 'Object Repository/ManuscriptFilters/Status'
+
+2018-03-22 13:01:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/ManuscriptFilters/Status' is clicked on
+
+2018-03-22 13:01:33 - [MESSAGE][PASSED] - Object: 'Object Repository/ManuscriptFilters/Status' is clicked on
+
+2018-03-22 13:01:33 - [TEST_STEP][PASSED] - Statement - all = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(ManuscriptFilters/All): Finding Test Object with id 'Object Repository/ManuscriptFilters/All'
+
+2018-03-22 13:01:33 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/ManuscriptFilters/All' is clicked on
+
+2018-03-22 13:01:33 - [MESSAGE][PASSED] - Object: 'Object Repository/ManuscriptFilters/All' is clicked on
+
+2018-03-22 13:01:33 - [TEST_STEP][PASSED] - waitForElementVisible: Web element with id: 'Object Repository/ManuscriptFilters/All' located by 'By.xpath: //div[@role="option" and contains(text(),"All")]' not found
+
+2018-03-22 13:01:35 - [MESSAGE][WARNING] - Web element with id: 'Object Repository/ManuscriptFilters/All' located by 'By.xpath: //div[@role="option" and contains(text(),"All")]' not found
+
+2018-03-22 13:01:35 - [TEST_STEP][PASSED] - closeBrowser: Browser is closed
+
+2018-03-22 13:01:35 - [MESSAGE][PASSED] - Browser is closed]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-03-22 13:01:09 - [TEST_SUITE][PASSED] - loginFilterManuscripts: Test Cases/Filter Manuscripts/Filter the manuscripts]]></system-out>
+      <system-err><![CDATA[]]></system-err>
+   </testsuite>
+</testsuites>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="loginAddNewManuscriptResume" time="46" tests="2" failures="1" errors="0">
+   <testsuite name="loginAddNewManuscriptResume" tests="2" failures="1" errors="0" time="46" timestamp="2018-03-21 16:16:42" hostname="vladstegaru - vlads-mbp.thinslices.com" id="Test Suites/loginAddNewManuscriptResume">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/vladstegaru/Documents/Hindawi/xpub-faraday/automation/Reports/loginAddNewManuscriptResume/20180321_161639"/>
+         <property name="logFiles" value="/Users/vladstegaru/Documents/Hindawi/xpub-faraday/automation/Reports/loginAddNewManuscriptResume/20180321_161639/execution0.log"/>
+         <property name="attachments" value="/Users/vladstegaru/Documents/Hindawi/xpub-faraday/automation/Reports/loginAddNewManuscriptResume/20180321_161639/1521641834726.png"/>
+         <property name="hostName" value="vladstegaru - vlads-mbp.thinslices.com"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.3.1.1"/>
+         <property name="browser" value="Chrome 65.0.3325.162"/>
+         <property name="hostAddress" value="192.168.1.115"/>
+         <property name="sessionId" value="a93aa177f3a31d475473725518dba279"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/Sign In/Sign In flow" classname="Test Cases/Sign In/Sign In flow" status="PASSED">
+         <system-out><![CDATA[2018-03-21 16:16:42 - [TEST_CASE][PASSED] - Test Cases/Sign In/Sign In flow: Test Cases/Sign In/Sign In flow
+
+2018-03-21 16:16:43 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: 'null'
+
+2018-03-21 16:16:46 - [MESSAGE][PASSED] - Browser is opened with url: 'null'
+
+2018-03-21 16:16:46 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https:xpub-faraday.now.sh' successfully
+
+2018-03-21 16:16:52 - [MESSAGE][PASSED] - Navigate to 'https:xpub-faraday.now.sh' successfully
+
+2018-03-21 16:16:52 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-21 16:16:52 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-21 16:16:52 - [TEST_STEP][PASSED] - setText: Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-21 16:16:52 - [MESSAGE][PASSED] - Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-21 16:16:52 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-21 16:16:52 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-21 16:16:52 - [TEST_STEP][PASSED] - setText: Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-21 16:16:53 - [MESSAGE][PASSED] - Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-21 16:16:53 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/LoginButton' is clicked on
+
+2018-03-21 16:16:53 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/LoginButton' is clicked on]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/Add new manuscript/Add a new manuscript" classname="Test Cases/Add new manuscript/Add a new manuscript" status="FAILED">
+         <failure type="FAILED" message="Unable to click on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/no' (Root cause: org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=65.0.3325.162)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.3 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'Vlads-MBP.thinslices.com', ip: 'fe80:0:0:0:141c:501a:55c7:f920%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.3', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/3h/5jvs258x4ln...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.162, webStorageEnabled: true}
+Session ID: 2a15e7210ebf6f4d5b5fc45db89285ba)"/>
+         <system-out><![CDATA[2018-03-21 16:16:53 - [TEST_CASE][FAILED] - Test Cases/Add new manuscript/Add a new manuscript: Test Cases/Add new manuscript/Add a new manuscript FAILED because (of) Unable to click on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/no' (Root cause: org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=65.0.3325.162)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.3 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'Vlads-MBP.thinslices.com', ip: 'fe80:0:0:0:141c:501a:55c7:f920%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.3', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/3h/5jvs258x4ln...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.162, webStorageEnabled: true}
+Session ID: 2a15e7210ebf6f4d5b5fc45db89285ba)
+
+2018-03-21 16:16:53 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: 'null'
+
+2018-03-21 16:16:53 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-03-21 16:16:54 - [MESSAGE][PASSED] - Browser is opened with url: 'null'
+
+2018-03-21 16:16:54 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'http://xpub-faraday.now.sh' successfully
+
+2018-03-21 16:17:00 - [MESSAGE][PASSED] - Navigate to 'http://xpub-faraday.now.sh' successfully
+
+2018-03-21 16:17:00 - [TEST_STEP][PASSED] - Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/usernameField): Finding Test Object with id 'Object Repository/SignIn/usernameField'
+
+2018-03-21 16:17:00 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-21 16:17:01 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-21 16:17:01 - [TEST_STEP][PASSED] - setText: Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-21 16:17:01 - [MESSAGE][PASSED] - Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-21 16:17:01 - [TEST_STEP][PASSED] - Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/passwordField): Finding Test Object with id 'Object Repository/SignIn/passwordField'
+
+2018-03-21 16:17:01 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-21 16:17:01 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-21 16:17:01 - [TEST_STEP][PASSED] - setText: Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-21 16:17:01 - [MESSAGE][PASSED] - Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-21 16:17:01 - [TEST_STEP][PASSED] - Statement - loginButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/LoginButton): Finding Test Object with id 'Object Repository/SignIn/LoginButton'
+
+2018-03-21 16:17:01 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/LoginButton' is clicked on
+
+2018-03-21 16:17:01 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/LoginButton' is clicked on
+
+2018-03-21 16:17:01 - [TEST_STEP][PASSED] - Statement - newButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/New): Finding Test Object with id 'Object Repository/NewManuscript/journalAndFieldSelection/New'
+
+2018-03-21 16:17:01 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/journalAndFieldSelection/New' is clicked on
+
+2018-03-21 16:17:05 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/journalAndFieldSelection/New' is clicked on
+
+2018-03-21 16:17:05 - [TEST_STEP][PASSED] - Statement - G_manuscriptID = "1231234": null
+
+2018-03-21 16:17:05 - [TEST_STEP][PASSED] - Statement - journal = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/Journal): Finding Test Object with id 'Object Repository/NewManuscript/journalAndFieldSelection/Journal'
+
+2018-03-21 16:17:05 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/journalAndFieldSelection/Journal' is clicked on
+
+2018-03-21 16:17:07 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/journalAndFieldSelection/Journal' is clicked on
+
+2018-03-21 16:17:07 - [TEST_STEP][PASSED] - Statement - hindawiFaraday = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/HindawiFaraday): Finding Test Object with id 'Object Repository/NewManuscript/journalAndFieldSelection/HindawiFaraday'
+
+2018-03-21 16:17:07 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/journalAndFieldSelection/HindawiFaraday' is clicked on
+
+2018-03-21 16:17:08 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/journalAndFieldSelection/HindawiFaraday' is clicked on
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - Statement - issue = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/Issue): Finding Test Object with id 'Object Repository/NewManuscript/journalAndFieldSelection/Issue'
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/journalAndFieldSelection/Issue' is clicked on
+
+2018-03-21 16:17:08 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/journalAndFieldSelection/Issue' is clicked on
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - Statement - regularIssues = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/RegularIssues): Finding Test Object with id 'Object Repository/NewManuscript/journalAndFieldSelection/RegularIssues'
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/journalAndFieldSelection/RegularIssues' is clicked on
+
+2018-03-21 16:17:08 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/journalAndFieldSelection/RegularIssues' is clicked on
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - Statement - nextButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/Next): Finding Test Object with id 'Object Repository/NewManuscript/journalAndFieldSelection/Next'
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/journalAndFieldSelection/Next' is clicked on
+
+2018-03-21 16:17:08 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/journalAndFieldSelection/Next' is clicked on
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - Statement - hasEmail = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/hasEmail): Finding Test Object with id 'Object Repository/NewManuscript/preSubmissionChecklist/hasEmail'
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/preSubmissionChecklist/hasEmail' is clicked on
+
+2018-03-21 16:17:08 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/preSubmissionChecklist/hasEmail' is clicked on
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - Statement - hasManuscript = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/hasManuscript): Finding Test Object with id 'Object Repository/NewManuscript/preSubmissionChecklist/hasManuscript'
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/preSubmissionChecklist/hasManuscript' is clicked on
+
+2018-03-21 16:17:08 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/preSubmissionChecklist/hasManuscript' is clicked on
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - Statement - hasEfiles = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/hasEfiles): Finding Test Object with id 'Object Repository/NewManuscript/preSubmissionChecklist/hasEfiles'
+
+2018-03-21 16:17:08 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/preSubmissionChecklist/hasEfiles' is clicked on
+
+2018-03-21 16:17:09 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/preSubmissionChecklist/hasEfiles' is clicked on
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - Statement - awareAndAccept = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/awareAndAccept): Finding Test Object with id 'Object Repository/NewManuscript/preSubmissionChecklist/awareAndAccept'
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/preSubmissionChecklist/awareAndAccept' is clicked on
+
+2018-03-21 16:17:09 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/preSubmissionChecklist/awareAndAccept' is clicked on
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - Statement - hasOrcid = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/hasOrcid): Finding Test Object with id 'Object Repository/NewManuscript/preSubmissionChecklist/hasOrcid'
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/preSubmissionChecklist/hasOrcid' is clicked on
+
+2018-03-21 16:17:09 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/preSubmissionChecklist/hasOrcid' is clicked on
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - Statement - submissionInstitutional = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/submissionInstitutional): Finding Test Object with id 'Object Repository/NewManuscript/preSubmissionChecklist/submissionInstitutional'
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/preSubmissionChecklist/submissionInstitutional' is clicked on
+
+2018-03-21 16:17:09 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/preSubmissionChecklist/submissionInstitutional' is clicked on
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - Statement - Next = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/preSubmissionChecklist/Next): Finding Test Object with id 'Object Repository/NewManuscript/preSubmissionChecklist/Next'
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/preSubmissionChecklist/Next' is clicked on
+
+2018-03-21 16:17:09 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/preSubmissionChecklist/Next' is clicked on
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - Statement - manuscriptTitle = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/manuscriptTitle): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/manuscriptTitle'
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/manuscriptTitle' is clicked on
+
+2018-03-21 16:17:09 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/manuscriptTitle' is clicked on
+
+2018-03-21 16:17:09 - [TEST_STEP][PASSED] - sendKeys: Keys 'A new random title' sent to object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/manuscriptTitle'
+
+2018-03-21 16:17:10 - [MESSAGE][PASSED] - Keys 'A new random title' sent to object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/manuscriptTitle'
+
+2018-03-21 16:17:10 - [TEST_STEP][PASSED] - Statement - manuscriptType = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/manuscriptType): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/manuscriptType'
+
+2018-03-21 16:17:10 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/manuscriptType' is clicked on
+
+2018-03-21 16:17:10 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/manuscriptType' is clicked on
+
+2018-03-21 16:17:10 - [TEST_STEP][PASSED] - Statement - research = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/research): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/research'
+
+2018-03-21 16:17:10 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/research' is clicked on
+
+2018-03-21 16:17:10 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/research' is clicked on
+
+2018-03-21 16:17:10 - [TEST_STEP][PASSED] - Statement - abstractField = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/abstractField): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/abstractField'
+
+2018-03-21 16:17:10 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/abstractField' is clicked on
+
+2018-03-21 16:17:10 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/abstractField' is clicked on
+
+2018-03-21 16:17:10 - [TEST_STEP][PASSED] - sendKeys: Keys 'A new random abstract text' sent to object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/abstractField'
+
+2018-03-21 16:17:11 - [MESSAGE][PASSED] - Keys 'A new random abstract text' sent to object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/abstractField'
+
+2018-03-21 16:17:11 - [TEST_STEP][PASSED] - Statement - addAuthor = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/addAuthor): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/addAuthor'
+
+2018-03-21 16:17:11 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/addAuthor' is clicked on
+
+2018-03-21 16:17:11 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/addAuthor' is clicked on
+
+2018-03-21 16:17:11 - [TEST_STEP][PASSED] - Statement - firstName = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/firstName): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/firstName'
+
+2018-03-21 16:17:11 - [TEST_STEP][PASSED] - setText: Text 'Vlad' is set on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/firstName'
+
+2018-03-21 16:17:11 - [MESSAGE][PASSED] - Text 'Vlad' is set on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/firstName'
+
+2018-03-21 16:17:11 - [TEST_STEP][PASSED] - Statement - lastName = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/lastName): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/lastName'
+
+2018-03-21 16:17:11 - [TEST_STEP][PASSED] - setText: Text 'Stegaru' is set on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/lastName'
+
+2018-03-21 16:17:12 - [MESSAGE][PASSED] - Text 'Stegaru' is set on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/lastName'
+
+2018-03-21 16:17:12 - [TEST_STEP][PASSED] - Statement - email = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/email): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/email'
+
+2018-03-21 16:17:12 - [TEST_STEP][PASSED] - setText: Text 'vlad.stegaru+newuser1@thinslices.com' is set on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/email'
+
+2018-03-21 16:17:13 - [MESSAGE][PASSED] - Text 'vlad.stegaru+newuser1@thinslices.com' is set on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/email'
+
+2018-03-21 16:17:13 - [TEST_STEP][PASSED] - Statement - affiliation = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/affiliation): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/affiliation'
+
+2018-03-21 16:17:13 - [TEST_STEP][PASSED] - setText: Text 'University' is set on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/affiliation'
+
+2018-03-21 16:17:13 - [MESSAGE][PASSED] - Text 'University' is set on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/affiliation'
+
+2018-03-21 16:17:13 - [TEST_STEP][PASSED] - Statement - country = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/country): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/country'
+
+2018-03-21 16:17:13 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/country' is clicked on
+
+2018-03-21 16:17:14 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/country' is clicked on
+
+2018-03-21 16:17:14 - [TEST_STEP][PASSED] - Statement - Canada = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/countryOption): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/countryOption'
+
+2018-03-21 16:17:14 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/countryOption' is clicked on
+
+2018-03-21 16:17:14 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/countryOption' is clicked on
+
+2018-03-21 16:17:14 - [TEST_STEP][PASSED] - Statement - SaveButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/Save): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/Save'
+
+2018-03-21 16:17:14 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/Save' is clicked on
+
+2018-03-21 16:17:14 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/manuscriptAuthorsDetails/Save' is clicked on
+
+2018-03-21 16:17:14 - [TEST_STEP][PASSED] - Statement - no = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/manuscriptAuthorsDetails/no): Finding Test Object with id 'Object Repository/NewManuscript/manuscriptAuthorsDetails/no'
+
+2018-03-21 16:17:14 - [TEST_STEP][FAILED] - click: Unable to click on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/no' (Root cause: org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=65.0.3325.162)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.3 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'Vlads-MBP.thinslices.com', ip: 'fe80:0:0:0:141c:501a:55c7:f920%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.3', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/3h/5jvs258x4ln...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.162, webStorageEnabled: true}
+Session ID: 2a15e7210ebf6f4d5b5fc45db89285ba)
+
+2018-03-21 16:17:15 - [MESSAGE][FAILED] - Unable to click on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/no' (Root cause: org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=65.0.3325.162)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.3 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'Vlads-MBP.thinslices.com', ip: 'fe80:0:0:0:141c:501a:55c7:f920%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.3', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/3h/5jvs258x4ln...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.162, webStorageEnabled: true}
+Session ID: 2a15e7210ebf6f4d5b5fc45db89285ba)
+[[ATTACHMENT|/Users/vladstegaru/Documents/Hindawi/xpub-faraday/automation/Reports/loginAddNewManuscriptResume/20180321_161639/1521641834726.png]]]]></system-out>
+         <system-err><![CDATA[2018-03-21 16:16:53 - [TEST_CASE][FAILED] - Test Cases/Add new manuscript/Add a new manuscript: Test Cases/Add new manuscript/Add a new manuscript FAILED because (of) Unable to click on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/no' (Root cause: org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=65.0.3325.162)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.3 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'Vlads-MBP.thinslices.com', ip: 'fe80:0:0:0:141c:501a:55c7:f920%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.3', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/3h/5jvs258x4ln...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.162, webStorageEnabled: true}
+Session ID: 2a15e7210ebf6f4d5b5fc45db89285ba)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/Resume submission Redirect" classname="Test Cases/Resume submission Redirect" status="PASSED">
+         <system-out><![CDATA[2018-03-21 16:17:15 - [TEST_CASE][PASSED] - Test Cases/Resume submission Redirect: Test Cases/Resume submission Redirect
+
+2018-03-21 16:17:15 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: 'null'
+
+2018-03-21 16:17:15 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-03-21 16:17:16 - [MESSAGE][PASSED] - Browser is opened with url: 'null'
+
+2018-03-21 16:17:16 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://xpub-faraday.now.sh' successfully
+
+2018-03-21 16:17:21 - [MESSAGE][PASSED] - Navigate to 'https://xpub-faraday.now.sh' successfully
+
+2018-03-21 16:17:21 - [TEST_STEP][PASSED] - Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/usernameField): Finding Test Object with id 'Object Repository/SignIn/usernameField'
+
+2018-03-21 16:17:21 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-21 16:17:21 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/usernameField' is clicked on
+
+2018-03-21 16:17:21 - [TEST_STEP][PASSED] - setText: Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-21 16:17:22 - [MESSAGE][PASSED] - Text 'admin' is set on object 'Object Repository/SignIn/usernameField'
+
+2018-03-21 16:17:22 - [TEST_STEP][PASSED] - Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/passwordField): Finding Test Object with id 'Object Repository/SignIn/passwordField'
+
+2018-03-21 16:17:22 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-21 16:17:22 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/passwordField' is clicked on
+
+2018-03-21 16:17:22 - [TEST_STEP][PASSED] - setText: Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-21 16:17:22 - [MESSAGE][PASSED] - Text 'admin123' is set on object 'Object Repository/SignIn/passwordField'
+
+2018-03-21 16:17:22 - [TEST_STEP][PASSED] - Statement - loginButton = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/LoginButton): Finding Test Object with id 'Object Repository/SignIn/LoginButton'
+
+2018-03-21 16:17:22 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/LoginButton' is clicked on
+
+2018-03-21 16:17:22 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/LoginButton' is clicked on
+
+2018-03-21 16:17:22 - [TEST_STEP][PASSED] - Statement - resumeSubmission = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(Resume/resumeSubmission): Finding Test Object with id 'Object Repository/Resume/resumeSubmission'
+
+2018-03-21 16:17:22 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/Resume/resumeSubmission' is clicked on
+
+2018-03-21 16:17:26 - [MESSAGE][PASSED] - Object: 'Object Repository/Resume/resumeSubmission' is clicked on
+
+2018-03-21 16:17:26 - [TEST_STEP][PASSED] - waitForPageLoad: Wait for page load successfully
+
+2018-03-21 16:17:26 - [MESSAGE][PASSED] - Wait for page load successfully
+
+2018-03-21 16:17:26 - [TEST_STEP][PASSED] - Statement - cancel = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewManuscript/journalAndFieldSelection/Cancel): Finding Test Object with id 'Object Repository/NewManuscript/journalAndFieldSelection/Cancel'
+
+2018-03-21 16:17:26 - [TEST_STEP][PASSED] - waitForElementVisible: Object 'Object Repository/NewManuscript/journalAndFieldSelection/Cancel' is visible
+
+2018-03-21 16:17:27 - [MESSAGE][PASSED] - Object 'Object Repository/NewManuscript/journalAndFieldSelection/Cancel' is visible
+
+2018-03-21 16:17:27 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewManuscript/journalAndFieldSelection/Cancel' is clicked on
+
+2018-03-21 16:17:28 - [MESSAGE][PASSED] - Object: 'Object Repository/NewManuscript/journalAndFieldSelection/Cancel' is clicked on]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-03-21 16:16:42 - [TEST_SUITE][FAILED] - loginAddNewManuscriptResume: Test Cases/Add new manuscript/Add a new manuscript FAILED because (of) Unable to click on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/no' (Root cause: org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=65.0.3325.162)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.3 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'Vlads-MBP.thinslices.com', ip: 'fe80:0:0:0:141c:501a:55c7:f920%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.3', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/3h/5jvs258x4ln...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.162, webStorageEnabled: true}
+Session ID: 2a15e7210ebf6f4d5b5fc45db89285ba)]]></system-out>
+      <system-err><![CDATA[2018-03-21 16:16:42 - [TEST_SUITE][FAILED] - loginAddNewManuscriptResume: Test Cases/Add new manuscript/Add a new manuscript FAILED because (of) Unable to click on object 'Object Repository/NewManuscript/manuscriptAuthorsDetails/no' (Root cause: org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=65.0.3325.162)
+  (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.13.3 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 0 milliseconds
+Build info: version: '3.7.1', revision: '8a0099a', time: '2017-11-06T21:07:36.161Z'
+System info: host: 'Vlads-MBP.thinslices.com', ip: 'fe80:0:0:0:141c:501a:55c7:f920%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.13.3', java.version: '1.8.0_102'
+Driver info: com.kms.katalon.selenium.driver.CChromeDriver
+Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528157 (4429ca2590d698..., userDataDir: /var/folders/3h/5jvs258x4ln...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.162, webStorageEnabled: true}
+Session ID: 2a15e7210ebf6f4d5b5fc45db89285ba)]]></system-err>
+   </testsuite>
+</testsuites>

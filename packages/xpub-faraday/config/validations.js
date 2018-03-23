@@ -9,6 +9,7 @@ module.exports = {
     status: Joi.string(),
     reviewers: Joi.array(),
     customId: Joi.string(),
+    assignedPeople: Joi.array(),
   },
   fragment: [
     {
