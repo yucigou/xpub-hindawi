@@ -183,8 +183,8 @@ const authsomeMode = async (userId, operation, object, context) => {
   // authorization/authsome mode, e.g.
   const user = await context.models.User.find(userId)
 
-  // Admins can do anything
-  if (user && user.admin === true) return true
+  // Admins and editor in chiefs can do anything
+  if (user && (user.admin === true || user.editorInChief === true)) return true
 
   if (user) {
     return authenticatedUser(user, operation, object, context)
