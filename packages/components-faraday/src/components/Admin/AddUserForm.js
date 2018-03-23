@@ -13,7 +13,7 @@ const emailValidator = value =>
 
 const AddUserForm = ({ roles, journal, error }) => {
   const roleOptions = roles.filter(r =>
-    ['editorInChief', 'author', 'admin'].includes(r.value),
+    ['editorInChief', 'author', 'admin', 'handlingEditor'].includes(r.value),
   )
   return (
     <div>
