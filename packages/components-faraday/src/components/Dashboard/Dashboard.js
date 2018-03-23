@@ -3,9 +3,7 @@ import { get } from 'lodash'
 import { Button } from '@pubsweet/ui'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
-import { withModal } from 'pubsweet-component-modal/src/components'
 
-import AbstractModal from './AbstractModal'
 import DashboardItems from './DashboardItems'
 import DashboardFilters from './DashboardFilters'
 
@@ -49,9 +47,6 @@ const Dashboard = ({
 )
 
 export default compose(
-  withModal({
-    modalComponent: AbstractModal,
-  }),
   withHandlers({
     showAbstractModal: ({ showModal }) => metadata => () => {
       showModal({

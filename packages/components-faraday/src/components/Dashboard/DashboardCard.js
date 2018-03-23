@@ -3,11 +3,7 @@ import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import { Button, Icon, th } from '@pubsweet/ui'
 import styled, { css, withTheme } from 'styled-components'
-import { compose, getContext, withHandlers } from 'recompose'
-import {
-  withModal,
-  ConfirmationModal,
-} from 'pubsweet-component-modal/src/components'
+import { compose, getContext } from 'recompose'
 
 import { parseVersion, parseJournalIssue } from './utils'
 
@@ -144,32 +140,9 @@ const DashboardCard = ({
   ) : null
 }
 
-export default compose(
-  getContext({ journal: PropTypes.object }),
-  withTheme,
-  withModal({
-    modalComponent: ConfirmationModal,
-  }),
-  withHandlers({
-    cancelSubmission: ({
-      showModal,
-      deleteProject,
-      project,
-      hideModal,
-    }) => () => {
-      const modalConfig = {
-        onConfirm: () => {
-          deleteProject(project)
-          hideModal()
-        },
-        dismissable: false,
-        title: 'Are you sure you want to delete the manuscript?',
-        subtitle: 'This operation cannot be undone!',
-      }
-      showModal(modalConfig)
-    },
-  }),
-)(DashboardCard)
+export default compose(getContext({ journal: PropTypes.object }), withTheme)(
+  DashboardCard,
+)
 
 // #region styled-components
 const defaultText = css`
