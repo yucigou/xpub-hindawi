@@ -10,7 +10,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  hideModal: () => dispatch(setModalVisibility(false)),
+  hideModal: e => dispatch(setModalVisibility(false)),
   showModal: (modalProps = {}) =>
     dispatch(setModalVisibility(true, modalProps)),
 })
@@ -21,7 +21,7 @@ const withModal = ({
 }) => WrappedComponent =>
   connect(mapState, mapDispatch)(
     ({ modalVisible, modalProps, hideModal, ...rest }) => (
-      <div>
+      <React.Fragment>
         {modalVisible && (
           <Modal
             {...modalProps}
@@ -31,7 +31,7 @@ const withModal = ({
           />
         )}
         <WrappedComponent hideModal={hideModal} {...rest} />
-      </div>
+      </React.Fragment>
     ),
   )
 
