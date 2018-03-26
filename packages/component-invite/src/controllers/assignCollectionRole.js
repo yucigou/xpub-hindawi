@@ -18,13 +18,13 @@ module.exports = async (
   url,
   resend,
 ) => {
-  if (reqUser.admin) {
-    logger.error(`admin tried to invite a ${role} to a collection`)
+  // if (reqUser.admin) {
+  //   logger.error(`admin tried to invite a ${role} to a collection`)
 
-    return res.status(403).json({
-      error: `admin cannot invite an ${role} to a collection`,
-    })
-  }
+  //   return res.status(403).json({
+  //     error: `admin cannot invite an ${role} to a collection`,
+  //   })
+  // }
 
   if (!configRoles.collection.includes(role)) {
     logger.error(`invitation has been attempted with invalid role: ${role}`)

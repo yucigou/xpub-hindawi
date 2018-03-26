@@ -1,11 +1,26 @@
 import React from 'react'
 import { get, head } from 'lodash'
-import { Icon, th } from '@pubsweet/ui'
-import styled, { css, withTheme } from 'styled-components'
+import { connect } from 'react-redux'
+import { Icon, Button, th } from '@pubsweet/ui'
 import { compose, withHandlers } from 'recompose'
-import AssignEditor from './AssignEditor'
+import styled, { css, withTheme } from 'styled-components'
+import {
+  withModal,
+  ConfirmationModal,
+  SuccessModal,
+} from 'pubsweet-component-modal/src/components'
 
-const HandlingEditorActions = ({ project, theme, getHandlingEditor }) => {
+import { revokeHandlingEditor, assignHandlingEditor } from '../../redux/editors'
+
+import HEModal from './AssignHEModal'
+
+const HandlingEditorActions = ({
+  project,
+  theme,
+  getHandlingEditor,
+  showConfirmModal,
+  showHEModal,
+}) => {
   const handlingEditor = getHandlingEditor()
   return (
     <Root>
@@ -15,21 +30,46 @@ const HandlingEditorActions = ({ project, theme, getHandlingEditor }) => {
             <HEName>{get(handlingEditor, 'name')}</HEName>
             {!handlingEditor.hasAnswer && (
               <HEActions>
-                <Icon color={theme.colorPrimary}>refresh-cw</Icon>
-                <Icon color={theme.colorPrimary}>x-circle</Icon>
+                <div onClick={showConfirmModal('resend')}>
+                  <Icon color={theme.colorPrimary}>refresh-cw</Icon>
+                </div>
+                <div onClick={showConfirmModal('cancel')}>
+                  <Icon color={theme.colorPrimary}>x-circle</Icon>
+                </div>
               </HEActions>
             )}
           </HEActions>
         ) : (
-          <AssignEditor collectionId={project.id} />
+          <AssignButton onClick={showHEModal}>Assign</AssignButton>
         )}
       </HEActions>
     </Root>
   )
 }
 
+const CardModal = ({ type, ...rest }) => {
+  switch (type) {
+    case 'confirmation':
+      return <ConfirmationModal {...rest} />
+    case 'success':
+      return <SuccessModal {...rest} />
+    case 'he-modal':
+    default:
+      return <HEModal {...rest} />
+  }
+}
+
+const handleError = fn => e => {
+  fn(get(JSON.parse(e.response), 'error') || 'Oops! Something went wrong!')
+}
+
 export default compose(
+  connect(null, { revokeHandlingEditor, assignHandlingEditor }),
   withTheme,
+  withModal({
+    modalKey: 'confirmHE',
+    modalComponent: CardModal,
+  }),
   withHandlers({
     getHandlingEditor: ({ project }) => () => {
       const assignedEditors = get(project, 'assignedPeople')
@@ -42,6 +82,56 @@ export default compose(
         )
       }
       return null
+    },
+  }),
+  withHandlers({
+    showConfirmModal: ({
+      showModal,
+      project,
+      revokeHandlingEditor,
+      assignHandlingEditor,
+      getHandlingEditor,
+      hideModal,
+      setModalError,
+    }) => actionType => {
+      const editor = getHandlingEditor()
+      const resendConfig = {
+        title: 'Resend Invitation?',
+        subtitle: '',
+        confirmText: 'Resend',
+        onConfirm: () =>
+          assignHandlingEditor(get(editor, 'email'), project.id, true).then(
+            () => {
+              hideModal()
+              showModal({
+                type: 'success',
+                title: 'Invite resent',
+              })
+            },
+            handleError(setModalError),
+          ),
+      }
+      const revokeConfig = {
+        title: 'Revoke Handling Editor Assignation?',
+        subtitle: `Clicking 'Revoke' will allow you to invite a different person.`,
+        confirmText: 'Revoke invite',
+        onConfirm: () =>
+          revokeHandlingEditor(get(editor, 'id'), project.id).then(() => {
+            hideModal()
+            showModal({
+              type: 'success',
+              title: 'Handling Editor Assignation Revoked',
+            })
+          }, handleError(setModalError)),
+      }
+
+      return () => {
+        const cfg = actionType === 'resend' ? resendConfig : revokeConfig
+        showModal({ ...cfg, type: 'confirmation' })
+      }
+    },
+    showHEModal: ({ showModal, project }) => () => {
+      showModal({ type: 'he-modal', collectionId: project.id, showModal })
     },
   }),
 )(HandlingEditorActions)
@@ -74,5 +164,14 @@ const HEActions = styled.div`
       }
     }
   }
+`
+
+const AssignButton = styled(Button)`
+  ${defaultText};
+  align-items: center;
+  background-color: ${th('colorPrimary')};
+  color: ${th('colorTextReverse')};
+  text-align: center;
+  height: calc(${th('subGridUnit')}*5);
 `
 // #endregion

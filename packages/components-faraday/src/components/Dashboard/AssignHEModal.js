@@ -1,9 +1,10 @@
 /* eslint react/prefer-stateless-function: 0 */
 
 import React from 'react'
-import { th, Icon } from '@pubsweet/ui'
+import { get } from 'lodash'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
+import { th, Icon } from '@pubsweet/ui'
 import styled, { withTheme } from 'styled-components'
 
 import { handlingEditors, assignHandlingEditor } from '../../redux/editors'
@@ -27,8 +28,28 @@ class AssignHEModal extends React.Component {
   }
 
   assignEditor = email => () => {
-    const { assignHandlingEditor, collectionId, hideModal } = this.props
-    assignHandlingEditor(email, collectionId).then(hideModal)
+    const {
+      assignHandlingEditor,
+      collectionId,
+      showModal,
+      hideModal,
+      setModalError,
+    } = this.props
+    assignHandlingEditor(email, collectionId).then(
+      () => {
+        hideModal()
+        showModal({
+          type: 'confirmation',
+          title: 'Assignation Sent',
+          cancelText: 'OK',
+        })
+      },
+      e => {
+        setModalError(
+          get(JSON.parse(e.response), 'error') || 'Oops! Something went wrong!',
+        )
+      },
+    )
   }
 
   render() {
