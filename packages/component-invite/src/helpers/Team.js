@@ -74,7 +74,7 @@ const setupEiCTeams = async (models, user) => {
 
 const setupManuscriptTeam = async (models, user, collectionId, role) => {
   const teams = await models.Team.all()
-  user.teams = []
+  user.teams = user.teams || []
   const filteredTeams = teams.filter(
     team =>
       team.group === role &&
@@ -89,12 +89,16 @@ const setupManuscriptTeam = async (models, user, collectionId, role) => {
     try {
       team = await team.updateProperties(team)
       team = await team.save()
+      user.teams.push(team.id)
+      await user.save()
       return team
     } catch (e) {
       logger.error(e)
     }
   } else {
     const team = await createNewTeam(collectionId, role, user.id, models.Team)
+    user.teams.push(team.id)
+    await user.save()
     return team
   }
 }
