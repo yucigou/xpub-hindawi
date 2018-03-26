@@ -1,9 +1,13 @@
 import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
-import { compose, getContext } from 'recompose'
 import { Button, Icon, th } from '@pubsweet/ui'
 import styled, { css, withTheme } from 'styled-components'
+import { compose, getContext, withHandlers } from 'recompose'
+import {
+  withModal,
+  ConfirmationModal,
+} from 'pubsweet-component-modal/src/components'
 
 import ZipFiles from './ZipFiles'
 import { parseVersion, parseJournalIssue } from './utils'
@@ -16,7 +20,7 @@ const DashboardCard = ({
   version,
   showAbstractModal,
   journal,
-  cancelSubmission,
+  showConfirmationModal,
   theme,
   ...rest
 }) => {
@@ -89,9 +93,9 @@ const DashboardCard = ({
             ) : (
               <Details
                 data-test="button-cancel-submission"
-                onClick={cancelSubmission}
+                onClick={showConfirmationModal}
               >
-                Cancel submission
+                Delete
               </Details>
             )}
           </RightDetails>
@@ -139,9 +143,36 @@ const DashboardCard = ({
   ) : null
 }
 
-export default compose(getContext({ journal: PropTypes.object }), withTheme)(
-  DashboardCard,
-)
+export default compose(
+  getContext({ journal: PropTypes.object }),
+  withTheme,
+  withModal({
+    modalKey: 'cancelManuscript',
+    modalComponent: ConfirmationModal,
+  }),
+  withHandlers({
+    showConfirmationModal: ({
+      deleteProject,
+      showModal,
+      hideModal,
+      setModalError,
+      project,
+    }) => () => {
+      showModal({
+        title: 'Are you sure you want to delete this submission?',
+        confirmText: 'Delete',
+        onConfirm: () => {
+          deleteProject(project).then(hideModal, e => {
+            setModalError(
+              get(JSON.parse(e.response), 'error') ||
+                'Oops! Something went wrong!',
+            )
+          })
+        },
+      })
+    },
+  }),
+)(DashboardCard)
 
 // #region styled-components
 const defaultText = css`
