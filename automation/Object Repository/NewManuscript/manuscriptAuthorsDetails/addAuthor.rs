@@ -6,11 +6,15 @@
    <elementGuidId>e12e5c46-5ca1-4e4f-96cb-467b1aa9be59</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>CSS</key>
+         <value>button[data-test=&quot;button-add-author&quot;]</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
-         <value>//div[@data-test=&quot;authors&quot;]/div/div/button</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

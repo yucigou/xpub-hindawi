@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value></value>
+         <value>input[type=&quot;radio&quot;][value=&quot;yes&quot;]+ span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>

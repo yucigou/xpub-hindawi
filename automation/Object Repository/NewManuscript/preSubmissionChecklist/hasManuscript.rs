@@ -7,13 +7,14 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>div[data-test=&quot;declarations&quot;] div label:nth-child(2)</value>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
+         <value>//div[@data-test=&quot;declarations&quot;]/div/label/span[contains(text(),'Microsoft')]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>CSS</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>td_vlad.stegarunewuserthinslic</name>
+   <name>td_admin</name>
    <tag></tag>
    <elementGuidId>1ee7b131-9b37-44ca-a75a-e710f5aa3d91</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>#root > div > div > div.sc-drKuOJ.fmUpkt > div > table > tbody > tr:nth-child(1)</value>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value></value>
+         <value>//td[contains(text(),&quot;admin@mailinator.com&quot;)]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>CSS</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

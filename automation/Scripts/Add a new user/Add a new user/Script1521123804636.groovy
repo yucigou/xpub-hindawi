@@ -20,87 +20,61 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 WebUI.openBrowser(null)
-
 WebUI.navigateToUrl('https://xpub-faraday.now.sh')
 
-username = findTestObject('NewUser/username')
-
+username = findTestObject('SignIn/username')
 WebUI.click(username)
-
 WebUI.setText(username, 'admin')
 
-password = findTestObject('NewUser/password')
-
+password = findTestObject('SignIn/password')
 WebUI.click(password)
-
 WebUI.setText(password, 'admin123')
 
-login = findTestObject('NewUser/login')
-
+login = findTestObject('SignIn/login')
 WebUI.click(login)
 
 admin = findTestObject("NewUser/adminButton")
 WebUI.click(admin)
 
 adminDashboard = findTestObject('NewUser/adminDashboard')
-
 WebUI.click(adminDashboard)
 
 users = findTestObject('NewUser/users')
-
 WebUI.waitForElementVisible(users, 2)
-
 WebUI.click(users)
 
 addUser = findTestObject('NewUser/addUser')
-
 WebUI.click(addUser)
 
 email = findTestObject('NewUser/email')
-
 WebUI.click(email)
-<<<<<<< HEAD
-WebUI.setText(email, 'vlad.stegaru+newestUser@thinslices.com')
-=======
->>>>>>> e85cabdf8bb80ea1284bf832b47b990be81d0c03
-
+//WebUI.setText(email, 'vlad.stegaru+newestUser@thinslices.com')
 WebUI.setText(email, 'bogdan.cochior+author@thinslices.com')
 
 roleDropDown = findTestObject('NewUser/roleDropDown')
-
 WebUI.click(roleDropDown)
 
 author = findTestObject('NewUser/author')
-
 WebUI.click(author)
 
 firstName = findTestObject('NewUser/firstName')
-
 WebUI.click(firstName)
-
 WebUI.setText(firstName, 'Bogdan Author')
 
 lastName = findTestObject('NewUser/lastName')
-
 WebUI.click(lastName)
-
 WebUI.setText(lastName, 'Test')
 
 affiliation = findTestObject('NewUser/affiliation')
-
 WebUI.click(affiliation)
-
 WebUI.setText(affiliation, 'College')
 
 title = findTestObject('NewUser/titleDropDown')
-
 WebUI.click(title)
 
 dr = findTestObject('NewUser/Dr')
-
 WebUI.click(dr)
 
 save = findTestObject('NewUser/save')
-
 WebUI.click(save)
 

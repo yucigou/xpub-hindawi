@@ -67,7 +67,7 @@ module.exports = async (
   try {
     let user = await models.User.findByEmail(email)
 
-    let team = teamHelper.getTeamByGroupAndCollection(
+    let team = await teamHelper.getTeamByGroupAndCollection(
       collectionId,
       role,
       models.Team,
@@ -79,10 +79,12 @@ module.exports = async (
         collectionId,
         role,
       )
+      user = await models.User.findByEmail(email)
+    } else {
+      user.teams = user.teams || []
+      user.teams.push(team.id)
+      user = await user.save()
     }
-
-    // getting the updated user from the DB - creating a team also updates the user
-    user = await models.User.findByEmail(email)
 
     if (user.invitations === undefined) {
       user = await inviteHelper.setupInvitation(

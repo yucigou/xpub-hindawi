@@ -3,30 +3,34 @@ const pickBy = require('lodash/pickBy')
 const omit = require('lodash/omit')
 
 async function teamPermissions(user, operation, object, context) {
-  const collection = get(object, 'collection')
-
-  if (collection) {
-    // Go through a user's teams, if they belong to a team that's based around
-    // this particular collection, check what membership in that team allows
-    // and return accordingly
-
-    /* eslint-disable */
-    for (const teamId of user.teams) {
+  const heTeamsProm = user.teams
+    .map(async teamId => {
       const team = await context.models.Team.find(teamId)
-
-      if (
-        team.teamType.permissions === 'handlingEditor' &&
-        team.object.id === collection.id &&
-        operation === 'GET'
-      ) {
-        console.log('team', team)
-        return true
+      if (team.teamType.permissions === 'handlingEditor') {
+        return team
       }
+      return null
+    })
+    .filter(Boolean)
+
+  const heTeams = await Promise.all(heTeamsProm)
+  const heCollections = heTeams.map(team => team.object.id)
+
+  if (heCollections.length > 0) {
+    return {
+      filter: collections => {
+        if (collections.length > 0) {
+          const correctColl = collections.filter(coll =>
+            heCollections.includes(coll.id),
+          )
+          return correctColl
+        }
+        return collections
+      },
     }
-    /* eslint-enable */
   }
 
-  return false
+  return {}
 }
 
 function unauthenticatedUser(operation, object) {
