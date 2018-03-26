@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>review</name>
+   <name>Research</name>
    <tag></tag>
    <elementGuidId>073d58c9-eab0-4bda-b090-aa974ebc3bd3</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>div[data-test=&quot;metadata.type&quot;] div[role=&quot;listbox&quot;] div div:nth-child(2)</value>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
+         <value>//div[contains(text(),&quot;Research&quot;)]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>CSS</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

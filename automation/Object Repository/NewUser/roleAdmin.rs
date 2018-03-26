@@ -6,13 +6,12 @@
    <elementGuidId>e32a2bfe-254a-42d6-b533-255570389045</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>div[data-test=&quot;role-selector&quot;] button</value>
-         <value>//div[contains(text(),'Editor in Chief')]</value>
+         <key>CSS</key>
+         <value>//div[contains(text(),&quot;Admin&quot;)]</value>
       </entry>
       <entry>
-         <key>CSS</key>
-         <value>div[data-test=&quot;role-selector&quot;] div[role=&quot;option&quot;]:last-child</value>
+         <key>XPATH</key>
+         <value>//div[contains(text(),'Editor in Chief')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>

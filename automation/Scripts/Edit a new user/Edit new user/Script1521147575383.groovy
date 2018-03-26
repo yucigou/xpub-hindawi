@@ -2,8 +2,6 @@ import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import java.util.concurrent.CancellationException as CancellationException
-import org.junit.After as After
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 import com.kms.katalon.core.checkpoint.CheckpointFactory as CheckpointFactory
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as MobileBuiltInKeywords
@@ -22,25 +20,65 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 WebUI.openBrowser(null)
+WebUI.navigateToUrl('https://xpub-faraday.now.sh')
 
-WebUI.navigateToUrl('http://localhost:3000')
-
-username = findTestObject('SignIn/usernameField')
+username = findTestObject("SignIn/username")
 WebUI.click(username)
-WebUI.setText(username, 'vlad')
+WebUI.setText(username, 'admin')
 
-password = findTestObject('SignIn/passwordField')
+password = findTestObject("SignIn/password")
 WebUI.click(password)
-WebUI.setText(password, '123123123')
+WebUI.setText(password, 'admin123')
 
-loginButton = findTestObject('SignIn/LoginButton')
-WebUI.click(loginButton)
+login = findTestObject("SignIn/login")
+WebUI.click(login)
 
-New = findTestObject("NewManuscript/journalFieldSelection/New")
-WebUI.click(New)
+admin = findTestObject("NewUser/adminButton")
+WebUI.click(admin)
 
-resumeSubmission = findTestObject('Resume/resumeSubmission')
-WebUI.click(resumeSubmission)
+adminDashboard = findTestObject("NewUser/adminDashboard")
+WebUI.click(adminDashboard)
 
-cancel = findTestObject("NewManuscript/journalFieldSelection/Cancel")
-WebUI.click(cancel)
+users = findTestObject("NewUser/users")
+WebUI.click(users)
+
+admin = findTestObject("EditUser/td_admin")
+WebUI.mouseOver(admin)
+WebUI.waitForElementVisible(admin, 2)
+
+edit = findTestObject("EditUser/a_Edit")
+WebUI.click(edit)
+
+firstName = findTestObject("EditUser/firstName")
+WebUI.click(firstName)
+WebUI.setText(firstName, 'John')
+
+lastName = findTestObject("EditUser/lastName")
+WebUI.click(lastName)
+WebUI.setText(lastName, 'Smith')
+
+affiliation = findTestObject("EditUser/affiliation")
+WebUI.click(affiliation)
+WebUI.setText(affiliation, 'University')
+
+title = findTestObject("EditUser/titleDropDown")
+WebUI.click(title)
+
+professor = findTestObject("EditUser/Professor")
+WebUI.click(professor)
+
+editorInChief = findTestObject("EditUser/editorInChief")
+WebUI.click(editorInChief)
+
+save = findTestObject("EditUser/save")
+WebUI.click(save)
+
+
+
+
+
+
+
+
+
+

@@ -8,15 +8,13 @@
       <entry>
          <key>CSS</key>
          <value>div[data-test=&quot;card-users&quot;]</value>
-         <key>XPATH</key>
-         <value>//span[contains(text(),'Users')]</value>
       </entry>
       <entry>
-         <key>CSS</key>
-         <value>//span[contains(text(),'Users')]</value>
+         <key>XPATH</key>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

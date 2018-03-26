@@ -29,15 +29,15 @@ WebUI.openBrowser(null)
 
 WebUI.navigateToUrl('http://localhost:3000')
 
-WebUI.click(findTestObject('SignIn/usernameField'))
+WebUI.click(findTestObject('SignIn/username'))
 
 
-WebUI.setText(findTestObject('SignIn/usernameField'), "vlad")
+WebUI.setText(findTestObject('SignIn/username'), "vlad")
 
-WebUI.click(findTestObject('SignIn/passwordField'))
+WebUI.click(findTestObject('SignIn/password'))
 
-WebUI.setText(findTestObject('SignIn/passwordField'), "123123123")
+WebUI.setText(findTestObject('SignIn/password'), "123123123")
 
-WebUI.click(findTestObject('SignIn/LoginButton'))
+WebUI.click(findTestObject('SignIn/login'))
 
 

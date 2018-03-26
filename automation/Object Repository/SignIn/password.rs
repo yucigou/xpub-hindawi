@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>login</name>
+   <name>password</name>
    <tag></tag>
-   <elementGuidId>13c40cbc-2634-4147-b93b-717f7ea9cc2b</elementGuidId>
+   <elementGuidId>4f096b22-ebe7-4747-99f7-50595df00fae</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>button[type=&quot;submit&quot;]</value>
+         <value>input[name=&quot;password&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>
@@ -17,34 +17,34 @@
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
-      <value>button</value>
+      <value>input</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
-      <value>submit</value>
+      <value>password</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>sc-jTzLTM jwsELq</value>
+      <value>sc-hzDkRC dhMpPK</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>name</name>
       <type>Main</type>
-      <value>Login</value>
+      <value>password</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;root&quot;)/div[@class=&quot;sc-cmTdod hZxvxw&quot;]/div[@class=&quot;sc-dyGzUR bQYZEl&quot;]/div[@class=&quot;sc-drKuOJ fmUpkt&quot;]/div[@class=&quot;sc-TOsTZ beQaWr&quot;]/form[1]/button[@class=&quot;sc-jTzLTM jwsELq&quot;]</value>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-fyjhYU bulmcW&quot;]/div[@class=&quot;sc-ugnQR hguLEQ&quot;]/div[@class=&quot;Login-local_root-28yxoK4a&quot;]/form[@class=&quot;Login-local_form-N-RCy5To&quot;]/label[@class=&quot;sc-Rmtcm jikjir&quot;]/input[@class=&quot;sc-hzDkRC dhMpPK&quot;]</value>
    </webElementProperties>
 </WebElementEntity>
