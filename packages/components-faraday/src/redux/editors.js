@@ -1,4 +1,4 @@
-import { get, create } from 'pubsweet-client/src/helpers/api'
+import { get, create, remove } from 'pubsweet-client/src/helpers/api'
 
 const SET_HANDLING_EDITORS = 'SET_HANDLING_EDITORS'
 
@@ -14,11 +14,19 @@ export const getHandlingEditors = () => dispatch =>
     dispatch(setHandlingEditors(res.users))
   })
 
-export const assignHandlingEditor = (email, collectionId) => dispatch =>
+export const assignHandlingEditor = (
+  email,
+  collectionId,
+  resend = false,
+) => dispatch =>
   create(`/users/invite/${collectionId}`, {
     email,
     role: 'handlingEditor',
+    resend,
   })
+
+export const revokeHandlingEditor = (collectionId, userId) => dispatch =>
+  remove(`/collections/${collectionId}/users/${userId}?role=handlingEditor`)
 
 const initialState = []
 export default (state = initialState, action = {}) => {

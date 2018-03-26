@@ -4,7 +4,6 @@ module.exports = {
     reducers: {
       authors: () => require('./redux/authors').default,
       files: () => require('./redux/files').default,
-      modal: () => require('./redux/modal').default,
       editors: () => require('./redux/editors').default,
     },
   },
