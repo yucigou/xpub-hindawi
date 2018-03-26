@@ -1,17 +1,13 @@
 import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
+import { compose, getContext } from 'recompose'
 import { Button, Icon, th } from '@pubsweet/ui'
-import styled, { css } from 'styled-components'
-import { compose, getContext, withHandlers } from 'recompose'
-import {
-  withModal,
-  ConfirmationModal,
-} from 'pubsweet-component-modal/src/components'
-
-import { parseVersion, parseJournalIssue } from './utils'
+import styled, { css, withTheme } from 'styled-components'
 
 import ZipFiles from './ZipFiles'
+import { parseVersion, parseJournalIssue } from './utils'
+import HandlingEditorActions from './HandlingEditorActions'
 
 const DashboardCard = ({
   deleteProject,
@@ -21,6 +17,7 @@ const DashboardCard = ({
   showAbstractModal,
   journal,
   cancelSubmission,
+  theme,
   ...rest
 }) => {
   const { submitted, title, type } = parseVersion(version)
@@ -87,7 +84,7 @@ const DashboardCard = ({
                 }
               >
                 Details
-                <Icon color="#667080">chevron-right</Icon>
+                <Icon color={theme.colorPrimary}>chevron-right</Icon>
               </Details>
             ) : (
               <Details
@@ -118,49 +115,33 @@ const DashboardCard = ({
                   arr,
                 ) => (
                   <Author key={email}>
-                    {isSubmitting && <AuthorStatus>SA</AuthorStatus>}
-                    {isCorresponding &&
-                      !isSubmitting && <AuthorStatus>CA</AuthorStatus>}
                     <AuthorName>
                       {firstName} {middleName} {lastName}
                     </AuthorName>
+                    {isSubmitting && <AuthorStatus>SA</AuthorStatus>}
+                    {isCorresponding &&
+                      !isSubmitting && <AuthorStatus>CA</AuthorStatus>}
                     {arr.length - 1 === index ? '' : ','}
                   </Author>
                 ),
               )}
             </AuthorList>
           </Top>
+          <Bottom>
+            <LeftDetails flex="5">
+              <HEText>Handling Editor</HEText>
+              <HandlingEditorActions project={project} />
+            </LeftDetails>
+          </Bottom>
         </DetailsView>
       )}
     </Card>
   ) : null
 }
 
-export default compose(
-  getContext({ journal: PropTypes.object }),
-  withModal({
-    modalComponent: ConfirmationModal,
-  }),
-  withHandlers({
-    cancelSubmission: ({
-      showModal,
-      deleteProject,
-      project,
-      hideModal,
-    }) => () => {
-      const modalConfig = {
-        onConfirm: () => {
-          deleteProject(project)
-          hideModal()
-        },
-        dismissable: false,
-        title: 'Are you sure you want to delete the manuscript?',
-        subtitle: 'This operation cannot be undone!',
-      }
-      showModal(modalConfig)
-    },
-  }),
-)(DashboardCard)
+export default compose(getContext({ journal: PropTypes.object }), withTheme)(
+  DashboardCard,
+)
 
 // #region styled-components
 const defaultText = css`
@@ -191,6 +172,7 @@ const AuthorStatus = styled.span`
   text-align: center;
   text-transform: uppercase;
   padding: 0 2px;
+  margin-left: 4px;
 `
 
 const ActionButtons = styled(Button)`
@@ -226,7 +208,7 @@ const DetailsView = styled.div`
   align-items: center;
   border-top: ${th('borderDefault')};
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
 `
@@ -322,9 +304,11 @@ const Status = styled.div`
   border: ${th('borderDefault')};
   ${defaultText};
   font-weight: bold;
-  padding: 0.2em 0.5em;
+  padding: 0 0.5em;
   text-align: left;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  line-height: 1.5;
+  color: ${th('colorPrimary')};
 `
 
 const DateField = styled.span`
@@ -332,4 +316,10 @@ const DateField = styled.span`
   margin: 0 ${th('subGridUnit')};
   text-align: left;
 `
+
+const HEText = styled.div`
+  ${defaultText};
+  text-transform: uppercase;
+`
+
 // #endregion

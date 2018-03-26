@@ -84,7 +84,7 @@ const createNewUser = async (
   UserModel,
   role,
 ) => {
-  const username = uuid.v4().slice(0, 8)
+  const username = email
   const password = uuid.v4()
   const userBody = {
     username,

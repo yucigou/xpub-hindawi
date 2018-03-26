@@ -1,28 +1,29 @@
 import React from 'react'
+import { omit } from 'lodash'
 import { connect } from 'react-redux'
 
 import Modal from './Modal'
-import { setModalVisibility } from '../redux/modal'
+import { showModal, hideModal } from '../redux/modal'
 
 const mapState = state => ({
-  modalVisible: state.modal.visible,
+  modalsVisibility: omit(state.modal, 'props'),
   modalProps: state.modal.props,
 })
 
-const mapDispatch = dispatch => ({
-  hideModal: () => dispatch(setModalVisibility(false)),
-  showModal: (modalProps = {}) =>
-    dispatch(setModalVisibility(true, modalProps)),
+const mapDispatch = modalKey => (dispatch, propss) => ({
+  hideModal: () => dispatch(hideModal()),
+  showModal: (modalProps = {}) => dispatch(showModal(modalKey, modalProps)),
 })
 
 const withModal = ({
+  modalKey,
   modalComponent: Component,
   overlayColor,
 }) => WrappedComponent =>
-  connect(mapState, mapDispatch)(
-    ({ modalVisible, modalProps, hideModal, ...rest }) => (
-      <div>
-        {modalVisible && (
+  connect(mapState, mapDispatch(modalKey))(
+    ({ modalsVisibility, modalProps, hideModal, ...rest }) => (
+      <React.Fragment>
+        {modalsVisibility[modalKey] && (
           <Modal
             {...modalProps}
             component={Component}
@@ -31,7 +32,7 @@ const withModal = ({
           />
         )}
         <WrappedComponent hideModal={hideModal} {...rest} />
-      </div>
+      </React.Fragment>
     ),
   )
 

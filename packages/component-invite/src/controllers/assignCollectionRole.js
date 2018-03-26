@@ -4,6 +4,7 @@ const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
 const mailService = require('pubsweet-component-mail-service')
 const inviteHelper = require('../helpers/Invitation')
+const collHelper = require('../helpers/Collection')
 
 const configRoles = config.get('roles')
 
@@ -53,8 +54,9 @@ module.exports = async (
     }
   }
 
+  let collection
   try {
-    await models.Collection.find(collectionId)
+    collection = await models.Collection.find(collectionId)
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'collection')
     return res.status(notFoundError.status).json({
@@ -65,7 +67,7 @@ module.exports = async (
   try {
     let user = await models.User.findByEmail(email)
 
-    let team = teamHelper.getTeamByGroupAndCollection(
+    let team = await teamHelper.getTeamByGroupAndCollection(
       collectionId,
       role,
       models.Team,
@@ -77,10 +79,12 @@ module.exports = async (
         collectionId,
         role,
       )
+      user = await models.User.findByEmail(email)
+    } else {
+      user.teams = user.teams || []
+      user.teams.push(team.id)
+      user = await user.save()
     }
-
-    // getting the updated user from the DB - creating a team also updates the user
-    user = await models.User.findByEmail(email)
 
     if (user.invitations === undefined) {
       user = await inviteHelper.setupInvitation(
@@ -89,6 +93,7 @@ module.exports = async (
         collectionId,
         team.id,
       )
+      await collHelper.addAssignedPeople(collection, user, role)
     } else {
       const matchingInvitation = inviteHelper.getMatchingInvitation(
         user.invitations,
@@ -102,6 +107,7 @@ module.exports = async (
           collectionId,
           team.id,
         )
+        await collHelper.addAssignedPeople(collection, user, role)
       }
     }
 

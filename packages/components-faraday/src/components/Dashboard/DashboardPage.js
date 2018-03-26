@@ -10,7 +10,7 @@ import { newestFirst, selectCurrentUser } from 'xpub-selectors'
 import { createDraftSubmission } from 'pubsweet-component-wizard/src/redux/conversion'
 
 import Dashboard from './Dashboard'
-
+import { getHandlingEditors } from '../../redux/editors'
 import withFilters from './withFilters'
 
 export default compose(
@@ -18,6 +18,7 @@ export default compose(
     actions.getCollections(),
     actions.getTeams(),
     actions.getUsers(),
+    getHandlingEditors(),
   ]),
   connect(
     state => {
