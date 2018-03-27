@@ -133,5 +133,5 @@ WebUI.click(submitManuscript)
 goToDashboard = findTestObject('Resume/goToDashboard')
 WebUI.click(goToDashboard)
 
-WebUI.closeBrowser()
+//WebUI.closeBrowser()
 
