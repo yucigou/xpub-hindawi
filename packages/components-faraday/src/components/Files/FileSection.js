@@ -57,7 +57,7 @@ const FileSection = ({
     over={isFileOver || (isOver && canDrop)}
   >
     <Header>
-      <PickerContainer>
+      <PickerContainer data-test={`upload-${listId}`}>
         <Title>{title}</Title>
         {!isFetching[listId] ? (
           <FilePicker

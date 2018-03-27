@@ -10,8 +10,9 @@ import {
 } from 'pubsweet-component-modal/src/components'
 
 import ZipFiles from './ZipFiles'
-import { parseVersion, parseJournalIssue, mapStatusToLabel } from './utils'
+import EditorInChiefActions from './EditorInChiefActions'
 import HandlingEditorActions from './HandlingEditorActions'
+import { parseVersion, parseJournalIssue, mapStatusToLabel } from './utils'
 
 const DashboardCard = ({
   deleteProject,
@@ -22,6 +23,7 @@ const DashboardCard = ({
   journal,
   showConfirmationModal,
   theme,
+  currentUser,
   ...rest
 }) => {
   const { submitted, title, type } = parseVersion(version)
@@ -34,6 +36,7 @@ const DashboardCard = ({
   const manuscriptMeta = `${type} - ${
     journalIssueType ? journalIssueType.label : 'N/A'
   }`
+  // console.log('Dashboard card', version, project, currentUser)
   return version ? (
     <Card data-test={customId}>
       <ListView>
@@ -134,7 +137,14 @@ const DashboardCard = ({
           <Bottom>
             <LeftDetails flex="5">
               <HEText>Handling Editor</HEText>
-              <HandlingEditorActions project={project} />
+              {get(currentUser, 'admin') ||
+                (get(currentUser, 'editorInChief') && (
+                  <EditorInChiefActions project={project} />
+                ))}
+              {get(currentUser, 'handlingEditor') &&
+                status === 'he-invited' && (
+                  <HandlingEditorActions project={project} />
+                )}
             </LeftDetails>
           </Bottom>
         </DetailsView>
@@ -144,7 +154,7 @@ const DashboardCard = ({
 }
 
 export default compose(
-  getContext({ journal: PropTypes.object }),
+  getContext({ journal: PropTypes.object, currentUser: PropTypes.object }),
   withTheme,
   withModal({
     modalKey: 'cancelManuscript',

@@ -1,0 +1,56 @@
+Suite/Test/Step Name,Browser,Description,Start time,End time,Duration,Status
+LoginNewUser,Chrome 65.0.3325.181,,2018-03-27 10:30:28,2018-03-27 10:30:52,23.714s,PASSED
+,,,,,,
+Test Cases/Sign In/Sign In flow,Chrome 65.0.3325.181,,2018-03-27 10:30:29,2018-03-27 10:30:39,9.970s,PASSED
+openBrowser,Chrome 65.0.3325.181,,2018-03-27 10:30:30,2018-03-27 10:30:33,3.358s,PASSED
+navigateToUrl,Chrome 65.0.3325.181,,2018-03-27 10:30:33,2018-03-27 10:30:38,5.215s,PASSED
+Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/username),Chrome 65.0.3325.181,,2018-03-27 10:30:38,2018-03-27 10:30:38,0.044s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:38,2018-03-27 10:30:39,0.110s,PASSED
+setText,Chrome 65.0.3325.181,,2018-03-27 10:30:39,2018-03-27 10:30:39,0.227s,PASSED
+Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/password),Chrome 65.0.3325.181,,2018-03-27 10:30:39,2018-03-27 10:30:39,0.004s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:39,2018-03-27 10:30:39,0.081s,PASSED
+setText,Chrome 65.0.3325.181,,2018-03-27 10:30:39,2018-03-27 10:30:39,0.192s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:39,2018-03-27 10:30:39,0.122s,PASSED
+,,,,,,
+Test Cases/Add a new user/Add a new user,Chrome 65.0.3325.181,,2018-03-27 10:30:39,2018-03-27 10:30:52,12.922s,PASSED
+openBrowser,Chrome 65.0.3325.181,,2018-03-27 10:30:39,2018-03-27 10:30:40,0.996s,PASSED
+navigateToUrl,Chrome 65.0.3325.181,,2018-03-27 10:30:40,2018-03-27 10:30:45,4.866s,PASSED
+Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/username),Chrome 65.0.3325.181,,2018-03-27 10:30:45,2018-03-27 10:30:45,0.008s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:45,2018-03-27 10:30:45,0.097s,PASSED
+setText,Chrome 65.0.3325.181,,2018-03-27 10:30:45,2018-03-27 10:30:46,0.196s,PASSED
+Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/password),Chrome 65.0.3325.181,,2018-03-27 10:30:46,2018-03-27 10:30:46,0.008s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:46,2018-03-27 10:30:46,0.089s,PASSED
+setText,Chrome 65.0.3325.181,,2018-03-27 10:30:46,2018-03-27 10:30:46,0.193s,PASSED
+Statement - login = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/login),Chrome 65.0.3325.181,,2018-03-27 10:30:46,2018-03-27 10:30:46,0.004s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:46,2018-03-27 10:30:46,0.100s,PASSED
+Statement - admin = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/adminButton),Chrome 65.0.3325.181,,2018-03-27 10:30:46,2018-03-27 10:30:46,0.005s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:46,2018-03-27 10:30:48,2.129s,PASSED
+Statement - adminDashboard = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/adminDashboard),Chrome 65.0.3325.181,,2018-03-27 10:30:48,2018-03-27 10:30:48,0.006s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:48,2018-03-27 10:30:48,0.141s,PASSED
+Statement - users = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/users),Chrome 65.0.3325.181,,2018-03-27 10:30:48,2018-03-27 10:30:48,0.011s,PASSED
+waitForElementVisible,Chrome 65.0.3325.181,,2018-03-27 10:30:48,2018-03-27 10:30:48,0.060s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:48,2018-03-27 10:30:48,0.097s,PASSED
+Statement - addUser = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/addUser),Chrome 65.0.3325.181,,2018-03-27 10:30:48,2018-03-27 10:30:48,0.005s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:48,2018-03-27 10:30:50,1.311s,PASSED
+Statement - email = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/email),Chrome 65.0.3325.181,,2018-03-27 10:30:50,2018-03-27 10:30:50,0.006s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:50,2018-03-27 10:30:50,0.071s,PASSED
+setText,Chrome 65.0.3325.181,,2018-03-27 10:30:50,2018-03-27 10:30:51,0.791s,PASSED
+Statement - roleDropDown = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/roleDropDown),Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.007s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.108s,PASSED
+Statement - author = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/author),Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.009s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.115s,PASSED
+Statement - firstName = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/firstName),Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.006s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.079s,PASSED
+setText,Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.286s,PASSED
+Statement - lastName = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/lastName),Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.005s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.078s,PASSED
+setText,Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.137s,PASSED
+Statement - affiliation = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/affiliation),Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.006s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:51,0.072s,PASSED
+setText,Chrome 65.0.3325.181,,2018-03-27 10:30:51,2018-03-27 10:30:52,0.184s,PASSED
+Statement - title = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/titleDropDown),Chrome 65.0.3325.181,,2018-03-27 10:30:52,2018-03-27 10:30:52,0.006s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:52,2018-03-27 10:30:52,0.104s,PASSED
+Statement - dr = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/Dr),Chrome 65.0.3325.181,,2018-03-27 10:30:52,2018-03-27 10:30:52,0.013s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:52,2018-03-27 10:30:52,0.145s,PASSED
+Statement - save = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/save),Chrome 65.0.3325.181,,2018-03-27 10:30:52,2018-03-27 10:30:52,0.008s,PASSED
+click,Chrome 65.0.3325.181,,2018-03-27 10:30:52,2018-03-27 10:30:52,0.129s,PASSED

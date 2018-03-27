@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>td_admin</name>
+   <name>td_user</name>
    <tag></tag>
    <elementGuidId>1ee7b131-9b37-44ca-a75a-e710f5aa3d91</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//td[contains(text(),&quot;admin@mailinator.com&quot;)]</value>
+         <value>//td[contains(text(),&quot;bogdan&quot;)]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

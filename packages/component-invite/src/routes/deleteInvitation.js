@@ -28,7 +28,7 @@ module.exports = models => async (req, res) => {
   const { collectionId, userId } = req.params
   try {
     const collection = await models.Collection.find(collectionId)
-    let user = await models.User.find(userId)
+    const user = await models.User.find(userId)
     const team = await teamHelper.getTeamByGroupAndCollection(
       collectionId,
       role,
@@ -42,8 +42,9 @@ module.exports = models => async (req, res) => {
       return
     }
     await inviteHelper.revokeInvitation(user, collectionId, role)
-    user = await models.User.find(userId)
     await teamHelper.removeTeamMember(team.id, userId, models.Team)
+    user.teams = user.teams.filter(userTeam => team.id !== userTeam.id)
+    await user.save()
     await collectionHelper.removeAssignedPeople(collection, user.email)
     try {
       await mailService.setupRevokeInvitationEmail(
