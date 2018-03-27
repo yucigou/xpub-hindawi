@@ -1,6 +1,7 @@
 const logger = require('@pubsweet/logger')
 const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
+const mailService = require('pubsweet-component-mail-service')
 
 module.exports = models => async (req, res) => {
   const { type, accept } = req.body
@@ -11,7 +12,7 @@ module.exports = models => async (req, res) => {
     return
   }
 
-  const user = await models.User.find(req.user)
+  let user = await models.User.find(req.user)
   if (!user.invitations) {
     res.status(400).json({ error: 'The user has no invitation' })
     logger.error('The request user does not have any invitation')
@@ -20,13 +21,13 @@ module.exports = models => async (req, res) => {
   const { collectionId } = req.params
 
   try {
-    await models.Collection.find(collectionId)
-    const filteredInvitations = user.invitations.filter(
+    const collection = await models.Collection.find(collectionId)
+    const matchingInvitations = user.invitations.filter(
       invitation =>
         invitation.collectionId === collectionId && invitation.type === type,
     )
 
-    if (filteredInvitations.length === 0) {
+    if (matchingInvitations.length === 0) {
       res.status(400).json({
         error: `Request data does not match any user invitation`,
       })
@@ -36,20 +37,39 @@ module.exports = models => async (req, res) => {
       return
     }
 
-    const matchingInvitation = filteredInvitations[0]
+    const matchingInvitation = matchingInvitations[0]
     matchingInvitation.hasAnswer = true
     if (accept === true) {
       matchingInvitation.isAccepted = true
-      await user.save()
+      try {
+        const users = await models.User.all()
+
+        const eic = users.find(user => user.editorInChief === true)
+        await mailService.setupHandlingEditorAgreedEmail(
+          eic.email,
+          user,
+          'handling-editor-agreed',
+          `${req.protocol}://${req.get('host')}`,
+          collection.customId,
+        )
+      } catch (e) {
+        logger.error(e)
+        return res.status(500).json({ error: 'Mail could not be sent.' })
+      }
     } else {
+      matchingInvitation.isAccepted = false
       await teamHelper.removeTeamMember(
         matchingInvitation.teamId,
         user.id,
         models.Team,
       )
+      const { reason } = req.body
+      if (reason !== undefined) {
+        matchingInvitation.reason = reason
+      }
     }
-
-    res.status(204).json()
+    user = await user.save()
+    res.status(200).json(user)
     return
   } catch (e) {
     const notFoundError = await helpers.handleNotFoundError(e, 'collection')

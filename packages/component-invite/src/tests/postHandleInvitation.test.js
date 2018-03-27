@@ -8,6 +8,7 @@ const Model = require('./helpers/Model')
 const models = Model.build()
 jest.mock('pubsweet-component-mail-service', () => ({
   setupAssignEmail: jest.fn(),
+  setupHandlingEditorAgreedEmail: jest.fn(),
 }))
 
 const notFoundError = new Error()
@@ -36,7 +37,7 @@ describe('Post handle invitation route handler', () => {
     req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
     await require(postInvitationPath)(models)(req, res)
-    expect(res.statusCode).toBe(204)
+    expect(res.statusCode).toBe(200)
     expect(handlingEditor.invitations[0].hasAnswer).toBeTruthy()
     expect(handlingEditor.invitations[0].isAccepted).toBeTruthy()
   })
@@ -53,7 +54,7 @@ describe('Post handle invitation route handler', () => {
     const res = httpMocks.createResponse()
     await require(postInvitationPath)(models)(req, res)
 
-    expect(res.statusCode).toBe(204)
+    expect(res.statusCode).toBe(200)
     expect(invitedHandlingEditor.invitations[0].hasAnswer).toBeTruthy()
     expect(invitedHandlingEditor.invitations[0].isAccepted).toBeFalsy()
   })

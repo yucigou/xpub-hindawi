@@ -1,4 +1,5 @@
 const Chance = require('chance')
+const { handlingEditor } = require('./userData')
 
 const chance = new Chance()
 module.exports = {
@@ -9,6 +10,16 @@ module.exports = {
     fragments: [],
     owners: [],
     save: jest.fn(),
+    assignedPeople: [
+      {
+        id: handlingEditor.id,
+        name: `${handlingEditor.firstName} ${handlingEditor.lastName}`,
+        role: 'handlingEditor',
+        email: handlingEditor.email,
+        hasAnswer: false,
+        isAccepted: false,
+      },
+    ],
   },
   noTeamCollection: {
     id: chance.guid(),

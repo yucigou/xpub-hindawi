@@ -25,7 +25,7 @@ export const assignHandlingEditor = (
     resend,
   })
 
-export const revokeHandlingEditor = (collectionId, userId) => dispatch =>
+export const revokeHandlingEditor = (userId, collectionId) => dispatch =>
   remove(`/collections/${collectionId}/users/${userId}?role=handlingEditor`)
 
 const initialState = []

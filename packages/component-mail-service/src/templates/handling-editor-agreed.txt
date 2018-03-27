@@ -1,0 +1,6 @@
+{{ name }} has agreed to be Handling Editor on manuscript {{ collectionId }}
+Please click on the link below to access your dashboard
+{{ url }} VIEW DASHBOARD
+Hindawi Publishing Corporation
+315 Madison Ave, Third Floor, Suite 307
+New York, NY 10017

@@ -1,8 +1,10 @@
 const initialState = {
+  error: null,
   props: {},
 }
 
 const SHOW_MODAL = 'modal/SHOW_MODAL'
+const SET_MODAL_ERROR = 'modal/SET_MODAL_ERROR'
 const HIDE_MODAL = 'modal/HIDE_MODAL'
 
 export const showModal = (modalKey, props = {}) => ({
@@ -10,6 +12,13 @@ export const showModal = (modalKey, props = {}) => ({
   payload: {
     modalKey,
     props,
+  },
+})
+
+export const setModalError = error => ({
+  type: SET_MODAL_ERROR,
+  payload: {
+    error,
   },
 })
 
@@ -24,7 +33,13 @@ export default (state = initialState, action = {}) => {
     case SHOW_MODAL:
       return {
         [action.payload.modalKey]: true,
+        error: null,
         props: action.payload.props,
+      }
+    case SET_MODAL_ERROR:
+      return {
+        ...state,
+        error: action.payload.error,
       }
     case HIDE_MODAL:
       return initialState
