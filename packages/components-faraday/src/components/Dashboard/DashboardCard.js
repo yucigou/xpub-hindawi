@@ -70,11 +70,11 @@ const DashboardCard = ({
           </RightDetails>
         </Top>
         <Bottom>
-          <LeftDetails flex="2">
+          <LeftDetails flex="3">
             <Status>{mapStatusToLabel(status)}</Status>
             <DateField>{submitted || ''}</DateField>
           </LeftDetails>
-          <RightDetails flex="5">
+          <RightDetails flex="4">
             <ManuscriptType title={manuscriptMeta}>
               {manuscriptMeta}
             </ManuscriptType>
