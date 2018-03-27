@@ -1,191 +1,150 @@
 import React from 'react'
-import { get, head } from 'lodash'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { th, Button } from '@pubsweet/ui'
 import { actions } from 'pubsweet-client'
-import { Icon, Button, th } from '@pubsweet/ui'
-import { compose, withHandlers } from 'recompose'
-import styled, { css, withTheme } from 'styled-components'
+import { withHandlers, compose, withState } from 'recompose'
 import {
   withModal,
   ConfirmationModal,
-  SuccessModal,
 } from 'pubsweet-component-modal/src/components'
 
-import { revokeHandlingEditor, assignHandlingEditor } from '../../redux/editors'
+import { handlingEditorDecision } from '../../redux/editors'
 
-import HEModal from './AssignHEModal'
+const DeclineModal = compose(
+  withState('reason', 'setReason', ''),
+  withHandlers({
+    changeReason: ({ setReason }) => e => {
+      setReason(e.target.value)
+    },
+  }),
+)(({ reason, changeReason, hideModal, onConfirm }) => (
+  <DeclineRoot>
+    <span>Decline handling editor role</span>
+    <textarea
+      onChange={changeReason}
+      placeholder="Decline reason (optional)"
+      value={reason}
+    />
+    <div>
+      <Button onClick={hideModal}>Cancel</Button>
+      <Button onClick={onConfirm(reason)} primary>
+        Decline
+      </Button>
+    </div>
+  </DeclineRoot>
+))
 
-const HandlingEditorActions = ({
-  project,
-  theme,
-  getHandlingEditor,
-  showConfirmModal,
-  showHEModal,
-}) => {
-  const handlingEditor = getHandlingEditor()
-  return (
-    <Root>
-      <HEActions>
-        {handlingEditor ? (
-          <HEActions>
-            <HEName>{get(handlingEditor, 'name')}</HEName>
-            {!handlingEditor.hasAnswer && (
-              <HEActions>
-                <div onClick={showConfirmModal('resend')}>
-                  <Icon color={theme.colorPrimary}>refresh-cw</Icon>
-                </div>
-                <div onClick={showConfirmModal('cancel')}>
-                  <Icon color={theme.colorPrimary}>x-circle</Icon>
-                </div>
-              </HEActions>
-            )}
-          </HEActions>
-        ) : (
-          <AssignButton onClick={showHEModal}>Assign</AssignButton>
-        )}
-      </HEActions>
-    </Root>
+const ModalComponent = ({ type, ...rest }) =>
+  type === 'decline' ? (
+    <DeclineModal {...rest} />
+  ) : (
+    <ConfirmationModal {...rest} />
   )
-}
 
-const CardModal = ({ type, ...rest }) => {
-  switch (type) {
-    case 'confirmation':
-      return <ConfirmationModal {...rest} />
-    case 'success':
-      return <SuccessModal {...rest} />
-    case 'he-modal':
-    default:
-      return <HEModal {...rest} />
-  }
-}
-
-const handleError = fn => e => {
-  fn(get(JSON.parse(e.response), 'error') || 'Oops! Something went wrong!')
-}
+const HandlingEditorActions = ({ showHEModal }) => (
+  <Root>
+    <Button onClick={showHEModal('decline')}>DECLINE</Button>
+    <Button onClick={showHEModal()} primary>
+      AGREE
+    </Button>
+  </Root>
+)
 
 export default compose(
   connect(null, {
-    revokeHandlingEditor,
-    assignHandlingEditor,
-    updateCollection: actions.updateCollection,
     getCollections: actions.getCollections,
+    updateCollection: actions.updateCollection,
   }),
-  withTheme,
   withModal({
-    modalKey: 'confirmHE',
-    modalComponent: CardModal,
+    modalKey: 'he-action',
+    modalComponent: ModalComponent,
   }),
   withHandlers({
-    getHandlingEditor: ({ project }) => () => {
-      const assignedEditors = get(project, 'assignedPeople')
-      if (assignedEditors && assignedEditors.length) {
-        return head(
-          assignedEditors.filter(
-            editor =>
-              !editor.hasAnswer || (editor.hasAnswer && editor.isAccepted),
-          ),
-        )
-      }
-      return null
-    },
-  }),
-  withHandlers({
-    showConfirmModal: ({
+    showHEModal: ({
       showModal,
-      project,
-      revokeHandlingEditor,
-      assignHandlingEditor,
-      getHandlingEditor,
       hideModal,
-      setModalError,
-      updateCollection,
+      project,
       getCollections,
-    }) => actionType => {
-      const editor = getHandlingEditor()
-      const resendConfig = {
-        title: 'Resend Invitation?',
-        subtitle: '',
-        confirmText: 'Resend',
-        onConfirm: () =>
-          assignHandlingEditor(get(editor, 'email'), project.id, true).then(
-            () => {
+      updateCollection,
+    }) => modalType => {
+      const agreeConfig = {
+        type: modalType,
+        title: 'Agree to handling editor assignment',
+        subtitle: `Clicking "Agree" will assign you as Handling Editor for this Manuscript.`,
+        onConfirm: () => {
+          handlingEditorDecision(project.id, true).then(() => {
+            updateCollection({
+              id: project.id,
+              status: 'under-review',
+            }).then(() => {
+              getCollections()
               hideModal()
-              showModal({
-                type: 'success',
-                title: 'Invite resent',
-              })
-            },
-            handleError(setModalError),
-          ),
+            })
+          }, hideModal)
+        },
       }
-      const revokeConfig = {
-        title: 'Revoke Handling Editor Assignation?',
-        subtitle: `Clicking 'Revoke' will allow you to invite a different person.`,
-        confirmText: 'Revoke invite',
-        onConfirm: () =>
-          revokeHandlingEditor(get(editor, 'id'), project.id).then(() => {
+      const declineConfig = {
+        type: modalType,
+        title: 'Decline handling editor role',
+        subtitle: `Clicking "Agree" will assign you as Handling Editor for this Manuscript.`,
+        onConfirm: reason => () => {
+          handlingEditorDecision(project.id, true, reason).then(() => {
             updateCollection({
               id: project.id,
               status: 'submitted',
             }).then(() => {
               getCollections()
               hideModal()
-              showModal({
-                type: 'success',
-                title: 'Handling Editor Assignation Revoked',
-              })
             })
-          }, handleError(setModalError)),
+          }, hideModal)
+        },
       }
-
       return () => {
-        const cfg = actionType === 'resend' ? resendConfig : revokeConfig
-        showModal({ ...cfg, type: 'confirmation' })
+        const cfg = modalType === 'decline' ? declineConfig : agreeConfig
+        showModal(cfg)
       }
-    },
-    showHEModal: ({ showModal, project }) => () => {
-      showModal({ type: 'he-modal', collectionId: project.id, showModal })
     },
   }),
 )(HandlingEditorActions)
 
 // #region styled-components
-const defaultText = css`
-  color: ${th('colorText')};
-  font-family: ${th('fontReading')};
-  font-size: ${th('fontSizeBaseSmall')};
+const DeclineRoot = styled.div`
+  align-items: center;
+  background-color: ${th('backgroundColor')};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(${th('gridUnit')} * 13);
+  padding: calc(${th('subGridUnit')} * 7);
+  width: calc(${th('gridUnit')} * 24);
+
+  & span {
+    color: ${th('colorPrimary')};
+    font-size: ${th('fontSizeHeading5')};
+    font-family: ${th('fontHeading')};
+    margin-bottom: 25px;
+  }
+
+  & textarea {
+    height: 100%;
+    width: 100%;
+  }
+
+  & textarea:focus,
+  & textarea:active {
+    outline: none;
+  }
+
+  & div {
+    display: flex;
+    justify-content: space-evenly;
+    margin: ${th('gridUnit')} auto 0;
+    width: 100%;
+  }
 `
 
 const Root = styled.div`
   margin-left: ${th('gridUnit')};
-`
-
-const HEName = styled.div``
-
-const HEActions = styled.div`
-  ${defaultText};
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin-left: ${th('subGridUnit')};
-  span {
-    margin-left: ${th('subGridUnit')};
-    &:hover {
-      svg {
-        opacity: 0.8;
-      }
-    }
-  }
-`
-
-const AssignButton = styled(Button)`
-  ${defaultText};
-  align-items: center;
-  background-color: ${th('colorPrimary')};
-  color: ${th('colorTextReverse')};
-  text-align: center;
-  height: calc(${th('subGridUnit')}*5);
 `
 // #endregion

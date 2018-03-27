@@ -90,7 +90,8 @@ export default compose(
   withContext(
     {
       journal: PropTypes.object,
+      currentUser: PropTypes.object,
     },
-    ({ journal }) => ({ journal }),
+    ({ journal, currentUser }) => ({ journal, currentUser }),
   ),
 )(Dashboard)
