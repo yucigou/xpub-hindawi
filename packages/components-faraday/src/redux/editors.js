@@ -28,6 +28,13 @@ export const assignHandlingEditor = (
 export const revokeHandlingEditor = (userId, collectionId) => dispatch =>
   remove(`/collections/${collectionId}/users/${userId}?role=handlingEditor`)
 
+export const handlingEditorDecision = (collectionId, accept, reason) =>
+  create(`/collections/${collectionId}/users`, {
+    type: 'handlingEditor',
+    accept,
+    reason,
+  })
+
 const initialState = []
 export default (state = initialState, action = {}) => {
   switch (action.type) {

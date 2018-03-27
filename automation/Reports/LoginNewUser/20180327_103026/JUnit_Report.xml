@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="LoginNewUser" time="23" tests="2" failures="0" errors="0">
+   <testsuite name="LoginNewUser" tests="2" failures="0" errors="0" time="23" timestamp="2018-03-27 10:30:28" hostname="vladstegaru - vlads-mbp.thinslices.com" id="Test Suites/LoginNewUser">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="/Users/vladstegaru/Documents/Hindawi/xpub-faraday/automation/Reports/LoginNewUser/20180327_103026"/>
+         <property name="logFiles" value="/Users/vladstegaru/Documents/Hindawi/xpub-faraday/automation/Reports/LoginNewUser/20180327_103026/execution0.log"/>
+         <property name="attachments" value=""/>
+         <property name="hostName" value="vladstegaru - vlads-mbp.thinslices.com"/>
+         <property name="os" value="Mac OS X 64bit"/>
+         <property name="katalonVersion" value="5.3.1.1"/>
+         <property name="browser" value="Chrome 65.0.3325.181"/>
+         <property name="hostAddress" value="192.168.1.115"/>
+         <property name="sessionId" value="cfc73cdb2e71b8c92b170e5e788e2987"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Mac OS X"/>
+      </properties>
+      <testcase name="Test Cases/Sign In/Sign In flow" classname="Test Cases/Sign In/Sign In flow" status="PASSED">
+         <system-out><![CDATA[2018-03-27 10:30:29 - [TEST_CASE][PASSED] - Test Cases/Sign In/Sign In flow: Test Cases/Sign In/Sign In flow
+
+2018-03-27 10:30:30 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: 'null'
+
+2018-03-27 10:30:33 - [MESSAGE][PASSED] - Browser is opened with url: 'null'
+
+2018-03-27 10:30:33 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://xpub-faraday.now.sh/' successfully
+
+2018-03-27 10:30:38 - [MESSAGE][PASSED] - Navigate to 'https://xpub-faraday.now.sh/' successfully
+
+2018-03-27 10:30:38 - [TEST_STEP][PASSED] - Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/username): Finding Test Object with id 'Object Repository/SignIn/username'
+
+2018-03-27 10:30:38 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/username' is clicked on
+
+2018-03-27 10:30:39 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/username' is clicked on
+
+2018-03-27 10:30:39 - [TEST_STEP][PASSED] - setText: Text 'admin' is set on object 'Object Repository/SignIn/username'
+
+2018-03-27 10:30:39 - [MESSAGE][PASSED] - Text 'admin' is set on object 'Object Repository/SignIn/username'
+
+2018-03-27 10:30:39 - [TEST_STEP][PASSED] - Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/password): Finding Test Object with id 'Object Repository/SignIn/password'
+
+2018-03-27 10:30:39 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/password' is clicked on
+
+2018-03-27 10:30:39 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/password' is clicked on
+
+2018-03-27 10:30:39 - [TEST_STEP][PASSED] - setText: Text 'admin123' is set on object 'Object Repository/SignIn/password'
+
+2018-03-27 10:30:39 - [MESSAGE][PASSED] - Text 'admin123' is set on object 'Object Repository/SignIn/password'
+
+2018-03-27 10:30:39 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/login' is clicked on
+
+2018-03-27 10:30:39 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/login' is clicked on]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/Add a new user/Add a new user" classname="Test Cases/Add a new user/Add a new user" status="PASSED">
+         <system-out><![CDATA[2018-03-27 10:30:39 - [TEST_CASE][PASSED] - Test Cases/Add a new user/Add a new user: Test Cases/Add a new user/Add a new user
+
+2018-03-27 10:30:39 - [TEST_STEP][PASSED] - openBrowser: Browser is opened with url: 'null'
+
+2018-03-27 10:30:39 - [MESSAGE][WARNING] - A browser is already opened. Closing browser and opening a new one
+
+2018-03-27 10:30:40 - [MESSAGE][PASSED] - Browser is opened with url: 'null'
+
+2018-03-27 10:30:40 - [TEST_STEP][PASSED] - navigateToUrl: Navigate to 'https://xpub-faraday.now.sh' successfully
+
+2018-03-27 10:30:45 - [MESSAGE][PASSED] - Navigate to 'https://xpub-faraday.now.sh' successfully
+
+2018-03-27 10:30:45 - [TEST_STEP][PASSED] - Statement - username = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/username): Finding Test Object with id 'Object Repository/SignIn/username'
+
+2018-03-27 10:30:45 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/username' is clicked on
+
+2018-03-27 10:30:45 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/username' is clicked on
+
+2018-03-27 10:30:45 - [TEST_STEP][PASSED] - setText: Text 'admin' is set on object 'Object Repository/SignIn/username'
+
+2018-03-27 10:30:46 - [MESSAGE][PASSED] - Text 'admin' is set on object 'Object Repository/SignIn/username'
+
+2018-03-27 10:30:46 - [TEST_STEP][PASSED] - Statement - password = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/password): Finding Test Object with id 'Object Repository/SignIn/password'
+
+2018-03-27 10:30:46 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/password' is clicked on
+
+2018-03-27 10:30:46 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/password' is clicked on
+
+2018-03-27 10:30:46 - [TEST_STEP][PASSED] - setText: Text 'admin123' is set on object 'Object Repository/SignIn/password'
+
+2018-03-27 10:30:46 - [MESSAGE][PASSED] - Text 'admin123' is set on object 'Object Repository/SignIn/password'
+
+2018-03-27 10:30:46 - [TEST_STEP][PASSED] - Statement - login = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(SignIn/login): Finding Test Object with id 'Object Repository/SignIn/login'
+
+2018-03-27 10:30:46 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/SignIn/login' is clicked on
+
+2018-03-27 10:30:46 - [MESSAGE][PASSED] - Object: 'Object Repository/SignIn/login' is clicked on
+
+2018-03-27 10:30:46 - [TEST_STEP][PASSED] - Statement - admin = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/adminButton): Finding Test Object with id 'Object Repository/NewUser/adminButton'
+
+2018-03-27 10:30:46 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/adminButton' is clicked on
+
+2018-03-27 10:30:48 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/adminButton' is clicked on
+
+2018-03-27 10:30:48 - [TEST_STEP][PASSED] - Statement - adminDashboard = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/adminDashboard): Finding Test Object with id 'Object Repository/NewUser/adminDashboard'
+
+2018-03-27 10:30:48 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/adminDashboard' is clicked on
+
+2018-03-27 10:30:48 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/adminDashboard' is clicked on
+
+2018-03-27 10:30:48 - [TEST_STEP][PASSED] - Statement - users = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/users): Finding Test Object with id 'Object Repository/NewUser/users'
+
+2018-03-27 10:30:48 - [TEST_STEP][PASSED] - waitForElementVisible: Object 'Object Repository/NewUser/users' is visible
+
+2018-03-27 10:30:48 - [MESSAGE][PASSED] - Object 'Object Repository/NewUser/users' is visible
+
+2018-03-27 10:30:48 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/users' is clicked on
+
+2018-03-27 10:30:48 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/users' is clicked on
+
+2018-03-27 10:30:48 - [TEST_STEP][PASSED] - Statement - addUser = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/addUser): Finding Test Object with id 'Object Repository/NewUser/addUser'
+
+2018-03-27 10:30:48 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/addUser' is clicked on
+
+2018-03-27 10:30:50 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/addUser' is clicked on
+
+2018-03-27 10:30:50 - [TEST_STEP][PASSED] - Statement - email = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/email): Finding Test Object with id 'Object Repository/NewUser/email'
+
+2018-03-27 10:30:50 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/email' is clicked on
+
+2018-03-27 10:30:50 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/email' is clicked on
+
+2018-03-27 10:30:50 - [TEST_STEP][PASSED] - setText: Text 'bogdan.cochior+author@thinslices.com' is set on object 'Object Repository/NewUser/email'
+
+2018-03-27 10:30:51 - [MESSAGE][PASSED] - Text 'bogdan.cochior+author@thinslices.com' is set on object 'Object Repository/NewUser/email'
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - Statement - roleDropDown = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/roleDropDown): Finding Test Object with id 'Object Repository/NewUser/roleDropDown'
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/roleDropDown' is clicked on
+
+2018-03-27 10:30:51 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/roleDropDown' is clicked on
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - Statement - author = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/author): Finding Test Object with id 'Object Repository/NewUser/author'
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/author' is clicked on
+
+2018-03-27 10:30:51 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/author' is clicked on
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - Statement - firstName = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/firstName): Finding Test Object with id 'Object Repository/NewUser/firstName'
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/firstName' is clicked on
+
+2018-03-27 10:30:51 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/firstName' is clicked on
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - setText: Text 'Bogdan Author' is set on object 'Object Repository/NewUser/firstName'
+
+2018-03-27 10:30:51 - [MESSAGE][PASSED] - Text 'Bogdan Author' is set on object 'Object Repository/NewUser/firstName'
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - Statement - lastName = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/lastName): Finding Test Object with id 'Object Repository/NewUser/lastName'
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/lastName' is clicked on
+
+2018-03-27 10:30:51 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/lastName' is clicked on
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - setText: Text 'Test' is set on object 'Object Repository/NewUser/lastName'
+
+2018-03-27 10:30:51 - [MESSAGE][PASSED] - Text 'Test' is set on object 'Object Repository/NewUser/lastName'
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - Statement - affiliation = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/affiliation): Finding Test Object with id 'Object Repository/NewUser/affiliation'
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/affiliation' is clicked on
+
+2018-03-27 10:30:51 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/affiliation' is clicked on
+
+2018-03-27 10:30:51 - [TEST_STEP][PASSED] - setText: Text 'College' is set on object 'Object Repository/NewUser/affiliation'
+
+2018-03-27 10:30:52 - [MESSAGE][PASSED] - Text 'College' is set on object 'Object Repository/NewUser/affiliation'
+
+2018-03-27 10:30:52 - [TEST_STEP][PASSED] - Statement - title = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/titleDropDown): Finding Test Object with id 'Object Repository/NewUser/titleDropDown'
+
+2018-03-27 10:30:52 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/titleDropDown' is clicked on
+
+2018-03-27 10:30:52 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/titleDropDown' is clicked on
+
+2018-03-27 10:30:52 - [TEST_STEP][PASSED] - Statement - dr = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/Dr): Finding Test Object with id 'Object Repository/NewUser/Dr'
+
+2018-03-27 10:30:52 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/Dr' is clicked on
+
+2018-03-27 10:30:52 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/Dr' is clicked on
+
+2018-03-27 10:30:52 - [TEST_STEP][PASSED] - Statement - save = com.kms.katalon.core.testobject.ObjectRepository.findTestObject(NewUser/save): Finding Test Object with id 'Object Repository/NewUser/save'
+
+2018-03-27 10:30:52 - [TEST_STEP][PASSED] - click: Object: 'Object Repository/NewUser/save' is clicked on
+
+2018-03-27 10:30:52 - [MESSAGE][PASSED] - Object: 'Object Repository/NewUser/save' is clicked on]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2018-03-27 10:30:28 - [TEST_SUITE][PASSED] - LoginNewUser: Test Cases/Add a new user/Add a new user]]></system-out>
+      <system-err><![CDATA[]]></system-err>
+   </testsuite>
+</testsuites>

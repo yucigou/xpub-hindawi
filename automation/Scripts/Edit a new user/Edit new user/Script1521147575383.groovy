@@ -42,7 +42,7 @@ WebUI.click(adminDashboard)
 users = findTestObject("NewUser/users")
 WebUI.click(users)
 
-admin = findTestObject("EditUser/td_admin")
+admin = findTestObject("EditUser/td_user")
 WebUI.mouseOver(admin)
 WebUI.waitForElementVisible(admin, 2)
 

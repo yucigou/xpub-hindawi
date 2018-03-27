@@ -18,26 +18,23 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUiBuiltInKeywords
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.WebDriver as WebDriver
-import org.openqa.selenium.WebElement as WebElement
-import org.openqa.selenium.interactions.Actions as Actions
-import com.kms.katalon.core.webui.common.WebUiCommonHelper as WebUiCommonHelper
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.JavascriptExecutor as JavascriptExecutor
 
 WebUI.openBrowser(null)
-
-WebUI.navigateToUrl('https://xpub-faraday.now.sh/')
+WebUI.navigateToUrl('https://xpub-faraday.now.sh')
 
 username = findTestObject('SignIn/username')
 WebUI.click(username)
-WebUI.setText(username, "admin")
+WebUI.setText(username, 'admin')
 
-
-password = findTestObject("SignIn/password")
+password = findTestObject('SignIn/password')
 WebUI.click(password)
-WebUI.setText(password, "admin123")
+WebUI.setText(password, 'admin123')
 
-WebUI.click(findTestObject('SignIn/login'))
+login = findTestObject('SignIn/login')
+WebUI.click(login)
 
+cancel = findTestObject("Cancel/cancel")
+if(WebUI.verifyElementPresent(cancel, 10) == true){
+	WebUI.click(cancel)
+}
 
