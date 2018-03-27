@@ -18,14 +18,6 @@ module.exports = async (
   url,
   resend,
 ) => {
-  // if (reqUser.admin) {
-  //   logger.error(`admin tried to invite a ${role} to a collection`)
-
-  //   return res.status(403).json({
-  //     error: `admin cannot invite an ${role} to a collection`,
-  //   })
-  // }
-
   if (!configRoles.collection.includes(role)) {
     logger.error(`invitation has been attempted with invalid role: ${role}`)
     return res
@@ -33,11 +25,11 @@ module.exports = async (
       .json({ error: `Role ${role} cannot be set on collections` })
   }
 
-  if (!reqUser.editorInChief && reqUser.teams === undefined) {
+  if (!reqUser.editorInChief && reqUser.teams === undefined && !reqUser.admin) {
     return res
       .status(403)
       .json({ error: `User ${reqUser.username} is not part of any teams` })
-  } else if (reqUser.editorInChief === false) {
+  } else if (reqUser.editorInChief === false && reqUser.admin === false) {
     const matchingTeams = await teamHelper.getMatchingTeams(
       reqUser.teams,
       models.Team,
@@ -67,24 +59,13 @@ module.exports = async (
   try {
     let user = await models.User.findByEmail(email)
 
-    let team = await teamHelper.getTeamByGroupAndCollection(
+    const team = await teamHelper.setupManuscriptTeam(
+      models,
+      user,
       collectionId,
       role,
-      models.Team,
     )
-    if (team === undefined) {
-      team = await teamHelper.setupManuscriptTeam(
-        models,
-        user,
-        collectionId,
-        role,
-      )
-      user = await models.User.findByEmail(email)
-    } else {
-      user.teams = user.teams || []
-      user.teams.push(team.id)
-      user = await user.save()
-    }
+    user = await models.User.findByEmail(email)
 
     if (user.invitations === undefined) {
       user = await inviteHelper.setupInvitation(

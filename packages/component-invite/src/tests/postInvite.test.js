@@ -39,6 +39,7 @@ const {
   invitedHandlingEditor,
 } = fixtures.users
 const { standardCollection } = fixtures.collections
+const { heTeam } = fixtures.teams
 const postInvitePath = '../routes/postInvite'
 describe('Post invite route handler', () => {
   it('should return success when the admin invites a global role', async () => {
@@ -54,36 +55,6 @@ describe('Post invite route handler', () => {
     expect(data.firstName).toEqual(body.firstName)
     expect(data.email).toEqual(body.email)
     expect(data.admin).toEqual(body.admin)
-  })
-  it('should return an error when the admin invites a user on a collection', async () => {
-    const req = httpMocks.createRequest({
-      body,
-    })
-    req.user = admin.id
-    req.params.collectionId = '123'
-    const res = httpMocks.createResponse()
-    await require(postInvitePath)(models)(req, res)
-    expect(res.statusCode).toBe(403)
-    const data = JSON.parse(res._getData())
-    expect(data.error).toEqual(
-      `admin cannot invite an ${body.role} to a collection`,
-    )
-  })
-  it('should return an error when the admin invites a reviewer', async () => {
-    body.role = 'reviewer'
-    body.admin = false
-    const req = httpMocks.createRequest({
-      body,
-    })
-    req.user = admin.id
-    const res = httpMocks.createResponse()
-    await require(postInvitePath)(models)(req, res)
-    expect(res.statusCode).toBe(403)
-    const data = JSON.parse(res._getData())
-    expect(data.error).toEqual(
-      `admin tried to invite an invalid role: ${body.role}`,
-    )
-    body.role = globalRoles[random(0, globalRoles.length - 1)]
   })
   it('should return an error params are missing', async () => {
     delete body.email
@@ -171,6 +142,7 @@ describe('Post invite route handler', () => {
       body,
     })
     req.user = editorInChief.id
+    const initialSize = standardCollection.assignedPeople.length
     req.params.collectionId = standardCollection.id
     const res = httpMocks.createResponse()
     await require(postInvitePath)(models)(req, res)
@@ -179,7 +151,11 @@ describe('Post invite route handler', () => {
     const data = JSON.parse(res._getData())
     expect(data.email).toEqual(body.email)
     expect(data.invitations[0].collectionId).toEqual(req.params.collectionId)
-    expect(standardCollection.assignedPeople).toHaveLength(1)
+    expect(standardCollection.assignedPeople.length).toBeGreaterThan(
+      initialSize,
+    )
+    expect(heTeam.members).toContain(author.id)
+    expect(author.teams).toContain(heTeam.id)
   })
   it('should return success when the handlingEditor invites a reviewer with a collection', async () => {
     const body = {

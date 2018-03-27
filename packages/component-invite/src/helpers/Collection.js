@@ -19,4 +19,11 @@ module.exports = {
     collection.assignedPeople.push(assignedPerson)
     await collection.save()
   },
+  removeAssignedPeople: async (collection, email) => {
+    const assignedPeople = collection.assignedPeople.filter(
+      person => person.email !== email,
+    )
+    collection.assignedPeople = assignedPeople
+    await collection.save()
+  },
 }

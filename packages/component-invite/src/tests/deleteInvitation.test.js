@@ -27,7 +27,7 @@ describe('Delete Invitation route handler', () => {
     const res = httpMocks.createResponse()
     const initialSize = handlingEditor.invitations.length
     await require(deleteInvitationPath)(models)(req, res)
-    expect(res.statusCode).toBe(204)
+    expect(res.statusCode).toBe(200)
     expect(heTeam.members).not.toContain(handlingEditor.id)
     expect(handlingEditor.invitations).toHaveLength(initialSize - 1)
   })
