@@ -83,6 +83,27 @@ module.exports = {
     }
     return Email.send(mailData)
   },
+  setupHandlingEditorAgreedEmail: async (
+    toEmail,
+    user,
+    emailType,
+    url,
+    collectionId,
+  ) => {
+    const { htmlBody, textBody } = getEmailBody(emailType, {
+      url,
+      name: `${user.firstName} ${user.lastName}`,
+      collectionId,
+    })
+    const mailData = {
+      from: config.get('mailer.from'),
+      to: toEmail,
+      subject: 'Handling Editor Agreed',
+      text: textBody,
+      html: htmlBody,
+    }
+    return Email.send(mailData)
+  },
 }
 
 const getEmailBody = (emailType, replacements) => {

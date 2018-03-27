@@ -16,9 +16,8 @@ const build = () => {
     Team: {},
   }
   UserMock.find = jest.fn(id => findMock(id, 'users'))
-
   UserMock.findByEmail = jest.fn(email => findByEmailMock(email))
-
+  UserMock.all = jest.fn(() => Object.values(fixtures.users))
   TeamMock.find = jest.fn(id => findMock(id, 'teams'))
   TeamMock.updateProperties = jest.fn(team =>
     updatePropertiesMock(team, 'teams'),

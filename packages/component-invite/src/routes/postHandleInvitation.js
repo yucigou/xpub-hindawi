@@ -1,6 +1,7 @@
 const logger = require('@pubsweet/logger')
 const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
+const mailService = require('pubsweet-component-mail-service')
 
 module.exports = models => async (req, res) => {
   const { type, accept } = req.body
@@ -20,13 +21,13 @@ module.exports = models => async (req, res) => {
   const { collectionId } = req.params
 
   try {
-    await models.Collection.find(collectionId)
-    const filteredInvitations = user.invitations.filter(
+    const collection = await models.Collection.find(collectionId)
+    const matchingInvitation = user.invitations.find(
       invitation =>
         invitation.collectionId === collectionId && invitation.type === type,
     )
 
-    if (filteredInvitations.length === 0) {
+    if (matchingInvitation === undefined) {
       res.status(400).json({
         error: `Request data does not match any user invitation`,
       })
@@ -36,11 +37,25 @@ module.exports = models => async (req, res) => {
       return
     }
 
-    const matchingInvitation = filteredInvitations[0]
     matchingInvitation.hasAnswer = true
     if (accept === true) {
       matchingInvitation.isAccepted = true
       await user.save()
+      try {
+        const users = await models.User.all()
+
+        const eic = users.find(user => user.editorInChief === true)
+        await mailService.setupHandlingEditorAgreedEmail(
+          eic.email,
+          user,
+          'handling-editor-agreed',
+          `${req.protocol}://${req.get('host')}`,
+          collection.customId,
+        )
+      } catch (e) {
+        logger.error(e)
+        return res.status(500).json({ error: 'Mail could not be sent.' })
+      }
     } else {
       await teamHelper.removeTeamMember(
         matchingInvitation.teamId,
