@@ -26,4 +26,12 @@ module.exports = {
     collection.assignedPeople = assignedPeople
     await collection.save()
   },
+  updateAssignedPeople: async (collection, email) => {
+    const assignedPerson = collection.assignedPeople.find(
+      person => person.email === email,
+    )
+    assignedPerson.hasAnswer = true
+    assignedPerson.isAccepted = true
+    await collection.save()
+  },
 }

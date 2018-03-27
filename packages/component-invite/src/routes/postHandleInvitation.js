@@ -42,6 +42,7 @@ module.exports = models => async (req, res) => {
     matchingInvitation.hasAnswer = true
     if (accept === true) {
       matchingInvitation.isAccepted = true
+      await collectionHelper.updateAssignedPeople(collection, user.email)
       try {
         const users = await models.User.all()
 
