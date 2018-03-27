@@ -7,11 +7,10 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>div[data-test=&quot;button-upload-manuscripts&quot;]</value>
+         <value>div[data-test=&quot;upload-manuscripts&quot;] input[type=&quot;file&quot;]</value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>

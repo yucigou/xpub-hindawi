@@ -7,14 +7,14 @@
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value></value>
+         <value>a[href=&quot;/admin/users/edit/e0e308d7-aff9-4ab7-b230-9d486e11fb50&quot;]</value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//a[contains(text(),&quot;Edit&quot;)]</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
