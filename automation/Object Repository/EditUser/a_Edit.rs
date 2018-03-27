@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>LoginButton</name>
+   <name>a_Edit</name>
    <tag></tag>
-   <elementGuidId>4bf556e3-9a8c-4577-ac69-f0ba05bf79a6</elementGuidId>
+   <elementGuidId>1ab696f2-d3f9-4d16-a6d1-c6e1e9274fa7</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>button[type=&quot;submit&quot;]</value>
+         <value></value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//a[contains(text(),&quot;Edit&quot;)]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>CSS</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
-      <value>button</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>type</name>
-      <type>Main</type>
-      <value>submit</value>
+      <value>a</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>Login-local_button-2V-wyVs0 sc-kgoBCf jJDfiI</value>
+      <value>sc-bEjcJn hzylbl</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>href</name>
+      <type>Main</type>
+      <value>/admin/users/edit/cfcaebdf-82b0-4d06-94d6-687d126165e7</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>Login</value>
+      <value>Edit</value>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;root&quot;)/div[@class=&quot;sc-fyjhYU bulmcW&quot;]/div[@class=&quot;sc-ugnQR hguLEQ&quot;]/div[@class=&quot;Login-local_root-28yxoK4a&quot;]/form[@class=&quot;Login-local_form-N-RCy5To&quot;]/button[@class=&quot;Login-local_button-2V-wyVs0 sc-kgoBCf jJDfiI&quot;]</value>
+      <value>id(&quot;root&quot;)/div[@class=&quot;sc-cmTdod hZxvxw&quot;]/div[@class=&quot;sc-dyGzUR bQYZEl&quot;]/div[@class=&quot;sc-drKuOJ fmUpkt&quot;]/div[1]/table[@class=&quot;sc-hzDEsm cniXiH&quot;]/tbody[1]/tr[@class=&quot;sc-jeCdPy kCgSUu&quot;]/td[7]/a[@class=&quot;sc-bEjcJn hzylbl&quot;]</value>
    </webElementProperties>
 </WebElementEntity>

@@ -21,39 +21,24 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.junit.After as After
 import org.openqa.selenium.Keys as Keys
-import java.util.*
+
 
 WebUI.openBrowser(null)
-
 WebUI.navigateToUrl('https://xpub-faraday.now.sh')
 
-username = findTestObject('SignIn/usernameField')
-
+username = findTestObject('SignIn/username')
 WebUI.click(username)
-
 WebUI.setText(username, 'admin')
 
-password = findTestObject('SignIn/passwordField')
-
+password = findTestObject('SignIn/password')
 WebUI.click(password)
-
 WebUI.setText(password, 'admin123')
 
-loginButton = findTestObject('SignIn/LoginButton')
-
+loginButton = findTestObject('SignIn/login')
 WebUI.click(loginButton)
 
-/*manuscriptBoard = findTestObject("Resume/manuscriptBoard")
-
-def manuscriptIds = []
-for(i= 0; i=manuscriptIds.size(); i++){
-	
-	manuscriptIds << newButton = findTestObject('NewManuscript/journalfFieldSelection/New')
-	
-	WebUI.click(newButton)
-}*/
-
-//GlobalVariable.G_manuscriptID = '1231234'
+New = findTestObject("NewManuscript/journalfFieldSelection/New")
+WebUI.click(New)
 
 journal = findTestObject('NewManuscript/journalfFieldSelection/Journal')
 WebUI.click(journal)
@@ -61,17 +46,13 @@ WebUI.click(journal)
 hindawiFaraday = findTestObject('NewManuscript/journalfFieldSelection/HindawiFaraday')
 WebUI.click(hindawiFaraday)
 
-
 issue = findTestObject('NewManuscript/journalfFieldSelection/Issue')
-
 WebUI.click(issue)
 
 regularIssues = findTestObject('NewManuscript/journalfFieldSelection/RegularIssues')
-
 WebUI.click(regularIssues)
 
 nextButton = findTestObject('NewManuscript/journalfFieldSelection/Next')
-
 WebUI.click(nextButton)
 
 hasEmail = findTestObject('NewManuscript/preSubmissionChecklist/hasEmail')
@@ -97,72 +78,59 @@ WebUI.click(Next)
 
 manuscriptTitle = findTestObject('NewManuscript/manuscriptAuthorsDetails/manuscriptTitle')
 WebUI.click(manuscriptTitle)
-
 WebUI.sendKeys(manuscriptTitle, 'A new random title')
 
 manuscriptType = findTestObject('NewManuscript/manuscriptAuthorsDetails/manuscriptType')
 WebUI.click(manuscriptType)
 
-research = findTestObject('NewManuscript/manuscriptAuthorsDetails/review')
-
+research = findTestObject('NewManuscript/manuscriptAuthorsDetails/Research')
 WebUI.click(research)
 
 abstractField = findTestObject('NewManuscript/manuscriptAuthorsDetails/abstractField')
-
 WebUI.click(abstractField)
-
 WebUI.sendKeys(abstractField, 'A new random abstract text')
 
 addAuthor = findTestObject('NewManuscript/manuscriptAuthorsDetails/addAuthor')
-
 WebUI.click(addAuthor)
 
 firstName = findTestObject('NewManuscript/manuscriptAuthorsDetails/firstName')
-
 WebUI.setText(firstName, 'Vlad')
 
 lastName = findTestObject('NewManuscript/manuscriptAuthorsDetails/lastName')
-
 WebUI.setText(lastName, 'Stegaru')
 
 email = findTestObject('NewManuscript/manuscriptAuthorsDetails/email')
-
 WebUI.setText(email, 'vlad.stegaru+newuser1@thinslices.com')
 
 affiliation = findTestObject('NewManuscript/manuscriptAuthorsDetails/affiliation')
-
 WebUI.setText(affiliation, 'University')
 
 country = findTestObject('NewManuscript/manuscriptAuthorsDetails/country')
-
 WebUI.click(country)
 
-Canada = findTestObject('NewManuscript/manuscriptAuthorsDetails/countryOption')
-
-WebUI.click(Canada)
+countryOption = findTestObject('NewManuscript/manuscriptAuthorsDetails/countryOption')
+WebUI.click(countryOption)
 
 SaveButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/Save')
-
 WebUI.click(SaveButton)
 
-noButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/no')
+submittingAuthor = findTestObject("NewManuscript/manuscriptAuthorsDetails/submittingAuthor")
+WebUI.waitForElementPresent(submittingAuthor, 10)
 
+noButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/no')
 WebUI.click(noButton)
 
 NextButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/Next')
-
 WebUI.click(NextButton)
 
-//attachFile = findTestObject('NewManuscript/manuscriptFilesUpload/attachManuscript')
+attachFile = findTestObject('NewManuscript/manuscriptFilesUpload/attachManuscript')
 
-//WebUI.uploadFile(attachFile, '/Users/vladstegaru/Documents/Hindawi/attachements/document.pdf')
+WebUI.uploadFile(attachFile, '/Users/vladstegaru/Documents/Hindawi/attachements/document.pdf')
 
 submitManuscript = findTestObject('NewManuscript/manuscriptFilesUpload/submitManuscript')
-
 WebUI.click(submitManuscript)
 
 goToDashboard = findTestObject('Resume/goToDashboard')
-
 WebUI.click(goToDashboard)
 
 WebUI.closeBrowser()

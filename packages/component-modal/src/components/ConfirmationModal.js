@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Button } from '@pubsweet/ui'
+import { Icon, Button, th } from '@pubsweet/ui'
 import styled, { css, withTheme } from 'styled-components'
 
 const ConfirmationModal = ({
@@ -11,6 +11,7 @@ const ConfirmationModal = ({
   cancelText = 'Cancel',
   hideModal,
   theme,
+  modalError,
 }) => (
   <Root>
     <CloseIcon data-test="icon-modal-hide" onClick={hideModal}>
@@ -19,13 +20,18 @@ const ConfirmationModal = ({
     {title && <Title dangerouslySetInnerHTML={{ __html: title }} />}
     {subtitle && <Subtitle dangerouslySetInnerHTML={{ __html: subtitle }} />}
     {content && <Content dangerouslySetInnerHTML={{ __html: content }} />}
+
+    {modalError && <ErrorMessage>{modalError}</ErrorMessage>}
+
     <ButtonsContainer>
       <Button data-test="button-modal-hide" onClick={hideModal}>
         {cancelText}
       </Button>
-      <Button data-test="button-modal-confirm" onClick={onConfirm} primary>
-        {confirmText}
-      </Button>
+      {onConfirm && (
+        <Button data-test="button-modal-confirm" onClick={onConfirm} primary>
+          {confirmText}
+        </Button>
+      )}
     </ButtonsContainer>
   </Root>
 )
@@ -34,51 +40,59 @@ export default withTheme(ConfirmationModal)
 
 // #region styled-components
 const defaultText = css`
-  color: ${({ theme }) => theme.colorText};
-  font-family: ${({ theme }) => theme.fontReading};
-  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+  color: ${th('colorText')};
+  font-family: ${th('fontReading')};
+  font-size: ${th('fontSizeBaseSmall')};
 `
 
 const Root = styled.div`
-  background-color: ${({ theme }) => theme.backgroundColor};
-  padding: 50px 32px 32px 32px;
-  border: ${({ theme }) => theme.borderDefault};
+  background-color: ${th('backgroundColor')};
+  border: ${th('borderDefault')};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: calc(${th('gridUnit')} * 20);
+  padding: calc(${th('gridUnit')} * 2);
   position: relative;
-  width: 600px;
-  max-height: 500px;
   overflow-y: scroll;
+  width: calc(${th('gridUnit')} * 25);
 `
 
 const Title = styled.div`
   ${defaultText};
-  font-size: ${({ theme }) => theme.fontSizeBase};
+  font-size: ${th('fontSizeHeading5')};
+  margin-bottom: ${th('gridUnit')};
   text-align: center;
-  margin-bottom: 20px;
 `
 
 const Subtitle = styled.div`
   ${defaultText};
-  font-weight: bold;
-  line-height: 1.57;
-  margin-bottom: 15px;
+  margin-bottom: calc(${th('subGridUnit')} * 6);
   text-align: center;
 `
 
 const Content = styled.div`
   ${defaultText};
-  line-height: 1.57;
-  margin-top: 10px;
+  margin-top: calc(${th('subGridUnit')} * 2);
   text-align: left;
 `
 const ButtonsContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-  margin: 30px auto 0;
+  margin: ${th('gridUnit')} auto 0;
+  width: 100%;
 `
 const CloseIcon = styled.div`
   cursor: pointer;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: ${th('subGridUnit')};
+  right: ${th('subGridUnit')};
 `
+
+const ErrorMessage = styled.div`
+  color: ${th('colorError')};
+  margin: ${th('subGridUnit')};
+  text-align: center;
+`
+
 // #endregion

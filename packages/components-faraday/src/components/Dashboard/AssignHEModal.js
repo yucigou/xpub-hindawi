@@ -1,10 +1,11 @@
 /* eslint react/prefer-stateless-function: 0 */
 
 import React from 'react'
-import { th } from '@pubsweet/ui'
+import { get } from 'lodash'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
+import { th, Icon } from '@pubsweet/ui'
+import styled, { withTheme } from 'styled-components'
 
 import { handlingEditors, assignHandlingEditor } from '../../redux/editors'
 
@@ -27,22 +28,46 @@ class AssignHEModal extends React.Component {
   }
 
   assignEditor = email => () => {
-    const { assignHandlingEditor, collectionId, hideModal } = this.props
-    assignHandlingEditor(email, collectionId).then(hideModal)
+    const {
+      assignHandlingEditor,
+      collectionId,
+      showModal,
+      hideModal,
+      setModalError,
+    } = this.props
+    assignHandlingEditor(email, collectionId).then(
+      () => {
+        hideModal()
+        showModal({
+          type: 'confirmation',
+          title: 'Assignation Sent',
+          cancelText: 'OK',
+        })
+      },
+      e => {
+        setModalError(
+          get(JSON.parse(e.response), 'error') || 'Oops! Something went wrong!',
+        )
+      },
+    )
   }
 
   render() {
     const { searchInput } = this.state
-    const { editors } = this.props
+    const { editors, hideModal, theme } = this.props
     const filteredEditors = this.filterEditors(editors)
     return (
       <RootModal>
-        <button onClick={this.props.hideModal}>CLOSE</button>
+        <CloseIcon data-test="icon-modal-hide" onClick={hideModal}>
+          <Icon color={theme.colorPrimary}>x</Icon>
+        </CloseIcon>
         <ModalTitle>Assign Handling Editor</ModalTitle>
         <ModalHeader>
           <span>HANDLING EDITORS</span>
           <SearchInput
+            data-test="he-search"
             onChange={this.changeInput}
+            placeholder="Search by name or email"
             type="text"
             value={searchInput}
           />
@@ -58,7 +83,10 @@ class AssignHEModal extends React.Component {
                   <span>{`${firstName} ${lastName}`}</span>
                   <span>{email}</span>
                 </EditorDetails>
-                <AssignButton onClick={this.assignEditor(email)}>
+                <AssignButton
+                  data-test={`assign-${email}`}
+                  onClick={this.assignEditor(email)}
+                >
                   ASSIGN
                 </AssignButton>
               </SuggestedEditor>
@@ -77,9 +105,17 @@ export default compose(
     }),
     { assignHandlingEditor },
   ),
+  withTheme,
 )(AssignHEModal)
 
 // #region styled-components
+const CloseIcon = styled.div`
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+`
+
 const EditorDetails = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,13 +136,16 @@ const SuggestedEditor = styled.div`
 
 const AssignButton = styled.button`
   align-items: center;
-  color: ${th('colorTextReverse')};
   background-color: ${th('colorPrimary')};
+  cursor: pointer;
+  color: ${th('colorTextReverse')};
   display: flex;
   justify-content: center;
+  font-size: ${th('fontSizeBaseSmall')};
+  font-family: ${th('fontReading')};
   height: ${th('gridUnit')};
-  width: calc(${th('gridUnit')} * 4);
   opacity: 0;
+  width: calc(${th('gridUnit')} * 4);
 
   ${SuggestedEditor}:hover & {
     opacity: 1;
@@ -121,6 +160,7 @@ const RootModal = styled.div`
   justify-content: flex-start;
   height: calc(${th('gridUnit')} * 18);
   padding: calc(${th('subGridUnit')} * 8) calc(${th('subGridUnit')} * 6);
+  position: relative;
   width: calc(${th('gridUnit')} * 24);
 `
 
@@ -139,6 +179,7 @@ const ModalHeader = styled.div`
   & span {
     color: ${th('colorPrimary')};
     font-size: ${th('fontSizeBase')};
+    font-family: ${th('fontReading')};
     margin-bottom: ${th('subGridUnit')};
   }
 `
@@ -147,6 +188,11 @@ const SearchInput = styled.input`
   border: 4px solid gray;
   height: calc(${th('subGridUnit')} * 5);
   padding: ${th('subGridUnit')};
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
 `
 
 const ScrollContainer = styled.div`

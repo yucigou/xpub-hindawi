@@ -40,5 +40,5 @@ const ModalRoot = styled.div`
   justify-content: center;
   background-color: ${({ overlayColor }) =>
     overlayColor || 'rgba(0, 0, 0, 0.8)'};
-  /* z-index: ${({ theme }) => theme.modalIndex}; */
+  z-index: ${({ theme }) => theme.modalIndex};
 `

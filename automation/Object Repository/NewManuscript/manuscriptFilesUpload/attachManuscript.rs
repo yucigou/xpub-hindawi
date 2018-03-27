@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>attachFile</name>
+   <name>attachManuscript</name>
    <tag></tag>
    <elementGuidId>c3eed726-7b7f-4e93-8d4a-baddc5a31314</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value></value>
+         <value>div[data-test=&quot;button-upload-manuscripts&quot;]</value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//*[@id=&quot;root&quot;]/div/div[2]/div/div[2]/form/div[1]/div/div/div[2]/div[1]/div/div</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

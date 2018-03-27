@@ -23,19 +23,19 @@ WebUI.openBrowser(null)
 
 WebUI.navigateToUrl('xpub-faraday.now.sh')
 
-username = findTestObject('SignIn/usernameField')
+username = findTestObject('SignIn/username')
 
 WebUI.click(username)
 
 WebUI.setText(username, 'admin')
 
-password = findTestObject('SignIn/passwordField')
+password = findTestObject('SignIn/password')
 
 WebUI.click(password)
 
 WebUI.setText(password, 'admin123')
 
-loginButton = findTestObject('SignIn/LoginButton')
+loginButton = findTestObject('SignIn/login')
 
 WebUI.click(loginButton)
 

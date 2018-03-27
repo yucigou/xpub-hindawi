@@ -11,15 +11,10 @@
       </entry>
       <entry>
          <key>XPATH</key>
-         <key>XPATH</key>
-         <value>//button/*[1]</value>
-      </entry>
-      <entry>
-         <key>CSS</key>
-         <value>button:first-child</value>
+         <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>CSS</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
