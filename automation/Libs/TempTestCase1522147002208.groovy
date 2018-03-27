@@ -13,13 +13,13 @@ DriverCleanerCollector.getInstance().addDriverCleaner(new com.kms.katalon.core.w
 DriverCleanerCollector.getInstance().addDriverCleaner(new com.kms.katalon.core.mobile.contribution.MobileDriverCleaner())
 
 
-RunConfiguration.setExecutionSettingFile('/var/folders/3h/5jvs258x4lng1yz2s32ryr4r0000gn/T/Katalon/Test Cases/Cancel submission/Cancel manuscript/20180327_112123/execution.properties')
+RunConfiguration.setExecutionSettingFile('/var/folders/3h/5jvs258x4lng1yz2s32ryr4r0000gn/T/Katalon/Test Cases/Add new manuscript/Add a new manuscript/20180327_133642/execution.properties')
 
 TestCaseMain.beforeStart()
 try {
     
-	    TestCaseMain.runTestCase('Test Cases/Cancel submission/Cancel manuscript', new TestCaseBinding('Test Cases/Cancel submission/Cancel manuscript', [:]), FailureHandling.STOP_ON_FAILURE )
+	    TestCaseMain.runTestCase('Test Cases/Add new manuscript/Add a new manuscript', new TestCaseBinding('Test Cases/Add new manuscript/Add a new manuscript', [:]), FailureHandling.STOP_ON_FAILURE )
     
 } catch (Exception e) {
-    TestCaseMain.logError(e, 'Test Cases/Cancel submission/Cancel manuscript')
+    TestCaseMain.logError(e, 'Test Cases/Add new manuscript/Add a new manuscript')
 }

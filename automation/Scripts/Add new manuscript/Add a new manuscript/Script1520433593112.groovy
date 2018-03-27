@@ -24,7 +24,7 @@ import org.openqa.selenium.Keys as Keys
 
 
 WebUI.openBrowser(null)
-WebUI.navigateToUrl('https://xpub-faraday.now.sh')
+WebUI.navigateToUrl('http://localhost:3000')
 
 username = findTestObject('SignIn/username')
 WebUI.click(username)
@@ -32,7 +32,7 @@ WebUI.setText(username, 'admin')
 
 password = findTestObject('SignIn/password')
 WebUI.click(password)
-WebUI.setText(password, 'admin123')
+WebUI.setText(password, 'password')
 
 loginButton = findTestObject('SignIn/login')
 WebUI.click(loginButton)
@@ -119,19 +119,25 @@ WebUI.waitForElementPresent(submittingAuthor, 10)
 
 noButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/no')
 WebUI.click(noButton)
+WebUI.waitForElementPresent(noButton, 10)
 
 NextButton = findTestObject('NewManuscript/manuscriptAuthorsDetails/Next')
+WebUI.waitForElementVisible(NextButton, 10)
 WebUI.click(NextButton)
 
-attachFile = findTestObject('NewManuscript/manuscriptFilesUpload/attachManuscript')
-
-WebUI.uploadFile(attachFile, '/Users/vladstegaru/Documents/Hindawi/attachements/document.pdf')
+attachManuscript = findTestObject('NewManuscript/manuscriptFilesUpload/attachManuscript')
+document = findTestObject("NewManuscript/manuscriptFilesUpload/document")
+WebUI.uploadFile(attachManuscript, '/Users/vladstegaru/Documents/Hindawi/attachements/document.pdf')
+WebUI.waitForElementPresent(document, 10)
 
 submitManuscript = findTestObject('NewManuscript/manuscriptFilesUpload/submitManuscript')
 WebUI.click(submitManuscript)
+WebUI.waitForElementVisible(submitManuscript, 10)
 
 goToDashboard = findTestObject('Resume/goToDashboard')
+WebUI.waitForElementPresent(goToDashboard, 10)
 WebUI.click(goToDashboard)
+WebUI.waitForPageLoad(5)
 
 //WebUI.closeBrowser()
 
