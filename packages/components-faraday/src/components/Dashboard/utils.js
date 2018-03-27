@@ -79,7 +79,9 @@ export const mapStatusToLabel = status => {
   switch (status) {
     case 'he-invited':
       return 'Handling Editor Invited'
-    default:
+    case 'submitted':
       return 'Submitted'
+    default:
+      return 'Draft'
   }
 }
