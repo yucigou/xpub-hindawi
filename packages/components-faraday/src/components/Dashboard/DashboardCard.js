@@ -10,7 +10,7 @@ import {
 } from 'pubsweet-component-modal/src/components'
 
 import ZipFiles from './ZipFiles'
-import { parseVersion, parseJournalIssue } from './utils'
+import { parseVersion, parseJournalIssue, mapStatusToLabel } from './utils'
 import HandlingEditorActions from './HandlingEditorActions'
 
 const DashboardCard = ({
@@ -71,7 +71,7 @@ const DashboardCard = ({
         </Top>
         <Bottom>
           <LeftDetails flex="2">
-            <Status>{status}</Status>
+            <Status>{mapStatusToLabel(status)}</Status>
             <DateField>{submitted || ''}</DateField>
           </LeftDetails>
           <RightDetails flex="5">

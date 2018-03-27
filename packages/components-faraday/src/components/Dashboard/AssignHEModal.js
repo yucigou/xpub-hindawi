@@ -5,6 +5,7 @@ import { get } from 'lodash'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { th, Icon } from '@pubsweet/ui'
+import { actions } from 'pubsweet-client'
 import styled, { withTheme } from 'styled-components'
 
 import { handlingEditors, assignHandlingEditor } from '../../redux/editors'
@@ -34,14 +35,22 @@ class AssignHEModal extends React.Component {
       showModal,
       hideModal,
       setModalError,
+      updateCollection,
+      getCollections,
     } = this.props
     assignHandlingEditor(email, collectionId).then(
       () => {
-        hideModal()
-        showModal({
-          type: 'confirmation',
-          title: 'Assignation Sent',
-          cancelText: 'OK',
+        updateCollection({
+          id: collectionId,
+          status: 'he-invited',
+        }).then(() => {
+          getCollections()
+          hideModal()
+          showModal({
+            type: 'confirmation',
+            title: 'Assignation Sent',
+            cancelText: 'OK',
+          })
         })
       },
       e => {
@@ -103,7 +112,11 @@ export default compose(
     state => ({
       editors: handlingEditors(state),
     }),
-    { assignHandlingEditor },
+    {
+      assignHandlingEditor,
+      updateCollection: actions.updateCollection,
+      getCollections: actions.getCollections,
+    },
   ),
   withTheme,
 )(AssignHEModal)
