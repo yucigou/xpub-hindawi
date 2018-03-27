@@ -24,6 +24,7 @@ export const parseUpdateUser = values => {
     'roles',
     'rev',
     'editorInChief',
+    'handlingEditor',
   ]
 
   return pick(values, valuesToSave)

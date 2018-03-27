@@ -10,16 +10,11 @@ import { newestFirst, selectCurrentUser } from 'xpub-selectors'
 import { createDraftSubmission } from 'pubsweet-component-wizard/src/redux/conversion'
 
 import Dashboard from './Dashboard'
-import { getHandlingEditors } from '../../redux/editors'
 import withFilters from './withFilters'
+import { getHandlingEditors } from '../../redux/editors'
 
 export default compose(
-  ConnectPage(() => [
-    actions.getCollections(),
-    actions.getTeams(),
-    actions.getUsers(),
-    getHandlingEditors(),
-  ]),
+  ConnectPage(() => [actions.getCollections()]),
   connect(
     state => {
       const { collections, conversion } = state
@@ -49,6 +44,12 @@ export default compose(
         dispatch(actions.deleteCollection(collection)),
       createDraftSubmission: () => dispatch(createDraftSubmission(history)),
     }),
+  ),
+  ConnectPage(
+    ({ currentUser }) =>
+      get(currentUser, 'admin') || get(currentUser, 'editorInChief')
+        ? [getHandlingEditors()]
+        : [],
   ),
   withRouter,
   withJournal,

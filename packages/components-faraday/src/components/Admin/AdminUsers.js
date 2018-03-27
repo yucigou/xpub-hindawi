@@ -24,6 +24,7 @@ const TableRow = ({
   affiliation,
   isConfirmed,
   editorInChief,
+  handlingEditor,
   admin,
   roleOptions,
 }) => (
@@ -36,8 +37,8 @@ const TableRow = ({
     <td>{affiliation}</td>
     <td>
       <Role>{`Author${isEqual(editorInChief, true) ? ', Editor in Chief' : ''}${
-        isEqual(admin, true) ? ', Admin' : ''
-      }`}</Role>
+        isEqual(handlingEditor, true) ? ', Handling Editor' : ''
+      }${isEqual(admin, true) ? ', Admin' : ''}`}</Role>
     </td>
     <td>
       <Tag>{isConfirmed ? 'Confirmed' : 'Invited'}</Tag>
