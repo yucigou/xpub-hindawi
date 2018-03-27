@@ -8,6 +8,7 @@ const Model = require('./helpers/Model')
 const models = Model.build()
 jest.mock('pubsweet-component-mail-service', () => ({
   setupAssignEmail: jest.fn(),
+  setupHandlingEditorAgreedEmail: jest.fn(),
 }))
 
 const notFoundError = new Error()
