@@ -4,6 +4,7 @@ const config = require('config')
 const inviteHelper = require('../helpers/Invitation')
 const mailService = require('pubsweet-component-mail-service')
 const logger = require('@pubsweet/logger')
+const collectionHelper = require('../helpers/Collection')
 
 const configRoles = config.get('roles')
 module.exports = models => async (req, res) => {
@@ -26,7 +27,7 @@ module.exports = models => async (req, res) => {
 
   const { collectionId, userId } = req.params
   try {
-    await models.Collection.find(collectionId)
+    const collection = await models.Collection.find(collectionId)
     let user = await models.User.find(userId)
     const team = await teamHelper.getTeamByGroupAndCollection(
       collectionId,
@@ -43,6 +44,7 @@ module.exports = models => async (req, res) => {
     await inviteHelper.revokeInvitation(user, collectionId, role)
     user = await models.User.find(userId)
     await teamHelper.removeTeamMember(team.id, userId, models.Team)
+    await collectionHelper.removeAssignedPeople(collection, user.email)
     try {
       await mailService.setupRevokeInvitationEmail(
         user.email,

@@ -1,5 +1,6 @@
 const { standardCollection } = require('./collections')
 const { heTeamID, reviewerTeamID } = require('./teamIDs')
+const { handlingEditor } = require('./userData')
 
 const users = {
   admin: {
@@ -29,12 +30,12 @@ const users = {
   handlingEditor: {
     type: 'user',
     username: 'handling',
-    email: 'handling@example.com',
+    email: handlingEditor.email,
     password: 'test',
     admin: false,
-    id: 'handling123',
-    firstName: 'Handling',
-    lastName: 'Editor',
+    id: handlingEditor.id,
+    firstName: handlingEditor.firstName,
+    lastName: handlingEditor.lastName,
     invitations: [
       {
         type: 'handlingEditor',
