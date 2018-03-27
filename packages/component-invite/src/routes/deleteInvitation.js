@@ -43,7 +43,7 @@ module.exports = models => async (req, res) => {
     }
     await inviteHelper.revokeInvitation(user, collectionId, role)
     await teamHelper.removeTeamMember(team.id, userId, models.Team)
-    user.teams = user.teams.filter(userTeam => team.id !== userTeam.id)
+    user.teams = user.teams.filter(userTeamId => team.id !== userTeamId)
     await user.save()
     await collectionHelper.removeAssignedPeople(collection, user.email)
     try {

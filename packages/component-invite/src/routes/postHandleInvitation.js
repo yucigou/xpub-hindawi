@@ -2,6 +2,7 @@ const logger = require('@pubsweet/logger')
 const helpers = require('../helpers/helpers')
 const teamHelper = require('../helpers/Team')
 const mailService = require('pubsweet-component-mail-service')
+const collectionHelper = require('../helpers/Collection')
 
 module.exports = models => async (req, res) => {
   const { type, accept } = req.body
@@ -63,6 +64,10 @@ module.exports = models => async (req, res) => {
         user.id,
         models.Team,
       )
+      user.teams = user.teams.filter(
+        userTeamId => matchingInvitation.teamId !== userTeamId,
+      )
+      await collectionHelper.removeAssignedPeople(collection, user.email)
       const { reason } = req.body
       if (reason !== undefined) {
         matchingInvitation.reason = reason
