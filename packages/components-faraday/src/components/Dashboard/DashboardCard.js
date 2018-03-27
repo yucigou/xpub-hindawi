@@ -24,6 +24,7 @@ const DashboardCard = ({
   showConfirmationModal,
   theme,
   currentUser,
+  renderHandlingEditorRow,
   ...rest
 }) => {
   const { submitted, title, type } = parseVersion(version)
@@ -137,14 +138,7 @@ const DashboardCard = ({
           <Bottom>
             <LeftDetails flex="5">
               <HEText>Handling Editor</HEText>
-              {get(currentUser, 'admin') ||
-                (get(currentUser, 'editorInChief') && (
-                  <EditorInChiefActions project={project} />
-                ))}
-              {get(currentUser, 'handlingEditor') &&
-                status === 'he-invited' && (
-                  <HandlingEditorActions project={project} />
-                )}
+              {renderHandlingEditorRow()}
             </LeftDetails>
           </Bottom>
         </DetailsView>
@@ -161,6 +155,30 @@ export default compose(
     modalComponent: ConfirmationModal,
   }),
   withHandlers({
+    renderHandlingEditorRow: ({ currentUser, project }) => () => {
+      const status = get(project, 'status') || 'draft'
+      const isAdmin = get(currentUser, 'admin')
+      const isEic = get(currentUser, 'editorInChief')
+      const isHe = get(currentUser, 'handlingEditor')
+      const assignedPeople = get(project, 'assignedPeople')
+      const assignedHE =
+        assignedPeople && assignedPeople.find(p => p.role === 'handlingEditor')
+
+      if (isAdmin || isEic) {
+        if (status === 'submitted' || status === 'he-invited')
+          return <EditorInChiefActions project={project} />
+        if (status === 'under-review')
+          return <AssignedHE>{get(assignedHE, 'name')}</AssignedHE>
+        return <div>bine bulanes</div>
+      }
+
+      if (isHe) {
+        if (status === 'he-invited')
+          return <HandlingEditorActions project={project} />
+        if (status === 'under-review')
+          return <AssignedHE>{get(assignedHE, 'name')}</AssignedHE>
+      }
+    },
     showConfirmationModal: ({
       deleteProject,
       showModal,
@@ -189,6 +207,12 @@ const defaultText = css`
   color: ${th('colorText')};
   font-family: ${th('fontReading')};
   font-size: ${th('fontSizeBaseSmall')};
+`
+
+const AssignedHE = styled.span`
+  ${defaultText};
+  margin-left: calc(${th('subGridUnit')} * 3);
+  text-decoration: underline;
 `
 
 const AuthorList = styled.span`

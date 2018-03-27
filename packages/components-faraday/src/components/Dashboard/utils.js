@@ -81,6 +81,8 @@ export const mapStatusToLabel = status => {
       return 'Handling Editor Invited'
     case 'submitted':
       return 'Submitted'
+    case 'under-review':
+      return 'Under review'
     default:
       return 'Draft'
   }

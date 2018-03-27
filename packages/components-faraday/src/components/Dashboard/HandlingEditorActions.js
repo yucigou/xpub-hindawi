@@ -89,7 +89,7 @@ export default compose(
         title: 'Decline handling editor role',
         subtitle: `Clicking "Agree" will assign you as Handling Editor for this Manuscript.`,
         onConfirm: reason => () => {
-          handlingEditorDecision(project.id, true, reason).then(() => {
+          handlingEditorDecision(project.id, false, reason).then(() => {
             updateCollection({
               id: project.id,
               status: 'submitted',
@@ -128,6 +128,7 @@ const DeclineRoot = styled.div`
 
   & textarea {
     height: 100%;
+    padding: calc(${th('subGridUnit')} * 2);
     width: 100%;
   }
 
