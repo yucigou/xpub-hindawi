@@ -78,7 +78,7 @@ export const parseJournalIssue = (journal, metadata) =>
 export const mapStatusToLabel = status => {
   switch (status) {
     case 'he-invited':
-      return 'HE Invited'
+      return 'Handling Editor Invited'
     default:
       return 'Submitted'
   }

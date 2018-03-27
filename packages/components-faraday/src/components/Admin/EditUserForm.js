@@ -75,6 +75,17 @@ const EditUserForm = ({ roles, journal, user, error }) => (
               checked={input.value}
               type="checkbox"
               {...input}
+              label="Handling Editor"
+            />
+          )}
+          name="handlingEditor"
+        />
+        <ValidatedField
+          component={input => (
+            <Checkbox
+              checked={input.value}
+              type="checkbox"
+              {...input}
               label="Admin"
             />
           )}
