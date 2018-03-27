@@ -49,7 +49,7 @@ module.exports = models => async (req, res) => {
         'revoke-handling-editor',
       )
 
-      return res.status(204).json()
+      return res.status(200).json({})
     } catch (e) {
       logger.error(e.message)
       return res.status(500).json({ error: 'Email could not be sent.' })

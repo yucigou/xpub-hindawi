@@ -74,3 +74,12 @@ export const parseVersion = version => ({
 
 export const parseJournalIssue = (journal, metadata) =>
   journal.issueTypes.find(t => t.value === get(metadata, 'issue'))
+
+export const mapStatusToLabel = status => {
+  switch (status) {
+    case 'he-invited':
+      return 'HE Invited'
+    default:
+      return 'Submitted'
+  }
+}

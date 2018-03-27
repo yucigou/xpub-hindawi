@@ -1,6 +1,7 @@
 import React from 'react'
 import { get, head } from 'lodash'
 import { connect } from 'react-redux'
+import { actions } from 'pubsweet-client'
 import { Icon, Button, th } from '@pubsweet/ui'
 import { compose, withHandlers } from 'recompose'
 import styled, { css, withTheme } from 'styled-components'
@@ -64,7 +65,12 @@ const handleError = fn => e => {
 }
 
 export default compose(
-  connect(null, { revokeHandlingEditor, assignHandlingEditor }),
+  connect(null, {
+    revokeHandlingEditor,
+    assignHandlingEditor,
+    updateCollection: actions.updateCollection,
+    getCollections: actions.getCollections,
+  }),
   withTheme,
   withModal({
     modalKey: 'confirmHE',
@@ -93,6 +99,8 @@ export default compose(
       getHandlingEditor,
       hideModal,
       setModalError,
+      updateCollection,
+      getCollections,
     }) => actionType => {
       const editor = getHandlingEditor()
       const resendConfig = {
@@ -117,10 +125,16 @@ export default compose(
         confirmText: 'Revoke invite',
         onConfirm: () =>
           revokeHandlingEditor(get(editor, 'id'), project.id).then(() => {
-            hideModal()
-            showModal({
-              type: 'success',
-              title: 'Handling Editor Assignation Revoked',
+            updateCollection({
+              id: project.id,
+              status: 'submitted',
+            }).then(() => {
+              getCollections()
+              hideModal()
+              showModal({
+                type: 'success',
+                title: 'Handling Editor Assignation Revoked',
+              })
             })
           }, handleError(setModalError)),
       }
