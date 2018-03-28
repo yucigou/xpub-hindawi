@@ -1,0 +1,6 @@
+Handling Editor Invitation Declined
+{{ name }} has declined to be Handling Editor on manuscript {{ collectionId }}.
+{{ finalReason }}
+Hindawi Publishing Corporation
+315 Madison Ave, Third Floor, Suite 307
+New York, NY 10017

@@ -111,7 +111,7 @@ const users = {
       },
     ],
     teams: [heTeamID],
-    save: jest.fn(() => users.handlingEditor),
+    save: jest.fn(() => users.invitedHandlingEditor),
     editorInChief: false,
   },
 }

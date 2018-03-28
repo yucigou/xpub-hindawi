@@ -40,13 +40,12 @@ module.exports = models => async (req, res) => {
 
     const matchingInvitation = matchingInvitations[0]
     matchingInvitation.hasAnswer = true
+    const users = await models.User.all()
+    const eic = users.find(user => user.editorInChief === true)
     if (accept === true) {
       matchingInvitation.isAccepted = true
       await collectionHelper.updateAssignedPeople(collection, user.email)
       try {
-        const users = await models.User.all()
-
-        const eic = users.find(user => user.editorInChief === true)
         await mailService.setupHandlingEditorAgreedEmail(
           eic.email,
           user,
@@ -72,6 +71,18 @@ module.exports = models => async (req, res) => {
       const { reason } = req.body
       if (reason !== undefined) {
         matchingInvitation.reason = reason
+      }
+      try {
+        await mailService.setupDeclineEmail(
+          eic.email,
+          user,
+          'handling-editor-declined',
+          collection.customId,
+          reason,
+        )
+      } catch (e) {
+        logger.error(e)
+        return res.status(500).json({ error: 'Mail could not be sent.' })
       }
     }
     user = await user.save()
