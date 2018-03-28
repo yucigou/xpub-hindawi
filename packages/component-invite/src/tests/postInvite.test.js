@@ -23,8 +23,8 @@ const body = {
   role: globalRoles[random(0, globalRoles.length - 1)],
   firstName: chance.first(),
   lastName: chance.last(),
-  title: 'professor',
-  affiliation: 'MIT',
+  title: 'Mr',
+  affiliation: chance.company(),
 }
 body.admin = body.role === 'admin'
 
@@ -38,6 +38,7 @@ const {
   handlingEditor,
   author,
   invitedHandlingEditor,
+  submittingAuthor,
 } = fixtures.users
 const { standardCollection } = fixtures.collections
 const { heTeam } = fixtures.teams
@@ -239,6 +240,61 @@ describe('Post invite route handler', () => {
     expect(data.email).toEqual(body.email)
     expect(invitedHandlingEditor.invitations.length).toBeGreaterThan(
       initialSize,
+    )
+  })
+  it('should return success when an author adds a new co author to a collection', async () => {
+    const body = {
+      email: chance.email(),
+      role: 'coAuthor',
+    }
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = submittingAuthor.id
+    req.params.collectionId = standardCollection.id
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+
+    expect(res.statusCode).toBe(200)
+    const data = JSON.parse(res._getData())
+    expect(data.email).toEqual(body.email)
+    expect(data.invitations).toBeUndefined()
+  })
+  it('should return success when an author adds an existing user as co author to a collection', async () => {
+    const body = {
+      email: author.email,
+      role: 'coAuthor',
+    }
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = submittingAuthor.id
+    const initialSize = author.invitations.length
+    req.params.collectionId = standardCollection.id
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+
+    // expect(res.statusCode).toBe(200)
+    const data = JSON.parse(res._getData())
+    // console.log(data)
+    expect(data.email).toEqual(body.email)
+    expect(data.invitations).toHaveLength(initialSize)
+  })
+  it('should return an error when an handlingEditor without a team invites a reviewer on a collection', async () => {
+    body.role = 'reviewer'
+    body.admin = false
+    const req = httpMocks.createRequest({
+      body,
+    })
+    delete handlingEditor.teams
+    req.user = handlingEditor.id
+    req.params.collectionId = standardCollection.id
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+    expect(res.statusCode).toBe(403)
+    const data = JSON.parse(res._getData())
+    expect(data.error).toEqual(
+      `Handling Editor ${handlingEditor.email} is not part of any teams`,
     )
   })
 })

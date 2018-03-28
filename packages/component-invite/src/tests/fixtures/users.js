@@ -1,7 +1,9 @@
 const { standardCollection } = require('./collections')
 const { heTeamID, reviewerTeamID } = require('./teamIDs')
-const { handlingEditor } = require('./userData')
+const { handlingEditor, submittingAuthor } = require('./userData')
+const Chance = require('chance')
 
+const chance = new Chance()
 const users = {
   admin: {
     type: 'user',
@@ -49,6 +51,7 @@ const users = {
     teams: [heTeamID],
     save: jest.fn(() => users.handlingEditor),
     editorInChief: false,
+    handlingEditor: true,
   },
   author: {
     type: 'user',
@@ -113,6 +116,21 @@ const users = {
     teams: [heTeamID],
     save: jest.fn(() => users.invitedHandlingEditor),
     editorInChief: false,
+  },
+  submittingAuthor: {
+    type: 'user',
+    username: 'sauthor',
+    email: submittingAuthor.email,
+    password: 'password',
+    admin: false,
+    id: submittingAuthor.id,
+    passwordResetToken: chance.hash(),
+    firstName: submittingAuthor.firstName,
+    lastName: submittingAuthor.lastName,
+    affiliation: chance.company(),
+    title: 'Mr',
+    save: jest.fn(() => users.submittingAuthor),
+    isConfirmed: false,
   },
 }
 

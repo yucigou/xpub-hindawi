@@ -17,6 +17,11 @@ const createNewTeam = async (collectionId, role, userId, TeamModel) => {
       group = 'reviewer'
       name = 'Reviewer'
       break
+    case 'coAuthor':
+      permissions = 'coAuthor'
+      group = 'author'
+      name = 'author'
+      break
     default:
       break
   }
@@ -87,7 +92,6 @@ const setupManuscriptTeam = async (models, user, collectionId, role) => {
     team.members.push(user.id)
 
     try {
-      // team = await team.updateProperties(team)
       team = await team.save()
       user.teams.push(team.id)
       await user.save()

@@ -8,28 +8,18 @@ const resetPath = config.get('invite-reset-password.url')
 
 module.exports = {
   setupInviteEmail: async (email, emailType, token, inviteUrl) => {
-    let subject
-    let replacements = {}
-    switch (emailType) {
-      case 'invite':
-        subject = 'Hindawi Invitation'
-        replacements = {
-          url: `${inviteUrl}${resetPath}?${querystring.encode({
-            email,
-            token,
-          })}`,
-        }
-        break
-      default:
-        subject = 'Welcome to Hindawi!'
-        break
+    const replacements = {
+      url: `${inviteUrl}${resetPath}?${querystring.encode({
+        email,
+        token,
+      })}`,
     }
 
     const { htmlBody, textBody } = getEmailBody(emailType, replacements)
     const mailData = {
       from: config.get('mailer.from'),
       to: email,
-      subject,
+      subject: 'Hindawi Invitation',
       text: textBody,
       html: htmlBody,
     }
@@ -42,6 +32,12 @@ module.exports = {
     switch (emailType) {
       case 'assign-handling-editor':
         subject = 'Hindawi Handling Editor Invitation'
+        replacements = {
+          url: dashBoardUrl,
+        }
+        break
+      case 'assign-coauthor':
+        subject = 'Manuscript Assignment on Hindawi'
         replacements = {
           url: dashBoardUrl,
         }

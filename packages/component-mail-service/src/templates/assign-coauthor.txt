@@ -1,0 +1,7 @@
+You have been assigned as an Author to a manuscript.
+The manuscript will become visible on your dashboard once it's submitted.
+Please click on the link below to access your dashboard
+{{ url }} VIEW DASHBOARD
+Hindawi Publishing Corporation
+315 Madison Ave, Third Floor, Suite 307
+New York, NY 10017

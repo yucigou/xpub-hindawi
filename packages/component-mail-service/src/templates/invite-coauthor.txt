@@ -1,0 +1,7 @@
+You have been invited as an Author to a manuscript.
+The manuscript will be visible on your dashboard once it's submitted.
+Please confirm your account and set your account details by clicking on the link below.
+{{ url }} CONFIRM
+Hindawi Publishing Corporation
+315 Madison Ave, Third Floor, Suite 307
+New York, NY 10017

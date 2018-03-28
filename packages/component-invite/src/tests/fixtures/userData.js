@@ -9,4 +9,10 @@ module.exports = {
     firstName: chance.first(),
     lastName: chance.last(),
   },
+  submittingAuthor: {
+    id: chance.guid(),
+    email: chance.email(),
+    firstName: chance.first(),
+    lastName: chance.last(),
+  },
 }
