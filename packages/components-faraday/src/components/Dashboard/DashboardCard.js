@@ -164,6 +164,7 @@ export default compose(
       const assignedHE =
         assignedPeople && assignedPeople.find(p => p.role === 'handlingEditor')
 
+      // this can be changed, but it works; cba
       if (isAdmin || isEic) {
         if (status === 'submitted' || status === 'he-invited')
           return <EditorInChiefActions project={project} />
