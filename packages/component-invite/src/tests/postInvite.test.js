@@ -14,6 +14,7 @@ const models = Model.build()
 jest.mock('pubsweet-component-mail-service', () => ({
   setupInviteEmail: jest.fn(),
   setupAssignEmail: jest.fn(),
+  setupDeclineEmail: jest.fn(),
 }))
 const chance = new Chance()
 const globalRoles = configRoles.global
