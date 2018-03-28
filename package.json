@@ -36,7 +36,8 @@
     "lint:style": "stylelint packages/**/*.scss packages/**/*.css",
     "precommit": "lint-staged",
     "styleguide": "lerna run styleguide",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "start": "docker-compose up"
   },
   "lint-staged": {
     "*.js": [
