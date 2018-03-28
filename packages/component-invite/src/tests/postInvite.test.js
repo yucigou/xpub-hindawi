@@ -14,6 +14,7 @@ const models = Model.build()
 jest.mock('pubsweet-component-mail-service', () => ({
   setupInviteEmail: jest.fn(),
   setupAssignEmail: jest.fn(),
+  setupDeclineEmail: jest.fn(),
 }))
 const chance = new Chance()
 const globalRoles = configRoles.global
@@ -218,6 +219,26 @@ describe('Post invite route handler', () => {
     const data = JSON.parse(res._getData())
     expect(data.email).toEqual(body.email)
     expect(data.invitations[0].collectionId).toEqual(req.params.collectionId)
-    expect(data.invitations).toHaveLength(1)
+  })
+  it('should return success when the EiC invites the a HE after he declined an invitation', async () => {
+    const body = {
+      email: invitedHandlingEditor.email,
+      role: 'handlingEditor',
+    }
+    const req = httpMocks.createRequest({
+      body,
+    })
+    req.user = editorInChief.id
+    req.params.collectionId = standardCollection.id
+    const initialSize = invitedHandlingEditor.invitations.length
+    const res = httpMocks.createResponse()
+    await require(postInvitePath)(models)(req, res)
+
+    expect(res.statusCode).toBe(200)
+    const data = JSON.parse(res._getData())
+    expect(data.email).toEqual(body.email)
+    expect(invitedHandlingEditor.invitations.length).toBeGreaterThan(
+      initialSize,
+    )
   })
 })

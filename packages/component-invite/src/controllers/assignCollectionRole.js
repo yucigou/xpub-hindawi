@@ -76,10 +76,16 @@ module.exports = async (
       )
       await collHelper.addAssignedPeople(collection, user, role)
     } else {
-      const matchingInvitation = inviteHelper.getMatchingInvitation(
-        user.invitations,
-        collectionId,
-        role,
+      // const matchingInvitation = inviteHelper.getMatchingInvitation(
+      //   user.invitations,
+      //   collectionId,
+      //   role,
+      // )
+      const matchingInvitation = user.invitations.find(
+        invitation =>
+          invitation.collectionId === collectionId &&
+          invitation.role === role &&
+          invitation.hasAnswer === false,
       )
       if (matchingInvitation === undefined) {
         user = await inviteHelper.setupInvitation(

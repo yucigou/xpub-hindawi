@@ -11,6 +11,7 @@ import {
   SuccessModal,
 } from 'pubsweet-component-modal/src/components'
 
+import { handleError } from './utils'
 import { revokeHandlingEditor, assignHandlingEditor } from '../../redux/editors'
 
 import HEModal from './AssignHEModal'
@@ -25,12 +26,12 @@ const EditorInChiefActions = ({
   const handlingEditor = getHandlingEditor()
   return (
     <Root>
-      <HEActions>
+      <HEActions data-test="eic-assign">
         {handlingEditor ? (
           <HEActions>
             <HEName>{get(handlingEditor, 'name')}</HEName>
             {!handlingEditor.hasAnswer && (
-              <HEActions>
+              <HEActions data-test="eic-after-assign">
                 <div onClick={showConfirmModal('resend')}>
                   <Icon color={theme.colorPrimary}>refresh-cw</Icon>
                 </div>
@@ -58,10 +59,6 @@ const CardModal = ({ type, ...rest }) => {
     default:
       return <HEModal {...rest} />
   }
-}
-
-const handleError = fn => e => {
-  fn(get(JSON.parse(e.response), 'error') || 'Oops! Something went wrong!')
 }
 
 export default compose(
@@ -183,9 +180,9 @@ const HEActions = styled.div`
 const AssignButton = styled(Button)`
   ${defaultText};
   align-items: center;
-  background-color: ${th('colorPrimary')};
   color: ${th('colorTextReverse')};
-  text-align: center;
+  background-color: ${th('colorPrimary')};
   height: calc(${th('subGridUnit')}*5);
+  text-align: center;
 `
 // #endregion

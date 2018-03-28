@@ -104,6 +104,28 @@ module.exports = {
     }
     return Email.send(mailData)
   },
+  setupDeclineEmail: async (toEmail, user, emailType, collectionId, reason) => {
+    let finalReason = ''
+    if (reason !== undefined) {
+      finalReason = `Reason: "${reason}"`
+    }
+    const replacements = {
+      finalReason,
+      name: `${user.firstName} ${user.lastName}`,
+      collectionId,
+    }
+
+    const { htmlBody, textBody } = getEmailBody(emailType, replacements)
+    const mailData = {
+      from: config.get('mailer.from'),
+      to: toEmail,
+      subject: 'Handling Editor Declined',
+      text: textBody,
+      html: htmlBody,
+    }
+
+    return Email.send(mailData)
+  },
 }
 
 const getEmailBody = (emailType, replacements) => {

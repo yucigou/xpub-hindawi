@@ -1,5 +1,5 @@
-import { get, isEmpty, forEach, isArray, find } from 'lodash'
 import moment from 'moment'
+import { get, isEmpty, forEach, isArray, find } from 'lodash'
 
 export const parseTitle = version => {
   const title = get(version, 'metadata.title')
@@ -86,4 +86,8 @@ export const mapStatusToLabel = status => {
     default:
       return 'Draft'
   }
+}
+
+export const handleError = fn => e => {
+  fn(get(JSON.parse(e.response), 'error') || 'Oops! Something went wrong!')
 }
