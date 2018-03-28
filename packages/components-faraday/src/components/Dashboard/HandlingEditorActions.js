@@ -9,6 +9,7 @@ import {
   ConfirmationModal,
 } from 'pubsweet-component-modal/src/components'
 
+import { handleError } from './utils'
 import { handlingEditorDecision } from '../../redux/editors'
 
 const DeclineModal = compose(
@@ -67,6 +68,7 @@ export default compose(
       project,
       getCollections,
       updateCollection,
+      setModalError,
     }) => modalType => {
       const agreeConfig = {
         type: modalType,
@@ -81,7 +83,7 @@ export default compose(
               getCollections()
               hideModal()
             })
-          }, hideModal)
+          }, handleError(setModalError))
         },
       }
       const declineConfig = {
@@ -89,7 +91,7 @@ export default compose(
         title: 'Decline handling editor role',
         subtitle: `Clicking "Agree" will assign you as Handling Editor for this Manuscript.`,
         onConfirm: reason => () => {
-          handlingEditorDecision(project.id, true, reason).then(() => {
+          handlingEditorDecision(project.id, false, reason).then(() => {
             updateCollection({
               id: project.id,
               status: 'submitted',
@@ -97,7 +99,7 @@ export default compose(
               getCollections()
               hideModal()
             })
-          }, hideModal)
+          }, handleError(setModalError))
         },
       }
       return () => {
@@ -128,6 +130,7 @@ const DeclineRoot = styled.div`
 
   & textarea {
     height: 100%;
+    padding: calc(${th('subGridUnit')} * 2);
     width: 100%;
   }
 

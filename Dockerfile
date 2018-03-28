@@ -1,5 +1,7 @@
 FROM xpub/xpub:base
 
+WORKDIR ${HOME}
+
 COPY package.json yarn.lock ./
 COPY lerna.json .babelrc .eslintignore .eslintrc .prettierrc .stylelintignore .stylelintrc ./
 COPY packages packages
@@ -16,7 +18,9 @@ RUN [ "rm", "-rf", "/npm-packages-offline-cache"]
 
 
 ENV NODE_ENV "development"
-# WORKDIR ${HOME}/packages/xpub-faraday
+WORKDIR ${HOME}/packages/xpub-faraday
 # RUN [ "npm", "run", "server "]
 
 EXPOSE 3000
+
+CMD [ "npm", "run", "start-now" ]
