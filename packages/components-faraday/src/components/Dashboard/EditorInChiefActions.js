@@ -11,6 +11,7 @@ import {
   SuccessModal,
 } from 'pubsweet-component-modal/src/components'
 
+import { handleError } from './utils'
 import { revokeHandlingEditor, assignHandlingEditor } from '../../redux/editors'
 
 import HEModal from './AssignHEModal'
@@ -58,10 +59,6 @@ const CardModal = ({ type, ...rest }) => {
     default:
       return <HEModal {...rest} />
   }
-}
-
-const handleError = fn => e => {
-  fn(get(JSON.parse(e.response), 'error') || 'Oops! Something went wrong!')
 }
 
 export default compose(

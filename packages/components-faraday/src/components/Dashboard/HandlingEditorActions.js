@@ -9,6 +9,7 @@ import {
   ConfirmationModal,
 } from 'pubsweet-component-modal/src/components'
 
+import { handleError } from './utils'
 import { handlingEditorDecision } from '../../redux/editors'
 
 const DeclineModal = compose(
@@ -67,6 +68,7 @@ export default compose(
       project,
       getCollections,
       updateCollection,
+      setModalError,
     }) => modalType => {
       const agreeConfig = {
         type: modalType,
@@ -81,7 +83,7 @@ export default compose(
               getCollections()
               hideModal()
             })
-          }, hideModal)
+          }, handleError(setModalError))
         },
       }
       const declineConfig = {
@@ -97,7 +99,7 @@ export default compose(
               getCollections()
               hideModal()
             })
-          }, hideModal)
+          }, handleError(setModalError))
         },
       }
       return () => {
