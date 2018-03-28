@@ -27,7 +27,7 @@ const DeclineModal = compose(
       placeholder="Decline reason (optional)"
       value={reason}
     />
-    <div>
+    <div data-test="he-buttons">
       <Button onClick={hideModal}>Cancel</Button>
       <Button onClick={onConfirm(reason)} primary>
         Decline

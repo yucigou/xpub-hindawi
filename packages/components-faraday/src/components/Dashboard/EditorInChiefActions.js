@@ -26,12 +26,12 @@ const EditorInChiefActions = ({
   const handlingEditor = getHandlingEditor()
   return (
     <Root>
-      <HEActions>
+      <HEActions data-test="eic-assign">
         {handlingEditor ? (
           <HEActions>
             <HEName>{get(handlingEditor, 'name')}</HEName>
             {!handlingEditor.hasAnswer && (
-              <HEActions>
+              <HEActions data-test="eic-after-assign">
                 <div onClick={showConfirmModal('resend')}>
                   <Icon color={theme.colorPrimary}>refresh-cw</Icon>
                 </div>
