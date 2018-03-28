@@ -180,9 +180,9 @@ const HEActions = styled.div`
 const AssignButton = styled(Button)`
   ${defaultText};
   align-items: center;
-  background-color: ${th('colorPrimary')};
   color: ${th('colorTextReverse')};
-  text-align: center;
+  background-color: ${th('colorPrimary')};
   height: calc(${th('subGridUnit')}*5);
+  text-align: center;
 `
 // #endregion
