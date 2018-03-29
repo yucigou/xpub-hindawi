@@ -22,11 +22,7 @@ module.exports = models => async (req, res) => {
     return
   }
   const reqUser = await models.User.find(req.user)
-  if (email === reqUser.email) {
-    res.status(400).json({ error: 'Cannot invite yourself' })
-    logger.error(`${reqUser.email} tried to invite his own email`)
-    return
-  }
+
   const collectionId = get(req, 'params.collectionId')
   const url = `${req.protocol}://${req.get('host')}`
   if (collectionId)
@@ -41,6 +37,11 @@ module.exports = models => async (req, res) => {
       req.body,
     )
 
+  if (email === reqUser.email) {
+    res.status(400).json({ error: 'Cannot invite yourself' })
+    logger.error(`${reqUser.email} tried to invite his own email`)
+    return
+  }
   if (reqUser.admin)
     return require('../controllers/inviteGlobalRole')(
       req.body,

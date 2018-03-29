@@ -27,6 +27,10 @@ module.exports = async (
   }
 
   if (reqUser.handlingEditor === true) {
+    if (reqUser.email === email) {
+      logger.error(`${reqUser.email} tried to invite his own email`)
+      return res.status(400).json({ error: 'Cannot invite yourself' })
+    }
     if (reqUser.teams === undefined) {
       return res.status(403).json({
         error: `Handling Editor ${reqUser.email} is not part of any teams`,
@@ -46,6 +50,11 @@ module.exports = async (
         } cannot invite a ${role} to ${collectionId}`,
       })
     }
+  }
+
+  if (reqUser.editorInChief === true && email === reqUser.email) {
+    logger.error(`${reqUser.email} tried to invite his own email`)
+    return res.status(400).json({ error: 'Cannot invite yourself' })
   }
 
   let collection
@@ -69,9 +78,12 @@ module.exports = async (
     )
     // get updated user from DB
     user = await models.User.findByEmail(email)
-    if (role === 'coAuthor') {
+    if (role === 'author') {
+      if (collection.owners[0].id === user.id) {
+        return res.status(200).json(user)
+      }
       try {
-        await mailService.setupAssignEmail(user.email, 'assign-coauthor', url)
+        await mailService.setupAssignEmail(user.email, 'assign-author', url)
 
         return res.status(200).json(user)
       } catch (e) {

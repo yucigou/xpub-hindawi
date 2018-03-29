@@ -3,8 +3,8 @@ const pickBy = require('lodash/pickBy')
 const omit = require('lodash/omit')
 
 async function teamPermissions(user, operation, object, context) {
-  const permissions = ['handlingEditor', 'coAuthor']
-  const teams = Promise.all(
+  const permissions = ['handlingEditor', 'author']
+  const teams = await Promise.all(
     user.teams
       .map(async teamId => {
         const team = await context.models.Team.find(teamId)

@@ -16,12 +16,6 @@ module.exports = models => async (req, res) => {
     return
   }
 
-  const reqUser = await models.User.find(req.user)
-  if (!reqUser.editorInChief) {
-    res.status(400).json({ error: 'The request user must be Editor in Chief' })
-    return
-  }
-
   const { collectionId } = req.params
   try {
     await models.Collection.find(collectionId)
