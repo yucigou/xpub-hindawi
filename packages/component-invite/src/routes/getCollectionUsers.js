@@ -34,6 +34,9 @@ module.exports = models => async (req, res) => {
 
     const membersData = members.map(async member => {
       const user = await models.User.find(member)
+      if (role === 'author') {
+        return user
+      }
       const { timestamp, status } = inviteHelper.getInviteData(
         user.invitations,
         collectionId,

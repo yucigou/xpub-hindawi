@@ -131,7 +131,7 @@ module.exports = async (
       return res.status(500).json({ error: 'Mail could not be sent.' })
     }
   } catch (e) {
-    if (e.name === 'NotFoundError' && role === 'coAuthor') {
+    if (e.name === 'NotFoundError' && role === 'author') {
       return userHelper.setupNewUser(
         body,
         url,
@@ -139,7 +139,7 @@ module.exports = async (
         email,
         role,
         models.User,
-        'invite-coauthor',
+        'invite-author',
       )
     }
     const notFoundError = await helpers.handleNotFoundError(e, 'user')

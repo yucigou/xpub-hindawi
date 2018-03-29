@@ -245,7 +245,7 @@ describe('Post invite route handler', () => {
   it('should return success when an author adds a new co author to a collection', async () => {
     const body = {
       email: chance.email(),
-      role: 'coAuthor',
+      role: 'author',
     }
     const req = httpMocks.createRequest({
       body,
@@ -263,7 +263,7 @@ describe('Post invite route handler', () => {
   it('should return success when an author adds an existing user as co author to a collection', async () => {
     const body = {
       email: author.email,
-      role: 'coAuthor',
+      role: 'author',
     }
     const req = httpMocks.createRequest({
       body,

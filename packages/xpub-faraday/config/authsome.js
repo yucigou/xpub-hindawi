@@ -22,8 +22,8 @@ async function teamPermissions(user, operation, object, context) {
     return {
       filter: filterParam => {
         if (filterParam.length > 0) {
-          const collections = filterParam.filter(coll =>
-            collIDs.includes(coll.id),
+          const collections = filterParam.filter(
+            coll => collIDs.includes(coll.id) || coll.owners.includes(user.id),
           )
           return collections
         }

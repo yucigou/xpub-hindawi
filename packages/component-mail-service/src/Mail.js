@@ -36,7 +36,7 @@ module.exports = {
           url: dashBoardUrl,
         }
         break
-      case 'assign-coauthor':
+      case 'assign-author':
         subject = 'Manuscript Assignment on Hindawi'
         replacements = {
           url: dashBoardUrl,

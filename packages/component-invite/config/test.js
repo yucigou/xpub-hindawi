@@ -9,12 +9,12 @@ module.exports = {
   },
   roles: {
     global: ['admin', 'editorInChief', 'author', 'handlingEditor'],
-    collection: ['handlingEditor', 'reviewer', 'coAuthor'],
+    collection: ['handlingEditor', 'reviewer', 'author'],
     inviteRights: {
-      admin: ['admin', 'editorInChief', 'author', 'handlingEditor', 'coAuthor'],
+      admin: ['admin', 'editorInChief', 'author', 'handlingEditor', 'author'],
       editorInChief: ['handlingEditor'],
       handlingEditor: ['reviewer'],
-      author: ['coAuthor'],
+      author: ['author'],
     },
   },
 }
