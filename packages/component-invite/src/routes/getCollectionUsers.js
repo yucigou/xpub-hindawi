@@ -15,8 +15,8 @@ module.exports = models => async (req, res) => {
     res.status(400).json({ error: `Role ${role} is invalid` })
     return
   }
-
   const { collectionId } = req.params
+  console.log('req', role, collectionId)
   try {
     await models.Collection.find(collectionId)
     const members = await teamHelper.getTeamMembersByCollection(

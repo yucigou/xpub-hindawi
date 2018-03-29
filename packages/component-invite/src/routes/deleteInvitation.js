@@ -36,7 +36,6 @@ module.exports = models => async (req, res) => {
       role,
       models.Team,
     )
-
     if (team === undefined) {
       res.status(400).json({
         error: `The requested collection does not have a ${role} Team`,
