@@ -5,6 +5,20 @@ const logger = require('winston')
 
 // const environment = process.env.NODE_ENV || 'development'
 
+const getDbConfig = () => {
+  if (process.env.DATABASE) {
+    return {
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DATABASE,
+      host: process.env.DB_HOST,
+      port: 5432,
+      ssl: true,
+    }
+  }
+  return {}
+}
+
 module.exports = {
   authsome: {
     mode: path.resolve(__dirname, 'authsome.js'),
@@ -17,7 +31,7 @@ module.exports = {
     components,
   },
   'pubsweet-server': {
-    db: {},
+    db: getDbConfig(),
     port: 3000,
     logger,
     uploads: 'uploads',
@@ -49,11 +63,12 @@ module.exports = {
   },
   roles: {
     global: ['admin', 'editorInChief', 'author', 'handlingEditor'],
-    collection: ['handlingEditor', 'reviewer'],
+    collection: ['handlingEditor', 'reviewer', 'coAuthor'],
     inviteRights: {
-      admin: ['admin', 'editorInChief', 'author', 'handlingEditor'],
+      admin: ['admin', 'editorInChief', 'author', 'handlingEditor', 'coAuthor'],
       editorInChief: ['handlingEditor'],
       handlingEditor: ['reviewer'],
+      author: ['coAuthor'],
     },
   },
   mailer: {

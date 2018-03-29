@@ -38,6 +38,7 @@ module.exports = models => async (req, res) => {
       collectionId,
       models,
       url,
+      req.body,
     )
 
   if (reqUser.admin)

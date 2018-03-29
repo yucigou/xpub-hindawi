@@ -5,6 +5,7 @@ const teamHelper = require('../helpers/Team')
 const mailService = require('pubsweet-component-mail-service')
 const inviteHelper = require('../helpers/Invitation')
 const collHelper = require('../helpers/Collection')
+const userHelper = require('../helpers/User')
 
 const configRoles = config.get('roles')
 
@@ -16,7 +17,7 @@ module.exports = async (
   collectionId,
   models,
   url,
-  resend,
+  body,
 ) => {
   if (!configRoles.collection.includes(role)) {
     logger.error(`invitation has been attempted with invalid role: ${role}`)
@@ -25,19 +26,20 @@ module.exports = async (
       .json({ error: `Role ${role} cannot be set on collections` })
   }
 
-  if (!reqUser.editorInChief && reqUser.teams === undefined && !reqUser.admin) {
-    return res
-      .status(403)
-      .json({ error: `User ${reqUser.username} is not part of any teams` })
-  } else if (reqUser.editorInChief === false && reqUser.admin === false) {
-    const matchingTeams = await teamHelper.getMatchingTeams(
+  if (reqUser.handlingEditor === true) {
+    if (reqUser.teams === undefined) {
+      return res.status(403).json({
+        error: `Handling Editor ${reqUser.email} is not part of any teams`,
+      })
+    }
+    const heTeams = await teamHelper.getMatchingTeams(
       reqUser.teams,
       models.Team,
       collectionId,
       role,
     )
 
-    if (matchingTeams.length === 0) {
+    if (heTeams.length === 0) {
       return res.status(403).json({
         error: `User ${
           reqUser.email
@@ -65,7 +67,18 @@ module.exports = async (
       collectionId,
       role,
     )
+    // get updated user from DB
     user = await models.User.findByEmail(email)
+    if (role === 'coAuthor') {
+      try {
+        await mailService.setupAssignEmail(user.email, 'assign-coauthor', url)
+
+        return res.status(200).json(user)
+      } catch (e) {
+        logger.error(e)
+        return res.status(500).json({ error: 'Email could not be sent.' })
+      }
+    }
 
     if (user.invitations === undefined) {
       user = await inviteHelper.setupInvitation(
@@ -76,11 +89,6 @@ module.exports = async (
       )
       await collHelper.addAssignedPeople(collection, user, role)
     } else {
-      // const matchingInvitation = inviteHelper.getMatchingInvitation(
-      //   user.invitations,
-      //   collectionId,
-      //   role,
-      // )
       const matchingInvitation = user.invitations.find(
         invitation =>
           invitation.collectionId === collectionId &&
@@ -111,6 +119,17 @@ module.exports = async (
       return res.status(500).json({ error: 'Mail could not be sent.' })
     }
   } catch (e) {
+    if (e.name === 'NotFoundError' && role === 'coAuthor') {
+      return userHelper.setupNewUser(
+        body,
+        url,
+        res,
+        email,
+        role,
+        models.User,
+        'invite-coauthor',
+      )
+    }
     const notFoundError = await helpers.handleNotFoundError(e, 'user')
     return res.status(notFoundError.status).json({
       error: notFoundError.message,

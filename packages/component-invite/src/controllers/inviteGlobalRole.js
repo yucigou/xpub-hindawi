@@ -1,12 +1,11 @@
 const logger = require('@pubsweet/logger')
-const helpers = require('../helpers/helpers')
-const mailService = require('pubsweet-component-mail-service')
+const userHelper = require('../helpers/User')
 const config = require('config')
 
 const configRoles = config.get('roles')
 
 module.exports = async (body, models, res, url) => {
-  const { email, role, firstName, lastName, affiliation, title } = body
+  const { email, role } = body
 
   if (!configRoles.inviteRights.admin.includes(role)) {
     logger.error(`admin ${email} tried to invite a ${role}`)
@@ -27,28 +26,14 @@ module.exports = async (body, models, res, url) => {
       return res.status(500).json({ error: e.details[0].message })
     }
 
-    const newUser = await helpers.createNewUser(
+    return userHelper.setupNewUser(
+      body,
+      url,
+      res,
       email,
-      firstName,
-      lastName,
-      affiliation,
-      title,
-      models.User,
       role,
+      models.User,
+      'invite',
     )
-
-    try {
-      await mailService.setupInviteEmail(
-        newUser.email,
-        'invite',
-        newUser.passwordResetToken,
-        url,
-      )
-
-      return res.status(200).json(newUser)
-    } catch (e) {
-      logger.error(e.message)
-      return res.status(500).json({ error: 'Email could not be sent.' })
-    }
   }
 }

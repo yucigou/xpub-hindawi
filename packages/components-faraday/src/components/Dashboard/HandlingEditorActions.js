@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
-import { th, Button } from '@pubsweet/ui'
 import { actions } from 'pubsweet-client'
+import { th, Button } from '@pubsweet/ui'
+import styled, { css } from 'styled-components'
 import { withHandlers, compose, withState } from 'recompose'
 import {
   withModal,
@@ -27,7 +27,7 @@ const DeclineModal = compose(
       placeholder="Decline reason (optional)"
       value={reason}
     />
-    <div>
+    <div data-test="he-buttons">
       <Button onClick={hideModal}>Cancel</Button>
       <Button onClick={onConfirm(reason)} primary>
         Decline
@@ -45,10 +45,10 @@ const ModalComponent = ({ type, ...rest }) =>
 
 const HandlingEditorActions = ({ showHEModal }) => (
   <Root>
-    <Button onClick={showHEModal('decline')}>DECLINE</Button>
-    <Button onClick={showHEModal()} primary>
+    <DecisionButton onClick={showHEModal('decline')}>DECLINE</DecisionButton>
+    <DecisionButton onClick={showHEModal()} primary>
       AGREE
-    </Button>
+    </DecisionButton>
   </Root>
 )
 
@@ -111,6 +111,22 @@ export default compose(
 )(HandlingEditorActions)
 
 // #region styled-components
+const defaultText = css`
+  font-family: ${th('fontReading')};
+  font-size: ${th('fontSizeBaseSmall')};
+`
+
+const DecisionButton = styled(Button)`
+  ${defaultText};
+  align-items: center;
+  color: ${({ primary }) =>
+    primary ? th('colorTextReverse') : th('colorPrimary')});
+  background-color: ${({ primary }) =>
+    primary ? th('colorPrimary') : th('backgroundColorReverse')};
+  height: calc(${th('subGridUnit')}*5);
+  text-align: center;
+`
+
 const DeclineRoot = styled.div`
   align-items: center;
   background-color: ${th('backgroundColor')};

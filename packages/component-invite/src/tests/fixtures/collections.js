@@ -1,5 +1,5 @@
 const Chance = require('chance')
-const { handlingEditor } = require('./userData')
+const { handlingEditor, submittingAuthor } = require('./userData')
 
 const chance = new Chance()
 module.exports = {
@@ -27,6 +27,14 @@ module.exports = {
     type: 'collection',
     fragments: [],
     owners: [],
+    save: jest.fn(),
+  },
+  authorsCollection: {
+    id: chance.guid(),
+    title: chance.sentence(),
+    type: 'collection',
+    fragments: [],
+    owners: [submittingAuthor.id],
     save: jest.fn(),
   },
 }

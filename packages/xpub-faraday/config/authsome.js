@@ -3,29 +3,31 @@ const pickBy = require('lodash/pickBy')
 const omit = require('lodash/omit')
 
 async function teamPermissions(user, operation, object, context) {
-  const heTeamsProm = user.teams
-    .map(async teamId => {
-      const team = await context.models.Team.find(teamId)
-      if (team.teamType.permissions === 'handlingEditor') {
-        return team
-      }
-      return null
-    })
-    .filter(Boolean)
-
-  const heTeams = await Promise.all(heTeamsProm)
-  const heCollections = heTeams.map(team => team.object.id)
-
-  if (heCollections.length > 0) {
-    return {
-      filter: collections => {
-        if (collections.length > 0) {
-          const correctColl = collections.filter(coll =>
-            heCollections.includes(coll.id),
-          )
-          return correctColl
+  const permissions = ['handlingEditor', 'coAuthor']
+  const teams = Promise.all(
+    user.teams
+      .map(async teamId => {
+        const team = await context.models.Team.find(teamId)
+        if (permissions.includes(team.teamType.permissions)) {
+          return team
         }
-        return collections
+        return null
+      })
+      .filter(Boolean),
+  )
+
+  const collIDs = teams.map(team => team.object.id)
+
+  if (collIDs.length > 0) {
+    return {
+      filter: filterParam => {
+        if (filterParam.length > 0) {
+          const collections = filterParam.filter(coll =>
+            collIDs.includes(coll.id),
+          )
+          return collections
+        }
+        return filterParam
       },
     }
   }
