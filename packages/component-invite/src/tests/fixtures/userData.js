@@ -15,4 +15,8 @@ module.exports = {
     firstName: chance.first(),
     lastName: chance.last(),
   },
+  admin: {
+    id: chance.guid(),
+    email: chance.email(),
+  },
 }

@@ -8,7 +8,7 @@ module.exports = {
     title: 'Standard Collection',
     type: 'collection',
     fragments: [],
-    owners: [],
+    owners: [submittingAuthor.id],
     save: jest.fn(),
     assignedPeople: [
       {

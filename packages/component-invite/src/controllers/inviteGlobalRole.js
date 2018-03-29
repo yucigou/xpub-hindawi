@@ -26,7 +26,7 @@ module.exports = async (body, models, res, url) => {
       return res.status(500).json({ error: e.details[0].message })
     }
 
-    return userHelper.setupNewUser(
+    const newUser = await userHelper.setupNewUser(
       body,
       url,
       res,
@@ -35,5 +35,13 @@ module.exports = async (body, models, res, url) => {
       models.User,
       'invite',
     )
+
+    if (newUser.error !== undefined) {
+      return res.status(newUser.status).json({
+        error: newUser.message,
+      })
+    }
+
+    return res.status(200).json(newUser)
   }
 }

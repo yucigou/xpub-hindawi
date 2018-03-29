@@ -1,6 +1,6 @@
 const { standardCollection } = require('./collections')
 const { heTeamID, reviewerTeamID } = require('./teamIDs')
-const { handlingEditor, submittingAuthor } = require('./userData')
+const { handlingEditor, submittingAuthor, admin } = require('./userData')
 const Chance = require('chance')
 
 const chance = new Chance()
@@ -8,10 +8,10 @@ const users = {
   admin: {
     type: 'user',
     username: 'admin',
-    email: 'admin@example.com',
+    email: admin.email,
     password: 'test',
     admin: true,
-    id: 'admin123',
+    id: admin.id,
   },
   editorInChief: {
     type: 'user',
