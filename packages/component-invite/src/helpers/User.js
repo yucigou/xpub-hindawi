@@ -31,10 +31,10 @@ module.exports = {
         url,
       )
 
-      return res.status(200).json(newUser)
+      return newUser
     } catch (e) {
       logger.error(e.message)
-      return res.status(500).json({ error: 'Email could not be sent.' })
+      return { status: 500, error: 'Email could not be sent.' }
     }
   },
 }

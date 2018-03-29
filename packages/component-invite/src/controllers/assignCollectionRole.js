@@ -132,7 +132,7 @@ module.exports = async (
     }
   } catch (e) {
     if (e.name === 'NotFoundError' && role === 'author') {
-      return userHelper.setupNewUser(
+      const newUser = await userHelper.setupNewUser(
         body,
         url,
         res,
@@ -141,6 +141,13 @@ module.exports = async (
         models.User,
         'invite-author',
       )
+      if (newUser.error !== undefined) {
+        return res.status(newUser.status).json({
+          error: newUser.message,
+        })
+      }
+      await teamHelper.setupManuscriptTeam(models, newUser, collectionId, role)
+      return res.status(200).json(newUser)
     }
     const notFoundError = await helpers.handleNotFoundError(e, 'user')
     return res.status(notFoundError.status).json({
