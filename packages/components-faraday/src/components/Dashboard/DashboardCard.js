@@ -37,7 +37,7 @@ const DashboardCard = ({
   const manuscriptMeta = `${type} - ${
     journalIssueType ? journalIssueType.label : 'N/A'
   }`
-  // console.log('Dashboard card', version, project, currentUser)
+
   return version ? (
     <Card id={customId}>
       <ListView>
