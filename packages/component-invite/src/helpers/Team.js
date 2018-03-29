@@ -17,8 +17,8 @@ const createNewTeam = async (collectionId, role, userId, TeamModel) => {
       group = 'reviewer'
       name = 'Reviewer'
       break
-    case 'coAuthor':
-      permissions = 'coAuthor'
+    case 'author':
+      permissions = 'author'
       group = 'author'
       name = 'author'
       break
