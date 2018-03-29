@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Sign In flow</name>
+   <name>Assign He</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>78d241c4-0097-452c-96b8-17f4f156e210</testCaseGuid>
+   <testCaseGuid>a554a979-2210-4cb4-8945-afca85d1a70c</testCaseGuid>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
-      <id>e818a000-1434-4565-9664-6d2992456762</id>
+      <id>7776a1e5-75f8-4172-82db-dc719480bfe7</id>
       <masked>false</masked>
-      <name>username</name>
+      <name>assignButton</name>
    </variable>
 </TestCaseEntity>

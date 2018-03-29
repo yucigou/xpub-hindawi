@@ -16,6 +16,12 @@
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
       <testCaseId>Test Cases/Sign In/Sign In flow</testCaseId>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>e818a000-1434-4565-9664-6d2992456762</variableId>
+      </variableLink>
    </testCaseLink>
    <testCaseLink>
       <guid>e9ab62a4-f041-4f4f-9e59-0dcb31fc00e7</guid>
@@ -27,6 +33,12 @@
          <type>DEFAULT</type>
          <value></value>
          <variableId>30a84231-84ba-44cb-9eec-26ad7d97acd5</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>68ae01ba-31a5-4819-aa48-3031d89305ba</variableId>
       </variableLink>
    </testCaseLink>
    <testCaseLink>

@@ -6,10 +6,17 @@
    <comment></comment>
    <testCaseGuid>75320485-255a-4adc-be3e-c3a9e8cf5399</testCaseGuid>
    <variable>
-      <defaultValue>'0'</defaultValue>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>68ae01ba-31a5-4819-aa48-3031d89305ba</id>
+      <masked>false</masked>
+      <name>loggedUserName</name>
+   </variable>
+   <variable>
+      <defaultValue>findTestObject(null)</defaultValue>
       <description></description>
       <id>30a84231-84ba-44cb-9eec-26ad7d97acd5</id>
       <masked>false</masked>
-      <name>G_manuscriptID</name>
+      <name>attachedDocument</name>
    </variable>
 </TestCaseEntity>

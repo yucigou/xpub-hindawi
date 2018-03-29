@@ -6,11 +6,11 @@
    <elementGuidId>c3eed726-7b7f-4e93-8d4a-baddc5a31314</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>CSS</key>
-         <value>div[data-test=&quot;upload-manuscripts&quot;] input[type=&quot;file&quot;]</value>
+         <key>XPATH</key>
       </entry>
       <entry>
-         <key>XPATH</key>
+         <key>CSS</key>
+         <value>div[data-test=&quot;upload-manuscripts&quot;] input[type=&quot;file&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>CSS</selectorMethod>
