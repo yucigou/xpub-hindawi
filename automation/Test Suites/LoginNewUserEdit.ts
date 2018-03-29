@@ -16,6 +16,12 @@
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
       <testCaseId>Test Cases/Sign In/Sign In flow</testCaseId>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>e818a000-1434-4565-9664-6d2992456762</variableId>
+      </variableLink>
    </testCaseLink>
    <testCaseLink>
       <guid>d5a7124a-16b0-458d-9be2-50e24b4b9799</guid>

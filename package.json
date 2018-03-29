@@ -30,7 +30,7 @@
     "url": "git@gitlab.coko.foundation:xpub/xpub.git"
   },
   "scripts": {
-    "clean": "lerna clean",
+    "clean": "lerna clean && rm -rf node_modules",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint packages",
     "lint:style": "stylelint packages/**/*.scss packages/**/*.css",

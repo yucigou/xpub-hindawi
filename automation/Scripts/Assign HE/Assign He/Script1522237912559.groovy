@@ -18,33 +18,29 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUiBuiltInKeywords
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.WebDriver as WebDriver
-import org.openqa.selenium.WebElement as WebElement
-import org.openqa.selenium.interactions.Actions as Actions
-import com.kms.katalon.core.webui.common.WebUiCommonHelper as WebUiCommonHelper
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.JavascriptExecutor as JavascriptExecutor
 
 WebUI.openBrowser(null)
-
-WebUI.navigateToUrl('https://xpub-faraday.now.sh/')
+WebUI.navigateToUrl('http://localhost:3000')
 
 username = findTestObject('SignIn/username')
 WebUI.click(username)
-WebUI.setText(username, "admin")
+WebUI.setText(username, 'vlad.stegaru+eic4@thinslices.com')
 
-
-password = findTestObject("SignIn/password")
+password = findTestObject('SignIn/password')
 WebUI.click(password)
-WebUI.setText(password, "admin123")
+WebUI.setText(password, 'eicpass123')
 
-login = findTestObject("SignIn/login")
-WebUI.click(login)
+loginButton = findTestObject('SignIn/login')
+WebUI.click(loginButton)
 
-loggedInUserName = findTestObject("SignIn/admin")
-username = WebUI.getText(loggedInUserName)
-println(username)
-assert username == "admin"
-WebUI.click(loggedInUserName)
+assignHE = findTestObject("AssignHE/aheAssign")
+WebUI.click(assignHE)
 
+HE = findTestObject("AssignHE/HE")
+WebUI.mouseOver(HE)
 
+assign = findTestObject("AssingHE/assign")
+WebUI.click(assign)
+
+ok = findTestObject("AssignHE/OK")
+WebUI.click(ok)

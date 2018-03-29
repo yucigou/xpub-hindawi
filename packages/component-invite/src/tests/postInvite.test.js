@@ -274,9 +274,8 @@ describe('Post invite route handler', () => {
     const res = httpMocks.createResponse()
     await require(postInvitePath)(models)(req, res)
 
-    // expect(res.statusCode).toBe(200)
+    expect(res.statusCode).toBe(200)
     const data = JSON.parse(res._getData())
-    // console.log(data)
     expect(data.email).toEqual(body.email)
     expect(data.invitations).toHaveLength(initialSize)
   })

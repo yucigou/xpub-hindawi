@@ -37,6 +37,13 @@ WebUI.setText(password, 'password')
 loginButton = findTestObject('SignIn/login')
 WebUI.click(loginButton)
 
+/*loggedInUserName = findTestObject("SignIn/admin")
+username = WebUI.getText(loggedInUserName)
+println(username)
+assert username == "admin"
+WebUI.click(loggedInUserName)
+WebUI.click(loginButton)*/
+
 New = findTestObject("NewManuscript/journalfFieldSelection/New")
 WebUI.click(New)
 
@@ -126,9 +133,11 @@ WebUI.waitForElementVisible(NextButton, 10)
 WebUI.click(NextButton)
 
 attachManuscript = findTestObject('NewManuscript/manuscriptFilesUpload/attachManuscript')
-document = findTestObject("NewManuscript/manuscriptFilesUpload/document")
 WebUI.uploadFile(attachManuscript, '/Users/vladstegaru/Documents/Hindawi/attachements/document.pdf')
+document = findTestObject("NewManuscript/manuscriptFilesUpload/document")
 WebUI.waitForElementPresent(document, 10)
+
+WebUI.delay(5)
 
 submitManuscript = findTestObject('NewManuscript/manuscriptFilesUpload/submitManuscript')
 WebUI.click(submitManuscript)
@@ -139,5 +148,5 @@ WebUI.waitForElementPresent(goToDashboard, 10)
 WebUI.click(goToDashboard)
 WebUI.waitForPageLoad(5)
 
-//WebUI.closeBrowser()
+WebUI.closeBrowser()
 
