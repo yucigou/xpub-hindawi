@@ -9,7 +9,7 @@ jest.mock('pubsweet-component-mail-service', () => ({
   setupRevokeInvitationEmail: jest.fn(),
 }))
 const { standardCollection, noTeamCollection } = fixtures.collections
-const { editorInChief, admin, handlingEditor } = fixtures.users
+const { editorInChief, admin, handlingEditor, author } = fixtures.users
 const { heTeam } = fixtures.teams
 const query = {
   role: 'handlingEditor',
@@ -83,12 +83,14 @@ describe('Delete Invitation route handler', () => {
     const req = httpMocks.createRequest()
     req.query = query
     req.params.collectionId = standardCollection.id
-    req.user = admin.id
+    req.user = author.id
     const res = httpMocks.createResponse()
     await require(deleteInvitationPath)(models)(req, res)
     expect(res.statusCode).toBe(400)
     const data = JSON.parse(res._getData())
-    expect(data.error).toEqual('The request user must be Editor in Chief')
+    expect(data.error).toEqual(
+      'The request user must be Editor in Chief or Admin',
+    )
   })
   it('should return an error when the collection does not have a the requested role team', async () => {
     const req = httpMocks.createRequest()

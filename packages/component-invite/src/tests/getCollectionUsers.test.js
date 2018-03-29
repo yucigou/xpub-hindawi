@@ -6,7 +6,7 @@ const fixtures = require('./fixtures/fixtures')
 const Model = require('./helpers/Model')
 
 const { standardCollection, noTeamCollection } = fixtures.collections
-const { editorInChief, admin } = fixtures.users
+const { editorInChief } = fixtures.users
 const query = {
   role: 'handlingEditor',
 }
@@ -63,18 +63,6 @@ describe('Get collection users route handler', () => {
     const data = JSON.parse(res._getData())
     expect(data.error).toEqual(`Role ${query.role} is invalid`)
     query.role = 'handlingEditor'
-  })
-  it('should return an error when the request user is not editorInChief', async () => {
-    const req = httpMocks.createRequest()
-    req.query = query
-    req.params.collectionId = standardCollection.id
-    req.user = admin.id
-    const res = httpMocks.createResponse()
-    const models = Model.build()
-    await require(getCollectionUsersPath)(models)(req, res)
-    expect(res.statusCode).toBe(400)
-    const data = JSON.parse(res._getData())
-    expect(data.error).toEqual('The request user must be Editor in Chief')
   })
   it('should return an error when the collection does not have a the requested role team', async () => {
     const req = httpMocks.createRequest()

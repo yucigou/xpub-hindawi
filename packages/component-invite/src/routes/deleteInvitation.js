@@ -20,7 +20,7 @@ module.exports = models => async (req, res) => {
   }
 
   const reqUser = await models.User.find(req.user)
-  if (!reqUser.editorInChief || !reqUser.admin) {
+  if (!reqUser.editorInChief && !reqUser.admin) {
     res
       .status(400)
       .json({ error: 'The request user must be Editor in Chief or Admin' })
