@@ -98,7 +98,6 @@ export default compose(
       { authors = [], addAuthor, setEditMode, setFormAuthors, reset, match },
     ) => {
       const collectionId = get(match, 'params.project')
-      const fragmentId = get(match, 'params.version')
       const isFirstAuthor = authors.length === 0
       addAuthor(
         {
@@ -107,7 +106,6 @@ export default compose(
           isCorresponding: isFirstAuthor,
         },
         collectionId,
-        fragmentId,
       ).then(author => {
         const newAuthors = [...authors, author]
         setEditMode(false)()

@@ -15,7 +15,7 @@ import {
 import { change as changeForm } from 'redux-form'
 import { SortableList } from 'pubsweet-component-sortable-list/src/components'
 
-import { addAuthor } from '../../redux/authors'
+import { addAuthor, deleteAuthor, getAuthors } from '../../redux/authors'
 
 import Author from './Author'
 import countries from './countries'
@@ -81,6 +81,7 @@ export default compose(
     {
       addAuthor,
       changeForm,
+      deleteAuthor,
     },
   ),
   withState('authors', 'setAuthors', []),
@@ -113,16 +114,21 @@ export default compose(
       if (isCorresponding) return `#${index + 1} Corresponding author`
       return `#${index + 1} Author`
     },
-    moveAuthor: ({ authors, setAuthors, changeForm }) => (
+    moveAuthor: ({ authors, setFormAuthors, changeForm }) => (
       dragIndex,
       hoverIndex,
     ) => {
       const newAuthors = SortableList.moveItem(authors, dragIndex, hoverIndex)
-      setAuthors(newAuthors)
-    },
-    removeAuthor: ({ authors, setFormAuthors }) => authorEmail => () => {
-      const newAuthors = authors.filter(a => a.email !== authorEmail)
       setFormAuthors(newAuthors)
+    },
+    removeAuthor: ({ authors, setFormAuthors, deleteAuthor, project }) => (
+      id,
+      authorEmail,
+    ) => () => {
+      deleteAuthor(project.id, id).then(() => {
+        const newAuthors = authors.filter(a => a.id !== id)
+        setFormAuthors(newAuthors)
+      })
     },
     setAsCorresponding: ({ authors, setFormAuthors }) => authorEmail => () => {
       const newAuthors = authors.map(
@@ -139,8 +145,8 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { version, setAuthors } = this.props
-      setAuthors(version.authors)
+      const { setFormAuthors, project } = this.props
+      getAuthors(project.id).then(setFormAuthors)
     },
   }),
 )(Authors)

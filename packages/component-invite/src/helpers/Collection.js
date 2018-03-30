@@ -20,10 +20,10 @@ module.exports = {
     await collection.save()
   },
   removeAssignedPeople: async (collection, email) => {
-    const assignedPeople = collection.assignedPeople.filter(
-      person => person.email !== email,
-    )
-    collection.assignedPeople = assignedPeople
+    const assignedPeople =
+      collection.assignedPeople &&
+      collection.assignedPeople.filter(person => person.email !== email)
+    collection.assignedPeople = assignedPeople || []
     await collection.save()
   },
   updateAssignedPeople: async (collection, email) => {

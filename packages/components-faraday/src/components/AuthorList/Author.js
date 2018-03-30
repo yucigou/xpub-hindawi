@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Label } from './FormItems'
 
 export default ({
+  id,
   firstName,
   middleName,
   lastName,
@@ -29,7 +30,10 @@ export default ({
         <Title>{parseAuthorType(isSubmitting, isCorresponding, index)}</Title>
         <ButtonContainer>
           {!isSubmitting && (
-            <ClickableIcon onClick={removeAuthor(email)} title="Delete author">
+            <ClickableIcon
+              onClick={removeAuthor(id, email)}
+              title="Delete author"
+            >
               <Icon size={3}>trash</Icon>
             </ClickableIcon>
           )}

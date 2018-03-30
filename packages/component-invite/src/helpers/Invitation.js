@@ -1,10 +1,12 @@
 const revokeInvitation = async (user, collectionId, type) => {
-  const filteredInvitations = user.invitations.filter(
-    invitation =>
-      invitation.collectionId !== collectionId && invitation.type !== type,
-  )
+  const filteredInvitations =
+    user.invitations &&
+    user.invitations.filter(
+      invitation =>
+        invitation.collectionId !== collectionId && invitation.type !== type,
+    )
 
-  user.invitations = filteredInvitations
+  user.invitations = filteredInvitations || []
   await user.save()
 }
 
