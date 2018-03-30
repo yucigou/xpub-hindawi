@@ -16,7 +16,7 @@ module.exports = models => async (req, res) => {
     return
   }
   const { collectionId } = req.params
-  console.log('req', role, collectionId)
+
   try {
     await models.Collection.find(collectionId)
     const members = await teamHelper.getTeamMembersByCollection(
