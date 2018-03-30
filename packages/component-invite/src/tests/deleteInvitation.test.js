@@ -9,7 +9,7 @@ jest.mock('pubsweet-component-mail-service', () => ({
   setupRevokeInvitationEmail: jest.fn(),
 }))
 const { standardCollection, noTeamCollection } = fixtures.collections
-const { editorInChief, admin, handlingEditor, author } = fixtures.users
+const { editorInChief, handlingEditor, author } = fixtures.users
 const { heTeam } = fixtures.teams
 const query = {
   role: 'handlingEditor',
