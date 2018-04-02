@@ -28,7 +28,7 @@ const DashboardCard = ({
   ...rest
 }) => {
   const { submitted, title, type } = parseVersion(version)
-  const status = get(project, 'status') || 'Draft'
+  const status = get(project, 'status')
   const metadata = get(version, 'metadata')
   const files = get(version, 'files')
   const customId = project.customId || project.id.split('-')[0]
@@ -127,8 +127,7 @@ const DashboardCard = ({
                       {firstName} {middleName} {lastName}
                     </AuthorName>
                     {isSubmitting && <AuthorStatus>SA</AuthorStatus>}
-                    {isCorresponding &&
-                      !isSubmitting && <AuthorStatus>CA</AuthorStatus>}
+                    {isCorresponding && <AuthorStatus>CA</AuthorStatus>}
                     {arr.length - 1 === index ? '' : ','}
                   </Author>
                 ),
@@ -170,7 +169,7 @@ export default compose(
           return <EditorInChiefActions project={project} />
         if (status === 'under-review')
           return <AssignedHE>{get(assignedHE, 'name')}</AssignedHE>
-        return <div>bine bulanes</div>
+        return <div />
       }
 
       if (isHe) {
