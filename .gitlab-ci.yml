@@ -51,7 +51,7 @@ test:
 #   only:
 #   - master
 
-demo:now:
+demo:qa:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: demo
   when: manual
@@ -60,11 +60,29 @@ demo:now:
   only:
     - master
   environment:
-    name: $PACKAGE_NAME/demo
-    url: https://xpub-faraday.now.sh/
+    name: qa/$PACKAGE_NAME
+    url: https://xpub-faraday-qa.now.sh/
   script:
     - npm i -g --unsafe-perm now
     - cd ${HOME}/now
     - echo "FROM ${IMAGE_ORG}/${IMAGE_NAME}:${CI_COMMIT_SHA}" >> Dockerfile
     - now --public --docker --token $NOW_TOKEN -e AWS_S3_ACCESS_KEY=$AWS_S3_ACCESS_KEY -e AWS_S3_SECRET_KEY=$AWS_S3_SECRET_KEY -e AWS_S3_REGION=$AWS_S3_REGION -e AWS_S3_BUCKET=$AWS_S3_BUCKET -e AWS_SES_SECRET_KEY=$AWS_SES_SECRET_KEY -e AWS_SES_ACCESS_KEY=$AWS_SES_ACCESS_KEY -e AWS_SES_REGION=$AWS_SES_REGION -e EMAIL_SENDER=$EMAIL_SENDER -e secret=$SECRET -e DATABASE=$DATABASE -e DB_USER=$DB_USER -e DB_PASS=$DB_PASS -e DB_HOST=$DB_HOST
+    - now alias $NOW_URL xpub-faraday-qa --token $NOW_TOKEN
+
+demo:staging:
+  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  stage: demo
+  when: manual
+  variables:
+    PACKAGE_NAME: xpub-faraday
+  only:
+    - master
+  environment:
+    name: demo/$PACKAGE_NAME
+    url: https://xpub-faraday.now.sh/
+  script:
+    - npm i -g --unsafe-perm now
+    - cd ${HOME}/now
+    - echo "FROM ${IMAGE_ORG}/${IMAGE_NAME}:${CI_COMMIT_SHA}" >> Dockerfile
+    - now --public --docker --token $NOW_TOKEN -e AWS_S3_ACCESS_KEY=$AWS_S3_ACCESS_KEY -e AWS_S3_SECRET_KEY=$AWS_S3_SECRET_KEY -e AWS_S3_REGION=$AWS_S3_REGION -e AWS_S3_BUCKET=$AWS_S3_BUCKET -e AWS_SES_SECRET_KEY=$AWS_SES_SECRET_KEY -e AWS_SES_ACCESS_KEY=$AWS_SES_ACCESS_KEY -e AWS_SES_REGION=$AWS_SES_REGION -e EMAIL_SENDER=$EMAIL_SENDER -e secret=$SECRET -e DATABASE=$DATABASE_STAGING -e DB_USER=$DB_USER_STAGING -e DB_PASS=$DB_PASS_STAGING -e DB_HOST=$DB_HOST_STAGING
     - now alias $NOW_URL xpub-faraday --token $NOW_TOKEN
