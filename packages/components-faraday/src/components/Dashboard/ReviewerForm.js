@@ -75,6 +75,7 @@ const Root = styled.div`
   border: ${th('borderDefault')};
   display: flex;
   flex-direction: column;
+  margin-bottom: ${th('gridUnit')};
   padding: ${th('subGridUnit')} calc(${th('subGridUnit')} * 3)
     calc(${th('subGridUnit')} * 3) calc(${th('subGridUnit')} * 3);
 `

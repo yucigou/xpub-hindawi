@@ -147,7 +147,7 @@ const SuggestionItem = styled.div`
   padding-left: calc(${th('subGridUnit')} * 2);
 
   &:hover {
-    background-color: ${th('colorPrimary')};
+    background-color: ${th('colorSecondary')};
   }
 `
 
@@ -159,7 +159,7 @@ const ScrollContainer = styled.div`
 
 const SuggestionsContainer = styled.div`
   align-items: flex-start;
-  background-color: ${th('backgroundColor')};
+  background-color: ${th('backgroundColorReverse')};
   border: ${th('borderDefault')};
   display: flex;
   flex-direction: column;

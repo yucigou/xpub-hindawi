@@ -4,7 +4,7 @@ import { compose, withHandlers } from 'recompose'
 import styled, { css, withTheme } from 'styled-components'
 import { withModal } from 'pubsweet-component-modal/src/components'
 
-import { ReviewerForm } from './'
+import { ReviewerForm, ReviewersList } from './'
 
 const InviteReviewers = ({ showInviteModal }) => (
   <AssignButton onClick={showInviteModal}>Invite reviewers</AssignButton>
@@ -12,12 +12,17 @@ const InviteReviewers = ({ showInviteModal }) => (
 
 const InviteReviewersModal = withTheme(({ theme, hideModal, onConfirm }) => (
   <Root>
-    <Title>Invite Reviewers</Title>
-    <Subtitle>Invite reviewer</Subtitle>
-    <ReviewerForm />
     <CloseIcon data-test="icon-modal-hide" onClick={hideModal}>
       <Icon color={theme.colorPrimary}>x</Icon>
     </CloseIcon>
+
+    <Title>Invite Reviewers</Title>
+
+    <Subtitle>Invite reviewer</Subtitle>
+    <ReviewerForm />
+
+    <Subtitle>Reviewers Info</Subtitle>
+    <ReviewersList />
   </Root>
 ))
 
@@ -67,7 +72,7 @@ const Title = styled.span`
 
 const Root = styled.div`
   align-items: center;
-  background-color: ${th('backgroundColor')};
+  background-color: ${th('backgroundColorReverse')};
   display: flex;
   flex-direction: column;
   padding: calc(${th('subGridUnit')} * 6);
