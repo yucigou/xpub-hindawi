@@ -10,9 +10,12 @@ import {
 } from 'pubsweet-component-modal/src/components'
 
 import ZipFiles from './ZipFiles'
-import EditorInChiefActions from './EditorInChiefActions'
-import HandlingEditorActions from './HandlingEditorActions'
 import { parseVersion, parseJournalIssue, mapStatusToLabel } from './utils'
+import {
+  EditorInChiefActions,
+  HandlingEditorActions,
+  InviteReviewers,
+} from './'
 
 const DashboardCard = ({
   deleteProject,
@@ -141,6 +144,7 @@ const DashboardCard = ({
               {renderHandlingEditorRow()}
             </LeftDetails>
           </Bottom>
+          <InviteReviewers />
         </DetailsView>
       )}
     </Card>
