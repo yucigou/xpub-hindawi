@@ -13,7 +13,7 @@ import { compose, withProps, withHandlers, withState } from 'recompose'
 
 import AddUserForm from './AddUserForm'
 import EditUserForm from './EditUserForm'
-import { getRoleOptions, setAdmin, parseUpdateUser } from './utils'
+import { getRoleOptions, setAdmin, parseUpdateUser } from './../utils'
 
 const onSubmit = (values, dispatch, { isEdit, history }) => {
   if (!isEdit) {

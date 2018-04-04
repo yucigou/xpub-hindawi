@@ -5,14 +5,8 @@ import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { Field, formValueSelector, getFormMeta } from 'redux-form'
-// import { ValidatedTextField } from '../AuthorList/FormItems'
 
-// const emailRegex = new RegExp(
-//   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
-// )
-
-// const emailValidator = value =>
-//   emailRegex.test(value) ? undefined : 'Invalid email'
+import { emailValidator } from '../utils'
 
 const defaultValues = [
   {
@@ -59,18 +53,23 @@ const defaultValues = [
   },
 ]
 
-const renderField = ({ input: { onBlur, ...rest } }) => (
-  <RenderRoot>
-    <Input
-      {...rest}
-      autoComplete="off"
-      onBlur={() => {
-        setTimeout(onBlur, 100)
-      }}
-      type="text"
-    />
-  </RenderRoot>
-)
+const renderField = ({ input: { onBlur, ...rest }, meta }) => {
+  const hasError = meta.touched && meta.error
+  return (
+    <RenderRoot>
+      <Input
+        hasError={hasError}
+        {...rest}
+        autoComplete="off"
+        onBlur={() => {
+          setTimeout(onBlur, 100)
+        }}
+        type="text"
+      />
+      {hasError && <ErrorMessage>Invalid email</ErrorMessage>}
+    </RenderRoot>
+  )
+}
 
 const ReviewersSelect = ({
   label = 'Email*',
@@ -84,7 +83,7 @@ const ReviewersSelect = ({
   return (
     <Root>
       <FormLabel>{label}</FormLabel>
-      <Field component={renderField} name="email" />
+      <Field component={renderField} name="email" validate={emailValidator} />
       {active &&
         filteredValues.length > 0 && (
           <SuggestionsContainer>
@@ -120,8 +119,17 @@ const defaultText = css`
   font-family: ${({ theme }) => theme.fontReading};
 `
 
+const ErrorMessage = styled.span`
+  color: ${th('colorError')};
+  font-family: ${th('fontInterface')};
+  font-size: ${({ theme }) => theme.fontSizeBaseSmall};
+`
+
 const Input = styled.input`
-  border: 1px solid #667080;
+  border: ${({ hasError, ...rest }) =>
+    `1px solid ${
+      hasError ? th('colorError')(rest) : th('colorPrimary')(rest)
+    }`};
   border-radius: 2px;
   font-family: inherit;
   font-size: inherit;
@@ -133,7 +141,6 @@ const RenderRoot = styled.div`
   display: flex;
   flex-direction: column;
   max-width: calc(${th('gridUnit')} * 14);
-  margin-bottom: ${th('gridUnit')};
 `
 
 const SuggestionItem = styled.div`

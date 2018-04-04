@@ -1,15 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ValidatedField, TextField, Menu, th } from '@pubsweet/ui'
-
 import { required } from 'xpub-validators'
-
-const emailRegex = new RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
-)
-
-const emailValidator = value =>
-  emailRegex.test(value) ? undefined : 'Invalid email'
+import { ValidatedField, TextField, Menu, th } from '@pubsweet/ui'
+import { emailValidator } from '../utils'
 
 const AddUserForm = ({ roles, journal, error }) => {
   const roleOptions = roles.filter(r =>

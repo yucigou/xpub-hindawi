@@ -9,15 +9,9 @@ import { selectCurrentUser } from 'xpub-selectors'
 
 import countries from './countries'
 import { Spinner } from '../UIComponents/'
+import { emailValidator } from '../utils'
 import { getAuthorFetching } from '../../redux/authors'
 import { MenuItem, ValidatedTextField } from './FormItems'
-
-const emailRegex = new RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
-)
-
-const emailValidator = value =>
-  emailRegex.test(value) ? undefined : 'Invalid email'
 
 const AuthorAdder = ({
   authors = [],

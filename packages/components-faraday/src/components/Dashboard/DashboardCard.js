@@ -10,7 +10,7 @@ import {
 } from 'pubsweet-component-modal/src/components'
 
 import ZipFiles from './ZipFiles'
-import { parseVersion, parseJournalIssue, mapStatusToLabel } from './utils'
+import { parseVersion, parseJournalIssue, mapStatusToLabel } from './../utils'
 import { EditorInChiefActions, HandlingEditorActions } from './'
 import { InviteReviewers } from '../Reviewers/'
 

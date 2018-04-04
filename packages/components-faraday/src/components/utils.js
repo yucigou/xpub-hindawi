@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { get, isEmpty, forEach, isArray, find } from 'lodash'
+import { get, find } from 'lodash'
 
 export const parseTitle = version => {
   const title = get(version, 'metadata.title')
@@ -7,38 +7,6 @@ export const parseTitle = version => {
     return title.replace(/<p[^>]*>/g, '').replace(/<\/p>/g, '')
   }
   return 'Untitled'
-}
-
-export const getFilesURL = files => {
-  const urls = []
-
-  forEach(files, value => {
-    if (!isEmpty(value)) {
-      if (isArray(value)) {
-        value.forEach(v => {
-          urls.push(v)
-        })
-      } else {
-        urls.push(value)
-      }
-    }
-  })
-
-  return urls
-}
-
-export const downloadAll = urls => {
-  const link = document.createElement('a')
-  link.style.display = 'none'
-
-  document.body.appendChild(link)
-
-  urls.forEach(u => {
-    link.setAttribute('download', u.name)
-    link.setAttribute('href', u.signedUrl || u.url)
-    link.click()
-  })
-  document.body.removeChild(link)
 }
 
 export const parseAuthor = version => {
@@ -91,3 +59,10 @@ export const mapStatusToLabel = status => {
 export const handleError = fn => e => {
   fn(get(JSON.parse(e.response), 'error') || 'Oops! Something went wrong!')
 }
+
+const emailRegex = new RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
+)
+
+export const emailValidator = value =>
+  emailRegex.test(value) ? undefined : 'Invalid email'

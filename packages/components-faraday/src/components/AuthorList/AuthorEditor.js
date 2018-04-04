@@ -1,22 +1,16 @@
 import React, { Fragment } from 'react'
 import { pick } from 'lodash'
-import { Icon, Checkbox } from '@pubsweet/ui'
 import { connect } from 'react-redux'
+import { Icon, Checkbox } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
 import { compose, withHandlers, withProps } from 'recompose'
 import { reduxForm, Field, change as changeForm } from 'redux-form'
 
 import countries from './countries'
 import { Spinner } from '../UIComponents'
+import { emailValidator } from '../utils'
 import { getAuthorFetching } from '../../redux/authors'
 import { ValidatedTextField, MenuItem } from './FormItems'
-
-const emailRegex = new RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
-)
-
-const emailValidator = value =>
-  emailRegex.test(value) ? undefined : 'Invalid email'
 
 const renderCheckbox = ({ input }) => (
   <Checkbox checked={input.value} type="checkbox" {...input} />

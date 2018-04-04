@@ -9,7 +9,7 @@ import {
   ConfirmationModal,
 } from 'pubsweet-component-modal/src/components'
 
-import { handleError } from './utils'
+import { handleError } from './../utils'
 import { handlingEditorDecision } from '../../redux/editors'
 
 const DeclineModal = compose(

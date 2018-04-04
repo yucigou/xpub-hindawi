@@ -11,7 +11,7 @@ import {
   SuccessModal,
 } from 'pubsweet-component-modal/src/components'
 
-import { handleError } from './utils'
+import { handleError } from './../utils'
 import { revokeHandlingEditor, assignHandlingEditor } from '../../redux/editors'
 
 import HEModal from './AssignHEModal'

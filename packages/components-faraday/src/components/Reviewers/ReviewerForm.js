@@ -67,7 +67,7 @@ const ButtonsContainer = styled.div`
 `
 
 const Row = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: row;
 `
