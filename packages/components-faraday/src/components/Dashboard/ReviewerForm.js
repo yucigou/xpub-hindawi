@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { reduxForm, change as changeForm, initialize } from 'redux-form'
 import { th, Button } from '@pubsweet/ui'
 import { compose, withHandlers } from 'recompose'
+import { reduxForm, change as changeForm, initialize } from 'redux-form'
 
 import { ReviewersSelect } from './'
 import { ValidatedTextField } from '../AuthorList/FormItems'
+import { inviteReviewer } from '../../redux/reviewers'
 
 // const emailRegex = new RegExp(
 //   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
@@ -15,7 +16,7 @@ import { ValidatedTextField } from '../AuthorList/FormItems'
 // const emailValidator = value =>
 //   emailRegex.test(value) ? undefined : 'Invalid email'
 
-const ReviewerForm = ({ clearForm, selectReviewer }) => (
+const ReviewerForm = ({ clearForm, selectReviewer, handleSubmit }) => (
   <Root>
     <Row>
       <ReviewersSelect onSelect={selectReviewer} />
@@ -27,7 +28,7 @@ const ReviewerForm = ({ clearForm, selectReviewer }) => (
     </Row>
     <ButtonsContainer>
       <FormButton onClick={clearForm}>Clear</FormButton>
-      <FormButton disabled primary>
+      <FormButton onClick={handleSubmit} primary>
         Send
       </FormButton>
     </ButtonsContainer>
@@ -35,9 +36,10 @@ const ReviewerForm = ({ clearForm, selectReviewer }) => (
 )
 
 export default compose(
-  connect(null, { changeForm, initialize }),
+  connect(null, { changeForm, initialize, inviteReviewer }),
   reduxForm({
     form: 'inviteReviewer',
+    onSubmit: (values, dispatch, { inviteReviewer }) => {},
   }),
   withHandlers({
     selectReviewer: ({ changeForm, initialize }) => reviewer => () => {
