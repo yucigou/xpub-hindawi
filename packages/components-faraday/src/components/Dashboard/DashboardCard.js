@@ -11,11 +11,8 @@ import {
 
 import ZipFiles from './ZipFiles'
 import { parseVersion, parseJournalIssue, mapStatusToLabel } from './utils'
-import {
-  EditorInChiefActions,
-  HandlingEditorActions,
-  InviteReviewers,
-} from './'
+import { EditorInChiefActions, HandlingEditorActions } from './'
+import { InviteReviewers } from '../Reviewers/'
 
 const DashboardCard = ({
   deleteProject,
