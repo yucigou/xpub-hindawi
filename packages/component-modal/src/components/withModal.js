@@ -23,7 +23,15 @@ const withModal = ({
   overlayColor,
 }) => WrappedComponent =>
   connect(mapState, mapDispatch(modalKey))(
-    ({ modalsVisibility, modalProps, modalError, hideModal, ...rest }) => (
+    ({
+      modalsVisibility,
+      modalProps,
+      modalError,
+      hideModal,
+      showModal,
+      setModalError,
+      ...rest
+    }) => (
       <React.Fragment>
         {modalsVisibility[modalKey] && (
           <Modal
@@ -32,9 +40,16 @@ const withModal = ({
             hideModal={hideModal}
             modalError={modalError}
             overlayColor={overlayColor}
+            setModalError={setModalError}
+            showModal={showModal}
           />
         )}
-        <WrappedComponent hideModal={hideModal} {...rest} />
+        <WrappedComponent
+          hideModal={hideModal}
+          setModalError={setModalError}
+          showModal={showModal}
+          {...rest}
+        />
       </React.Fragment>
     ),
   )

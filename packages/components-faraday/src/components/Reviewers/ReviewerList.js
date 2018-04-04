@@ -1,5 +1,6 @@
 import React from 'react'
 import { th, Icon } from '@pubsweet/ui'
+import { compose, withHandlers } from 'recompose'
 import styled, { withTheme } from 'styled-components'
 
 const defaultReviewers = [
@@ -41,18 +42,24 @@ const defaultReviewers = [
   },
 ]
 
-const ResendRevoke = withTheme(({ theme }) => (
-  <ActionButtons>
-    <div onClick={() => {}}>
-      <Icon color={theme.colorPrimary}>refresh-cw</Icon>
-    </div>
-    <div onClick={() => {}}>
-      <Icon color={theme.colorPrimary}>x-circle</Icon>
-    </div>
-  </ActionButtons>
-))
+const ResendRevoke = withTheme(
+  ({ theme, showConfirmResend, showConfirmRevoke }) => (
+    <ActionButtons>
+      <div onClick={showConfirmResend}>
+        <Icon color={theme.colorPrimary}>refresh-cw</Icon>
+      </div>
+      <div onClick={showConfirmRevoke}>
+        <Icon color={theme.colorPrimary}>x-circle</Icon>
+      </div>
+    </ActionButtons>
+  ),
+)
 
-const ReviewersList = ({ reviewers = defaultReviewers }) => (
+const ReviewersList = ({
+  reviewers = defaultReviewers,
+  showConfirmResend,
+  showConfirmRevoke,
+}) => (
   <Root>
     <ScrollContainer>
       {reviewers.map((r, index, arr) => (
@@ -70,14 +77,44 @@ const ReviewersList = ({ reviewers = defaultReviewers }) => (
             <StatusText>{r.status}</StatusText>
             <StatusText>{r.lastUpdated}</StatusText>
           </Column>
-          <ResendRevoke />
+          <ResendRevoke
+            showConfirmResend={showConfirmResend}
+            showConfirmRevoke={showConfirmRevoke}
+          />
         </ReviewerItem>
       ))}
     </ScrollContainer>
   </Root>
 )
 
-export default ReviewersList
+export default compose(
+  withHandlers({
+    goBackToReviewers: ({ showModal, hideModal }) => () => {
+      showModal({
+        type: 'invite-reviewers',
+        onConfirm: () => {
+          hideModal()
+        },
+      })
+    },
+  }),
+  withHandlers({
+    showConfirmResend: ({ showModal, goBackToReviewers }) => () => {
+      showModal({
+        title: 'Resend confirmation',
+        onConfirm: goBackToReviewers,
+        onCancel: goBackToReviewers,
+      })
+    },
+    showConfirmRevoke: ({ showModal, hideModal, goBackToReviewers }) => () => {
+      showModal({
+        title: 'Revoke confirmation',
+        onConfirm: goBackToReviewers,
+        onCancel: goBackToReviewers,
+      })
+    },
+  }),
+)(ReviewersList)
 
 // #region styled-components
 const ReviewerEmail = styled.span`

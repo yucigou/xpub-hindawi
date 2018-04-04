@@ -2,7 +2,10 @@ import React from 'react'
 import { Icon, Button, th } from '@pubsweet/ui'
 import { compose, withHandlers } from 'recompose'
 import styled, { css, withTheme } from 'styled-components'
-import { withModal } from 'pubsweet-component-modal/src/components'
+import {
+  withModal,
+  ConfirmationModal,
+} from 'pubsweet-component-modal/src/components'
 
 import { ReviewerForm, ReviewersList } from './'
 
@@ -10,30 +13,42 @@ const InviteReviewers = ({ showInviteModal }) => (
   <AssignButton onClick={showInviteModal}>Invite reviewers</AssignButton>
 )
 
-const InviteReviewersModal = withTheme(({ theme, hideModal, onConfirm }) => (
-  <Root>
-    <CloseIcon data-test="icon-modal-hide" onClick={hideModal}>
-      <Icon color={theme.colorPrimary}>x</Icon>
-    </CloseIcon>
+const InviteReviewersModal = withTheme(
+  ({ theme, hideModal, onConfirm, showModal }) => (
+    <Root>
+      <CloseIcon data-test="icon-modal-hide" onClick={hideModal}>
+        <Icon color={theme.colorPrimary}>x</Icon>
+      </CloseIcon>
 
-    <Title>Invite Reviewers</Title>
+      <Title>Invite Reviewers</Title>
 
-    <Subtitle>Invite reviewer</Subtitle>
-    <ReviewerForm />
+      <Subtitle>Invite reviewer</Subtitle>
+      <ReviewerForm />
 
-    <Subtitle>Reviewers Info</Subtitle>
-    <ReviewersList />
-  </Root>
-))
+      <Subtitle>Reviewers Info</Subtitle>
+      <ReviewersList showModal={showModal} />
+    </Root>
+  ),
+)
+
+const ModalSwitcher = ({ type, ...rest }) => {
+  switch (type) {
+    case 'invite-reviewers':
+      return <InviteReviewersModal {...rest} />
+    default:
+      return <ConfirmationModal {...rest} />
+  }
+}
 
 export default compose(
   withModal({
     modalKey: 'invite-reviewers',
-    modalComponent: InviteReviewersModal,
+    modalComponent: ModalSwitcher,
   }),
   withHandlers({
     showInviteModal: ({ showModal, hideModal }) => () => {
       showModal({
+        type: 'invite-reviewers',
         onConfirm: () => {
           hideModal()
         },

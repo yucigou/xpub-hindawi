@@ -1,5 +1,6 @@
 import React from 'react'
 import { Icon, Button, th } from '@pubsweet/ui'
+import { compose, withHandlers } from 'recompose'
 import styled, { css, withTheme } from 'styled-components'
 
 const ConfirmationModal = ({
@@ -7,14 +8,14 @@ const ConfirmationModal = ({
   subtitle,
   content,
   onConfirm,
+  onClose,
   confirmText = 'OK',
   cancelText = 'Cancel',
-  hideModal,
   theme,
   modalError,
 }) => (
   <Root>
-    <CloseIcon data-test="icon-modal-hide" onClick={hideModal}>
+    <CloseIcon data-test="icon-modal-hide" onClick={onClose}>
       <Icon color={theme.colorPrimary}>x</Icon>
     </CloseIcon>
     {title && <Title dangerouslySetInnerHTML={{ __html: title }} />}
@@ -24,7 +25,7 @@ const ConfirmationModal = ({
     {modalError && <ErrorMessage>{modalError}</ErrorMessage>}
 
     <ButtonsContainer>
-      <Button data-test="button-modal-hide" onClick={hideModal}>
+      <Button data-test="button-modal-hide" onClick={onClose}>
         {cancelText}
       </Button>
       {onConfirm && (
@@ -36,7 +37,18 @@ const ConfirmationModal = ({
   </Root>
 )
 
-export default withTheme(ConfirmationModal)
+export default compose(
+  withTheme,
+  withHandlers({
+    onClose: ({ onCancel, hideModal }) => () => {
+      if (onCancel && typeof onCancel === 'function') {
+        onCancel()
+      } else {
+        hideModal()
+      }
+    },
+  }),
+)(ConfirmationModal)
 
 // #region styled-components
 const defaultText = css`
