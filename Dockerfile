@@ -2,14 +2,14 @@ FROM xpub/xpub:base
 
 WORKDIR ${HOME}
 
-# COPY package.json yarn.lock ./
-# COPY lerna.json .babelrc .eslintignore .eslintrc .prettierrc .stylelintignore .stylelintrc ./
-# COPY packages packages
-# COPY now now
+COPY package.json yarn.lock ./
+COPY lerna.json .babelrc .eslintignore .eslintrc .prettierrc .stylelintignore .stylelintrc ./
+COPY packages packages
+COPY now now
 
-# COPY ./ ./
+# COPY ./ ${HOME}/
 
-#RUN [ "yarn", "config", "set", "workspaces-experimental", "true" ]
+#RUN [ "yarn", "config", "set", "n", "true" ]
 
 # We do a development install because react-styleguidist is a dev dependency
 #RUN [ "yarn", "install", "--frozen-lockfile" ]
@@ -26,7 +26,7 @@ WORKDIR ${HOME}/packages/xpub-faraday
 #RUN [ "yarn", "config", "set", "workspaces-experimental", "true" ]
 
 # We do a development install because react-styleguidist is a dev dependency
-#RUN [ "yarn", "install", "--frozen-lockfile" ]
+RUN [ "yarn", "install", "--frozen-lockfile" ]
 
 # Remove cache and offline mirror
 #RUN [ "yarn", "cache", "clean"]
