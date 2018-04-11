@@ -1,3 +1,5 @@
+(Note: this repo is forked from https://gitlab.coko.foundation/xpub/xpub-faraday)
+
 Note: xpub is still _very_ new. This repository contains an initial set of components but is not yet ready for use.
 
 ## xPub-faraday  
