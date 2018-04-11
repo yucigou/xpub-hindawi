@@ -1,6 +1,6 @@
-# FROM xpub/xpub:base
+FROM xpub/xpub:base
 
-# WORKDIR ${HOME}
+WORKDIR ${HOME}
 
 # COPY package.json yarn.lock ./
 # COPY lerna.json .babelrc .eslintignore .eslintrc .prettierrc .stylelintignore .stylelintrc ./
@@ -19,8 +19,8 @@
 #RUN [ "rm", "-rf", "/npm-packages-offline-cache"]
 
 
-# ENV NODE_ENV "development"
-# WORKDIR ${HOME}/packages/xpub-faraday
+ENV NODE_ENV "development"
+WORKDIR ${HOME}/packages/xpub-faraday
 # RUN [ "npm", "run", "server "]
 
 #RUN [ "yarn", "config", "set", "workspaces-experimental", "true" ]
@@ -32,6 +32,6 @@
 #RUN [ "yarn", "cache", "clean"]
 #RUN [ "rm", "-rf", "/npm-packages-offline-cache"]
 
-# EXPOSE 3000
+EXPOSE 3000
 
-# CMD [ "npm", "run", "start-now" ]
+CMD [ "npx", "pubsweet", "server" ]
