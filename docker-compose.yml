@@ -2,20 +2,19 @@ version: '3'
 
 services:
   app:
-    # image: ygou/xpub-faraday:1.0.0
-    image: xpub/xpub:base
-    # build:
-      # context: .
-      # dockerfile: ./Dockerfile
+    image: ygou/xpub-faraday:0.4.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     # command: sh -c "cd packages/xpub-faraday && yarn install --frozen-lockfile && ./scripts/wait-for-it.sh postgres:5432 -s -t 40 -- npx pubsweet server"
     # command: sh -c "yarn install --frozen-lockfile && ./scripts/wait-for-it.sh postgres:5432 -s -t 40 -- npx pubsweet server"
     # command: sh -c "./scripts/wait-for-it.sh postgres:5432 -s -t 40 -- npx pubsweet server"
-    working_dir: /home/xpub/packages/xpub-faraday
+    # working_dir: /home/xpub/packages/xpub-faraday
     command: sh -c "npx pubsweet server"
     ports:
       - ${PORT:-3000}:3000
-    volumes:
-      - ./:/home/xpub
+    # volumes:
+    #   - ./:/home/xpub
     depends_on:
       - postgres
     environment:
