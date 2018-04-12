@@ -1,5 +1,9 @@
 FROM xpub/xpub:base
 
+# RUN groupadd ygou
+# RUN useradd ygou -g ygou
+# USER node
+
 WORKDIR ${HOME}
 
 COPY package.json yarn.lock ./
@@ -20,6 +24,8 @@ COPY now now
 
 
 ENV NODE_ENV "development"
+ENV PGHOST "postgres"
+ENV PGUSER "postgres"
 WORKDIR ${HOME}/packages/xpub-faraday
 # RUN [ "npm", "run", "server "]
 
