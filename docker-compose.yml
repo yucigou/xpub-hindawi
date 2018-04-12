@@ -20,18 +20,18 @@ services:
     environment:
       NODE_ENV: development
       PGHOST: postgres
-      PGUSER: $USER
+      PGUSER: postgres
 
   postgres:
     image: postgres:10
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: $USER
-    volumes:
-      - postgres-volume:/var/lib/postgresql/data
+      POSTGRES_USER: postgres
+    # volumes:
+    #   - postgres-volume:/var/lib/postgresql/data
       # - ./scripts/test.sql:/docker-entrypoint-initdb.d/test.sql
 
-volumes:
-  postgres-volume:
+# volumes:
+#   postgres-volume:
 

@@ -1,0 +1,175 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert --provider=openshift -o xpub.yml
+      kompose.version: 1.7.0 (767ab4b)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: app
+    name: app
+  spec:
+    ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+    selector:
+      io.kompose.service: app
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert --provider=openshift -o xpub.yml
+      kompose.version: 1.7.0 (767ab4b)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: postgres
+    name: postgres
+  spec:
+    ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+    selector:
+      io.kompose.service: postgres
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert --provider=openshift -o xpub.yml
+      kompose.version: 1.7.0 (767ab4b)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: app
+    name: app
+  spec:
+    replicas: 1
+    selector:
+      io.kompose.service: app
+    strategy:
+      resources: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: app
+      spec:
+        containers:
+        - args:
+          - sh
+          - -c
+          - npx pubsweet server
+          env:
+          - name: NODE_ENV
+            value: development
+          - name: PGHOST
+            value: postgres
+          - name: PGUSER
+            value: postgres
+          image: ' '
+          name: app
+          ports:
+          - containerPort: 3000
+          resources: {}
+        restartPolicy: Always
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - app
+        from:
+          kind: ImageStreamTag
+          name: app:0.4.0
+      type: ImageChange
+  status: {}
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: app
+    name: app
+  spec:
+    tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: ygou/xpub-faraday:0.4.0
+      generation: null
+      importPolicy: {}
+      name: 0.4.0
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert --provider=openshift -o xpub.yml
+      kompose.version: 1.7.0 (767ab4b)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: postgres
+    name: postgres
+  spec:
+    replicas: 1
+    selector:
+      io.kompose.service: postgres
+    strategy:
+      resources: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: postgres
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_USER
+            value: postgres
+          image: ' '
+          name: postgres
+          ports:
+          - containerPort: 5432
+          resources: {}
+        restartPolicy: Always
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - postgres
+        from:
+          kind: ImageStreamTag
+          name: postgres:10
+      type: ImageChange
+  status: {}
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: postgres
+    name: postgres
+  spec:
+    tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: postgres:10
+      generation: null
+      importPolicy: {}
+      name: "10"
+  status:
+    dockerImageRepository: ""
+kind: List
+metadata: {}
+
