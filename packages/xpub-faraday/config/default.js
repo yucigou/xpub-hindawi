@@ -71,7 +71,7 @@ module.exports = {
     },
   },
   mailer: {
-    from: 'sebastian.mihalache@thinslices.com',
+    from: 'ygou@ebi.ac.uk',
     path: `${__dirname}/mailer`,
   },
   publicKeys: [
